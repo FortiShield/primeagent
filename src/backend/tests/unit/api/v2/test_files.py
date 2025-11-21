@@ -6,14 +6,14 @@ from pathlib import Path
 # we need to import tmpdir
 import anyio
 import pytest
+from asgi_lifespan import LifespanManager
+from httpx import ASGITransport, AsyncClient
 from primeagent.api.v2.mcp import get_mcp_file
 from primeagent.main import create_app
 from primeagent.services.auth.utils import get_password_hash
 from primeagent.services.database.models.api_key.model import ApiKey
 from primeagent.services.database.models.user.model import User, UserRead
 from primeagent.services.deps import get_db_service
-from asgi_lifespan import LifespanManager
-from httpx import ASGITransport, AsyncClient
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
 from wfx.services.deps import session_scope

@@ -367,7 +367,11 @@ class MockDataGeneratorComponent(Component):
                         else (
                             "26-35"
                             if x <= age_group_26_35
-                            else "36-50" if x <= age_group_36_50 else "51-65" if x <= age_group_51_65 else "65+"
+                            else "36-50"
+                            if x <= age_group_36_50
+                            else "51-65"
+                            if x <= age_group_51_65
+                            else "65+"
                         )
                     )
                 )

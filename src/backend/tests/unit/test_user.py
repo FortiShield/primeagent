@@ -1,12 +1,12 @@
 from datetime import datetime, timezone
 
 import pytest
+from httpx import AsyncClient
 from primeagent.services.auth.utils import create_super_user, get_password_hash
 from primeagent.services.database.models.user import UserUpdate
 from primeagent.services.database.models.user.model import User
 from primeagent.services.database.utils import session_getter
 from primeagent.services.deps import get_db_service, get_settings_service
-from httpx import AsyncClient
 from sqlmodel import select
 from wfx.services.settings.constants import DEFAULT_SUPERUSER
 

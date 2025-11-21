@@ -2,6 +2,7 @@ from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
+from httpx import AsyncClient
 from primeagent.api.utils.mcp.config_utils import (
     MCPServerValidationResult,
     auto_configure_starter_projects_mcp,
@@ -12,7 +13,6 @@ from primeagent.services.database.models.folder.constants import DEFAULT_FOLDER_
 from primeagent.services.database.models.folder.model import Folder
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import session_scope
-from httpx import AsyncClient
 from sqlmodel import select
 
 

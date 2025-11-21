@@ -7,6 +7,8 @@ from datetime import datetime
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from anyio import Path
+from httpx import AsyncClient
 from primeagent.initial_setup.constants import STARTER_FOLDER_NAME
 from primeagent.initial_setup.setup import (
     detect_github_url,
@@ -20,8 +22,6 @@ from primeagent.services.auth.utils import create_super_user
 from primeagent.services.database.models import Flow
 from primeagent.services.database.models.folder.model import Folder
 from primeagent.services.deps import get_settings_service, session_scope
-from anyio import Path
-from httpx import AsyncClient
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
 

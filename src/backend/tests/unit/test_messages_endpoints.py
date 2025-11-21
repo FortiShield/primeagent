@@ -3,13 +3,13 @@ from urllib.parse import quote
 from uuid import UUID
 
 import pytest
+from httpx import AsyncClient
 from primeagent.memory import aadd_messagetables
 
 # Assuming you have these imports available
 from primeagent.services.database.models.message import MessageCreate, MessageRead, MessageUpdate
 from primeagent.services.database.models.message.model import MessageTable
 from primeagent.services.deps import session_scope
-from httpx import AsyncClient
 
 
 @pytest.fixture

@@ -18,7 +18,11 @@ from wfx.services.settings.service import SettingsService
 
 from primeagent.helpers.user import get_user_by_flow_id_or_endpoint_name
 from primeagent.services.database.models.api_key.crud import check_key
-from primeagent.services.database.models.user.crud import get_user_by_id, get_user_by_username, update_user_last_login_at
+from primeagent.services.database.models.user.crud import (
+    get_user_by_id,
+    get_user_by_username,
+    update_user_last_login_at,
+)
 from primeagent.services.database.models.user.model import User, UserRead
 from primeagent.services.deps import get_db_service, get_session, get_settings_service, session_scope
 
@@ -33,7 +37,9 @@ api_key_query = APIKeyQuery(name=API_KEY_NAME, scheme_name="API key query", auto
 api_key_header = APIKeyHeader(name=API_KEY_NAME, scheme_name="API key header", auto_error=False)
 
 MINIMUM_KEY_LENGTH = 32
-AUTO_LOGIN_WARNING = "In v2.0, PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN will be removed. Please update your authentication method."
+AUTO_LOGIN_WARNING = (
+    "In v2.0, PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN will be removed. Please update your authentication method."
+)
 AUTO_LOGIN_ERROR = (
     "Since v1.5, PRIMEAGENT_AUTO_LOGIN requires a valid API key. "
     "Set PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN=true to skip this check. "

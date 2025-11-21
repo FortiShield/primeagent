@@ -4,8 +4,8 @@ import uuid
 from uuid import UUID
 
 import pytest
-from primeagent.services.database.models.flow import FlowUpdate
 from httpx import codes
+from primeagent.services.database.models.flow import FlowUpdate
 from wfx.log.logger import logger
 from wfx.memory import aget_messages
 

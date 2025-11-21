@@ -166,7 +166,8 @@ class TestPassMessageComponent(ComponentTestBaseWithoutClient):
 
         # Should have Message return annotation
         assert (
-            sig.return_annotation == Message or str(sig.return_annotation) == "<class 'primeagent.schema.message.Message'>"
+            sig.return_annotation == Message
+            or str(sig.return_annotation) == "<class 'primeagent.schema.message.Message'>"
         )
 
     async def test_component_legacy_status(self, component_class, default_kwargs):

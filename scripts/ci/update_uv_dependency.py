@@ -17,7 +17,9 @@ def update_uv_dep(base_version: str) -> None:
 
     # For the main project, update the primeagent-base dependency in the UV section
     # Updated pattern to handle PEP 440 version suffixes and both ~= and == version specifiers
-    pattern = re.compile(r'(dependencies\s*=\s*\[\s*\n\s*)("primeagent-base(?:~=|==)[\d.]+(?:\.(?:post|dev|a|b|rc)\d+)*")')
+    pattern = re.compile(
+        r'(dependencies\s*=\s*\[\s*\n\s*)("primeagent-base(?:~=|==)[\d.]+(?:\.(?:post|dev|a|b|rc)\d+)*")'
+    )
     replacement = rf'\1"primeagent-base-nightly=={base_version}"'
 
     # Check if the pattern is found
