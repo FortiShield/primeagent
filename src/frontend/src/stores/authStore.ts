@@ -2,7 +2,10 @@
 
 import { Cookies } from "react-cookie";
 import { create } from "zustand";
-import { PRIMEAGENT_ACCESS_TOKEN, PRIMEAGENT_API_TOKEN } from "@/constants/constants";
+import {
+  PRIMEAGENT_ACCESS_TOKEN,
+  PRIMEAGENT_API_TOKEN,
+} from "@/constants/constants";
 import type { AuthStoreType } from "@/types/zustand/auth";
 
 const cookies = new Cookies();

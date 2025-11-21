@@ -305,9 +305,9 @@ def configure(
         processors=processors,
         wrapper_class=wrapper_class,
         context_class=dict,
-        logger_factory=structlog.PrintLoggerFactory(file=log_output_file)
-        if not log_file
-        else structlog.stdlib.LoggerFactory(),
+        logger_factory=(
+            structlog.PrintLoggerFactory(file=log_output_file) if not log_file else structlog.stdlib.LoggerFactory()
+        ),
         cache_logger_on_first_use=cache if cache is not None else True,
     )
 

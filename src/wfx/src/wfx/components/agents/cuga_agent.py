@@ -7,6 +7,9 @@ import uuid
 from collections.abc import AsyncIterator
 from typing import TYPE_CHECKING, Any, cast
 
+from langchain_core.agents import AgentFinish
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.tools import StructuredTool
 from primeagent.field_typing import Tool
 from primeagent.io import BoolInput, DropdownInput, IntInput, MultilineInput, Output, TableInput
 
@@ -15,9 +18,6 @@ from primeagent.schema.data import Data
 from primeagent.schema.dotdict import dotdict
 from primeagent.schema.message import Message
 from primeagent.schema.table import EditMode
-from langchain_core.agents import AgentFinish
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_core.tools import StructuredTool
 from pydantic import ValidationError
 
 from wfx.base.agents.events import ExceptionWithMessageError
@@ -357,7 +357,7 @@ class CugaComponent(ToolCallingAgentComponent):
             tool_run_id = None
             # 3. Chain end event with AgentFinish
             async for event in cuga_agent.run_task_generic_yield(eval_mode=False, goal=current_input):
-                logger.debug(f"recieved event {event}")
+                logger.debug(f"received event {event}")
                 if last_event is not None and tool_run_id is not None:
                     logger.debug(f"last event {last_event}")
                     try:

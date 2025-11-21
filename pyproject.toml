@@ -1,6 +1,6 @@
 [project]
 name = "primeagent"
-version = "1.6.4"
+version = "1.0.0"
 description = "A Python package with a built-in web application"
 requires-python = ">=3.10,<3.14"
 license = "MIT"
@@ -253,7 +253,7 @@ override-dependencies = [
 [project.scripts]
 primeagent = "primeagent.primeagent_launcher:main"
 
-[tool.codespell]
+[tool.codetypo]
 skip = '.git,*.pdf,*.svg,*.pdf,*.yaml,*.ipynb,poetry.lock,*.min.js,*.css,package-lock.json,*.trig.,**/node_modules/**,./stuff/*,*.csv'
 # Ignore latin etc
 ignore-regex = '.*(Stati Uniti|Tense=Pres).*'

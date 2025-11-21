@@ -91,7 +91,9 @@ class TestRunStarterProjectsBackwardCompatibility:
                     if "primeagent" in line and ("No module named" in line or "Module" in line):
                         error_line = line.strip()
                         break
-                pytest.fail(f"Primeagent import error found in 1.6.0 template {template_file.name}.\nError: {error_line}")
+                pytest.fail(
+                    f"Primeagent import error found in 1.6.0 template {template_file.name}.\nError: {error_line}"
+                )
 
             # Check for wfx import errors (these indicate structural issues)
             if "No module named 'wfx." in all_output or "Module wfx." in all_output:

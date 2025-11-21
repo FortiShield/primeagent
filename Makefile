@@ -208,11 +208,11 @@ template_tests: ## run all starter project template tests
 # CODE QUALITY
 ######################
 
-codespell: ## run codespell to check spelling
-	@uvx codespell --toml pyproject.toml
+codetypo: ## run codetypo to check spelling
+	@uvx codetypo --toml pyproject.toml
 
-fix_codespell: ## run codespell to fix spelling errors
-	@uvx codespell --toml pyproject.toml --write
+fix_codetypo: ## run codetypo to fix spelling errors
+	@uvx codetypo --toml pyproject.toml --write
 
 format_backend: ## backend code formatters
 	@uv run ruff check . --fix
@@ -834,8 +834,8 @@ help_backend: ## show backend-specific commands
 	@echo "  $(GREEN)make format_backend$(NC)      - Format backend code (ruff)"
 	@echo "  $(GREEN)make format_frontend_check$(NC) - Check frontend formatting (biome)"
 	@echo "  $(GREEN)make lint$(NC)                - Run backend linters (mypy)"
-	@echo "  $(GREEN)make codespell$(NC)           - Check spelling errors"
-	@echo "  $(GREEN)make fix_codespell$(NC)       - Fix spelling errors automatically"
+	@echo "  $(GREEN)make codetypo$(NC)           - Check spelling errors"
+	@echo "  $(GREEN)make fix_codetypo$(NC)       - Fix spelling errors automatically"
 	@echo "  $(GREEN)make unsafe_fix$(NC)          - Run ruff with unsafe fixes"
 	@echo ''
 	@echo "$(GREEN)Database (Alembic):$(NC)"

@@ -201,9 +201,7 @@ Note: Check 'Advanced' for all options.
             time_range_enum = (
                 self.time_range
                 if isinstance(self.time_range, TavilySearchTimeRange)
-                else TavilySearchTimeRange(str(self.time_range).lower())
-                if self.time_range
-                else None
+                else TavilySearchTimeRange(str(self.time_range).lower()) if self.time_range else None
             )
         except ValueError as e:
             error_message = f"Invalid time range value: {e!s}"

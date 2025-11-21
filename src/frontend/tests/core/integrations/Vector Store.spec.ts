@@ -176,7 +176,9 @@ withEventDeliveryModes(
 
     await page.waitForTimeout(2000);
 
-    primeagentCount = await page.locator('[data-testid="primeagent-0-option"]').count();
+    primeagentCount = await page
+      .locator('[data-testid="primeagent-0-option"]')
+      .count();
 
     while (primeagentCount === 0) {
       await page.waitForTimeout(1000);

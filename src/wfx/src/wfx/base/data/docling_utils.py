@@ -307,9 +307,11 @@ def docling_worker(
 
         # Process the results while maintaining the original structure
         processed_data = [
-            {"document": res.document, "file_path": str(res.input.file), "status": res.status.name}
-            if res.status == ConversionStatus.SUCCESS
-            else None
+            (
+                {"document": res.document, "file_path": str(res.input.file), "status": res.status.name}
+                if res.status == ConversionStatus.SUCCESS
+                else None
+            )
             for res in results
         ]
 

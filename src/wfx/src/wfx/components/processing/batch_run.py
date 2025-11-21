@@ -152,9 +152,11 @@ class BatchRunComponent(Component):
 
             # Prepare the batch of conversations
             conversations = [
-                [{"role": "system", "content": system_msg}, {"role": "user", "content": text}]
-                if system_msg
-                else [{"role": "user", "content": text}]
+                (
+                    [{"role": "system", "content": system_msg}, {"role": "user", "content": text}]
+                    if system_msg
+                    else [{"role": "user", "content": text}]
+                )
                 for text in user_texts
             ]
 
