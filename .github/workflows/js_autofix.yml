@@ -12,7 +12,7 @@ env:
   NODE_VERSION: "22"
 jobs:
   autofix:
-    if: ${{ github.actor != 'github-actions[bot]' }}
+    if: ${{ github.actor != 'github-actions[bot]' || 'khulnasoft-bot' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
