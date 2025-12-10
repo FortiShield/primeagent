@@ -12,7 +12,7 @@ env:
 jobs:
   lint:
     name: Run Ruff Check and Format
-    if: ${{ github.actor != 'github-actions[bot]' || 'khulnasoft-bot' }}
+    if: ${{ github.actor != 'github-actions[bot]' || github.actor == 'khulnasoft-bot' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -30,7 +30,7 @@ jobs:
 
   update-starter-projects:
     name: Update Starter Projects
-    if: ${{ github.actor != 'github-actions[bot]' || 'khulnasoft-bot' }}
+    if: ${{ github.actor != 'github-actions[bot]' || github.actor == 'khulnasoft-bot' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -55,7 +55,7 @@ jobs:
 
   update-component-index:
     name: Update Component Index
-    if: ${{ github.actor != 'github-actions[bot]' || 'khulnasoft-bot' }}
+    if: ${{ github.actor != 'github-actions[bot]' || github.actor == 'khulnasoft-bot' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
