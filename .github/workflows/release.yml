@@ -75,7 +75,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # Fetch all history - required for tags (?) 
+          fetch-depth: 0 # Fetch all history - required for tags (?)
       - name: Validate that input is a tag, not a branch
         run: |
           # Check if the input exists as a tag
@@ -283,7 +283,7 @@ jobs:
 
   test-cross-platform:
     name: Test Cross-Platform Installation
-    needs: [build-base, build-main]
+    needs: [build-base, build-main, build-wfx]
     if: |
       always() &&
       !cancelled() &&
@@ -343,7 +343,7 @@ jobs:
 
   build-wfx:
     name: Build WFX
-    needs: [ci]
+    needs: [build-base]
     if: ${{ inputs.release_wfx }}
     runs-on: ubuntu-latest
     outputs:
@@ -393,7 +393,7 @@ jobs:
   test-wfx-cross-platform:
     name: Test WFX Cross-Platform Installation
     if: ${{ inputs.release_wfx }}
-    needs: [build-wfx]
+    needs: [build-wfx, test-cross-platform]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

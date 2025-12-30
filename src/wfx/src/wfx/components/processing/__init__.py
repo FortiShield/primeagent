@@ -15,7 +15,6 @@ if TYPE_CHECKING:
     from wfx.components.processing.data_operations import DataOperationsComponent
     from wfx.components.processing.data_to_dataframe import DataToDataFrameComponent
     from wfx.components.processing.dataframe_operations import DataFrameOperationsComponent
-    from wfx.components.processing.dataframe_to_toolset import DataFrameToToolsetComponent
     from wfx.components.processing.dynamic_create_data import DynamicCreateDataComponent
     from wfx.components.processing.extract_key import ExtractDataKeyComponent
     from wfx.components.processing.filter_data import FilterDataComponent
@@ -46,7 +45,6 @@ _dynamic_imports = {
     "DataOperationsComponent": "data_operations",
     "DataToDataFrameComponent": "data_to_dataframe",
     "DataFrameOperationsComponent": "dataframe_operations",
-    "DataFrameToToolsetComponent": "dataframe_to_toolset",
     "DynamicCreateDataComponent": "dynamic_create_data",
     "ExtractDataKeyComponent": "extract_key",
     "FilterDataComponent": "filter_data",
@@ -76,7 +74,6 @@ __all__ = [
     "CreateDataComponent",
     "DataFilterComponent",
     "DataFrameOperationsComponent",
-    "DataFrameToToolsetComponent",
     "DataOperationsComponent",
     "DataToDataFrameComponent",
     "DynamicCreateDataComponent",

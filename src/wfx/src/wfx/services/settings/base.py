@@ -456,7 +456,13 @@ class Settings(BaseSettings):
                 database_dir = info.data["config_dir"]
                 logger.debug(f"Saving database to config_dir: {database_dir}")
             else:
-                database_dir = Path(__file__).parent.parent.parent.resolve()
+                # Use primeagent package path, not wfx, for backwards compatibility
+                try:
+                    import primeagent
+
+                    database_dir = Path(primeagent.__file__).parent.resolve()
+                except ImportError:
+                    database_dir = Path(__file__).parent.parent.parent.resolve()
                 logger.debug(f"Saving database to primeagent directory: {database_dir}")
 
             pre_db_file_name = "primeagent-pre.db"
