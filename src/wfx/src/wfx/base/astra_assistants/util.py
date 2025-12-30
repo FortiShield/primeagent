@@ -28,6 +28,14 @@ def get_patched_openai_client(shared_component_cache):
     os.environ["ASTRA_ASSISTANTS_QUIET"] = "true"
     client = shared_component_cache.get("client")
     if isinstance(client, CacheMiss):
+        # Validate that ASTRA_DB_APPLICATION_TOKEN is set
+        if not os.getenv("ASTRA_DB_APPLICATION_TOKEN"):
+            msg = (
+                "ASTRA_DB_APPLICATION_TOKEN is not set. "
+                "This environment variable is required when using Astra Assistants components. "
+                "Please provide a valid Astra DB Application Token."
+            )
+            raise ValueError(msg)
         client = patch(OpenAIWithDefaultKey())
         shared_component_cache.set("client", client)
     return client
