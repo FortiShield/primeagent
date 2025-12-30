@@ -12,6 +12,9 @@ jobs:
       contents: read
       packages: write # Needed to push to GitHub Container Registry
 
+    env:
+      PRIMEAGENT_IMAGE_BASE: python:3.12.3-slim # Default value for PRIMEAGENT_IMAGE
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -42,10 +45,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./docker/build_and_push_backend.Dockerfile
+          file: ./docker/build_and_and_push_backend.Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: PRIMEAGENT_IMAGE=${{ env.PRIMEAGENT_IMAGE_BASE }}
 
       - name: Build and push Frontend Docker image
         uses: docker/build-push-action@v5
