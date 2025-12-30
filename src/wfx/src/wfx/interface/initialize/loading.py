@@ -193,8 +193,24 @@ async def build_custom_component(params: dict, custom_component: CustomComponent
     artifact = {"repr": custom_repr, "raw": raw, "type": artifact_type}
 
     if custom_component._vertex is not None:  # noqa: SLF001
-        custom_component._artifacts = {custom_component._vertex.outputs[0].get("name"): artifact}  # noqa: SLF001
-        custom_component._results = {custom_component._vertex.outputs[0].get("name"): build_result}  # noqa: SLF001
+        vertex = custom_component._vertex  # noqa: SLF001
+        output_name = vertex.outputs[0].get("name") if vertex.outputs else "output"
+
+        # Update artifacts
+        if hasattr(custom_component, "set_artifacts"):
+            custom_component.set_artifacts({output_name: artifact})
+        elif hasattr(custom_component, "artifacts"):
+            custom_component.artifacts = {output_name: artifact}  # type: ignore[attr-defined]
+        else:
+            custom_component._artifacts = {output_name: artifact}  # noqa: SLF001
+
+        # Update results
+        if hasattr(custom_component, "set_results"):
+            custom_component.set_results({output_name: build_result})
+        elif hasattr(custom_component, "results"):
+            custom_component.results = {output_name: build_result}  # type: ignore[attr-defined]
+        else:
+            custom_component._results = {output_name: build_result}  # noqa: SLF001
         return custom_component, build_result, artifact
 
     msg = "Custom component does not have a vertex"
