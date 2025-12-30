@@ -14,8 +14,6 @@ Note on version compatibility:
 - When installing langchain-openai, use: langchain-openai>=0.3.0,<1.0.0
 """
 
-import importlib.util
-import json
 import os
 import re
 import select
@@ -30,73 +28,24 @@ import urllib.request
 from pathlib import Path
 
 import pytest
+from integration.utils import (
+    get_simple_agent_flow_path,
+    get_starter_projects_path,
+    has_integration_deps,
+    has_openai_api_key,
+    parse_json_from_output,
+)
 from typer.testing import CliRunner
 
 from wfx.__main__ import app as wfx_app
 
 runner = CliRunner()
 
-
-def has_integration_deps() -> bool:
-    """Check if integration dependencies are installed."""
-    required_modules = ["langchain_openai", "langchain_community", "bs4", "lxml"]
-    return all(importlib.util.find_spec(module) is not None for module in required_modules)
-
-
 # Skip all tests in this module if integration deps are not installed
 pytestmark = pytest.mark.skipif(
     not has_integration_deps(),
     reason="Integration dependencies not installed. Run: uv sync --group integration",
 )
-
-
-def get_starter_projects_path() -> Path:
-    """Get path to starter projects directory."""
-    test_file_path = Path(__file__).resolve()
-    current = test_file_path.parent
-    while current != current.parent:
-        starter_path = current / "src" / "backend" / "base" / "primeagent" / "initial_setup" / "starter_projects"
-        if starter_path.exists():
-            return starter_path
-        current = current.parent
-    # Return an empty Path() if not found
-    return Path()
-
-
-def get_simple_agent_flow_path() -> Path:
-    """Get path to Simple Agent starter project."""
-    return get_starter_projects_path() / "Simple Agent.json"
-
-
-def has_openai_api_key() -> bool:
-    """Check if OPENAI_API_KEY is set."""
-    key = os.getenv("OPENAI_API_KEY", "")
-    return bool(key) and key != "dummy" and len(key) > 10
-
-
-def parse_json_from_output(output: str, context: str = "output") -> dict:
-    """Parse JSON from command output, searching in reverse if direct parsing fails.
-
-    Args:
-        output: The command output string to parse.
-        context: Description of the output source for error messages.
-
-    Returns:
-        The parsed JSON as a dictionary.
-
-    Raises:
-        pytest.fail: If no valid JSON is found in the output.
-    """
-    try:
-        return json.loads(output)
-    except json.JSONDecodeError:
-        lines = output.split("\n")
-        for line in reversed(lines):
-            try:
-                return json.loads(line)
-            except json.JSONDecodeError:
-                continue
-        pytest.fail(f"No valid JSON in {context}: {output}")
 
 
 class TestSimpleAgentFlowLoading:
