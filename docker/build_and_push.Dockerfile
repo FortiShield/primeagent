@@ -48,7 +48,13 @@ COPY ./src/wfx/pyproject.toml /app/src/wfx/pyproject.toml
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     RUSTFLAGS='--cfg reqwest_unstable' \
-    uv sync --frozen --no-install-project --no-editable --extra postgresql
+    uv sync --frozen --no-install-project --no-editable --extra postgresql \
+    --ignore-install nvidia-nccl-cu12 \
+    --ignore-install nvidia-cusolver-cu12 \
+    --ignore-install nvidia-cusparse-cu12 \
+    --ignore-install nvidia-cublas-cu12 \
+    --ignore-install nvidia-cudnn-cu12 \
+    --ignore-install nvidia-cusparselt-cu12
 
 COPY ./src /app/src
 
@@ -64,7 +70,13 @@ WORKDIR /app
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     RUSTFLAGS='--cfg reqwest_unstable' \
-    uv sync --frozen --no-editable --extra postgresql
+    uv sync --frozen --no-editable --extra postgresql \
+    --ignore-install nvidia-nccl-cu12 \
+    --ignore-install nvidia-cusolver-cu12 \
+    --ignore-install nvidia-cusparse-cu12 \
+    --ignore-install nvidia-cublas-cu12 \
+    --ignore-install nvidia-cudnn-cu12 \
+    --ignore-install nvidia-cusparselt-cu12
 
 ################################
 # RUNTIME
