@@ -276,12 +276,7 @@ def distributed_client_fixture(
         # monkeypatch.setattr(manager, "USE_CELERY", True)
         monkeypatch.setattr(celery_app, "celery_app", celery_app.make_celery("primeagent", Config))
 
-        # def get_session_override():
-        #     return session
-
         app = create_app()
-
-        # app.dependency_overrides[get_session] = get_session_override
         with TestClient(app) as client:
             yield client
     finally:
@@ -432,7 +427,6 @@ async def client_fixture(
             return app, db_path
 
         app, db_path = await asyncio.to_thread(init_app)
-        # app.dependency_overrides[get_session] = get_session_override
         async with (
             LifespanManager(app, startup_timeout=None, shutdown_timeout=None) as manager,
             AsyncClient(transport=ASGITransport(app=manager.app), base_url="http://testserver/", http2=True) as client,
