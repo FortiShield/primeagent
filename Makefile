@@ -305,17 +305,17 @@ endif
 
 dev: setup_env ## fast startup with minimal dependencies
 	@echo 'Syncing core-dev dependencies...'
-	@uv sync --group core-dev --group dev
+	@uv sync --extra core-dev --group dev
 	@make backend
 
 llm: setup_env ## startup with LLM support
 	@echo 'Syncing LLM dependencies...'
-	@uv sync --extra llm --group core-dev --group dev
+	@uv sync --extra llm --extra core-dev --group dev
 	@make backend
 
 vector: setup_env ## startup with Vector DB support
 	@echo 'Syncing Vector DB dependencies...'
-	@uv sync --extra vector --group core-dev --group dev
+	@uv sync --extra vector --extra core-dev --group dev
 	@make backend
 
 build_and_run: setup_env ## build the project and run it
