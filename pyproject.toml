@@ -8,6 +8,7 @@ keywords = ["nlp", "langchain", "openai", "gpt", "gui"]
 readme = "README.md"
 maintainers = [{ name = "khulnaSoft", email = "info@khulnasoft.com" }]
 # Define your main dependencies here
+dependencies = [
     "primeagent-base~=0.2.0",
     "uv==0.7.20",
     # Core Runtime
