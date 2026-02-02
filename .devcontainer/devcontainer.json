@@ -8,7 +8,7 @@
     "ghcr.io/devcontainers/features/node": {},
     "ghcr.io/dhoeric/features/hadolint:1": {}
   },
-  "postCreateCommand": "sudo chown -R primeagent .venv .mypy_cache src/frontend/node_modules src/frontend/build src/backend/base/primeagent/frontend && make install_frontend && make install_backend",
+  "postCreateCommand": "sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile || true && sudo chown -R primeagent .venv .mypy_cache src/frontend/node_modules src/frontend/build src/backend/base/primeagent/frontend && make install_frontend && uv sync --group core-dev --group dev",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -24,6 +24,9 @@
         "GitHub.vscode-pull-request-github"
       ],
       "settings": {
+        "python.analysis.indexing": false,
+        "python.analysis.autoImportCompletions": false,
+        "python.testing.pytestEnabled": false,
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.profiles.linux": {
           "zsh": {

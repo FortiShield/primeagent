@@ -5,6 +5,13 @@ primeagent.* to wfx.* to maintain compatibility with existing code that
 references the old primeagent module structure.
 """
 
+import os
+
+# Memory guardrails
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["NUMEXPR_MAX_THREADS"] = "1"
+
 import importlib
 import importlib.util
 import sys
