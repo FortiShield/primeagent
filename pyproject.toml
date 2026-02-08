@@ -12,7 +12,7 @@ dependencies = [
     "primeagent-base~=0.2.0",
     "uv==0.7.20",
     # Core Runtime
-    "fastmcp==2.13.0",
+    "fastmcp==2.14.0",
     "mcp>=1.17.0,<2.0.0",
     "fastapi", # version managed by base
     "typer",
