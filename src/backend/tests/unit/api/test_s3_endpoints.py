@@ -49,8 +49,14 @@ class TestS3FileEndpoints:
     async def test_download_file_parses_path_correctly(self, mock_storage_service, mock_settings):
         """Test that download_file correctly extracts filename from path."""
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -81,8 +87,14 @@ class TestS3FileEndpoints:
     async def test_download_file_returns_streaming_response(self, mock_storage_service, mock_settings):
         """Test that download_file returns StreamingResponse for file downloads."""
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -116,8 +128,14 @@ class TestS3FileEndpoints:
     async def test_download_file_returns_content_string(self, mock_storage_service, mock_settings):
         """Test that download_file returns decoded content when return_content=True."""
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -148,8 +166,14 @@ class TestS3FileEndpoints:
     async def test_delete_file_calls_storage_with_correct_params(self, mock_storage_service, mock_settings):
         """Test that delete_file correctly parses path and calls storage service."""
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -187,8 +211,14 @@ class TestS3FileEndpoints:
         mock_storage_service.get_file.side_effect = FileNotFoundError("File not found in S3")
 
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -220,8 +250,14 @@ class TestS3FileEndpoints:
     async def test_upload_saves_to_storage_service(self, mock_storage_service, mock_settings):
         """Test that file upload correctly saves to storage service."""
         with (
-            patch("primeagent.services.deps.get_storage_service", return_value=mock_storage_service),
-            patch("primeagent.services.deps.get_settings_service", return_value=mock_settings),
+            patch(
+                "primeagent.services.deps.get_storage_service",
+                return_value=mock_storage_service,
+            ),
+            patch(
+                "primeagent.services.deps.get_settings_service",
+                return_value=mock_settings,
+            ),
         ):
             mock_user = MagicMock()
             mock_user.id = "user_123"
@@ -238,5 +274,8 @@ class TestS3FileEndpoints:
 
                 # Verify storage service was called
                 mock_storage_service.save_file.assert_called_once_with(
-                    flow_id="user_123", file_name="upload.txt", data=b"file content", append=False
+                    flow_id="user_123",
+                    file_name="upload.txt",
+                    data=b"file content",
+                    append=False,
                 )

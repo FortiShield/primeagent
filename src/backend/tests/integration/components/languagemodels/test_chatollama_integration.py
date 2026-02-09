@@ -22,7 +22,11 @@ class TestChatOllamaIntegration:
         # Define a JSON schema for structured output
         json_schema = {
             "type": "object",
-            "properties": {"name": {"type": "string"}, "age": {"type": "integer"}, "email": {"type": "string"}},
+            "properties": {
+                "name": {"type": "string"},
+                "age": {"type": "integer"},
+                "email": {"type": "string"},
+            },
             "required": ["name", "email"],
         }
 
@@ -47,7 +51,12 @@ class TestChatOllamaIntegration:
         mock_message = Message(text=json_response)
 
         # Patch text_response as an async method
-        with patch.object(component, "text_response", new_callable=AsyncMock, return_value=mock_message):
+        with patch.object(
+            component,
+            "text_response",
+            new_callable=AsyncMock,
+            return_value=mock_message,
+        ):
             # Get Data output
             data_output = await component.build_data_output()
 
@@ -89,7 +98,12 @@ class TestChatOllamaIntegration:
         ]"""
         mock_message = Message(text=json_response)
 
-        with patch.object(component, "text_response", new_callable=AsyncMock, return_value=mock_message):
+        with patch.object(
+            component,
+            "text_response",
+            new_callable=AsyncMock,
+            return_value=mock_message,
+        ):
             # Get DataFrame output
             df_output = await component.build_dataframe_output()
 
@@ -142,7 +156,12 @@ class TestChatOllamaIntegration:
         json_response = '{"name": "Jane Smith", "age": 25, "email": "jane@test.com", "city": "Boston"}'
         mock_message = Message(text=json_response)
 
-        with patch.object(component, "text_response", new_callable=AsyncMock, return_value=mock_message):
+        with patch.object(
+            component,
+            "text_response",
+            new_callable=AsyncMock,
+            return_value=mock_message,
+        ):
             # Verify Data output works
             data_output = await component.build_data_output()
             assert isinstance(data_output, Data)
@@ -163,7 +182,10 @@ class TestChatOllamaIntegration:
         mock_chat_ollama.return_value = mock_model
 
         component = ChatOllamaComponent(
-            base_url="http://localhost:11434", model_name="llama3.1", format="json", temperature=0.1
+            base_url="http://localhost:11434",
+            model_name="llama3.1",
+            format="json",
+            temperature=0.1,
         )
 
         component.input_value = "Generate some data"
@@ -173,7 +195,12 @@ class TestChatOllamaIntegration:
         mock_message = Message(text=invalid_response)
 
         with (
-            patch.object(component, "text_response", new_callable=AsyncMock, return_value=mock_message),
+            patch.object(
+                component,
+                "text_response",
+                new_callable=AsyncMock,
+                return_value=mock_message,
+            ),
             pytest.raises(ValueError, match="Invalid JSON response"),
         ):
             await component.build_data_output()

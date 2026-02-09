@@ -36,7 +36,8 @@ class UrlSchema(BaseModel):
     """Schema for the fetch_content tool's parameters."""
 
     urls: list[str] | None = Field(
-        default=None, description="Enter one or more URLs to crawl recursively, by clicking the '+' button."
+        default=None,
+        description="Enter one or more URLs to crawl recursively, by clicking the '+' button.",
     )
 
 
@@ -82,7 +83,11 @@ def test_no_param_tool_conversion():
     assert tool_spec["function"]["name"] == "no_param_tool"
     assert tool_spec["function"]["description"] == "A tool with no parameters"
     # Tool with no parameters should have empty properties
-    assert tool_spec["function"]["parameters"] == {"type": "object", "properties": {}, "required": []}
+    assert tool_spec["function"]["parameters"] == {
+        "type": "object",
+        "properties": {},
+        "required": [],
+    }
 
 
 def test_tool_with_list_parameter():
@@ -194,7 +199,11 @@ def test_error_handling():
     assert tool_spec["type"] == "function"
     assert tool_spec["function"]["name"] == "broken_tool"
     assert "parameters" in tool_spec["function"]
-    assert tool_spec["function"]["parameters"] == {"type": "object", "properties": {}, "required": []}
+    assert tool_spec["function"]["parameters"] == {
+        "type": "object",
+        "properties": {},
+        "required": [],
+    }
 
 
 def test_complex_schema_conversion():

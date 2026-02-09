@@ -206,7 +206,10 @@ class StreamableHTTP:
     def get_manager(self) -> StreamableHTTPSessionManager:
         """Fetch the active Streamable HTTP session manager or raise if it is unavailable."""
         if not self._started or self.session_manager is None:
-            raise HTTPException(status_code=503, detail="MCP Streamable HTTP transport is not initialized")
+            raise HTTPException(
+                status_code=503,
+                detail="MCP Streamable HTTP transport is not initialized",
+            )
         return self.session_manager
 
     async def stop(self) -> None:
@@ -236,7 +239,9 @@ class StreamableHTTP:
 _streamable_http = StreamableHTTP()
 
 
-async def start_streamable_http_manager(stateless: bool = True) -> None:  # noqa: FBT001, FBT002
+async def start_streamable_http_manager(
+    stateless: bool = True,
+) -> None:
     await _streamable_http.start(stateless=stateless)
 
 

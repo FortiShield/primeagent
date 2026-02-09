@@ -331,7 +331,11 @@ async def test_create_generic_variable_with_fernet_signature_fails(service, sess
 
     with pytest.raises(ValueError, match="cannot start with 'gAAAAA'"):
         await service.create_variable(
-            user_id, "TEST_VAR", "gAAAAABthis-looks-like-encrypted-but-is-generic", type_="Generic", session=session
+            user_id,
+            "TEST_VAR",
+            "gAAAAABthis-looks-like-encrypted-but-is-generic",
+            type_="Generic",
+            session=session,
         )
 
 

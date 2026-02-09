@@ -32,7 +32,10 @@ class TestSettingsInitializationOrder:
 
     def test_is_settings_service_initialized_returns_true_after_init(self):
         """Test that is_settings_service_initialized returns True after initialization."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -68,7 +71,10 @@ class TestSettingsInitializationOrder:
     def test_dotenv_loading_before_settings_init(self, tmp_path):
         """Test the complete flow: load .env, then initialize settings."""
         from dotenv import load_dotenv
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -134,7 +140,10 @@ class TestSettingsInitializationOrder:
 
     def test_cli_check_pattern_error_case(self, tmp_path):
         """Test the CLI check pattern when settings ARE initialized (error case)."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -165,7 +174,10 @@ class TestSettingsInitializationOrder:
 
     def test_error_message_when_settings_already_initialized(self, tmp_path):
         """Test that we get a clear error when trying to load .env after settings init."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services

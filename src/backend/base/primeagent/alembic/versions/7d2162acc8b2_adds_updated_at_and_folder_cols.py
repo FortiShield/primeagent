@@ -29,16 +29,24 @@ def upgrade() -> None:
     try:
         if "name" in api_key_columns:
             with op.batch_alter_table("apikey", schema=None) as batch_op:
-                batch_op.alter_column("name", existing_type=sa.VARCHAR(), nullable=False)
+                batch_op.alter_column(
+                    "name", existing_type=sa.VARCHAR(), nullable=False
+                )
     except Exception as e:
         print(e)
 
     try:
         with op.batch_alter_table("flow", schema=None) as batch_op:
             if "updated_at" not in flow_columns:
-                batch_op.add_column(sa.Column("updated_at", sa.DateTime(), nullable=True))
+                batch_op.add_column(
+                    sa.Column("updated_at", sa.DateTime(), nullable=True)
+                )
             if "folder" not in flow_columns:
-                batch_op.add_column(sa.Column("folder", sqlmodel.sql.sqltypes.AutoString(), nullable=True))
+                batch_op.add_column(
+                    sa.Column(
+                        "folder", sqlmodel.sql.sqltypes.AutoString(), nullable=True
+                    )
+                )
     except Exception as e:
         print(e)
 

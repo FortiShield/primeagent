@@ -27,8 +27,14 @@ def upgrade() -> None:
     with op.batch_alter_table("apikey", schema=None) as batch_op:
         if migration.column_exists(table_name="apikey", column_name="name", conn=conn):
             api_key_columns = inspector.get_columns("apikey")
-            name_column = next((column for column in api_key_columns if column["name"] == "name"), None)
-            if name_column is not None and isinstance(name_column["type"], sa.VARCHAR) and not name_column["nullable"]:
+            name_column = next(
+                (column for column in api_key_columns if column["name"] == "name"), None
+            )
+            if (
+                name_column is not None
+                and isinstance(name_column["type"], sa.VARCHAR)
+                and not name_column["nullable"]
+            ):
                 batch_op.alter_column("name", existing_type=sa.VARCHAR(), nullable=True)
 
     # ### end Alembic commands ###
@@ -42,8 +48,16 @@ def downgrade() -> None:
     with op.batch_alter_table("apikey", schema=None) as batch_op:
         if migration.column_exists(table_name="apikey", column_name="name", conn=conn):
             api_key_columns = inspector.get_columns("apikey")
-            name_column = next((column for column in api_key_columns if column["name"] == "name"), None)
-            if name_column is not None and isinstance(name_column["type"], sa.VARCHAR) and name_column["nullable"]:
-                batch_op.alter_column("name", existing_type=sa.VARCHAR(), nullable=False)
+            name_column = next(
+                (column for column in api_key_columns if column["name"] == "name"), None
+            )
+            if (
+                name_column is not None
+                and isinstance(name_column["type"], sa.VARCHAR)
+                and name_column["nullable"]
+            ):
+                batch_op.alter_column(
+                    "name", existing_type=sa.VARCHAR(), nullable=False
+                )
 
     # ### end Alembic commands ###

@@ -1,7 +1,9 @@
 from unittest.mock import patch
 
 import pytest
-from primeagent.components.tools.python_code_structured_tool import PythonCodeStructuredTool
+from primeagent.components.tools.python_code_structured_tool import (
+    PythonCodeStructuredTool,
+)
 
 from tests.base import ComponentTestBaseWithoutClient
 
@@ -62,7 +64,13 @@ class TestPythonCodeStructuredTool(ComponentTestBaseWithoutClient):
         # field_order can be None if not explicitly set at instance level
         assert hasattr(component, "field_order")
         # The class-level field_order is what we expect
-        expected_order = ["name", "description", "tool_code", "return_direct", "tool_function"]
+        expected_order = [
+            "name",
+            "description",
+            "tool_code",
+            "return_direct",
+            "tool_function",
+        ]
         assert PythonCodeStructuredTool.field_order == expected_order
 
     async def test_inputs_configuration(self, component_class, default_kwargs):
@@ -74,7 +82,13 @@ class TestPythonCodeStructuredTool(ComponentTestBaseWithoutClient):
 
         # Check for expected input names
         input_names = [input_field.name for input_field in component.inputs]
-        expected_inputs = ["tool_code", "tool_name", "tool_description", "return_direct", "tool_function"]
+        expected_inputs = [
+            "tool_code",
+            "tool_name",
+            "tool_description",
+            "return_direct",
+            "tool_function",
+        ]
 
         for expected_input in expected_inputs:
             assert expected_input in input_names

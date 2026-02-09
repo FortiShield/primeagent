@@ -121,7 +121,12 @@ async def save_file_routine(
         file_name = file.filename
 
     # Save the file using the storage service.
-    await storage_service.save_file(flow_id=str(current_user.id), file_name=file_name, data=file_content, append=append)
+    await storage_service.save_file(
+        flow_id=str(current_user.id),
+        file_name=file_name,
+        data=file_content,
+        append=append,
+    )
 
     return file_id, file_name
 
@@ -192,7 +197,8 @@ async def upload_user_file(
         else:
             # For normal files, ensure unique name by appending a count if necessary
             stmt = select(UserFile).where(
-                col(UserFile.name).like(f"{root_filename}%"), UserFile.user_id == current_user.id
+                col(UserFile.name).like(f"{root_filename}%"),
+                UserFile.user_id == current_user.id,
             )
             existing_files = await session.exec(stmt)
             files = existing_files.all()  # Fetch all matching records
@@ -215,7 +221,11 @@ async def upload_user_file(
         # Read file content, save with unique filename, and compute file size in one routine
         try:
             file_id, stored_file_name = await save_file_routine(
-                file, storage_service, current_user, file_name=unique_filename, append=append
+                file,
+                storage_service,
+                current_user,
+                file_name=unique_filename,
+                append=append,
             )
             file_size = await storage_service.get_file_size(
                 flow_id=str(current_user.id),
@@ -260,7 +270,8 @@ async def upload_user_file(
                 await logger.aerror(f"Failed to clean up uploaded file {stored_file_name}: {e}")
 
             raise HTTPException(
-                status_code=500, detail=f"Error inserting file metadata into database: {db_err}"
+                status_code=500,
+                detail=f"Error inserting file metadata into database: {db_err}",
             ) from db_err
     except HTTPException:
         # Re-raise HTTP exceptions (like 409 conflicts) without modification
@@ -424,14 +435,23 @@ async def delete_files_batch(
         # If there were storage failures, include them in the response
         if storage_failures:
             await logger.awarning(
-                "Batch delete completed with %d storage failures: %s", len(storage_failures), storage_failures
+                "Batch delete completed with %d storage failures: %s",
+                len(storage_failures),
+                storage_failures,
             )
         # If there were database failures, log them
         if db_failures:
-            await logger.aerror("Batch delete completed with %d database failures: %s", len(db_failures), db_failures)
+            await logger.aerror(
+                "Batch delete completed with %d database failures: %s",
+                len(db_failures),
+                db_failures,
+            )
             # If all database deletions failed, raise an error
             if len(db_failures) == len(files):
-                raise HTTPException(status_code=500, detail=f"Failed to delete any files from database: {db_failures}")
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to delete any files from database: {db_failures}",
+                )
 
         # Calculate how many files were actually deleted from database
         # Files successfully deleted = total - (kept due to transient storage failures) - (DB deletion failures)
@@ -690,7 +710,8 @@ async def delete_file(
                     db_error,
                 )
                 raise HTTPException(
-                    status_code=500, detail=f"Error deleting file from database: {db_error}"
+                    status_code=500,
+                    detail=f"Error deleting file from database: {db_error}",
                 ) from db_error
 
             return {"detail": f"File {file_to_delete.name} deleted successfully"}
@@ -764,14 +785,23 @@ async def delete_all_files(
 
         if storage_failures:
             await logger.awarning(
-                "Batch delete completed with %d storage failures: %s", len(storage_failures), storage_failures
+                "Batch delete completed with %d storage failures: %s",
+                len(storage_failures),
+                storage_failures,
             )
 
         if db_failures:
-            await logger.aerror("Batch delete completed with %d database failures: %s", len(db_failures), db_failures)
+            await logger.aerror(
+                "Batch delete completed with %d database failures: %s",
+                len(db_failures),
+                db_failures,
+            )
             # If all database deletions failed, raise an error
             if len(db_failures) == len(files):
-                raise HTTPException(status_code=500, detail=f"Failed to delete any files from database: {db_failures}")
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to delete any files from database: {db_failures}",
+                )
 
         # Calculate how many files were actually deleted from database
         # Files successfully deleted = total - (kept due to transient storage failures) - (DB deletion failures)

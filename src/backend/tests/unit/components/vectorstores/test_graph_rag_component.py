@@ -83,7 +83,10 @@ class TestGraphRAGComponent(ComponentTestBaseWithoutClient):
                         **(
                             {
                                 "tags": [
-                                    {"a": random.randint(1, 10), "b": random.randint(1, 10)}  # noqa: S311
+                                    {
+                                        "a": random.randint(1, 10),
+                                        "b": random.randint(1, 10),
+                                    }
                                     for _ in range(random.randint(1, 2))  # noqa: S311
                                 ]
                             }

@@ -22,7 +22,11 @@ class JobBase(SQLModel):
     status: JobStatus = Field(
         default=JobStatus.QUEUED,
         sa_column=Column(
-            SQLEnum(JobStatus, name="job_status_enum", values_callable=lambda obj: [item.value for item in obj]),
+            SQLEnum(
+                JobStatus,
+                name="job_status_enum",
+                values_callable=lambda obj: [item.value for item in obj],
+            ),
             nullable=False,
             index=True,
         ),

@@ -22,7 +22,11 @@ datetime_strategy = st.datetimes(
 )
 decimal_strategy = st.decimals(min_value=-1e6, max_value=1e6, allow_nan=False, allow_infinity=False, places=10)
 uuid_strategy = st.uuids()
-list_strategy = st.lists(st.one_of(st.integers(), st.text(), st.floats()), min_size=0, max_size=MAX_ITEMS_LENGTH * 3)
+list_strategy = st.lists(
+    st.one_of(st.integers(), st.text(), st.floats()),
+    min_size=0,
+    max_size=MAX_ITEMS_LENGTH * 3,
+)
 dict_strategy = st.dictionaries(
     keys=st.text(min_size=1),
     values=st.one_of(st.integers(), st.floats(), st.text(), st.booleans(), st.none()),

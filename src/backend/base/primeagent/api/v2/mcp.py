@@ -16,7 +16,11 @@ from primeagent.api.v2.files import (
 )
 from primeagent.api.v2.schemas import MCPServerConfig
 from primeagent.logging import logger
-from primeagent.services.deps import get_settings_service, get_shared_component_cache_service, get_storage_service
+from primeagent.services.deps import (
+    get_settings_service,
+    get_shared_component_cache_service,
+    get_storage_service,
+)
 from primeagent.services.settings.service import SettingsService
 from primeagent.services.storage.service import StorageService
 from wfx.base.agents.utils import safe_cache_get, safe_cache_set
@@ -91,7 +95,10 @@ async def get_server_list(
         mcp_file = await get_mcp_file(current_user)
         server_config_file = await get_file_by_name(mcp_file, current_user, session)
         if not server_config_file:
-            raise HTTPException(status_code=500, detail="Failed to create MCP Servers configuration file") from None
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to create MCP Servers configuration file",
+            ) from None
 
         server_config_bytes = await download_file(
             server_config_file.id,
@@ -151,7 +158,11 @@ async def get_servers(
 
     # Check all of the tool counts for each server concurrently
     async def check_server(server_name: str) -> dict:
-        server_info: dict[str, str | int | None] = {"name": server_name, "mode": None, "toolsCount": None}
+        server_info: dict[str, str | int | None] = {
+            "name": server_name,
+            "mode": None,
+            "toolsCount": None,
+        }
         # Create clients that we control so we can clean them up after
         mcp_stdio_client = MCPStdioClient()
         mcp_streamable_http_client = MCPStreamableHttpClient()
@@ -294,7 +305,11 @@ async def update_server(
 
     # Upload the updated server configuration
     await upload_server_config(
-        server_list, current_user, session, storage_service=storage_service, settings_service=settings_service
+        server_list,
+        current_user,
+        session,
+        storage_service=storage_service,
+        settings_service=settings_service,
     )
 
     shared_component_cache_service = get_shared_component_cache_service()

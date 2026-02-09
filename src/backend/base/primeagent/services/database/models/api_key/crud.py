@@ -7,7 +7,12 @@ from uuid import UUID
 
 from cryptography.fernet import InvalidToken
 from primeagent.services.auth import utils as auth_utils
-from primeagent.services.database.models.api_key.model import ApiKey, ApiKeyCreate, ApiKeyRead, UnmaskedApiKeyRead
+from primeagent.services.database.models.api_key.model import (
+    ApiKey,
+    ApiKeyCreate,
+    ApiKeyRead,
+    UnmaskedApiKeyRead,
+)
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import get_settings_service
 from sqlmodel import select, update
@@ -32,7 +37,14 @@ async def get_api_keys(session: AsyncSession, user_id: UUID) -> list[ApiKeyRead]
         if api_key:
             try:
                 actual_key = auth_utils.decrypt_api_key(api_key, settings_service=settings_service, fernet_obj=fernet)
-            except (ValueError, TypeError, InvalidToken, UnicodeDecodeError, AttributeError, binascii.Error):
+            except (
+                ValueError,
+                TypeError,
+                InvalidToken,
+                UnicodeDecodeError,
+                AttributeError,
+                binascii.Error,
+            ):
                 # Fallback to stored value for legacy entries
                 actual_key = api_key
         else:

@@ -372,7 +372,12 @@ class TestOllamaEmbeddingsComponent(ComponentTestBaseWithoutClient):
         mock_post_response.json.side_effect = [
             {component.JSON_CAPABILITIES_KEY: [component.EMBEDDING_CAPABILITY]},
             {component.JSON_CAPABILITIES_KEY: ["completion"]},  # Not an embedding model
-            {component.JSON_CAPABILITIES_KEY: [component.EMBEDDING_CAPABILITY, "completion"]},
+            {
+                component.JSON_CAPABILITIES_KEY: [
+                    component.EMBEDDING_CAPABILITY,
+                    "completion",
+                ]
+            },
         ]
         mock_post.return_value = mock_post_response
 

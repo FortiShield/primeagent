@@ -18,7 +18,10 @@ class CeleryBackend(TaskBackend):
     # TODO: Barebones implementation, needs check like task_func being decorated with celery Task
     # dedicated error handling for celery specific errors and retries
     def launch_task(self, task_func: Callable[..., Any], *args: Any, **kwargs: Any) -> tuple[str, Any]:
-        from primeagent.exceptions.api import WorkflowResourceError, WorkflowServiceUnavailableError
+        from primeagent.exceptions.api import (
+            WorkflowResourceError,
+            WorkflowServiceUnavailableError,
+        )
 
         # I need to type the delay method to make it easier
         if not hasattr(task_func, "delay"):

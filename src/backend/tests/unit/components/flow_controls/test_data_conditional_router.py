@@ -2,7 +2,9 @@ from unittest.mock import patch
 
 import pytest
 from primeagent.schema.data import Data
-from wfx.components.flow_controls.data_conditional_router import DataConditionalRouterComponent
+from wfx.components.flow_controls.data_conditional_router import (
+    DataConditionalRouterComponent,
+)
 
 from tests.base import ComponentTestBaseWithoutClient
 
@@ -81,7 +83,15 @@ class TestDataConditionalRouterComponent(ComponentTestBaseWithoutClient):
             ("hello world", "hello", "ends with", False),
         ],
     )
-    async def test_compare_values(self, component_class, default_kwargs, item_value, compare_value, operator, expected):
+    async def test_compare_values(
+        self,
+        component_class,
+        default_kwargs,
+        item_value,
+        compare_value,
+        operator,
+        expected,
+    ):
         """Test compare_values method with various operators."""
         component = await self.component_setup(component_class, default_kwargs)
         result = component.compare_values(item_value, compare_value, operator)

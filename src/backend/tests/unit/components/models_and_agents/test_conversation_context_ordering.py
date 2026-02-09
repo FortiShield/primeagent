@@ -52,7 +52,12 @@ class TestALTKAgentContextOrdering:
         assert len(context) == 4, f"Expected 4 messages, got {len(context)}"
 
         # Verify message types based on original senders
-        expected_types = [HumanMessage, AIMessage, HumanMessage, HumanMessage]  # User, AI, User, User
+        expected_types = [
+            HumanMessage,
+            AIMessage,
+            HumanMessage,
+            HumanMessage,
+        ]  # User, AI, User, User
         for i, (msg, expected_type) in enumerate(zip(context, expected_types, strict=True)):
             assert isinstance(msg, expected_type), (
                 f"Message {i} has wrong type. Expected {expected_type.__name__}, got {type(msg).__name__}"

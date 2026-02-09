@@ -116,7 +116,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output_base()
             assert isinstance(result, list)
             assert result == [{"field": "value"}]
@@ -151,7 +154,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             multiple=False,
         )
 
-        with pytest.raises(TypeError, match=re.escape("Language model does not support structured output.")):
+        with pytest.raises(
+            TypeError,
+            match=re.escape("Language model does not support structured output."),
+        ):
             component.build_structured_output()
 
     def test_correctly_builds_output_model(self):
@@ -276,7 +282,13 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             api_key="test-api-key",
             input_value="Test input",
             schema_name="InvalidSchema",
-            output_schema=[{"name": "field", "type": "invalid_type", "description": "Invalid field"}],
+            output_schema=[
+                {
+                    "name": "field",
+                    "type": "invalid_type",
+                    "description": "Invalid field",
+                }
+            ],
             multiple=False,
         )
 
@@ -286,7 +298,12 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.llm_operations.structured_output.get_chat_result")
     @patch("wfx.base.models.unified_models.get_model_classes")
     def test_nested_output_schema(
-        self, mock_get_model_classes, mock_get_chat_result, mock_llm, mock_model_classes, model_metadata
+        self,
+        mock_get_model_classes,
+        mock_get_chat_result,
+        mock_llm,
+        mock_model_classes,
+        model_metadata,
     ):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
@@ -332,7 +349,12 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.llm_operations.structured_output.get_chat_result")
     @patch("wfx.base.models.unified_models.get_model_classes")
     def test_large_input_value(
-        self, mock_get_model_classes, mock_get_chat_result, mock_llm, mock_model_classes, model_metadata
+        self,
+        mock_get_model_classes,
+        mock_get_chat_result,
+        mock_llm,
+        mock_model_classes,
+        model_metadata,
     ):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
@@ -483,9 +505,15 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
                     return {
                         "objects": [
                             {"product": "iPhone", "price": 999.99},
-                            {"product": "iPhone", "price": 1099.99},  # Variation - different price
+                            {
+                                "product": "iPhone",
+                                "price": 1099.99,
+                            },  # Variation - different price
                             {"product": "Samsung", "price": 899.99},
-                            {"product": "iPhone", "price": 999.99},  # Exact duplicate - should be removed
+                            {
+                                "product": "iPhone",
+                                "price": 999.99,
+                            },  # Exact duplicate - should be removed
                         ]
                     }
 
@@ -509,7 +537,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Remove exact duplicates but keep variations that have different field values.",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output()
 
             # Check that result is a Data object
@@ -614,12 +645,36 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             """,
             schema_name="ProductReview",
             output_schema=[
-                {"name": "product_name", "type": "str", "description": "The name of the product"},
-                {"name": "sound_quality", "type": "str", "description": "Description of sound quality"},
-                {"name": "comfort", "type": "str", "description": "Description of comfort"},
-                {"name": "battery_life", "type": "str", "description": "Description of battery life"},
-                {"name": "price", "type": "float", "description": "The price of the product"},
-                {"name": "rating", "type": "float", "description": "The overall rating out of 5"},
+                {
+                    "name": "product_name",
+                    "type": "str",
+                    "description": "The name of the product",
+                },
+                {
+                    "name": "sound_quality",
+                    "type": "str",
+                    "description": "Description of sound quality",
+                },
+                {
+                    "name": "comfort",
+                    "type": "str",
+                    "description": "Description of comfort",
+                },
+                {
+                    "name": "battery_life",
+                    "type": "str",
+                    "description": "Description of battery life",
+                },
+                {
+                    "name": "price",
+                    "type": "float",
+                    "description": "The price of the product",
+                },
+                {
+                    "name": "rating",
+                    "type": "float",
+                    "description": "The overall rating out of 5",
+                },
             ],
             multiple=False,
             system_prompt="Extract detailed product review information from the input text.",
@@ -675,17 +730,45 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             """,
             schema_name="RestaurantReview",
             output_schema=[
-                {"name": "restaurant_name", "type": "str", "description": "The name of the restaurant"},
+                {
+                    "name": "restaurant_name",
+                    "type": "str",
+                    "description": "The name of the restaurant",
+                },
                 {"name": "street", "type": "str", "description": "Street address"},
                 {"name": "city", "type": "str", "description": "City"},
                 {"name": "state", "type": "str", "description": "State"},
                 {"name": "zip", "type": "str", "description": "ZIP code"},
-                {"name": "first_item_name", "type": "str", "description": "Name of first item ordered"},
-                {"name": "first_item_price", "type": "float", "description": "Price of first item"},
-                {"name": "second_item_name", "type": "str", "description": "Name of second item ordered"},
-                {"name": "second_item_price", "type": "float", "description": "Price of second item"},
-                {"name": "total_bill", "type": "float", "description": "Total bill amount"},
-                {"name": "would_return", "type": "bool", "description": "Whether the reviewer would return"},
+                {
+                    "name": "first_item_name",
+                    "type": "str",
+                    "description": "Name of first item ordered",
+                },
+                {
+                    "name": "first_item_price",
+                    "type": "float",
+                    "description": "Price of first item",
+                },
+                {
+                    "name": "second_item_name",
+                    "type": "str",
+                    "description": "Name of second item ordered",
+                },
+                {
+                    "name": "second_item_price",
+                    "type": "float",
+                    "description": "Price of second item",
+                },
+                {
+                    "name": "total_bill",
+                    "type": "float",
+                    "description": "Total bill amount",
+                },
+                {
+                    "name": "would_return",
+                    "type": "bool",
+                    "description": "Whether the reviewer would return",
+                },
             ],
             multiple=False,
             system_prompt="Extract detailed restaurant review information from the input text.",
@@ -786,7 +869,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output_base()
             # Should return the dict directly since there's no "objects" key
             assert isinstance(result, dict)
@@ -814,7 +900,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output_base()
             # Should return the string directly
             assert isinstance(result, str)
@@ -848,7 +937,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output_base()
             # Should return the entire result dict when responses is empty
             assert isinstance(result, dict)
@@ -884,7 +976,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         )
 
         with (
-            patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result),
+            patch(
+                "wfx.components.llm_operations.structured_output.get_chat_result",
+                mock_get_chat_result,
+            ),
             pytest.raises(ValueError, match="No structured output returned"),
         ):
             component.build_structured_output()
@@ -923,7 +1018,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output()
 
             # Check that result is a Data object
@@ -982,7 +1080,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Extract ALL relevant instances that match the schema",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output()
 
             # Check that result is a Data object
@@ -1033,7 +1134,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Extract person info",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output()
 
             # Check that result is a Data object
@@ -1075,13 +1179,20 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             output_schema=[
                 {"name": "product", "type": "str", "description": "Product name"},
                 {"name": "price", "type": "float", "description": "Product price"},
-                {"name": "available", "type": "bool", "description": "Product availability"},
+                {
+                    "name": "available",
+                    "type": "bool",
+                    "description": "Product availability",
+                },
             ],
             multiple=False,
             system_prompt="Extract product info",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_output()
 
             # Check that result is a Data object
@@ -1139,7 +1250,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_dataframe()
 
             # Check that result is a DataFrame object
@@ -1194,7 +1308,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
             system_prompt="Test system prompt",
         )
 
-        with patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result):
+        with patch(
+            "wfx.components.llm_operations.structured_output.get_chat_result",
+            mock_get_chat_result,
+        ):
             result = component.build_structured_dataframe()
 
             # Check that result is a DataFrame object
@@ -1243,7 +1360,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         )
 
         with (
-            patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result),
+            patch(
+                "wfx.components.llm_operations.structured_output.get_chat_result",
+                mock_get_chat_result,
+            ),
             pytest.raises(ValueError, match="No structured output returned"),
         ):
             component.build_structured_dataframe()
@@ -1279,7 +1399,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         )
 
         with (
-            patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result),
+            patch(
+                "wfx.components.llm_operations.structured_output.get_chat_result",
+                mock_get_chat_result,
+            ),
             pytest.raises(ValueError, match="No structured output returned"),
         ):
             component.build_structured_dataframe()
@@ -1304,7 +1427,9 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         with (
             patch.object(component, "_extract_output_with_trustcall", return_value=None) as mock_trustcall,
             patch.object(
-                component, "_extract_output_with_langchain", return_value=[{"field": "langchain_value"}]
+                component,
+                "_extract_output_with_langchain",
+                return_value=[{"field": "langchain_value"}],
             ) as mock_langchain,
         ):
             result = component.build_structured_output_base()
@@ -1378,7 +1503,11 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock langchain to return list with dict
         with (
             patch.object(component, "_extract_output_with_trustcall", return_value=None),
-            patch.object(component, "_extract_output_with_langchain", return_value=[{"field": "test_value"}]),
+            patch.object(
+                component,
+                "_extract_output_with_langchain",
+                return_value=[{"field": "test_value"}],
+            ),
         ):
             result = component.build_structured_output_base()
 
@@ -1407,7 +1536,11 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock langchain to return dict directly
         with (
             patch.object(component, "_extract_output_with_trustcall", return_value=None),
-            patch.object(component, "_extract_output_with_langchain", return_value={"field": "dict_value"}),
+            patch.object(
+                component,
+                "_extract_output_with_langchain",
+                return_value={"field": "dict_value"},
+            ),
         ):
             result = component.build_structured_output_base()
 
@@ -1484,7 +1617,10 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         )
 
         with (
-            patch("wfx.components.llm_operations.structured_output.get_chat_result", mock_get_chat_result),
+            patch(
+                "wfx.components.llm_operations.structured_output.get_chat_result",
+                mock_get_chat_result,
+            ),
             patch.object(component, "_extract_output_with_langchain") as mock_lc_fallback,
         ):
             result = component.build_structured_output_base()

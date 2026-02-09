@@ -222,7 +222,8 @@ class TestParseFilePathRoundTrip:
 
         # Build a path with nested flow_id
         full_path = service.build_full_path(
-            "afffa27a-a9f0-4511-b1a9-7e6cb2b3df05", "2025-12-07_14-47-29_primeagent_pid_mem_usage.png"
+            "afffa27a-a9f0-4511-b1a9-7e6cb2b3df05",
+            "2025-12-07_14-47-29_primeagent_pid_mem_usage.png",
         )
         assert (
             full_path

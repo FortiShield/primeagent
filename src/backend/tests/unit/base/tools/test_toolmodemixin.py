@@ -43,24 +43,66 @@ class AllInputsComponent(Component):
                 {"name": "name", "type": "str"},
             ],
         ),
-        DataInput(name="data_input", display_name="Data Input", info="Input for data objects.", tool_mode=True),
-        DataFrameInput(
-            name="dataframe_input", display_name="DataFrame Input", info="Input for DataFrame objects.", tool_mode=True
+        DataInput(
+            name="data_input",
+            display_name="Data Input",
+            info="Input for data objects.",
+            tool_mode=True,
         ),
-        PromptInput(name="prompt_input", display_name="Prompt Input", info="Input for prompt data.", tool_mode=True),
-        StrInput(name="str_input", display_name="String Input", info="Input for string data.", tool_mode=True),
+        DataFrameInput(
+            name="dataframe_input",
+            display_name="DataFrame Input",
+            info="Input for DataFrame objects.",
+            tool_mode=True,
+        ),
+        PromptInput(
+            name="prompt_input",
+            display_name="Prompt Input",
+            info="Input for prompt data.",
+            tool_mode=True,
+        ),
+        StrInput(
+            name="str_input",
+            display_name="String Input",
+            info="Input for string data.",
+            tool_mode=True,
+        ),
         MessageInput(
-            name="message_input", display_name="Message Input", info="Input for message objects.", tool_mode=True
+            name="message_input",
+            display_name="Message Input",
+            info="Input for message objects.",
+            tool_mode=True,
         ),
         MessageTextInput(
-            name="message_text_input", display_name="Message Text Input", info="Input for message text.", tool_mode=True
+            name="message_text_input",
+            display_name="Message Text Input",
+            info="Input for message text.",
+            tool_mode=True,
         ),
         MultilineInput(
-            name="multiline_input", display_name="Multiline Input", info="Input for multiline text.", tool_mode=True
+            name="multiline_input",
+            display_name="Multiline Input",
+            info="Input for multiline text.",
+            tool_mode=True,
         ),
-        IntInput(name="int_input", display_name="Integer Input", info="Input for integer values.", tool_mode=True),
-        FloatInput(name="float_input", display_name="Float Input", info="Input for float values.", tool_mode=True),
-        BoolInput(name="bool_input", display_name="Boolean Input", info="Input for boolean values.", tool_mode=True),
+        IntInput(
+            name="int_input",
+            display_name="Integer Input",
+            info="Input for integer values.",
+            tool_mode=True,
+        ),
+        FloatInput(
+            name="float_input",
+            display_name="Float Input",
+            info="Input for float values.",
+            tool_mode=True,
+        ),
+        BoolInput(
+            name="bool_input",
+            display_name="Boolean Input",
+            info="Input for boolean values.",
+            tool_mode=True,
+        ),
         NestedDictInput(
             name="nested_dict_input",
             display_name="Nested Dictionary Input",
@@ -130,20 +172,53 @@ def test_component_inputs_toolkit():
     expected_inputs = {
         "table_input": {"title": "Table Input", "description": "Input for table data."},
         "data_input": {"title": "Data Input", "description": "Input for data objects."},
-        "dataframe_input": {"title": "Dataframe Input", "description": "Input for DataFrame objects."},
-        "prompt_input": {"title": "Prompt Input", "description": "Input for prompt data."},
+        "dataframe_input": {
+            "title": "Dataframe Input",
+            "description": "Input for DataFrame objects.",
+        },
+        "prompt_input": {
+            "title": "Prompt Input",
+            "description": "Input for prompt data.",
+        },
         "str_input": {"title": "Str Input", "description": "Input for string data."},
-        "message_input": {"title": "Message Input", "description": "Input for message objects."},
-        "message_text_input": {"title": "Message Text Input", "description": "Input for message text."},
-        "multiline_input": {"title": "Multiline Input", "description": "Input for multiline text."},
+        "message_input": {
+            "title": "Message Input",
+            "description": "Input for message objects.",
+        },
+        "message_text_input": {
+            "title": "Message Text Input",
+            "description": "Input for message text.",
+        },
+        "multiline_input": {
+            "title": "Multiline Input",
+            "description": "Input for multiline text.",
+        },
         # TODO: to check how the title is generated, Shouldnt it  be the display name?
         "int_input": {"title": "Int Input", "description": "Input for integer values."},
-        "float_input": {"title": "Float Input", "description": "Input for float values."},
-        "bool_input": {"title": "Bool Input", "description": "Input for boolean values."},
-        "nested_dict_input": {"title": "Nested Dict Input", "description": "Input for nested dictionary data."},
-        "dict_input": {"title": "Dict Input", "description": "Input for dictionary data."},
-        "dropdown_input": {"title": "Dropdown Input", "description": "Input for dropdown selections."},
-        "multiselect_input": {"title": "Multiselect Input", "description": "Input for multiple selections."},
+        "float_input": {
+            "title": "Float Input",
+            "description": "Input for float values.",
+        },
+        "bool_input": {
+            "title": "Bool Input",
+            "description": "Input for boolean values.",
+        },
+        "nested_dict_input": {
+            "title": "Nested Dict Input",
+            "description": "Input for nested dictionary data.",
+        },
+        "dict_input": {
+            "title": "Dict Input",
+            "description": "Input for dictionary data.",
+        },
+        "dropdown_input": {
+            "title": "Dropdown Input",
+            "description": "Input for dropdown selections.",
+        },
+        "multiselect_input": {
+            "title": "Multiselect Input",
+            "description": "Input for multiple selections.",
+        },
     }
 
     # Iterate and assert each input's properties

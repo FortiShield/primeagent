@@ -1,7 +1,10 @@
 """Tests for mustache security utilities."""
 
 import pytest
-from primeagent.utils.mustache_security import safe_mustache_render, validate_mustache_template
+from primeagent.utils.mustache_security import (
+    safe_mustache_render,
+    validate_mustache_template,
+)
 
 
 class TestMustacheSecurity:

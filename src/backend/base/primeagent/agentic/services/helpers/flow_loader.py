@@ -158,7 +158,10 @@ async def _load_graph_from_python(
             return graph
         if module_name in sys.modules:
             del sys.modules[module_name]
-        raise HTTPException(status_code=500, detail=f"Flow module must define 'get_graph()' function: {flow_path}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Flow module must define 'get_graph()' function: {flow_path}",
+        )
 
     get_graph_func = module.get_graph
 

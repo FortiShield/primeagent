@@ -29,7 +29,10 @@ class TestMCPToolsComponent(ComponentTestBaseWithoutClient):
             "command": "npx -y @modelcontextprotocol/server-everything",
             "sse_url": "https://mcp.deepwiki.com/sse",
             "tool": "echo",
-            "mcp_server": {"name": "test_server", "config": {"command": "uvx mcp-server-fetch"}},
+            "mcp_server": {
+                "name": "test_server",
+                "config": {"command": "uvx mcp-server-fetch"},
+            },
         }
 
     @pytest.fixture
@@ -295,7 +298,10 @@ class TestMCPComponentHeaders:
         server_config = {
             "url": "http://test.url",
             "mode": "Streamable_HTTP",
-            "headers": {"Authorization": "Bearer old-token", "X-Existing": "existing-value"},
+            "headers": {
+                "Authorization": "Bearer old-token",
+                "X-Existing": "existing-value",
+            },
         }
 
         # Simulate the merge logic
@@ -467,7 +473,10 @@ class TestMCPComponentHeaders:
     async def test_headers_with_special_characters(self, component):
         """Test headers with special characters in values."""
         component.headers = [
-            {"key": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test"},
+            {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+            },
             {"key": "X-Special", "value": "value with spaces and !@#$%"},
         ]
 

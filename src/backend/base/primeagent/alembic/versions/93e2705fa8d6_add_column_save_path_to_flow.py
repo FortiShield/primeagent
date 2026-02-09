@@ -26,7 +26,9 @@ def upgrade() -> None:
     column_names = [column["name"] for column in inspector.get_columns("flow")]
     with op.batch_alter_table("flow", schema=None) as batch_op:
         if "fs_path" not in column_names:
-            batch_op.add_column(sa.Column("fs_path", sqlmodel.sql.sqltypes.AutoString(), nullable=True))
+            batch_op.add_column(
+                sa.Column("fs_path", sqlmodel.sql.sqltypes.AutoString(), nullable=True)
+            )
 
     # ### end Alembic commands ###
 

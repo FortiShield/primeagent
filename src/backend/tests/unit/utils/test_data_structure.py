@@ -349,7 +349,11 @@ class TestGetSampleValues:
 
     def test_dict_sampling(self):
         """Test sampling from dictionaries."""
-        test_dict = {"list_field": [1, 2, 3, 4, 5], "simple_field": "value", "nested_dict": {"inner": [10, 20, 30]}}
+        test_dict = {
+            "list_field": [1, 2, 3, 4, 5],
+            "simple_field": "value",
+            "nested_dict": {"inner": [10, 20, 30]},
+        }
 
         result = get_sample_values(test_dict, max_items=2)
 
@@ -402,14 +406,20 @@ class TestIntegrationScenarios:
                         "name": "John Doe",
                         "email": "john@example.com",
                         "created_at": "2023-01-15T10:30:00Z",
-                        "metadata": {"login_count": 42, "preferences": {"theme": "dark", "notifications": True}},
+                        "metadata": {
+                            "login_count": 42,
+                            "preferences": {"theme": "dark", "notifications": True},
+                        },
                     },
                     {
                         "id": 2,
                         "name": "Jane Smith",
                         "email": "jane@example.com",
                         "created_at": "2023-02-01T14:20:00Z",
-                        "metadata": {"login_count": 15, "preferences": {"theme": "light", "notifications": False}},
+                        "metadata": {
+                            "login_count": 15,
+                            "preferences": {"theme": "light", "notifications": False},
+                        },
                     },
                 ],
                 "pagination": {"page": 1, "per_page": 10, "total": 2},

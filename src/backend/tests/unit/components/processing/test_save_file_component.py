@@ -81,7 +81,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         df = DataFrame([{"col1": 1, "col2": "a"}, {"col1": 2, "col2": "b"}])
         component.set_attributes(
-            {"input": df, "file_name": "test_output", "local_format": "csv", "storage_location": [{"name": "Local"}]}
+            {
+                "input": df,
+                "file_name": "test_output",
+                "local_format": "csv",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         # Mock only the database and upload functions - let file operations run normally
@@ -89,7 +94,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
             patch("wfx.services.deps.session_scope") as mock_session,
             patch(
-                "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                "primeagent.services.database.models.user.crud.get_user_by_id",
+                new_callable=AsyncMock,
             ) as mock_get_user,
         ):
             mock_db = AsyncMock()
@@ -115,7 +121,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         data = Data(data={"col1": "value1", "col2": "value2"})
         component.set_attributes(
-            {"input": data, "file_name": "test_data", "local_format": "json", "storage_location": [{"name": "Local"}]}
+            {
+                "input": data,
+                "file_name": "test_data",
+                "local_format": "json",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         # Mock only the database and upload functions - let file operations run normally
@@ -123,7 +134,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
             patch("wfx.services.deps.session_scope") as mock_session,
             patch(
-                "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                "primeagent.services.database.models.user.crud.get_user_by_id",
+                new_callable=AsyncMock,
             ) as mock_get_user,
         ):
             mock_db = AsyncMock()
@@ -155,7 +167,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
             patch("wfx.services.deps.session_scope") as mock_session,
             patch(
-                "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                "primeagent.services.database.models.user.crud.get_user_by_id",
+                new_callable=AsyncMock,
             ) as mock_get_user,
         ):
             mock_db = AsyncMock()
@@ -174,7 +187,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         df = DataFrame([{"col1": 1}])
         component.set_attributes(
-            {"input": df, "file_name": "test_output", "local_format": "csv", "storage_location": [{"name": "Local"}]}
+            {
+                "input": df,
+                "file_name": "test_output",
+                "local_format": "csv",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         # Mock database and upload functions - let file operations run normally
@@ -186,7 +204,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             ),
             patch("wfx.services.deps.session_scope") as mock_session,
             patch(
-                "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                "primeagent.services.database.models.user.crud.get_user_by_id",
+                new_callable=AsyncMock,
             ) as mock_get_user,
         ):
             mock_db = AsyncMock()
@@ -213,7 +232,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         message = Message(text="test")
         component.set_attributes(
-            {"input": message, "file_name": "test", "local_format": "csv", "storage_location": [{"name": "Local"}]}
+            {
+                "input": message,
+                "file_name": "test",
+                "local_format": "csv",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         with pytest.raises(ValueError, match="Invalid file format"):
@@ -225,7 +249,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         df = DataFrame([{"a": 1}])
         component.set_attributes(
-            {"input": df, "file_name": "test", "local_format": "txt", "storage_location": [{"name": "Local"}]}
+            {
+                "input": df,
+                "file_name": "test",
+                "local_format": "txt",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         with pytest.raises(ValueError, match="Invalid file format"):
@@ -237,7 +266,12 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
         component = component_class(_user_id=str(uuid4()))
         df = DataFrame([{"a": 1}])
         component.set_attributes(
-            {"input": df, "file_name": "", "local_format": "csv", "storage_location": [{"name": "Local"}]}
+            {
+                "input": df,
+                "file_name": "",
+                "local_format": "csv",
+                "storage_location": [{"name": "Local"}],
+            }
         )
 
         with pytest.raises(ValueError, match="File name must be provided"):
@@ -262,7 +296,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
             patch("wfx.services.deps.session_scope") as mock_session,
             patch(
-                "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                "primeagent.services.database.models.user.crud.get_user_by_id",
+                new_callable=AsyncMock,
             ) as mock_get_user,
         ):
             mock_db = AsyncMock()
@@ -304,7 +339,8 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
                 patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
                 patch("wfx.services.deps.session_scope") as mock_session,
                 patch(
-                    "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                    "primeagent.services.database.models.user.crud.get_user_by_id",
+                    new_callable=AsyncMock,
                 ) as mock_get_user,
             ):
                 # Make Path() return our temp file path
@@ -389,9 +425,15 @@ class TestSaveToFileComponent(ComponentTestBaseWithoutClient):
             # Case 1: Normal JSON (should work)
             ('{"type": "service_account", "project_id": "test"}', "Normal JSON"),
             # Case 2: JSON with literal newlines (the bug case)
-            ('{"type": "service_account", "private_key": "-----BEGIN\nKEY\n-----END"}', "With control chars"),
+            (
+                '{"type": "service_account", "private_key": "-----BEGIN\nKEY\n-----END"}',
+                "With control chars",
+            ),
             # Case 3: JSON with extra whitespace
-            ('  \n{"type": "service_account", "project_id": "test"}  \n', "With whitespace"),
+            (
+                '  \n{"type": "service_account", "project_id": "test"}  \n',
+                "With whitespace",
+            ),
         ]
 
         for service_account_json, test_name in test_cases:

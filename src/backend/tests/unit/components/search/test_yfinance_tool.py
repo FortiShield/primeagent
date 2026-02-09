@@ -14,7 +14,12 @@ class TestYfinanceComponent:
 
     @pytest.fixture
     def default_kwargs(self):
-        return {"symbol": "AAPL", "method": YahooFinanceMethod.GET_INFO, "num_news": 5, "_session_id": "test-session"}
+        return {
+            "symbol": "AAPL",
+            "method": YahooFinanceMethod.GET_INFO,
+            "num_news": 5,
+            "_session_id": "test-session",
+        }
 
     @pytest.fixture
     def file_names_mapping(self):

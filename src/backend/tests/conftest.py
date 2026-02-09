@@ -24,7 +24,9 @@ from primeagent.services.database.models.flow.model import Flow, FlowCreate, Flo
 from primeagent.services.database.models.folder.model import Folder
 from primeagent.services.database.models.transactions.model import TransactionTable
 from primeagent.services.database.models.user.model import User, UserCreate, UserRead
-from primeagent.services.database.models.vertex_builds.crud import delete_vertex_builds_by_flow_id
+from primeagent.services.database.models.vertex_builds.crud import (
+    delete_vertex_builds_by_flow_id,
+)
 from primeagent.services.deps import get_auth_service, get_db_service, session_scope
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import selectinload
@@ -93,7 +95,10 @@ def blockbuster(request):
 
             (
                 bb.functions["os.path.abspath"]
-                .can_block_in("loguru/_better_exceptions.py", {"_get_lib_dirs", "_format_exception"})
+                .can_block_in(
+                    "loguru/_better_exceptions.py",
+                    {"_get_lib_dirs", "_format_exception"},
+                )
                 .can_block_in("sqlalchemy/dialects/sqlite/pysqlite.py", "create_connect_args")
                 .can_block_in("botocore/__init__.py", "__init__")
             )
@@ -108,7 +113,10 @@ def blockbuster(request):
 def pytest_configure(config):
     config.addinivalue_line("markers", "noclient: don't create a client for this test")
     config.addinivalue_line("markers", "load_flows: load the flows for this test")
-    config.addinivalue_line("markers", "api_key_required: run only if the api key is set in the environment variables")
+    config.addinivalue_line(
+        "markers",
+        "api_key_required: run only if the api key is set in the environment variables",
+    )
     data_path = Path(__file__).parent.absolute() / "data"
 
     pytest.BASIC_EXAMPLE_PATH = data_path / "basic_example.json"
@@ -211,7 +219,11 @@ async def async_client() -> AsyncGenerator:
     app = create_app()
     async with (
         LifespanManager(app, startup_timeout=None, shutdown_timeout=None) as manager,
-        AsyncClient(transport=ASGITransport(app=manager.app), base_url="http://testserver", http2=True) as client,
+        AsyncClient(
+            transport=ASGITransport(app=manager.app),
+            base_url="http://testserver",
+            http2=True,
+        ) as client,
     ):
         yield client
 
@@ -243,7 +255,11 @@ def session_fixture():
 
 @pytest.fixture
 async def async_session():
-    engine = create_async_engine("sqlite+aiosqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    engine = create_async_engine(
+        "sqlite+aiosqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
     try:
         async with engine.begin() as conn:
             await conn.run_sync(SQLModel.metadata.create_all)
@@ -438,7 +454,8 @@ async def client_fixture(
             monkeypatch.setenv("PRIMEAGENT_AUTO_LOGIN", "false")
             if "load_flows" in request.keywords:
                 shutil.copyfile(
-                    pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
+                    pytest.BASIC_EXAMPLE_PATH,
+                    Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json",
                 )
                 monkeypatch.setenv("PRIMEAGENT_LOAD_FLOWS_PATH", load_flows_dir)
                 monkeypatch.setenv("PRIMEAGENT_AUTO_LOGIN", "true")
@@ -457,7 +474,11 @@ async def client_fixture(
         # app.dependency_overrides[get_session] = get_session_override
         async with (
             LifespanManager(app, startup_timeout=None, shutdown_timeout=None) as manager,
-            AsyncClient(transport=ASGITransport(app=manager.app), base_url="http://testserver/", http2=True) as client,
+            AsyncClient(
+                transport=ASGITransport(app=manager.app),
+                base_url="http://testserver/",
+                http2=True,
+            ) as client,
         ):
             yield client
         # app.dependency_overrides.clear()
@@ -659,7 +680,10 @@ async def added_webhook_test(client, json_webhook_test, logged_in_headers):
     webhook_test = orjson.loads(json_webhook_test)
     data = webhook_test["data"]
     webhook_test = FlowCreate(
-        name="Webhook Test", description="description", data=data, endpoint_name=webhook_test["endpoint_name"]
+        name="Webhook Test",
+        description="description",
+        data=data,
+        endpoint_name=webhook_test["endpoint_name"],
     )
     response = await client.post("api/v1/flows/", json=webhook_test.model_dump(), headers=logged_in_headers)
     assert response.status_code == 201

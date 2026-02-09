@@ -150,7 +150,11 @@ class TestEventManager:
             pass
 
         async def mock_queue_get():
-            return (uuid.uuid4(), b'{"event": "test_type", "data": "test_data"}\n\n', time.time())
+            return (
+                uuid.uuid4(),
+                b'{"event": "test_type", "data": "test_data"}\n\n',
+                time.time(),
+            )
 
         queue = asyncio.Queue()
         queue.put_nowait = mock_queue_put_nowait
@@ -164,7 +168,10 @@ class TestEventManager:
         event_id, str_data, _ = await queue.get()
         assert isinstance(event_id, uuid.UUID)
         assert isinstance(str_data, bytes)
-        assert json.loads(str_data.decode("utf-8")) == {"event": "test_type", "data": event_data}
+        assert json.loads(str_data.decode("utf-8")) == {
+            "event": "test_type",
+            "data": event_data,
+        }
 
     # Registering an event without specifying the event_type argument and providing the event_type argument
     def test_register_event_without_event_type_argument_fixed(self):

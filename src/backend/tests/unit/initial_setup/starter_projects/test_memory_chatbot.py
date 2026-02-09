@@ -35,7 +35,10 @@ AI: """
     )
     openai_component = OpenAIModelComponent(_id="openai")
     openai_component.set(
-        input_value=prompt_component.build_prompt, max_tokens=100, temperature=0.1, api_key="test_api_key"
+        input_value=prompt_component.build_prompt,
+        max_tokens=100,
+        temperature=0.1,
+        api_key="test_api_key",
     )
     openai_component.set_on_output(name="text_output", value="Mock response", cache=True)
 
@@ -57,7 +60,16 @@ AI: """
 @pytest.mark.usefixtures("client")
 def test_memory_chatbot(memory_chatbot_graph):
     # Now we run step by step
-    expected_order = deque(["chat_input", "chat_memory", "type_converter", "prompt", "openai", "chat_output"])
+    expected_order = deque(
+        [
+            "chat_input",
+            "chat_memory",
+            "type_converter",
+            "prompt",
+            "openai",
+            "chat_output",
+        ]
+    )
     assert memory_chatbot_graph.in_degree_map == {
         "chat_output": 1,
         "type_converter": 1,
@@ -66,7 +78,12 @@ def test_memory_chatbot(memory_chatbot_graph):
         "chat_input": 0,
         "chat_memory": 0,
     }
-    assert memory_chatbot_graph.vertices_layers == [["type_converter"], ["prompt"], ["openai"], ["chat_output"]]
+    assert memory_chatbot_graph.vertices_layers == [
+        ["type_converter"],
+        ["prompt"],
+        ["openai"],
+        ["chat_output"],
+    ]
     assert memory_chatbot_graph.first_layer == ["chat_input", "chat_memory"]
 
     for step in expected_order:
@@ -74,7 +91,10 @@ def test_memory_chatbot(memory_chatbot_graph):
         if isinstance(result, Finish):
             break
 
-        assert step == result.vertex.id, (memory_chatbot_graph.in_degree_map, memory_chatbot_graph.vertices_layers)
+        assert step == result.vertex.id, (
+            memory_chatbot_graph.in_degree_map,
+            memory_chatbot_graph.vertices_layers,
+        )
 
 
 def test_memory_chatbot_dump_structure(memory_chatbot_graph: Graph):

@@ -7,7 +7,12 @@ from primeagent.api.v1.schemas import UsersResponse
 from primeagent.initial_setup.setup import get_or_create_default_folder
 from primeagent.services.auth.utils import get_current_active_superuser
 from primeagent.services.database.models.user.crud import get_user_by_id, update_user
-from primeagent.services.database.models.user.model import User, UserCreate, UserRead, UserUpdate
+from primeagent.services.database.models.user.model import (
+    User,
+    UserCreate,
+    UserRead,
+    UserUpdate,
+)
 from primeagent.services.deps import get_auth_service, get_settings_service
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError

@@ -287,7 +287,8 @@ class TestDirectoryComponent(ComponentTestBaseWithoutClient):
             )
 
             with pytest.raises(
-                ValueError, match=r"Invalid file types specified: \['exe'\]\. Valid types are:"
+                ValueError,
+                match=r"Invalid file types specified: \['exe'\]\. Valid types are:",
             ) as exc_info:
                 directory_component.load_directory()
 
@@ -337,8 +338,14 @@ class TestDirectoryComponent(ComponentTestBaseWithoutClient):
 
             # Mock parallel_load_data to return some test data
             mock_data = [
-                Data(text="content1", data={"file_path": str(Path(temp_dir) / "test1.txt")}),
-                Data(text="content2", data={"file_path": str(Path(temp_dir) / "test2.txt")}),
+                Data(
+                    text="content1",
+                    data={"file_path": str(Path(temp_dir) / "test1.txt")},
+                ),
+                Data(
+                    text="content2",
+                    data={"file_path": str(Path(temp_dir) / "test2.txt")},
+                ),
             ]
             mock_parallel_load.return_value = mock_data
 

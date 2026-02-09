@@ -135,7 +135,10 @@ class TestOpenAIModelComponent(ComponentTestBaseWithoutClient):
         component = component_class(**default_kwargs)
 
         # Test when openai module is not available
-        with patch.dict("sys.modules", {"openai": None}), patch("builtins.__import__", side_effect=ImportError):
+        with (
+            patch.dict("sys.modules", {"openai": None}),
+            patch("builtins.__import__", side_effect=ImportError),
+        ):
             message = component._get_exception_message(Exception("test"))
             assert message is None
 
@@ -170,7 +173,10 @@ class TestOpenAIModelComponent(ComponentTestBaseWithoutClient):
         assert updated_config["temperature"]["show"] is True
         assert updated_config["seed"]["show"] is True
 
-    @pytest.mark.skipif(not has_api_key("OPENAI_API_KEY"), reason="OPENAI_API_KEY is not set or is empty")
+    @pytest.mark.skipif(
+        not has_api_key("OPENAI_API_KEY"),
+        reason="OPENAI_API_KEY is not set or is empty",
+    )
     def test_build_model_integration(self):
         component = OpenAIModelComponent()
         try:
@@ -190,7 +196,10 @@ class TestOpenAIModelComponent(ComponentTestBaseWithoutClient):
         assert model.model_name == "gpt-4.1-nano"
         assert model.openai_api_base == "https://api.openai.com/v1"
 
-    @pytest.mark.skipif(not has_api_key("OPENAI_API_KEY"), reason="OPENAI_API_KEY is not set or is empty")
+    @pytest.mark.skipif(
+        not has_api_key("OPENAI_API_KEY"),
+        reason="OPENAI_API_KEY is not set or is empty",
+    )
     def test_build_model_integration_reasoning(self):
         component = OpenAIModelComponent()
         component.api_key = get_openai_api_key()

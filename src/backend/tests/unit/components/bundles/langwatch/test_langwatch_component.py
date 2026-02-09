@@ -367,7 +367,11 @@ class TestLangWatchComponent(ComponentTestBaseWithoutClient):
         result = await component.evaluate()
 
         # Verify contexts were parsed correctly (contexts are split by comma, including whitespace)
-        assert request_data["data"]["contexts"] == ["context1", " context2", " context3"]
+        assert request_data["data"]["contexts"] == [
+            "context1",
+            " context2",
+            " context3",
+        ]
         assert isinstance(result, Data)
         assert result.data == expected_response
 

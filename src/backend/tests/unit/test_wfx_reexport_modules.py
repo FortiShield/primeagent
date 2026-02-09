@@ -74,7 +74,11 @@ def get_all_reexport_modules():
     }
 
     complex_reexport_modules = {
-        "primeagent.custom": ["wfx.custom", "wfx.custom.custom_component", "wfx.custom.utils"],
+        "primeagent.custom": [
+            "wfx.custom",
+            "wfx.custom.custom_component",
+            "wfx.custom.utils",
+        ],
         "primeagent.io": ["wfx.io", "wfx.template"],
     }
 
@@ -193,7 +197,11 @@ class TestWfxReexportModules:
 
     # Modules with complex/mixed import patterns
     COMPLEX_REEXPORT_MODULES = {
-        "primeagent.custom": ["wfx.custom", "wfx.custom.custom_component", "wfx.custom.utils"],
+        "primeagent.custom": [
+            "wfx.custom",
+            "wfx.custom.custom_component",
+            "wfx.custom.utils",
+        ],
         "primeagent.io": ["wfx.io", "wfx.template"],  # Mixed imports
     }
 
@@ -268,7 +276,9 @@ class TestWfxReexportModules:
                         attr = getattr(lf_module, item)
                         assert attr is not None, f"Attribute {item} is None in {primeagent_module}"
                     except AttributeError:
-                        pytest.fail(f"Complex module {primeagent_module} missing expected attribute {item} from __all__")
+                        pytest.fail(
+                            f"Complex module {primeagent_module} missing expected attribute {item} from __all__"
+                        )
 
                 successful_imports += 1
 
@@ -440,7 +450,11 @@ class TestWfxReexportModules:
         assert len(modules) > 0, "Should discover at least some primeagent modules"
 
         # Check that known modules are found
-        expected_modules = ["primeagent.schema", "primeagent.inputs", "primeagent.custom"]
+        expected_modules = [
+            "primeagent.schema",
+            "primeagent.inputs",
+            "primeagent.custom",
+        ]
         found_modules = [mod for mod in expected_modules if mod in modules]
         assert len(found_modules) > 0, f"Expected to find some of {expected_modules}, but found: {found_modules}"
 
@@ -458,14 +472,20 @@ class TestWfxReexportModules:
         pattern_info = self._detect_reexport_pattern(module_name)
         assert isinstance(pattern_info, dict), "Pattern detection should return a dict"
         assert "type" in pattern_info, "Pattern info should have 'type' key"
-        assert pattern_info["type"] in ["direct", "dynamic", "none", "import_error"], (
-            f"Unknown pattern type: {pattern_info['type']}"
-        )
+        assert pattern_info["type"] in [
+            "direct",
+            "dynamic",
+            "none",
+            "import_error",
+        ], f"Unknown pattern type: {pattern_info['type']}"
 
     def test_generate_backward_compatibility_imports(self):
         """Test generating backward compatibility imports dynamically."""
         # Test with a known module that has wfx imports
-        test_cases = [("primeagent.schema", "wfx.schema"), ("primeagent.custom", "wfx.custom")]
+        test_cases = [
+            ("primeagent.schema", "wfx.schema"),
+            ("primeagent.custom", "wfx.custom"),
+        ]
 
         for lf_module, expected_wfx_source in test_cases:
             wfx_symbols = self._get_expected_symbols(expected_wfx_source)

@@ -2,7 +2,12 @@ import enum
 from unittest.mock import Mock, patch
 
 import pytest
-from primeagent.utils.schemas import ChatOutputResponse, ContainsEnumMeta, DataOutputResponse, File
+from primeagent.utils.schemas import (
+    ChatOutputResponse,
+    ContainsEnumMeta,
+    DataOutputResponse,
+    File,
+)
 from pydantic import ValidationError
 
 
@@ -12,7 +17,11 @@ class TestFile:
     def test_file_typed_dict_structure(self):
         """Test that File TypedDict has correct structure."""
         # TypedDict is mainly for type hints, so we test basic usage
-        file_data: File = {"path": "/path/to/file.txt", "name": "file.txt", "type": "txt"}
+        file_data: File = {
+            "path": "/path/to/file.txt",
+            "name": "file.txt",
+            "type": "txt",
+        }
 
         assert file_data["path"] == "/path/to/file.txt"
         assert file_data["name"] == "file.txt"
@@ -20,7 +29,11 @@ class TestFile:
 
     def test_file_with_image_type(self):
         """Test File with image type."""
-        file_data: File = {"path": "/images/photo.jpg", "name": "photo.jpg", "type": "jpg"}
+        file_data: File = {
+            "path": "/images/photo.jpg",
+            "name": "photo.jpg",
+            "type": "jpg",
+        }
 
         assert file_data["type"] == "jpg"
 
@@ -222,7 +235,9 @@ class TestChatOutputResponse:
     def test_validate_message_complex_newline_patterns(self):
         """Test message validation with complex newline patterns."""
         response = ChatOutputResponse(
-            message="Para 1\n\nPara 2\nLine in para 2\n\n\nPara 3", sender="Machine", type="text"
+            message="Para 1\n\nPara 2\nLine in para 2\n\n\nPara 3",
+            sender="Machine",
+            type="text",
         )
 
         # The actual logic: replace \n\n with \n, then replace \n with \n\n
@@ -282,7 +297,15 @@ class TestDataOutputResponse:
 
     def test_data_response_complex_dicts(self):
         """Test data response with complex dictionary structures."""
-        data = [{"nested": {"key": "value"}, "list": [1, 2, 3], "number": 42, "boolean": True}, {"simple": "string"}]
+        data = [
+            {
+                "nested": {"key": "value"},
+                "list": [1, 2, 3],
+                "number": 42,
+                "boolean": True,
+            },
+            {"simple": "string"},
+        ]
 
         response = DataOutputResponse(data=data)
 

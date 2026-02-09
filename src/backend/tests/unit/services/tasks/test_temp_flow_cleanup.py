@@ -7,7 +7,11 @@ from uuid import uuid4
 import pytest
 from primeagent.services.database.models.flow import Flow as FlowTable
 from primeagent.services.database.models.message.model import MessageTable
-from primeagent.services.deps import get_settings_service, get_storage_service, session_scope
+from primeagent.services.deps import (
+    get_settings_service,
+    get_storage_service,
+    session_scope,
+)
 from primeagent.services.task.temp_flow_cleanup import (
     CleanupWorker,
     cleanup_orphaned_records,

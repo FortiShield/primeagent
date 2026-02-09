@@ -86,9 +86,7 @@ class AsyncStreamingLLMCallbackHandleSIO(AsyncCallbackHandler):
         """Run when tool errors."""
 
     @override
-    async def on_text(  # type: ignore[misc]
-        self, text: str, **kwargs: Any
-    ) -> Any:
+    async def on_text(self, text: str, **kwargs: Any) -> Any:  # type: ignore[misc]
         """Run on arbitrary text."""
         # This runs when first sending the prompt
         # to the LLM, adding it will send the final prompt

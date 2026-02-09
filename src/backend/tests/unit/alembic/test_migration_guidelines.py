@@ -170,7 +170,10 @@ class TestMigrationRuntimeGuidelines:
 
         # Initial Schema
         users = Table(
-            "users", metadata, Column("id", Integer, primary_key=True), Column("username", String, nullable=False)
+            "users",
+            metadata,
+            Column("id", Integer, primary_key=True),
+            Column("username", String, nullable=False),
         )
         metadata.create_all(engine)
 

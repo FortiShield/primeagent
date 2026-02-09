@@ -913,7 +913,12 @@ class TestStorageFailureHandling:
         # Mock S3 error with NoSuchBucket code
         class MockS3Error(Exception):
             def __init__(self):
-                self.response = {"Error": {"Code": "NoSuchBucket", "Message": "Bucket does not exist"}}
+                self.response = {
+                    "Error": {
+                        "Code": "NoSuchBucket",
+                        "Message": "Bucket does not exist",
+                    }
+                }
 
         error = MockS3Error()
         assert is_permanent_storage_failure(error) is True

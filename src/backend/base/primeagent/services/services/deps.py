@@ -11,10 +11,13 @@ if TYPE_CHECKING:
     from primeagent.services.cache.service import AsyncBaseCacheService, CacheService
     from primeagent.services.chat.service import ChatService
     from primeagent.services.database.service import DatabaseService
+    from primeagent.services.job_queue.service import JobQueueService
     from primeagent.services.session.service import SessionService
     from primeagent.services.state.service import StateService
+    from primeagent.services.storage.service import StorageService
     from primeagent.services.store.service import StoreService
     from primeagent.services.task.service import TaskService
+    from primeagent.services.telemetry.service import TelemetryService
     from primeagent.services.tracing.service import TracingService
     from primeagent.services.variable.service import VariableService
     from sqlmodel.ext.asyncio.session import AsyncSession
@@ -22,9 +25,6 @@ if TYPE_CHECKING:
 # These imports MUST be outside TYPE_CHECKING because FastAPI uses eval_str=True
 # to evaluate type annotations, and these types are used as return types for
 # dependency functions that FastAPI evaluates at module load time.
-from primeagent.services.job_queue.service import JobQueueService
-from primeagent.services.storage.service import StorageService
-from primeagent.services.telemetry.service import TelemetryService
 from wfx.services.auth.base import BaseAuthService  # noqa: TC002
 from wfx.services.settings.service import SettingsService  # noqa: TC002
 
@@ -192,7 +192,9 @@ def get_shared_component_cache_service() -> CacheService:
     Returns:
         The cache service instance.
     """
-    from primeagent.services.shared_component_cache.factory import SharedComponentCacheServiceFactory
+    from primeagent.services.shared_component_cache.factory import (
+        SharedComponentCacheServiceFactory,
+    )
 
     return get_service(ServiceType.SHARED_COMPONENT_CACHE_SERVICE, SharedComponentCacheServiceFactory())
 

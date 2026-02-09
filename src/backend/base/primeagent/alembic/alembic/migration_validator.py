@@ -53,7 +53,9 @@ class MigrationValidator:
             return {
                 "file": str(filepath),
                 "valid": False,
-                "violations": [Violation("FILE_NOT_FOUND", f"File not found: {filepath}", 0)],
+                "violations": [
+                    Violation("FILE_NOT_FOUND", f"File not found: {filepath}", 0)
+                ],
                 "warnings": [],
             }
 
@@ -76,7 +78,11 @@ class MigrationValidator:
         phase = self._extract_phase(content)
         if phase == MigrationPhase.UNKNOWN:
             violations.append(
-                Violation("NO_PHASE_MARKER", "Migration must specify phase: EXPAND, MIGRATE, or CONTRACT", 1)
+                Violation(
+                    "NO_PHASE_MARKER",
+                    "Migration must specify phase: EXPAND, MIGRATE, or CONTRACT",
+                    1,
+                )
             )
 
         # Check upgrade function
@@ -85,15 +91,25 @@ class MigrationValidator:
             phase_violations = self._check_upgrade_operations(upgrade_node, phase)
             violations.extend(phase_violations)
         else:
-            violations.append(Violation("MISSING_UPGRADE", "Migration must have an upgrade() function", 1))
+            violations.append(
+                Violation(
+                    "MISSING_UPGRADE", "Migration must have an upgrade() function", 1
+                )
+            )
 
         # Check downgrade function
         downgrade_node = self._find_function(tree, "downgrade")
         if downgrade_node:
             downgrade_issues = self._check_downgrade_safety(downgrade_node, phase)
             warnings.extend(downgrade_issues)
-        elif phase != MigrationPhase.CONTRACT:  # CONTRACT phase may not support rollback
-            violations.append(Violation("MISSING_DOWNGRADE", "Migration must have a downgrade() function", 1))
+        elif (
+            phase != MigrationPhase.CONTRACT
+        ):  # CONTRACT phase may not support rollback
+            violations.append(
+                Violation(
+                    "MISSING_DOWNGRADE", "Migration must have a downgrade() function", 1
+                )
+            )
 
         # Additional phase-specific checks
         if phase == MigrationPhase.CONTRACT:
@@ -111,7 +127,9 @@ class MigrationValidator:
     # Method to check DB operations constraints imposed by phases -
     # New constraint requirements should be added here
 
-    def _check_upgrade_operations(self, node: ast.FunctionDef, phase: MigrationPhase) -> list[Violation]:
+    def _check_upgrade_operations(
+        self, node: ast.FunctionDef, phase: MigrationPhase
+    ) -> list[Violation]:
         """Check upgrade operations for violations."""
         violations = []
 
@@ -126,14 +144,22 @@ class MigrationValidator:
                 elif self._is_op_call(child, "drop_column"):
                     violations.extend(self._check_drop_column(child, phase))
 
-                elif self._is_op_call(child, "rename_table") or self._is_op_call(child, "rename_column"):
+                elif self._is_op_call(child, "rename_table") or self._is_op_call(
+                    child, "rename_column"
+                ):
                     violations.append(
-                        Violation("DIRECT_RENAME", "Use expand-contract pattern instead of direct rename", child.lineno)
+                        Violation(
+                            "DIRECT_RENAME",
+                            "Use expand-contract pattern instead of direct rename",
+                            child.lineno,
+                        )
                     )
 
         return violations
 
-    def _check_add_column(self, call: ast.Call, phase: MigrationPhase, func_node: ast.FunctionDef) -> list[Violation]:
+    def _check_add_column(
+        self, call: ast.Call, phase: MigrationPhase, func_node: ast.FunctionDef
+    ) -> list[Violation]:
         """Check add_column operations."""
         violations = []
 
@@ -141,7 +167,9 @@ class MigrationValidator:
         if not self._has_nullable_true(call) and not self._has_server_default(call):
             violations.append(
                 Violation(
-                    "BREAKING_ADD_COLUMN", "New columns must be nullable=True or have server_default", call.lineno
+                    "BREAKING_ADD_COLUMN",
+                    "New columns must be nullable=True or have server_default",
+                    call.lineno,
                 )
             )
 
@@ -149,37 +177,55 @@ class MigrationValidator:
         if not self._has_existence_check_nearby(func_node, call):
             violations.append(
                 Violation(
-                    "NO_EXISTENCE_CHECK", "add_column should check if column exists first (idempotency)", call.lineno
+                    "NO_EXISTENCE_CHECK",
+                    "add_column should check if column exists first (idempotency)",
+                    call.lineno,
                 )
             )
 
         # Phase-specific checks
         if phase == MigrationPhase.CONTRACT:
-            violations.append(Violation("INVALID_PHASE_OPERATION", "Cannot add columns in CONTRACT phase", call.lineno))
+            violations.append(
+                Violation(
+                    "INVALID_PHASE_OPERATION",
+                    "Cannot add columns in CONTRACT phase",
+                    call.lineno,
+                )
+            )
 
         return violations
 
-    def _check_alter_column(self, call: ast.Call, phase: MigrationPhase) -> list[Violation]:
+    def _check_alter_column(
+        self, call: ast.Call, phase: MigrationPhase
+    ) -> list[Violation]:
         """Check alter_column operations."""
         violations = []
 
         # Check for type changes
         if self._has_type_change(call) and phase != MigrationPhase.CONTRACT:
             violations.append(
-                Violation("DIRECT_TYPE_CHANGE", "Type changes should use expand-contract pattern", call.lineno)
+                Violation(
+                    "DIRECT_TYPE_CHANGE",
+                    "Type changes should use expand-contract pattern",
+                    call.lineno,
+                )
             )
 
         # Check for nullable changes
         if self._changes_nullable_to_false(call) and phase != MigrationPhase.CONTRACT:
             violations.append(
                 Violation(
-                    "BREAKING_ADD_COLUMN", "Making column non-nullable only allowed in CONTRACT phase", call.lineno
+                    "BREAKING_ADD_COLUMN",
+                    "Making column non-nullable only allowed in CONTRACT phase",
+                    call.lineno,
                 )
             )
 
         return violations
 
-    def _check_drop_column(self, call: ast.Call, phase: MigrationPhase) -> list[Violation]:
+    def _check_drop_column(
+        self, call: ast.Call, phase: MigrationPhase
+    ) -> list[Violation]:
         """Check drop_column operations."""
         violations = []
 
@@ -208,7 +254,9 @@ class MigrationValidator:
             ]
         return []
 
-    def _check_downgrade_safety(self, node: ast.FunctionDef, phase: MigrationPhase) -> list[Violation]:
+    def _check_downgrade_safety(
+        self, node: ast.FunctionDef, phase: MigrationPhase
+    ) -> list[Violation]:
         """Check downgrade function for safety issues."""
         warnings = []
 
@@ -217,7 +265,10 @@ class MigrationValidator:
             if isinstance(child, ast.Call) and self._is_op_call(child, "alter_column"):
                 # Check if there's a backup mechanism
                 func_content = ast.unparse(node)
-                if "backup" not in func_content.lower() and "SELECT" not in func_content:
+                if (
+                    "backup" not in func_content.lower()
+                    and "SELECT" not in func_content
+                ):
                     warnings.append(
                         Violation(
                             "UNSAFE_ROLLBACK",
@@ -230,7 +281,10 @@ class MigrationValidator:
         # CONTRACT phase special handling
         if phase == MigrationPhase.CONTRACT:
             func_content = ast.unparse(node)
-            if "NotImplementedError" not in func_content and "raise" not in func_content:
+            if (
+                "NotImplementedError" not in func_content
+                and "raise" not in func_content
+            ):
                 warnings.append(
                     Violation(
                         "UNSAFE_ROLLBACK",
@@ -283,7 +337,9 @@ class MigrationValidator:
     ### Helper method to check for existence checks around operations.
     # It looks for if statements that might be checking column existence
     # TODO: Evaluate if more sophisticated analysis is needed for existence checks
-    def _has_existence_check_nearby(self, func_node: ast.FunctionDef, target_call: ast.Call) -> bool:
+    def _has_existence_check_nearby(
+        self, func_node: ast.FunctionDef, target_call: ast.Call
+    ) -> bool:
         """Check if operation is wrapped in existence check."""
         # Look for if statements that might be checking column existence
         for node in ast.walk(func_node):
@@ -293,7 +349,10 @@ class MigrationValidator:
                     if child == target_call:
                         # Check if the condition mentions columns or inspector
                         condition = ast.unparse(node.test)
-                        if any(keyword in condition.lower() for keyword in ["column", "inspector", "not in", "if not"]):
+                        if any(
+                            keyword in condition.lower()
+                            for keyword in ["column", "inspector", "not in", "if not"]
+                        ):
                             return True
         return False
 
@@ -328,7 +387,9 @@ def main():
     parser = argparse.ArgumentParser(description="Validate Alembic migrations")
     parser.add_argument("files", nargs="+", help="Migration files to validate")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
-    parser.add_argument("--strict", action="store_true", help="Treat warnings as errors")
+    parser.add_argument(
+        "--strict", action="store_true", help="Treat warnings as errors"
+    )
 
     args = parser.parse_args()
 
@@ -364,12 +425,16 @@ def main():
             if result["violations"]:
                 logger.error("\n❌ Violations:")
                 for v in result["violations"]:
-                    logger.error("  Line %s: %s - %s", v["line"], v["type"], v["message"])
+                    logger.error(
+                        "  Line %s: %s - %s", v["line"], v["type"], v["message"]
+                    )
 
             if result["warnings"]:
                 logger.warning("\n⚠️  Warnings:")
                 for w in result["warnings"]:
-                    logger.warning("  Line %s: %s - %s", w["line"], w["type"], w["message"])
+                    logger.warning(
+                        "  Line %s: %s - %s", w["line"], w["type"], w["message"]
+                    )
 
     sys.exit(0 if all_valid else 1)
 

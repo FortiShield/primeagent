@@ -82,7 +82,11 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Example Primeagent Load Testing Workflow")
-    parser.add_argument("--auto", action="store_true", help="Run automatically without user input prompts")
+    parser.add_argument(
+        "--auto",
+        action="store_true",
+        help="Run automatically without user input prompts",
+    )
     args = parser.parse_args()
 
     print("🚀 Primeagent Load Testing Example Workflow")
@@ -127,7 +131,10 @@ def main():
     try:
         # Step 1: List available flows
         wait_for_user("Press Enter to list available starter project flows...")
-        if not run_command([sys.executable, str(setup_script), "--list-flows"], "List available starter project flows"):
+        if not run_command(
+            [sys.executable, str(setup_script), "--list-flows"],
+            "List available starter project flows",
+        ):
             return
 
         # Step 2: Setup with Basic Prompting (good for examples)

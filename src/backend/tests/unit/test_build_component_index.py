@@ -116,7 +116,10 @@ class TestBuildComponentIndexScript:
             index = build_module.build_component_index()
 
             # Verify hash
-            index_without_hash = {"version": index["version"], "entries": index["entries"]}
+            index_without_hash = {
+                "version": index["version"],
+                "entries": index["entries"],
+            }
             payload = orjson.dumps(index_without_hash, option=orjson.OPT_SORT_KEYS)
             expected_hash = hashlib.sha256(payload).hexdigest()
 

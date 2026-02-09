@@ -31,7 +31,9 @@ def upgrade() -> None:
     try:
         if "credential" in tables and "fk_credential_user_id" not in foreign_keys_names:
             with op.batch_alter_table("credential", schema=None) as batch_op:
-                batch_op.create_foreign_key("fk_credential_user_id", "user", ["user_id"], ["id"])
+                batch_op.create_foreign_key(
+                    "fk_credential_user_id", "user", ["user_id"], ["id"]
+                )
     except Exception as e:
         print(e)
 

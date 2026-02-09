@@ -243,7 +243,10 @@ class TestLanguageModelComponent(ComponentTestBaseWithoutClient):
             api_key=None,
         )
 
-        with pytest.raises(ValueError, match="Anthropic API key is required when using Anthropic provider"):
+        with pytest.raises(
+            ValueError,
+            match="Anthropic API key is required when using Anthropic provider",
+        ):
             component.build_model()
 
     @patch("wfx.base.models.unified_models.get_variable_service")

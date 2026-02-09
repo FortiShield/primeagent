@@ -11,7 +11,10 @@ class TestFileComponentDynamicOutputs:
     def test_update_outputs_single_csv_file(self):
         """Test single CSV file shows structured + raw outputs."""
         component = FileComponent()
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["test.csv"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["test.csv"]}},
+        }
 
         result = component.update_outputs(frontend_node, "path", ["test.csv"])
 
@@ -24,7 +27,10 @@ class TestFileComponentDynamicOutputs:
     def test_update_outputs_single_json_file(self):
         """Test single JSON file shows JSON + raw outputs."""
         component = FileComponent()
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["data.json"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["data.json"]}},
+        }
 
         result = component.update_outputs(frontend_node, "path", ["data.json"])
 
@@ -37,7 +43,10 @@ class TestFileComponentDynamicOutputs:
     def test_update_outputs_multiple_files(self):
         """Test multiple files show only Files output."""
         component = FileComponent()
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["file1.txt", "file2.txt"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["file1.txt", "file2.txt"]}},
+        }
 
         result = component.update_outputs(frontend_node, "path", ["file1.txt", "file2.txt"])
 
@@ -58,7 +67,10 @@ class TestFileComponentDynamicOutputs:
         """Test non-path fields don't affect outputs."""
         component = FileComponent()
         original_outputs = [Output(display_name="Test", name="test", method="test_method")]
-        frontend_node = {"outputs": original_outputs, "template": {"path": {"file_path": ["value"]}}}
+        frontend_node = {
+            "outputs": original_outputs,
+            "template": {"path": {"file_path": ["value"]}},
+        }
 
         result = component.update_outputs(frontend_node, "other_field", "value")
 
@@ -128,7 +140,12 @@ class TestFileComponentDynamicOutputs:
             "mode": "structured",
             "doc": [
                 {"page_no": 1, "label": "title", "text": "Test Document", "level": 1},
-                {"page_no": 1, "label": "paragraph", "text": "Content here", "level": 0},
+                {
+                    "page_no": 1,
+                    "label": "paragraph",
+                    "text": "Content here",
+                    "level": 0,
+                },
             ],
             "meta": {"file_path": "test.pdf"},
         }
@@ -148,19 +165,28 @@ class TestFileComponentDynamicOutputs:
         component = FileComponent()
 
         # Test single CSV file
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["test.csv"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["test.csv"]}},
+        }
         result = component.update_outputs(frontend_node, "path", ["test.csv"])
         for output in result["outputs"]:
             assert output.tool_mode is True, f"Output {output.name} should have tool_mode=True"
 
         # Test single JSON file
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["data.json"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["data.json"]}},
+        }
         result = component.update_outputs(frontend_node, "path", ["data.json"])
         for output in result["outputs"]:
             assert output.tool_mode is True, f"Output {output.name} should have tool_mode=True"
 
         # Test multiple files
-        frontend_node = {"outputs": [], "template": {"path": {"file_path": ["file1.txt", "file2.txt"]}}}
+        frontend_node = {
+            "outputs": [],
+            "template": {"path": {"file_path": ["file1.txt", "file2.txt"]}},
+        }
         result = component.update_outputs(frontend_node, "path", ["file1.txt", "file2.txt"])
         for output in result["outputs"]:
             assert output.tool_mode is True, f"Output {output.name} should have tool_mode=True"
@@ -417,7 +443,12 @@ class TestFileComponentToolMode:
     def test_get_tool_description_filters_empty_paths(self):
         """Test that empty paths are filtered out."""
         component = FileComponent()
-        component._attributes["path"] = ["flow123/valid.pdf", "", None, "flow123/another.txt"]
+        component._attributes["path"] = [
+            "flow123/valid.pdf",
+            "",
+            None,
+            "flow123/another.txt",
+        ]
 
         description = component.get_tool_description()
 

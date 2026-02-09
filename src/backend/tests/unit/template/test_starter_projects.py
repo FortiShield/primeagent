@@ -112,7 +112,14 @@ class TestStarterProjects:
                 error_msg = "\n".join(errors)
                 pytest.fail(f"Template execution errors in {template_file.name}:\n{error_msg}")
 
-        except (ValueError, TypeError, KeyError, AttributeError, OSError, json.JSONDecodeError) as e:
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            json.JSONDecodeError,
+        ) as e:
             pytest.fail(f"{template_file.name}: Unexpected error during validation: {e!s}")
 
     @pytest.mark.asyncio
@@ -128,5 +135,12 @@ class TestStarterProjects:
                 error_msg = "\n".join(errors)
                 pytest.fail(f"Basic template execution errors in {template_file.name}:\n{error_msg}")
 
-        except (ValueError, TypeError, KeyError, AttributeError, OSError, json.JSONDecodeError) as e:
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            json.JSONDecodeError,
+        ) as e:
             pytest.fail(f"{template_file.name}: Unexpected error during validation: {e!s}")

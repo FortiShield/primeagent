@@ -7,7 +7,10 @@ import pytest
 from langchain_core.documents import Document
 from wfx.custom import Component, CustomComponent
 from wfx.custom.code_parser.code_parser import CodeParser, CodeSyntaxError
-from wfx.custom.custom_component.base_component import BaseComponent, ComponentCodeNullError
+from wfx.custom.custom_component.base_component import (
+    BaseComponent,
+    ComponentCodeNullError,
+)
 from wfx.custom.utils import build_custom_component_template
 
 

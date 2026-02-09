@@ -142,7 +142,10 @@ class TestLocalDBComponent(ComponentTestBaseWithoutClient):
         # Test with different number of results
         component.set(number_of_results=3)
         another_doc = Document(page_content="Another document")
-        mock_similarity_search.return_value = [*mock_docs, another_doc]  # Use unpacking instead of concatenation
+        mock_similarity_search.return_value = [
+            *mock_docs,
+            another_doc,
+        ]  # Use unpacking instead of concatenation
         results = component.search_documents()
         assert len(results) == 3
 
@@ -230,7 +233,11 @@ class TestLocalDBComponent(ComponentTestBaseWithoutClient):
         component.build_vector_store()
 
         # Switch to Retrieve mode and test similarity search
-        component.set(mode="Retrieve", search_type="Similarity", search_query="programming languages")
+        component.set(
+            mode="Retrieve",
+            search_type="Similarity",
+            search_query="programming languages",
+        )
         similarity_results = component.search_documents()
         assert len(similarity_results) == 2
         assert any("python" in result.text.lower() for result in similarity_results)
@@ -269,7 +276,11 @@ class TestLocalDBComponent(ComponentTestBaseWithoutClient):
 
         # Mock the get method to return documents
         mock_get.return_value = {
-            "documents": ["This is a test document", "This is a test document", "This is another document"],
+            "documents": [
+                "This is a test document",
+                "This is a test document",
+                "This is another document",
+            ],
             "metadatas": [{}, {}, {}],
             "ids": ["1", "2", "3"],
         }

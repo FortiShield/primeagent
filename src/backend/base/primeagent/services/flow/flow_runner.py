@@ -10,7 +10,12 @@ from primeagent.processing.process import process_tweaks, run_graph
 from primeagent.services.cache.service import AsyncBaseCacheService
 from primeagent.services.database.models import Flow, User, Variable
 from primeagent.services.database.utils import initialize_database
-from primeagent.services.deps import get_auth_service, get_cache_service, get_storage_service, session_scope
+from primeagent.services.deps import (
+    get_auth_service,
+    get_cache_service,
+    get_storage_service,
+    session_scope,
+)
 from sqlmodel import delete, select, text
 from wfx.graph import Graph
 from wfx.graph.vertex.param_handler import ParameterHandler
@@ -176,7 +181,10 @@ class PrimeagentRunnerExperimental:
     async def add_flow_to_db(flow_dict: dict, user_id: str | None):
         async with session_scope() as session:
             flow_db = Flow(
-                name=flow_dict.get("name"), id=UUID(flow_dict["id"]), data=flow_dict.get("data", {}), user_id=user_id
+                name=flow_dict.get("name"),
+                id=UUID(flow_dict["id"]),
+                data=flow_dict.get("data", {}),
+                user_id=user_id,
             )
             session.add(flow_db)
 
@@ -203,7 +211,10 @@ class PrimeagentRunnerExperimental:
     @staticmethod
     async def create_graph_from_flow(session_id: str, flow_dict: dict, user_id: str | None = None):
         graph = Graph.from_payload(
-            payload=flow_dict, flow_id=flow_dict["id"], flow_name=flow_dict.get("name"), user_id=user_id
+            payload=flow_dict,
+            flow_id=flow_dict["id"],
+            flow_name=flow_dict.get("name"),
+            user_id=user_id,
         )
         graph.session_id = session_id
         graph.set_run_id(session_id)

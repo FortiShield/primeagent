@@ -21,7 +21,9 @@ from wfx.schema.message import Message
 from wfx.utils.constants import MESSAGE_SENDER_AI
 
 
-async def create_event_iterator(events: list[dict[str, Any]]) -> AsyncIterator[dict[str, Any]]:
+async def create_event_iterator(
+    events: list[dict[str, Any]],
+) -> AsyncIterator[dict[str, Any]]:
     """Helper function to create an async iterator from a list of events."""
     for event in events:
         yield event
@@ -51,7 +53,11 @@ async def test_chain_start_event():
     send_message = create_mock_send_message()
 
     events = [
-        {"event": "on_chain_start", "data": {"input": {"input": "test input", "chat_history": []}}, "start_time": 0}
+        {
+            "event": "on_chain_start",
+            "data": {"input": {"input": "test input", "chat_history": []}},
+            "start_time": 0,
+        }
     ]
 
     # Initialize message with content blocks
@@ -217,7 +223,13 @@ async def test_chain_stream_event():
     """Test handling of on_chain_stream event."""
     send_message = create_mock_send_message()
 
-    events = [{"event": "on_chain_stream", "data": {"chunk": {"output": "streamed output"}}, "start_time": 0}]
+    events = [
+        {
+            "event": "on_chain_stream",
+            "data": {"chunk": {"output": "streamed output"}},
+            "start_time": 0,
+        }
+    ]
     agent_message = Message(
         sender=MESSAGE_SENDER_AI,
         sender_name="Agent",
@@ -240,7 +252,11 @@ async def test_multiple_events():
     output = AgentFinish(return_values={"output": "final output"}, log="test log")
 
     events = [
-        {"event": "on_chain_start", "data": {"input": {"input": "initial input", "chat_history": []}}, "start_time": 0},
+        {
+            "event": "on_chain_start",
+            "data": {"input": {"input": "initial input", "chat_history": []}},
+            "start_time": 0,
+        },
         {
             "event": "on_tool_start",
             "name": "test_tool",
@@ -309,7 +325,11 @@ async def test_handle_on_chain_start_with_input():
         properties={"icon": "Bot", "state": "partial"},
         content_blocks=[ContentBlock(title="Agent Steps", contents=[])],
     )
-    event = {"event": "on_chain_start", "data": {"input": {"input": "test input", "chat_history": []}}, "start_time": 0}
+    event = {
+        "event": "on_chain_start",
+        "data": {"input": {"input": "test input", "chat_history": []}},
+        "start_time": 0,
+    }
 
     updated_message, start_time = await handle_on_chain_start(event, agent_message, send_message, None, 0.0)
 
@@ -416,7 +436,11 @@ async def test_handle_on_chain_end_with_empty_return_values():
         def __init__(self):
             self.return_values = {}
 
-    event = {"event": "on_chain_end", "data": {"output": MockOutputEmptyReturnValues()}, "start_time": 0}
+    event = {
+        "event": "on_chain_end",
+        "data": {"output": MockOutputEmptyReturnValues()},
+        "start_time": 0,
+    }
 
     updated_message, start_time = await handle_on_chain_end(event, agent_message, send_message, None, 0.0)
 
@@ -643,7 +667,12 @@ def test_extract_output_text_chatbedrockconverse_index_with_extra_data():
 def test_extract_output_text_multiple_items_mixed():
     """Test _extract_output_text with multiple items including text and non-text."""
     result = _extract_output_text(
-        [{"text": "First part"}, {"type": "tool_use", "name": "some_tool"}, {"text": "Second part"}, {"index": 0}]
+        [
+            {"text": "First part"},
+            {"type": "tool_use", "name": "some_tool"},
+            {"text": "Second part"},
+            {"index": 0},
+        ]
     )
     assert result == "First partSecond part"
 
@@ -675,7 +704,11 @@ def test_extract_output_text_complex_chatbedrockconverse_response():
 def test_extract_output_text_all_non_text_items():
     """Test _extract_output_text with all non-text items."""
     result = _extract_output_text(
-        [{"type": "tool_use", "name": "some_tool"}, {"index": 0}, {"partial_json": '{"incomplete": true'}]
+        [
+            {"type": "tool_use", "name": "some_tool"},
+            {"index": 0},
+            {"partial_json": '{"incomplete": true'},
+        ]
     )
     assert result == ""
 
@@ -778,7 +811,11 @@ async def test_agent_streaming_no_text_accumulation():
     async def mock_send_message(message):
         # Capture each message sent for verification
         sent_messages.append(
-            {"text": message.text, "state": message.properties.state, "id": getattr(message, "id", None)}
+            {
+                "text": message.text,
+                "state": message.properties.state,
+                "id": getattr(message, "id", None),
+            }
         )
         return message
 
@@ -855,7 +892,11 @@ async def test_agent_streaming_without_event_manager():
             # Simulate production: add ID on first call (when persisting to DB)
             message.data["id"] = "test-message-id"
         sent_messages.append(
-            {"text": message.text, "state": message.properties.state, "id": getattr(message, "id", None)}
+            {
+                "text": message.text,
+                "state": message.properties.state,
+                "id": getattr(message, "id", None),
+            }
         )
         return message
 

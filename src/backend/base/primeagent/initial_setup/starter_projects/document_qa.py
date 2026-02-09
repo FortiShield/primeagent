@@ -31,7 +31,10 @@ Answer:
     )
 
     openai_component = LanguageModelComponent()
-    openai_component.set(input_value=chat_input.message_response, system_message=prompt_component.build_prompt)
+    openai_component.set(
+        input_value=chat_input.message_response,
+        system_message=prompt_component.build_prompt,
+    )
 
     chat_output = ChatOutput()
     chat_output.set(input_value=openai_component.text_response)

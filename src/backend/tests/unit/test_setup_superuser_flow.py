@@ -2,13 +2,22 @@ import pytest
 from primeagent.services.auth.utils import verify_password
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import get_settings_service
-from primeagent.services.utils import initialize_services, setup_superuser, teardown_superuser
+from primeagent.services.utils import (
+    initialize_services,
+    setup_superuser,
+    teardown_superuser,
+)
 from sqlmodel import select
-from wfx.services.settings.constants import DEFAULT_SUPERUSER, DEFAULT_SUPERUSER_PASSWORD
+from wfx.services.settings.constants import (
+    DEFAULT_SUPERUSER,
+    DEFAULT_SUPERUSER_PASSWORD,
+)
 
 
 @pytest.mark.asyncio
-async def test_initialize_services_creates_default_superuser_when_auto_login_true(client):  # noqa: ARG001
+async def test_initialize_services_creates_default_superuser_when_auto_login_true(
+    client,
+):
     from primeagent.services.deps import session_scope
 
     settings = get_settings_service()
@@ -24,7 +33,9 @@ async def test_initialize_services_creates_default_superuser_when_auto_login_tru
 
 
 @pytest.mark.asyncio
-async def test_teardown_superuser_removes_default_if_never_logged(client):  # noqa: ARG001
+async def test_teardown_superuser_removes_default_if_never_logged(
+    client,
+):
     from primeagent.services.deps import session_scope
 
     settings = get_settings_service()

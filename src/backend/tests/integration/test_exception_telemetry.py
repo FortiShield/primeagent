@@ -372,7 +372,9 @@ class TestTelemetryPayloadValidation:
     def test_exception_payload_optional_stack_trace_hash(self):
         """Test ExceptionPayload without stack trace hash."""
         payload = ExceptionPayload(
-            exception_type="RuntimeError", exception_message="Service unavailable", exception_context="lifespan"
+            exception_type="RuntimeError",
+            exception_message="Service unavailable",
+            exception_context="lifespan",
         )
 
         assert payload.stack_trace_hash is None
@@ -391,7 +393,10 @@ class TestTelemetryPayloadValidation:
         """Test that all payload types inherit client_type from BasePayload."""
         payloads = [
             ComponentPayload(
-                component_name="test", component_id="test-123", component_seconds=1, component_success=True
+                component_name="test",
+                component_id="test-123",
+                component_seconds=1,
+                component_success=True,
             ),
             PlaygroundPayload(playground_seconds=1, playground_success=True),
             RunPayload(run_seconds=1, run_success=True),
@@ -406,7 +411,11 @@ class TestTelemetryPayloadValidation:
                 backend_only=False,
             ),
             ShutdownPayload(time_running=100),
-            ExceptionPayload(exception_type="Error", exception_message="test", exception_context="test"),
+            ExceptionPayload(
+                exception_type="Error",
+                exception_message="test",
+                exception_context="test",
+            ),
         ]
 
         for payload in payloads:
@@ -600,7 +609,10 @@ class TestComponentInputTelemetry:
 
     def test_component_payload_with_run_id_integration(self):
         """Test ComponentPayload with run_id for joining data."""
-        from primeagent.services.telemetry.schema import ComponentInputsPayload, ComponentPayload
+        from primeagent.services.telemetry.schema import (
+            ComponentInputsPayload,
+            ComponentPayload,
+        )
 
         run_id = "run-integration-123"
         component_id = "TestComponent-xyz"

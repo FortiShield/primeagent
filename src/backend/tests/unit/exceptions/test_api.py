@@ -20,7 +20,10 @@ def test_api_exception():
             "primeagent.services.database.models.flow.utils.get_outdated_components",
             return_value=mock_outdated_components,
         ),
-        patch("primeagent.api.utils.get_suggestion_message", return_value=mock_suggestion_message),
+        patch(
+            "primeagent.api.utils.get_suggestion_message",
+            return_value=mock_suggestion_message,
+        ),
         patch(
             "primeagent.services.database.models.flow.utils.get_components_versions",
             return_value=mock_component_versions,

@@ -228,7 +228,10 @@ def enable_mcp_composer():
 
 
 async def test_handle_project_streamable_messages_success(
-    client: AsyncClient, user_test_project, mock_streamable_http_manager, logged_in_headers
+    client: AsyncClient,
+    user_test_project,
+    mock_streamable_http_manager,
+    logged_in_headers,
 ):
     """Test successful handling of project messages over Streamable HTTP."""
     response = await client.post(
@@ -257,7 +260,9 @@ async def test_handle_project_messages_success(
 async def test_update_project_mcp_settings_invalid_json(client: AsyncClient, user_test_project, logged_in_headers):
     """Test updating MCP settings with invalid JSON."""
     response = await client.patch(
-        f"api/v1/mcp/project/{user_test_project.id}", headers=logged_in_headers, json="invalid"
+        f"api/v1/mcp/project/{user_test_project.id}",
+        headers=logged_in_headers,
+        json="invalid",
     )
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -322,7 +327,9 @@ async def test_update_project_mcp_settings_success(
 
     # Make the real PATCH request
     response = await client.patch(
-        f"api/v1/mcp/project/{user_test_project.id}", headers=logged_in_headers, json=json_payload
+        f"api/v1/mcp/project/{user_test_project.id}",
+        headers=logged_in_headers,
+        json=json_payload,
     )
 
     # Assert response
@@ -401,7 +408,9 @@ async def test_update_project_mcp_settings_empty_settings(client: AsyncClient, u
 
     # Make the request to the actual endpoint
     response = await client.patch(
-        f"api/v1/mcp/project/{user_test_project.id}", headers=logged_in_headers, json=json_payload
+        f"api/v1/mcp/project/{user_test_project.id}",
+        headers=logged_in_headers,
+        json=json_payload,
     )
 
     # Verify response - the real endpoint should handle empty settings correctly
@@ -533,7 +542,9 @@ async def test_user_can_update_own_flow_mcp_settings(
 
     # Make the PATCH request to update settings
     response = await client.patch(
-        f"api/v1/mcp/project/{user_test_project.id}", headers=logged_in_headers, json=json_payload
+        f"api/v1/mcp/project/{user_test_project.id}",
+        headers=logged_in_headers,
+        json=json_payload,
     )
 
     # Should succeed as the user owns this project and flow
@@ -711,7 +722,10 @@ def _prepare_install_test_env(monkeypatch, tmp_path, filename="cursor.json"):
     async def fake_sse(project_id):
         return f"https://primeagent.local/api/v1/mcp/project/{project_id}/sse"
 
-    monkeypatch.setattr("primeagent.api.v1.mcp_projects.get_project_streamable_http_url", fake_streamable)
+    monkeypatch.setattr(
+        "primeagent.api.v1.mcp_projects.get_project_streamable_http_url",
+        fake_streamable,
+    )
     monkeypatch.setattr("primeagent.api.v1.mcp_projects.get_project_sse_url", fake_sse)
 
     class DummyAuth:
@@ -820,7 +834,10 @@ async def test_init_mcp_servers_error_handling():
         return original_get_project_sse(project_id)
 
     # Apply the patch
-    with patch("primeagent.api.v1.mcp_projects.get_project_sse", side_effect=mock_get_project_sse):
+    with patch(
+        "primeagent.api.v1.mcp_projects.get_project_sse",
+        side_effect=mock_get_project_sse,
+    ):
         # This should not raise any exception, as the error should be caught
         await init_mcp_servers()
 
@@ -841,7 +858,10 @@ async def test_init_mcp_servers_error_handling_streamable():
         return original_get_project_mcp_server(project_id)
 
     # Apply the patch
-    with patch("primeagent.api.v1.mcp_projects.get_project_mcp_server", side_effect=mock_get_project_mcp_server):
+    with patch(
+        "primeagent.api.v1.mcp_projects.get_project_mcp_server",
+        side_effect=mock_get_project_mcp_server,
+    ):
         # This should not raise any exception, as the error should be caught
         await init_mcp_servers()
 

@@ -19,7 +19,10 @@ class TestKnowledgeIngestionComponent(ComponentTestBaseWithClient):
     @pytest.fixture(autouse=True)
     def mock_knowledge_base_path(self, tmp_path):
         """Mock the knowledge base root path directly."""
-        with patch("primeagent.components.knowledge_bases.ingestion._KNOWLEDGE_BASES_ROOT_PATH", tmp_path):
+        with patch(
+            "primeagent.components.knowledge_bases.ingestion._KNOWLEDGE_BASES_ROOT_PATH",
+            tmp_path,
+        ):
             yield
 
     @pytest.fixture
@@ -27,7 +30,11 @@ class TestKnowledgeIngestionComponent(ComponentTestBaseWithClient):
         """Return default kwargs for component instantiation."""
         # Create a sample DataFrame
         data_df = DataFrame(
-            {"text": ["Sample text 1", "Sample text 2"], "title": ["Title 1", "Title 2"], "category": ["cat1", "cat2"]}
+            {
+                "text": ["Sample text 1", "Sample text 2"],
+                "title": ["Title 1", "Title 2"],
+                "category": ["cat1", "cat2"],
+            }
         )
 
         # Create column configuration
@@ -293,7 +300,10 @@ class TestKnowledgeIngestionComponent(ComponentTestBaseWithClient):
         mock_decrypt.return_value = "decrypted_key"
 
         # Mock vector store creation
-        with patch.object(component, "_create_vector_store"), patch.object(component, "_save_kb_files"):
+        with (
+            patch.object(component, "_create_vector_store"),
+            patch.object(component, "_save_kb_files"),
+        ):
             result = await component.build_kb_info()
 
         assert isinstance(result, Data)

@@ -19,7 +19,11 @@ if TYPE_CHECKING:
 
     from wfx.graph.graph.base import Graph
 
-from .test_execution_path_equivalence import ExecutionTrace, ExecutionTracer, assert_execution_equivalence
+from .test_execution_path_equivalence import (
+    ExecutionTrace,
+    ExecutionTracer,
+    assert_execution_equivalence,
+)
 
 TEST_DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 

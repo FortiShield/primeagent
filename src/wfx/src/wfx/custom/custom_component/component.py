@@ -22,7 +22,6 @@ from wfx.base.tools.constants import (
 )
 from wfx.custom.tree_visitor import RequiredInputsVisitor
 from wfx.exceptions.component import StreamingError
-from wfx.field_typing import Tool
 
 # Lazy import to avoid circular dependency
 # from wfx.graph.state.model import create_state_model
@@ -48,6 +47,7 @@ if TYPE_CHECKING:
 
     from wfx.base.tools.component_tool import ComponentToolkit
     from wfx.events.event_manager import EventManager
+    from wfx.field_typing import Tool
     from wfx.graph.edge.schema import EdgeData
     from wfx.graph.vertex.base import Vertex
     from wfx.inputs.inputs import InputTypes

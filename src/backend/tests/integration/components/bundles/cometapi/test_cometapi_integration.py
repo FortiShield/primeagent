@@ -54,7 +54,11 @@ class TestCometAPIIntegration:
         # Mock successful API response
         mock_response = MagicMock()
         mock_response.json.return_value = {
-            "data": [{"id": "gpt-4o-mini"}, {"id": "claude-3-5-haiku-latest"}, {"id": "gemini-2.5-flash"}]
+            "data": [
+                {"id": "gpt-4o-mini"},
+                {"id": "claude-3-5-haiku-latest"},
+                {"id": "gemini-2.5-flash"},
+            ]
         }
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
@@ -153,7 +157,11 @@ class TestCometAPIIntegration:
         """Test update_build_config integration."""
         build_config = {"model_name": {"value": "current-model", "placeholder": "Select a model"}}
 
-        with patch.object(component, "get_models", return_value=["gpt-4o-mini", "claude-3-5-haiku-latest"]):
+        with patch.object(
+            component,
+            "get_models",
+            return_value=["gpt-4o-mini", "claude-3-5-haiku-latest"],
+        ):
             updated_config = component.update_build_config(build_config, "new-key", "api_key")
 
         # Verify config was updated
@@ -166,7 +174,12 @@ class TestCometAPIIntegration:
     def test_real_api_integration(self, component):
         """Test with real API key if available."""
         component.set_attributes(
-            {"api_key": os.getenv("COMETAPI_KEY"), "model_name": "gpt-4o-mini", "temperature": 0.1, "max_tokens": 50}
+            {
+                "api_key": os.getenv("COMETAPI_KEY"),
+                "model_name": "gpt-4o-mini",
+                "temperature": 0.1,
+                "max_tokens": 50,
+            }
         )
 
         # Test model building
@@ -192,7 +205,12 @@ class TestCometAPIIntegration:
         """Test component input validation."""
         # Test with valid inputs
         component.set_attributes(
-            {"api_key": "valid-key", "model_name": "gpt-4o-mini", "temperature": 0.7, "max_tokens": 1000}
+            {
+                "api_key": "valid-key",
+                "model_name": "gpt-4o-mini",
+                "temperature": 0.7,
+                "max_tokens": 1000,
+            }
         )
 
         # Should not raise any validation errors

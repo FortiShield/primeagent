@@ -368,8 +368,14 @@ class TestExtractNestedValue:
         # Generic retriever output with documents
         data = {
             "documents": [
-                {"page_content": "Retrieved doc 1", "metadata": {"source": "file1.txt"}},
-                {"page_content": "Retrieved doc 2", "metadata": {"source": "file2.txt"}},
+                {
+                    "page_content": "Retrieved doc 1",
+                    "metadata": {"source": "file1.txt"},
+                },
+                {
+                    "page_content": "Retrieved doc 2",
+                    "metadata": {"source": "file2.txt"},
+                },
             ]
         }
         result = _extract_nested_value(data, "documents")
@@ -439,7 +445,10 @@ class TestExtractTextFromMessage:
     def test_extract_priority_message_message_first(self):
         """Test that message.message takes priority over other fields."""
         content = {
-            "message": {"message": "Priority Message", "text": "Should not return this"},
+            "message": {
+                "message": "Priority Message",
+                "text": "Should not return this",
+            },
             "text": "Also should not return this",
         }
         result = _extract_text_from_message(content)
@@ -788,7 +797,11 @@ class TestBuildMetadataForNonOutput:
             }
         }
         metadata = _build_metadata_for_non_output(
-            raw_content, "pinecone-123", "Pinecone Store", "PineconeVectorStore", "message"
+            raw_content,
+            "pinecone-123",
+            "Pinecone Store",
+            "PineconeVectorStore",
+            "message",
         )
 
         # Should not extract special metadata (no model_name or file path)
@@ -799,10 +812,19 @@ class TestBuildMetadataForNonOutput:
         """Test building metadata for retriever components."""
         # Retriever with search metadata
         raw_content = {
-            "message": {"message": "Retrieved 3 documents", "query": "search term", "top_k": 3, "avg_score": 0.85}
+            "message": {
+                "message": "Retrieved 3 documents",
+                "query": "search term",
+                "top_k": 3,
+                "avg_score": 0.85,
+            }
         }
         metadata = _build_metadata_for_non_output(
-            raw_content, "retriever-123", "Document Retriever", "VectorStoreRetriever", "message"
+            raw_content,
+            "retriever-123",
+            "Document Retriever",
+            "VectorStoreRetriever",
+            "message",
         )
 
         # Should not extract special metadata (no model_name or file path)
@@ -879,7 +901,12 @@ class TestCreateErrorResponse:
         """Test error details in response."""
         error = RuntimeError("Runtime error occurred")
         job_id = str(uuid4())
-        response = create_error_response("flow-1", job_id, WorkflowExecutionRequest(flow_id="flow-1", inputs={}), error)
+        response = create_error_response(
+            "flow-1",
+            job_id,
+            WorkflowExecutionRequest(flow_id="flow-1", inputs={}),
+            error,
+        )
 
         error_detail = response.errors[0]
         assert isinstance(error_detail, ErrorDetail)
@@ -1143,7 +1170,14 @@ class TestRunResponseToWorkflowResponse:
         result_data = Mock()
         result_data.component_id = "retriever-456"
         result_data.outputs = {
-            "result": {"message": {"result": {"documents": ["doc1", "doc2", "doc3"], "scores": [0.95, 0.87, 0.82]}}}
+            "result": {
+                "message": {
+                    "result": {
+                        "documents": ["doc1", "doc2", "doc3"],
+                        "scores": [0.95, 0.87, 0.82],
+                    }
+                }
+            }
         }
         result_data.metadata = {"query": "search term", "top_k": 3}
 

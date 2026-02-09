@@ -4,7 +4,10 @@ from uuid import UUID
 
 import pytest
 from kubernetes.client import V1ObjectMeta, V1Secret
-from primeagent.services.variable.kubernetes_secrets import KubernetesSecretManager, encode_user_id
+from primeagent.services.variable.kubernetes_secrets import (
+    KubernetesSecretManager,
+    encode_user_id,
+)
 
 
 @pytest.fixture
@@ -48,7 +51,11 @@ def test_get_secret(secret_manager, mocker):
 
 
 def test_delete_secret(secret_manager, mocker):
-    mocker.patch.object(secret_manager.core_api, "delete_namespaced_secret", return_value=MagicMock(status="Success"))
+    mocker.patch.object(
+        secret_manager.core_api,
+        "delete_namespaced_secret",
+        return_value=MagicMock(status="Success"),
+    )
 
     secret_manager.delete_secret(name="test-secret")
     secret_manager.core_api.delete_namespaced_secret.assert_called_once_with("test-secret", "test-namespace")

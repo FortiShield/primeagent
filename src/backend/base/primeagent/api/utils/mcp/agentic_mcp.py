@@ -317,7 +317,10 @@ async def initialize_agentic_user_variables(user_id: UUID | str, session: AsyncS
         variable_service = get_variable_service()
 
         # Define agentic variables with defaults
-        from wfx.services.settings.constants import AGENTIC_VARIABLES, DEFAULT_AGENTIC_VARIABLE_VALUE
+        from wfx.services.settings.constants import (
+            AGENTIC_VARIABLES,
+            DEFAULT_AGENTIC_VARIABLE_VALUE,
+        )
 
         # Create a dict with agentic variable names and default values as empty strings
         agentic_variables = dict.fromkeys(AGENTIC_VARIABLES, DEFAULT_AGENTIC_VARIABLE_VALUE)

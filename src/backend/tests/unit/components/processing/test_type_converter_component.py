@@ -119,7 +119,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
     def test_message_with_valid_json_text_to_data(self, component_class):
         """Test converting Message to Data."""
         valid_json_text = '{"foo": "bar"}'
-        component = component_class(input_data=Message(text=valid_json_text), output_type="Data", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_json_text),
+            output_type="Data",
+            auto_parse=True,
+        )
         result = component.convert_to_data()
         assert isinstance(result, Data)
         assert result.data == json.loads(valid_json_text)
@@ -127,7 +131,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
     def test_message_with_invalid_json_text_to_data(self, component_class):
         """Test converting Message to Data."""
         invalid_json_text = '{"foo", "bar"}'
-        component = component_class(input_data=Message(text=invalid_json_text), output_type="Data", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=invalid_json_text),
+            output_type="Data",
+            auto_parse=True,
+        )
         result = component.convert_to_data()
         assert isinstance(result, Data)
         assert isinstance(result.data["text"], str)
@@ -136,7 +144,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
     def test_message_with_valid_json_array_to_data(self, component_class):
         """Test converting Message with JSON array to Data."""
         valid_json_text = '[{"name": "Ana", "age": 28}, {"name": "Bruno", "age": 34}]'
-        component = component_class(input_data=Message(text=valid_json_text), output_type="Data", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_json_text),
+            output_type="Data",
+            auto_parse=True,
+        )
         result = component.convert_to_data()
 
         expected_data = {"records": json.loads(valid_json_text)}
@@ -171,7 +183,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
             "Diego,40,diego@email.com,Curitiba\n"
             "Elisa,31,elisa@email.com,Porto Alegre\n"
         )
-        component = component_class(input_data=Message(text=valid_csv_text), output_type="DataFrame", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_csv_text),
+            output_type="DataFrame",
+            auto_parse=True,
+        )
         result = component.convert_to_dataframe()
         expected = pd.read_csv(StringIO(valid_csv_text))
         assert isinstance(result, DataFrame)
@@ -181,7 +197,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
     def test_message_with_valid_json_object_to_dataframe(self, component_class):
         """Test converting Message with JSON object to DataFrame."""
         valid_json_text = '{"name": "Ana", "age": 28, "email": "ana@email.com", "city": "São Paulo"}'
-        component = component_class(input_data=Message(text=valid_json_text), output_type="DataFrame", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_json_text),
+            output_type="DataFrame",
+            auto_parse=True,
+        )
         result = component.convert_to_dataframe()
 
         expected_data = [json.loads(valid_json_text)]
@@ -198,7 +218,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
             {"name": "Bruno", "age": 34, "email": "bruno@email.com", "city": "Rio de Janeiro"},
             {"name": "Carla", "age": 22, "email": "carla@email.com", "city": "Belo Horizonte"}
         ]"""
-        component = component_class(input_data=Message(text=valid_json_text), output_type="DataFrame", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_json_text),
+            output_type="DataFrame",
+            auto_parse=True,
+        )
         result = component.convert_to_dataframe()
 
         expected_data = json.loads(valid_json_text)
@@ -212,7 +236,11 @@ class TestTypeConverterComponent(ComponentTestBaseWithoutClient):
     def test_message_with_compact_json_array_to_dataframe(self, component_class):
         """Test converting Message with compact JSON array to DataFrame."""
         valid_json_text = '[{"name":"Ana","age":28},{"name":"Bruno","age":34},{"name":"Carla","age":22}]'
-        component = component_class(input_data=Message(text=valid_json_text), output_type="DataFrame", auto_parse=True)
+        component = component_class(
+            input_data=Message(text=valid_json_text),
+            output_type="DataFrame",
+            auto_parse=True,
+        )
         result = component.convert_to_dataframe()
 
         expected_data = json.loads(valid_json_text)

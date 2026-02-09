@@ -10,10 +10,24 @@ from uuid import UUID, uuid4
 
 import orjson
 import sqlalchemy as sa
-from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Request, UploadFile, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Body,
+    Depends,
+    HTTPException,
+    Request,
+    UploadFile,
+    status,
+)
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import StreamingResponse
-from primeagent.api.utils import CurrentActiveUser, DbSession, extract_global_variables_from_headers, parse_value
+from primeagent.api.utils import (
+    CurrentActiveUser,
+    DbSession,
+    extract_global_variables_from_headers,
+    parse_value,
+)
 from primeagent.api.v1.schemas import (
     ConfigResponse,
     CustomComponentRequest,
@@ -28,7 +42,9 @@ from primeagent.events.event_manager import create_stream_tokens_event_manager
 from primeagent.exceptions.api import APIException, InvalidChatInputError
 from primeagent.exceptions.serialization import SerializationError
 from primeagent.helpers.flow import get_flow_by_id_or_endpoint_name
-from primeagent.interface.initialize.loading import update_params_with_load_from_db_fields
+from primeagent.interface.initialize.loading import (
+    update_params_with_load_from_db_fields,
+)
 from primeagent.processing.process import process_tweaks, run_graph_internal
 from primeagent.schema.graph import Tweaks
 from primeagent.services.auth.utils import (
@@ -38,10 +54,20 @@ from primeagent.services.auth.utils import (
 )
 from primeagent.services.cache.utils import save_uploaded_file
 from primeagent.services.database.models.flow.model import Flow, FlowRead
-from primeagent.services.database.models.flow.utils import get_all_webhook_components_in_flow
+from primeagent.services.database.models.flow.utils import (
+    get_all_webhook_components_in_flow,
+)
 from primeagent.services.database.models.user.model import User, UserRead
-from primeagent.services.deps import get_auth_service, get_session_service, get_settings_service, get_telemetry_service
-from primeagent.services.event_manager import create_webhook_event_manager, webhook_event_manager
+from primeagent.services.deps import (
+    get_auth_service,
+    get_session_service,
+    get_settings_service,
+    get_telemetry_service,
+)
+from primeagent.services.event_manager import (
+    create_webhook_event_manager,
+    webhook_event_manager,
+)
 from primeagent.services.telemetry.schema import RunPayload
 from primeagent.utils.compression import compress_response
 from primeagent.utils.version import get_version_info
@@ -161,7 +187,11 @@ async def simple_run_flow(
         graph_data = flow.data.copy()
         graph_data = process_tweaks(graph_data, input_request.tweaks or {}, stream=stream)
         graph = Graph.from_payload(
-            graph_data, flow_id=flow_id_str, user_id=str(user_id), flow_name=flow.name, context=context
+            graph_data,
+            flow_id=flow_id_str,
+            user_id=str(user_id),
+            flow_name=flow.name,
+            context=context,
         )
         if run_id is None:
             run_id = str(uuid4())
@@ -399,7 +429,10 @@ async def check_flow_user_permission(
         HTTPException: If the user does not have permission to run the flow
     """
     if flow and flow.user_id != api_key_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You do not have permission to run this flow")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to run this flow",
+        )
 
 
 async def _run_flow_internal(
@@ -598,7 +631,11 @@ async def simplified_run_flow(
     )
 
 
-@router.post("/run/session/{flow_id_or_name}", response_model=None, response_model_exclude_none=True)
+@router.post(
+    "/run/session/{flow_id_or_name}",
+    response_model=None,
+    response_model_exclude_none=True,
+)
 async def simplified_run_flow_session(
     *,
     background_tasks: BackgroundTasks,

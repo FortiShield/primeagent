@@ -26,13 +26,19 @@ def upgrade() -> None:
     flow_constraints = inspector.get_unique_constraints("flow")
     user_constraints = inspector.get_unique_constraints("user")
     try:
-        if not any(constraint["column_names"] == ["id"] for constraint in api_key_constraints):
+        if not any(
+            constraint["column_names"] == ["id"] for constraint in api_key_constraints
+        ):
             with op.batch_alter_table("apikey", schema=None) as batch_op:
                 batch_op.create_unique_constraint("uq_apikey_id", ["id"])
-        if not any(constraint["column_names"] == ["id"] for constraint in flow_constraints):
+        if not any(
+            constraint["column_names"] == ["id"] for constraint in flow_constraints
+        ):
             with op.batch_alter_table("flow", schema=None) as batch_op:
                 batch_op.create_unique_constraint("uq_flow_id", ["id"])
-        if not any(constraint["column_names"] == ["id"] for constraint in user_constraints):
+        if not any(
+            constraint["column_names"] == ["id"] for constraint in user_constraints
+        ):
             with op.batch_alter_table("user", schema=None) as batch_op:
                 batch_op.create_unique_constraint("uq_user_id", ["id"])
     except Exception as e:
@@ -49,7 +55,9 @@ def downgrade() -> None:
     flow_constraints = inspector.get_unique_constraints("flow")
     user_constraints = inspector.get_unique_constraints("user")
     try:
-        if any(constraint["name"] == "uq_apikey_id" for constraint in api_key_constraints):
+        if any(
+            constraint["name"] == "uq_apikey_id" for constraint in api_key_constraints
+        ):
             with op.batch_alter_table("user", schema=None) as batch_op:
                 batch_op.drop_constraint("uq_user_id", type_="unique")
         if any(constraint["name"] == "uq_flow_id" for constraint in flow_constraints):

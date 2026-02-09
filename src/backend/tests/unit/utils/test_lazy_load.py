@@ -115,7 +115,10 @@ class TestLazyLoadDictBase:
     def test_all_types_dict_with_complex_data(self):
         """Test all_types_dict with complex nested data structures."""
         complex_dict = {
-            "components": {"llm": ["OpenAI", "Anthropic"], "tools": {"python": "PythonTool", "api": "APITool"}},
+            "components": {
+                "llm": ["OpenAI", "Anthropic"],
+                "tools": {"python": "PythonTool", "api": "APITool"},
+            },
             "metadata": {"version": "1.0", "updated": "2023-01-01"},
         }
         lazy_load = self.ConcreteLazyLoad(build_dict_return=complex_dict)

@@ -59,6 +59,9 @@ async def health_check(
         await logger.aexception("Error checking chat service")
 
     if response.has_error():
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=response.model_dump())
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=response.model_dump(),
+        )
     response.status = "ok"
     return response

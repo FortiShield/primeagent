@@ -5,7 +5,12 @@ from wfx.custom.custom_component.custom_component import CustomComponent
 
 # Import commonly used functions
 from wfx.custom.utils import build_custom_component_template
-from wfx.custom.validate import create_class, create_function, extract_class_name, extract_function_name
+from wfx.custom.validate import (
+    create_class,
+    create_function,
+    extract_class_name,
+    extract_function_name,
+)
 
 from wfx import custom as custom
 

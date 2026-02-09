@@ -130,7 +130,12 @@ class TestValidateMcpServerForProject:
             settings_service = get_settings_service()
 
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
             )
 
             assert result.server_exists is False
@@ -149,7 +154,9 @@ class TestValidateMcpServerForProject:
 
         # Create MCP server via API
         response = await client.post(
-            "/api/v2/mcp/servers/lf-test_project", json=server_config, headers={"x-api-key": created_api_key.api_key}
+            "/api/v2/mcp/servers/lf-test_project",
+            json=server_config,
+            headers={"x-api-key": created_api_key.api_key},
         )
         assert response.status_code == 200
 
@@ -160,7 +167,12 @@ class TestValidateMcpServerForProject:
             settings_service = get_settings_service()
 
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
             )
 
             assert result.server_exists is True
@@ -170,7 +182,10 @@ class TestValidateMcpServerForProject:
             assert result.conflict_message == ""
 
         # Cleanup - delete the server
-        await client.delete("/api/v2/mcp/servers/lf-test_project", headers={"x-api-key": created_api_key.api_key})
+        await client.delete(
+            "/api/v2/mcp/servers/lf-test_project",
+            headers={"x-api-key": created_api_key.api_key},
+        )
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("transport", ["streamable", "sse"])
@@ -184,7 +199,9 @@ class TestValidateMcpServerForProject:
 
         # Create MCP server with different project ID via API
         response = await client.post(
-            f"/api/v2/mcp/servers/{server_name}", json=server_config, headers={"x-api-key": created_api_key.api_key}
+            f"/api/v2/mcp/servers/{server_name}",
+            json=server_config,
+            headers={"x-api-key": created_api_key.api_key},
         )
         assert response.status_code == 200
 
@@ -195,7 +212,13 @@ class TestValidateMcpServerForProject:
             settings_service = get_settings_service()
 
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service, "create"
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
+                "create",
             )
 
             assert result.server_exists is True
@@ -206,7 +229,10 @@ class TestValidateMcpServerForProject:
             assert str(test_project.id) in result.conflict_message
 
         # Cleanup - delete the server
-        await client.delete(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": created_api_key.api_key})
+        await client.delete(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": created_api_key.api_key},
+        )
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("transport", ["streamable", "sse"])
@@ -220,7 +246,9 @@ class TestValidateMcpServerForProject:
 
         # Create MCP server with different project ID via API
         response = await client.post(
-            f"/api/v2/mcp/servers/{server_name}", json=server_config, headers={"x-api-key": created_api_key.api_key}
+            f"/api/v2/mcp/servers/{server_name}",
+            json=server_config,
+            headers={"x-api-key": created_api_key.api_key},
         )
         assert response.status_code == 200
 
@@ -232,24 +260,45 @@ class TestValidateMcpServerForProject:
 
             # Test create operation
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service, "create"
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
+                "create",
             )
             assert "Cannot create MCP server" in result.conflict_message
 
             # Test update operation
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service, "update"
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
+                "update",
             )
             assert "Cannot update MCP server" in result.conflict_message
 
             # Test delete operation
             result = await validate_mcp_server_for_project(
-                test_project.id, test_project.name, active_user, session, storage_service, settings_service, "delete"
+                test_project.id,
+                test_project.name,
+                active_user,
+                session,
+                storage_service,
+                settings_service,
+                "delete",
             )
             assert "Cannot delete MCP server" in result.conflict_message
 
         # Cleanup - delete the server
-        await client.delete(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": created_api_key.api_key})
+        await client.delete(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": created_api_key.api_key},
+        )
 
     @pytest.mark.asyncio
     async def test_validate_server_exception_handling(self, active_user, test_project, client: AsyncClient):  # noqa: ARG002
@@ -265,7 +314,12 @@ class TestValidateMcpServerForProject:
                 mock_get_server_list.side_effect = Exception("Test error")
 
                 result = await validate_mcp_server_for_project(
-                    test_project.id, test_project.name, active_user, session, storage_service, settings_service
+                    test_project.id,
+                    test_project.name,
+                    active_user,
+                    session,
+                    storage_service,
+                    settings_service,
                 )
 
                 # Should return result allowing operation to proceed on validation failure
@@ -288,12 +342,19 @@ class TestAutoConfigureStarterProjectsMcp:
 
         async with session_scope() as session:
             # Create user
-            user = User(id=user_id, username=f"test_starter_user_{user_id}", password="hashed_password")  # noqa: S106
+            user = User(
+                id=user_id,
+                username=f"test_starter_user_{user_id}",
+                password="hashed_password",
+            )
             session.add(user)
 
             # Create starter folder
             starter_folder = Folder(
-                id=project_id, name=DEFAULT_FOLDER_NAME, user_id=user_id, description="My Collection"
+                id=project_id,
+                name=DEFAULT_FOLDER_NAME,
+                user_id=user_id,
+                description="My Collection",
             )
             session.add(starter_folder)
 
@@ -466,20 +527,38 @@ class TestMultiUserMCPServerAccess:
         if transport == "streamable":
             config_one = {
                 "command": "uvx",
-                "args": ["mcp-proxy", "--transport", "streamablehttp", f"url-one-{uuid4()}"],
+                "args": [
+                    "mcp-proxy",
+                    "--transport",
+                    "streamablehttp",
+                    f"url-one-{uuid4()}",
+                ],
             }
             config_two = {
                 "command": "uvx",
-                "args": ["mcp-proxy", "--transport", "streamablehttp", f"url-two-{uuid4()}"],
+                "args": [
+                    "mcp-proxy",
+                    "--transport",
+                    "streamablehttp",
+                    f"url-two-{uuid4()}",
+                ],
             }
             updated_config_one = {
                 "command": "uvx",
-                "args": ["mcp-proxy", "--transport", "streamablehttp", f"updated-url-one-{uuid4()}"],
+                "args": [
+                    "mcp-proxy",
+                    "--transport",
+                    "streamablehttp",
+                    f"updated-url-one-{uuid4()}",
+                ],
             }
         else:
             config_one = {"command": "uvx", "args": ["mcp-proxy", f"url-one-{uuid4()}"]}
             config_two = {"command": "uvx", "args": ["mcp-proxy", f"url-two-{uuid4()}"]}
-            updated_config_one = {"command": "uvx", "args": ["mcp-proxy", f"updated-url-one-{uuid4()}"]}
+            updated_config_one = {
+                "command": "uvx",
+                "args": ["mcp-proxy", f"updated-url-one-{uuid4()}"],
+            }
 
         # User One creates a server
         response = await client.post(
@@ -500,11 +579,17 @@ class TestMultiUserMCPServerAccess:
         assert response.json() == config_two
 
         # Verify each user gets their own server config
-        response_one = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_one_api_key})
+        response_one = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_one_api_key},
+        )
         assert response_one.status_code == 200
         assert response_one.json() == config_one
 
-        response_two = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_two_api_key})
+        response_two = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_two_api_key},
+        )
         assert response_two.status_code == 200
         assert response_two.json() == config_two
 
@@ -518,32 +603,53 @@ class TestMultiUserMCPServerAccess:
         assert response.json() == updated_config_one
 
         # Verify User One's server is updated and User Two's is not
-        response_one = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_one_api_key})
+        response_one = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_one_api_key},
+        )
         assert response_one.status_code == 200
         assert response_one.json() == updated_config_one
 
-        response_two = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_two_api_key})
+        response_two = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_two_api_key},
+        )
         assert response_two.status_code == 200
         assert response_two.json() == config_two, "User Two's server should not be affected by User One's update"
 
         # User One tries to delete User Two's server (should only delete their own)
-        response = await client.delete(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_one_api_key})
+        response = await client.delete(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_one_api_key},
+        )
         assert response.status_code == 200
 
         # Verify User One's server is deleted
-        response_one = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_one_api_key})
+        response_one = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_one_api_key},
+        )
         assert response_one.json() is None
 
         # Verify User Two's server still exists
-        response_two = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_two_api_key})
+        response_two = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_two_api_key},
+        )
         assert response_two.status_code == 200
         assert response_two.json() == config_two, "User Two's server should not be affected by User One's delete"
 
         # Cleanup: User Two deletes their server
-        response = await client.delete(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_two_api_key})
+        response = await client.delete(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_two_api_key},
+        )
         assert response.status_code == 200
 
-        response_two = await client.get(f"/api/v2/mcp/servers/{server_name}", headers={"x-api-key": user_two_api_key})
+        response_two = await client.get(
+            f"/api/v2/mcp/servers/{server_name}",
+            headers={"x-api-key": user_two_api_key},
+        )
         assert response_two.json() is None
 
 
@@ -559,11 +665,20 @@ class TestMCPWithDefaultFolderName:
 
         async with session_scope() as session:
             # Create user
-            user = User(id=user_id, username=f"test_default_folder_{user_id}", password="hashed_password")  # noqa: S106
+            user = User(
+                id=user_id,
+                username=f"test_default_folder_{user_id}",
+                password="hashed_password",
+            )
             session.add(user)
 
             # Create folder with DEFAULT_FOLDER_NAME (should match current setting)
-            folder = Folder(id=project_id, name=DEFAULT_FOLDER_NAME, user_id=user_id, description="Test folder")
+            folder = Folder(
+                id=project_id,
+                name=DEFAULT_FOLDER_NAME,
+                user_id=user_id,
+                description="Test folder",
+            )
             session.add(folder)
 
             # Create flow in folder
@@ -626,11 +741,20 @@ class TestMCPWithDefaultFolderName:
 
         async with session_scope() as session:
             # Create user
-            user = User(id=user_id, username=f"test_migrated_{user_id}", password="hashed_password")  # noqa: S106
+            user = User(
+                id=user_id,
+                username=f"test_migrated_{user_id}",
+                password="hashed_password",
+            )
             session.add(user)
 
             # Create folder with legacy name that will be migrated
-            legacy_folder = Folder(id=project_id, name="Starter Project", user_id=user_id, description="Legacy folder")
+            legacy_folder = Folder(
+                id=project_id,
+                name="Starter Project",
+                user_id=user_id,
+                description="Legacy folder",
+            )
             session.add(legacy_folder)
 
             # Create flow in folder
@@ -698,11 +822,20 @@ class TestMCPWithDefaultFolderName:
 
         async with session_scope() as session:
             # Create user
-            user = User(id=user_id, username=f"test_wrong_folder_{user_id}", password="hashed_password")  # noqa: S106
+            user = User(
+                id=user_id,
+                username=f"test_wrong_folder_{user_id}",
+                password="hashed_password",
+            )
             session.add(user)
 
             # Create folder with different name
-            folder = Folder(id=project_id, name="Some Other Folder", user_id=user_id, description="Wrong folder")
+            folder = Folder(
+                id=project_id,
+                name="Some Other Folder",
+                user_id=user_id,
+                description="Wrong folder",
+            )
             session.add(folder)
 
             # Create flow in folder

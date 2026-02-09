@@ -15,5 +15,9 @@ def compress_response(data: Any) -> Response:
     return Response(
         content=compressed_data,
         media_type="application/json",
-        headers={"Content-Encoding": "gzip", "Vary": "Accept-Encoding", "Content-Length": str(len(compressed_data))},
+        headers={
+            "Content-Encoding": "gzip",
+            "Vary": "Accept-Encoding",
+            "Content-Length": str(len(compressed_data)),
+        },
     )

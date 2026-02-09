@@ -42,7 +42,11 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
             {"version": "1.1.1", "module": "vectorstores", "file_name": "chroma"},
         ]
 
-    def test_create_db(self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]) -> None:
+    def test_create_db(
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
+    ) -> None:
         """Test the create_collection method."""
         component: ChromaVectorStoreComponent = component_class().set(**default_kwargs)
         component.build_vector_store()
@@ -56,7 +60,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert (persist_directory / "chroma.sqlite3").is_file()
 
     def test_create_collection_with_data(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the create_collection method with data."""
         # set ingest_data in default_kwargs to a list of Data objects
@@ -72,7 +78,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert collection.count() == len(test_texts)
 
     def test_similarity_search(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the similarity search functionality through the component."""
         # Create test data with distinct topics
@@ -103,7 +111,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert len(results) == 3
 
     def test_mmr_search(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the MMR search functionality through the component."""
         # Create test data with some similar documents
@@ -134,7 +144,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert len(diverse_results) == 2
 
     def test_search_with_different_types(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test search with different search types."""
         test_data = [
@@ -165,7 +177,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert len(empty_results) == 0
 
     def test_search_with_score(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the search with score functionality through the component."""
         test_data = [
@@ -181,7 +195,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
 
         # Test search with score through the component
         component.set(
-            search_type="similarity_score_threshold", search_query="programming languages", number_of_results=2
+            search_type="similarity_score_threshold",
+            search_query="programming languages",
+            number_of_results=2,
         )
         results = component.search_documents()
 
@@ -196,7 +212,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert len(results) == 3
 
     def test_duplicate_handling(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test handling of duplicate documents."""
         # Create test data with duplicates
@@ -248,7 +266,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert vector_store._collection.count() == 2
 
     def test_chroma_collection_to_data(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the chroma_collection_to_data function."""
         from wfx.base.vectorstores.utils import chroma_collection_to_data
@@ -277,7 +297,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
             assert data_obj.data["metadata_field"] in {"value1", "value2"}
 
     def test_chroma_collection_to_data_without_metadata(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the chroma_collection_to_data function with documents that have no metadata."""
         from wfx.base.vectorstores.utils import chroma_collection_to_data
@@ -304,7 +326,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
             assert data_obj.data["text"] in {"Simple document 1", "Simple document 2"}
 
     def test_chroma_collection_to_data_empty_collection(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test the chroma_collection_to_data function with an empty collection."""
         from wfx.base.vectorstores.utils import chroma_collection_to_data
@@ -321,7 +345,9 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert len(data_objects) == 0
 
     def test_metadata_filtering_with_complex_data(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any]
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
     ) -> None:
         """Test that complex metadata is properly filtered and simple types are preserved."""
         from primeagent.base.vectorstores.utils import chroma_collection_to_data
@@ -372,7 +398,10 @@ class TestChromaVectorStoreComponent(ComponentTestBaseWithoutClient):
         assert "nested" not in data_obj.data
 
     def test_metadata_filtering_fallback(
-        self, component_class: type[ChromaVectorStoreComponent], default_kwargs: dict[str, Any], monkeypatch
+        self,
+        component_class: type[ChromaVectorStoreComponent],
+        default_kwargs: dict[str, Any],
+        monkeypatch,
     ) -> None:
         """Test the fallback behavior when filter_complex_metadata import fails."""
         import builtins

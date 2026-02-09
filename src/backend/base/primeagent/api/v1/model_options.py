@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 from primeagent.api.utils import CurrentActiveUser
-from wfx.base.models.unified_models import get_embedding_model_options, get_language_model_options
+from wfx.base.models.unified_models import (
+    get_embedding_model_options,
+    get_language_model_options,
+)
 
 router = APIRouter(prefix="/model_options", tags=["Model Options"])
 

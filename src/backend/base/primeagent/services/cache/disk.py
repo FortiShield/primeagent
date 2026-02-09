@@ -49,7 +49,10 @@ class AsyncDiskCache(AsyncBaseCacheService, Generic[AsyncLockType]):
     async def _set(self, key, value) -> None:
         if self.max_size and len(self.cache) >= self.max_size:
             await asyncio.to_thread(self.cache.cull)
-        item = {"value": pickle.dumps(value) if not isinstance(value, str | bytes) else value, "time": time.time()}
+        item = {
+            "value": (pickle.dumps(value) if not isinstance(value, str | bytes) else value),
+            "time": time.time(),
+        }
         await asyncio.to_thread(self.cache.set, key, item)
 
     async def delete(self, key, lock: asyncio.Lock | None = None) -> None:

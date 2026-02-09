@@ -11,12 +11,19 @@ from wfx.utils.util_strings import truncate_long_strings
         # Test case 2: Nested dictionary
         ({"outer": {"inner": "b" * 100}}, 5, {"outer": {"inner": "b" * 5 + "..."}}),
         # Test case 3: List of strings
-        (["short", "a" * 100, "also short"], 7, ["short", "a" * 7 + "...", "also sh" + "..."]),
+        (
+            ["short", "a" * 100, "also short"],
+            7,
+            ["short", "a" * 7 + "...", "also sh" + "..."],
+        ),
         # Test case 4: Mixed nested structure
         (
             {"key1": ["a" * 100, {"nested": "b" * 100}], "key2": "c" * 100},
             8,
-            {"key1": ["a" * 8 + "...", {"nested": "b" * 8 + "..."}], "key2": "c" * 8 + "..."},
+            {
+                "key1": ["a" * 8 + "...", {"nested": "b" * 8 + "..."}],
+                "key2": "c" * 8 + "...",
+            },
         ),
         # Test case 5: Empty structures
         ({}, 10, {}),
@@ -24,14 +31,21 @@ from wfx.utils.util_strings import truncate_long_strings
         # Test case 6: Strings at exact max_length
         ({"exact": "a" * 10}, 10, {"exact": "a" * 10}),
         # Test case 7: Non-string values
-        ({"num": 12345, "bool": True, "none": None}, 5, {"num": 12345, "bool": True, "none": None}),
+        (
+            {"num": 12345, "bool": True, "none": None},
+            5,
+            {"num": 12345, "bool": True, "none": None},
+        ),
         # Test case 8: Unicode characters
         ({"unicode": "こんにちは世界"}, 3, {"unicode": "こんに..."}),
         # Test case 9: Very large structure
         (
             {"key" + str(i): "value" * i for i in range(1000)},
             10,
-            {"key" + str(i): ("value" * i)[:10] + "..." if len("value" * i) > 10 else "value" * i for i in range(1000)},
+            {
+                "key" + str(i): (("value" * i)[:10] + "..." if len("value" * i) > 10 else "value" * i)
+                for i in range(1000)
+            },
         ),
     ],
 )
@@ -48,7 +62,10 @@ def test_truncate_long_strings_default_max_length():
 
 
 def test_truncate_long_strings_no_modification():
-    input_data = {"short": "short string", "nested": {"also_short": "another short string"}}
+    input_data = {
+        "short": "short string",
+        "nested": {"also_short": "another short string"},
+    }
     result = truncate_long_strings(input_data, 100)
     assert result == input_data
 

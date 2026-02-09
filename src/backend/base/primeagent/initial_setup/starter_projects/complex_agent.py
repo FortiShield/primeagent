@@ -83,7 +83,9 @@ If it is just a general query (e.g a greeting) you can respond them directly."""
     )
     crew_component = HierarchicalCrewComponent()
     crew_component.set(
-        tasks=task.build_task, agents=[dynamic_agent.build_output], manager_agent=manager_agent.build_output
+        tasks=task.build_task,
+        agents=[dynamic_agent.build_output],
+        manager_agent=manager_agent.build_output,
     )
     chat_output = ChatOutput()
     chat_output.set(input_value=crew_component.build_output)

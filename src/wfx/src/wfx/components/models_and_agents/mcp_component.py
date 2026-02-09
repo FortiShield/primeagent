@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import uuid
+from typing import TYPE_CHECKING
 
 from langchain_core.tools import StructuredTool  # noqa: TC002
 from wfx.base.agents.utils import maybe_unflatten_dict, safe_cache_get, safe_cache_set
@@ -13,13 +14,15 @@ from wfx.base.mcp.util import (
     update_tools,
 )
 from wfx.custom.custom_component.component_with_cache import ComponentWithCache
-from wfx.inputs.inputs import InputTypes
 from wfx.io import BoolInput, DictInput, DropdownInput, McpInput, MessageTextInput, Output
 from wfx.io.schema import flatten_schema, schema_to_primeagent_inputs
 from wfx.log.logger import logger
 from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message
 from wfx.services.deps import get_storage_service, session_scope
+
+if TYPE_CHECKING:
+    from wfx.inputs.inputs import InputTypes
 
 
 def resolve_mcp_config(

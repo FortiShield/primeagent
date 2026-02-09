@@ -55,4 +55,9 @@ def validate_component_code(code: str) -> ValidationResult:
         RuntimeError,
         KeyError,
     ) as e:
-        return ValidationResult(is_valid=False, code=code, error=f"{type(e).__name__}: {e}", class_name=class_name)
+        return ValidationResult(
+            is_valid=False,
+            code=code,
+            error=f"{type(e).__name__}: {e}",
+            class_name=class_name,
+        )

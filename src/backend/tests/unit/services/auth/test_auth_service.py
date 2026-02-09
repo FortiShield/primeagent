@@ -50,13 +50,18 @@ def _dummy_user(user_id: UUID, *, active: bool = True) -> User:
 
 
 @pytest.mark.anyio
-async def test_get_current_user_from_access_token_returns_active_user(auth_service: AuthService):
+async def test_get_current_user_from_access_token_returns_active_user(
+    auth_service: AuthService,
+):
     user_id = uuid4()
     db = AsyncMock()
     token = auth_service.create_token({"sub": str(user_id), "type": "access"}, timedelta(minutes=5))
     fake_user = _dummy_user(user_id)
 
-    with patch("primeagent.services.auth.service.get_user_by_id", new=AsyncMock(return_value=fake_user)) as mock_get_user:
+    with patch(
+        "primeagent.services.auth.service.get_user_by_id",
+        new=AsyncMock(return_value=fake_user),
+    ) as mock_get_user:
         result = await auth_service.get_current_user_from_access_token(token, db)
 
     assert result is fake_user
@@ -80,7 +85,9 @@ async def test_get_current_user_from_access_token_rejects_expired(
 
 
 @pytest.mark.anyio
-async def test_get_current_user_from_access_token_rejects_malformed_token(auth_service: AuthService):
+async def test_get_current_user_from_access_token_rejects_malformed_token(
+    auth_service: AuthService,
+):
     """CT-010: Malformed Bearer token must raise InvalidTokenError; jwt.decode rejects invalid tokens."""
     db = AsyncMock()
     malformed_tokens = [
@@ -93,14 +100,19 @@ async def test_get_current_user_from_access_token_rejects_malformed_token(auth_s
 
 
 @pytest.mark.anyio
-async def test_get_current_user_from_access_token_requires_active_user(auth_service: AuthService):
+async def test_get_current_user_from_access_token_requires_active_user(
+    auth_service: AuthService,
+):
     user_id = uuid4()
     db = AsyncMock()
     token = auth_service.create_token({"sub": str(user_id), "type": "access"}, timedelta(minutes=5))
     inactive_user = _dummy_user(user_id, active=False)
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_id", new=AsyncMock(return_value=inactive_user)),
+        patch(
+            "primeagent.services.auth.service.get_user_by_id",
+            new=AsyncMock(return_value=inactive_user),
+        ),
         pytest.raises(InactiveUserError),
     ):
         await auth_service.get_current_user_from_access_token(token, db)
@@ -224,7 +236,10 @@ async def test_create_refresh_token_valid(auth_service: AuthService):
     refresh_token = auth_service.create_token({"sub": str(user_id), "type": "refresh"}, timedelta(minutes=5))
     fake_user = _dummy_user(user_id)
 
-    with patch("primeagent.services.auth.service.get_user_by_id", new=AsyncMock(return_value=fake_user)):
+    with patch(
+        "primeagent.services.auth.service.get_user_by_id",
+        new=AsyncMock(return_value=fake_user),
+    ):
         result = await auth_service.create_refresh_token(refresh_token, db)
 
     assert "access_token" in result
@@ -239,7 +254,10 @@ async def test_create_refresh_token_user_not_found(auth_service: AuthService):
     refresh_token = auth_service.create_token({"sub": str(user_id), "type": "refresh"}, timedelta(minutes=5))
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_id", new=AsyncMock(return_value=None)),
+        patch(
+            "primeagent.services.auth.service.get_user_by_id",
+            new=AsyncMock(return_value=None),
+        ),
         pytest.raises(HTTPException) as exc,
     ):
         await auth_service.create_refresh_token(refresh_token, db)
@@ -256,7 +274,10 @@ async def test_create_refresh_token_inactive_user(auth_service: AuthService):
     inactive_user = _dummy_user(user_id, active=False)
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_id", new=AsyncMock(return_value=inactive_user)),
+        patch(
+            "primeagent.services.auth.service.get_user_by_id",
+            new=AsyncMock(return_value=inactive_user),
+        ),
         pytest.raises(HTTPException) as exc,
     ):
         await auth_service.create_refresh_token(refresh_token, db)
@@ -345,7 +366,10 @@ async def test_authenticate_user_success(auth_service: AuthService):
     )
     db = AsyncMock()
 
-    with patch("primeagent.services.auth.service.get_user_by_username", new=AsyncMock(return_value=user)):
+    with patch(
+        "primeagent.services.auth.service.get_user_by_username",
+        new=AsyncMock(return_value=user),
+    ):
         result = await auth_service.authenticate_user("testuser", password, db)
 
     assert result is user
@@ -365,7 +389,10 @@ async def test_authenticate_user_wrong_password(auth_service: AuthService):
     )
     db = AsyncMock()
 
-    with patch("primeagent.services.auth.service.get_user_by_username", new=AsyncMock(return_value=user)):
+    with patch(
+        "primeagent.services.auth.service.get_user_by_username",
+        new=AsyncMock(return_value=user),
+    ):
         result = await auth_service.authenticate_user("testuser", "wrong_password", db)
 
     assert result is None
@@ -376,7 +403,10 @@ async def test_authenticate_user_not_found(auth_service: AuthService):
     """Test authentication returns None for non-existent user."""
     db = AsyncMock()
 
-    with patch("primeagent.services.auth.service.get_user_by_username", new=AsyncMock(return_value=None)):
+    with patch(
+        "primeagent.services.auth.service.get_user_by_username",
+        new=AsyncMock(return_value=None),
+    ):
         result = await auth_service.authenticate_user("nonexistent", "password", db)
 
     assert result is None
@@ -396,7 +426,10 @@ async def test_authenticate_user_inactive_never_logged_in(auth_service: AuthServ
     db = AsyncMock()
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_username", new=AsyncMock(return_value=user)),
+        patch(
+            "primeagent.services.auth.service.get_user_by_username",
+            new=AsyncMock(return_value=user),
+        ),
         pytest.raises(HTTPException) as exc,
     ):
         await auth_service.authenticate_user("testuser", "password", db)
@@ -406,7 +439,9 @@ async def test_authenticate_user_inactive_never_logged_in(auth_service: AuthServ
 
 
 @pytest.mark.anyio
-async def test_authenticate_user_inactive_previously_logged_in(auth_service: AuthService):
+async def test_authenticate_user_inactive_previously_logged_in(
+    auth_service: AuthService,
+):
     """Test inactive user who previously logged in gets 'inactive user'."""
     user = User(
         id=uuid4(),
@@ -419,7 +454,10 @@ async def test_authenticate_user_inactive_previously_logged_in(auth_service: Aut
     db = AsyncMock()
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_username", new=AsyncMock(return_value=user)),
+        patch(
+            "primeagent.services.auth.service.get_user_by_username",
+            new=AsyncMock(return_value=user),
+        ),
         pytest.raises(HTTPException) as exc,
     ):
         await auth_service.authenticate_user("testuser", "password", db)

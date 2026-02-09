@@ -15,7 +15,10 @@ async def create_flow(client: AsyncClient, flow_data: str, headers: dict[str, st
 
 
 async def build_flow(
-    client: AsyncClient, flow_id: UUID, headers: dict[str, str], json: dict[str, Any] | None = None
+    client: AsyncClient,
+    flow_id: UUID,
+    headers: dict[str, str],
+    json: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Start a flow build and return the job_id."""
     if json is None:

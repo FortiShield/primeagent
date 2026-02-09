@@ -113,9 +113,20 @@ class OpenTelemetry(metaclass=ThreadSafeSingletonMetaUsingWeakref):
     prometheus_enabled: bool = True
 
     def _add_metric(
-        self, name: str, description: str, unit: str, metric_type: MetricType, labels: dict[str, bool]
+        self,
+        name: str,
+        description: str,
+        unit: str,
+        metric_type: MetricType,
+        labels: dict[str, bool],
     ) -> None:
-        metric = Metric(name=name, description=description, metric_type=metric_type, unit=unit, labels=labels)
+        metric = Metric(
+            name=name,
+            description=description,
+            metric_type=metric_type,
+            unit=unit,
+            labels=labels,
+        )
         self._metrics_registry[name] = metric
         if labels is None or len(labels) == 0:
             msg = "Labels must be provided for the metric upon registration"

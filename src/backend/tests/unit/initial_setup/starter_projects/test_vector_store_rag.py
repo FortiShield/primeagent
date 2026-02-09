@@ -28,17 +28,31 @@ def ingestion_graph():
     text_splitter.set(data_inputs=file_component.load_files_message)
     openai_embeddings = OpenAIEmbeddingsComponent(_id="openai-embeddings-123")
     openai_embeddings.set(
-        openai_api_key="sk-123", openai_api_base="https://api.openai.com/v1", openai_api_type="openai"
+        openai_api_key="sk-123",
+        openai_api_base="https://api.openai.com/v1",
+        openai_api_type="openai",
     )
 
     vector_store = AstraDBVectorStoreComponent(_id="ingestion-vector-store-123")
 
     # Mock search_documents by changing the value otherwise set by the vector_store_connection_decorator
-    vector_store.set_on_output(name="vectorstoreconnection", value=[Data(text="This is a test file.")], cache=True)
+    vector_store.set_on_output(
+        name="vectorstoreconnection",
+        value=[Data(text="This is a test file.")],
+        cache=True,
+    )
 
-    vector_store.set_on_output(name="vectorstoreconnection", value=[Data(text="This is a test file.")], cache=True)
+    vector_store.set_on_output(
+        name="vectorstoreconnection",
+        value=[Data(text="This is a test file.")],
+        cache=True,
+    )
     vector_store.set_on_output(name="search_results", value=[Data(text="This is a test file.")], cache=True)
-    vector_store.set_on_output(name="dataframe", value=DataFrame(data=[Data(text="This is a test file.")]), cache=True)
+    vector_store.set_on_output(
+        name="dataframe",
+        value=DataFrame(data=[Data(text="This is a test file.")]),
+        cache=True,
+    )
     vector_store.set(
         embedding_model=openai_embeddings.build_embeddings,
         ingest_data=text_splitter.split_text,
@@ -114,7 +128,10 @@ async def test_vector_store_rag(ingestion_graph, rag_graph):
         "rag-vector-store-123",
         "openai-embeddings-124",
     ]
-    for ids, graph, len_results in [(ingestion_ids, ingestion_graph, 5), (rag_ids, rag_graph, 8)]:
+    for ids, graph, len_results in [
+        (ingestion_ids, ingestion_graph, 5),
+        (rag_ids, rag_graph, 8),
+    ]:
         results = [result async for result in graph.async_start(reset_output_values=False)]
         assert len(results) == len_results
         vids = [result.vertex.id for result in results if hasattr(result, "vertex")]
@@ -125,7 +142,9 @@ async def test_vector_store_rag(ingestion_graph, rag_graph):
 def test_vector_store_rag_dump_components_and_edges(ingestion_graph, rag_graph):
     # Test ingestion graph components and edges
     ingestion_graph_dump = ingestion_graph.dump(
-        name="Ingestion Graph", description="Graph for data ingestion", endpoint_name="ingestion"
+        name="Ingestion Graph",
+        description="Graph for data ingestion",
+        endpoint_name="ingestion",
     )
 
     ingestion_data = ingestion_graph_dump["data"]
@@ -172,7 +191,9 @@ def test_vector_store_rag_dump_components_and_edges(ingestion_graph, rag_graph):
 
     # Test RAG graph components and edges
     rag_graph_dump = rag_graph.dump(
-        name="RAG Graph", description="Graph for Retrieval-Augmented Generation", endpoint_name="rag"
+        name="RAG Graph",
+        description="Graph for Retrieval-Augmented Generation",
+        endpoint_name="rag",
     )
 
     rag_data = rag_graph_dump["data"]
@@ -219,7 +240,10 @@ def test_vector_store_rag_dump_components_and_edges(ingestion_graph, rag_graph):
     for edge in rag_edges:
         source = edge["source"]
         target = edge["target"]
-        assert (source, target) in expected_rag_edges, f"Edge {source} -> {target} not found"
+        assert (
+            source,
+            target,
+        ) in expected_rag_edges, f"Edge {source} -> {target} not found"
 
 
 def test_vector_store_rag_add(ingestion_graph: Graph, rag_graph: Graph):
@@ -236,7 +260,9 @@ def test_vector_store_rag_add(ingestion_graph: Graph, rag_graph: Graph):
     )
 
     combined_graph_dump = ingestion_graph_copy.dump(
-        name="Combined Graph", description="Graph for data ingestion and RAG", endpoint_name="combined"
+        name="Combined Graph",
+        description="Graph for data ingestion and RAG",
+        endpoint_name="combined",
     )
 
     combined_data = combined_graph_dump["data"]
@@ -287,13 +313,18 @@ def test_vector_store_rag_add(ingestion_graph: Graph, rag_graph: Graph):
     for edge in combined_edges:
         source = edge["source"]
         target = edge["target"]
-        assert (source, target) in expected_combined_edges, f"Edge {source} -> {target} not found"
+        assert (
+            source,
+            target,
+        ) in expected_combined_edges, f"Edge {source} -> {target} not found"
 
 
 def test_vector_store_rag_dump(ingestion_graph, rag_graph):
     # Test ingestion graph dump
     ingestion_graph_dump = ingestion_graph.dump(
-        name="Ingestion Graph", description="Graph for data ingestion", endpoint_name="ingestion"
+        name="Ingestion Graph",
+        description="Graph for data ingestion",
+        endpoint_name="ingestion",
     )
     assert isinstance(ingestion_graph_dump, dict)
 
@@ -310,7 +341,9 @@ def test_vector_store_rag_dump(ingestion_graph, rag_graph):
 
     # Test RAG graph dump
     rag_graph_dump = rag_graph.dump(
-        name="RAG Graph", description="Graph for Retrieval-Augmented Generation", endpoint_name="rag"
+        name="RAG Graph",
+        description="Graph for Retrieval-Augmented Generation",
+        endpoint_name="rag",
     )
     assert isinstance(rag_graph_dump, dict)
 

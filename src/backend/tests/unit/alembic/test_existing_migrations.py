@@ -58,7 +58,8 @@ class TestExistingMigrations:
 
         # Pick a random legacy migration
         legacy_migration = next(
-            (f for f in migrations_dir.glob("*.py") if not f.name.startswith("00") and f.name != "__init__.py"), None
+            (f for f in migrations_dir.glob("*.py") if not f.name.startswith("00") and f.name != "__init__.py"),
+            None,
         )
 
         if legacy_migration:

@@ -64,7 +64,9 @@ class LangWatchTracer(BaseTracer):
             return False
         try:
             import langwatch
-            from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+            from opentelemetry.exporter.otlp.proto.http.trace_exporter import (
+                OTLPSpanExporter,
+            )
 
             # Initialize the shared provider if it doesn't exist
             if self.tracer_provider is None:
@@ -73,7 +75,8 @@ class LangWatchTracer(BaseTracer):
 
                 resource = Resource.create(attributes={"service.name": "primeagent"})
                 exporter = OTLPSpanExporter(
-                    endpoint=f"{endpoint}/api/otel/v1/traces", headers={"Authorization": f"Bearer {api_key}"}
+                    endpoint=f"{endpoint}/api/otel/v1/traces",
+                    headers={"Authorization": f"Bearer {api_key}"},
                 )
                 provider = TracerProvider(resource=resource)
                 provider.add_span_processor(BatchSpanProcessor(exporter))
@@ -153,8 +156,8 @@ class LangWatchTracer(BaseTracer):
         if not self._ready:
             return
         self.trace.root_span.end(
-            input=self._convert_to_langwatch_types(inputs) if self.trace.root_span.input is None else None,
-            output=self._convert_to_langwatch_types(outputs) if self.trace.root_span.output is None else None,
+            input=(self._convert_to_langwatch_types(inputs) if self.trace.root_span.input is None else None),
+            output=(self._convert_to_langwatch_types(outputs) if self.trace.root_span.output is None else None),
             error=error,
         )
 
@@ -179,7 +182,10 @@ class LangWatchTracer(BaseTracer):
 
     def _convert_to_langwatch_type(self, value):
         from langchain_core.messages import BaseMessage
-        from langwatch.langchain import langchain_message_to_chat_message, langchain_messages_to_chat_messages
+        from langwatch.langchain import (
+            langchain_message_to_chat_message,
+            langchain_messages_to_chat_messages,
+        )
         from wfx.schema.message import Message
 
         if isinstance(value, dict):

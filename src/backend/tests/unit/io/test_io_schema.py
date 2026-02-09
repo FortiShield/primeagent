@@ -2,7 +2,13 @@ from typing import TYPE_CHECKING, Literal
 
 import pytest
 from wfx.components.input_output import ChatInput
-from wfx.inputs.inputs import DropdownInput, FileInput, IntInput, NestedDictInput, StrInput
+from wfx.inputs.inputs import (
+    DropdownInput,
+    FileInput,
+    IntInput,
+    NestedDictInput,
+    StrInput,
+)
 from wfx.io.schema import create_input_schema
 
 if TYPE_CHECKING:

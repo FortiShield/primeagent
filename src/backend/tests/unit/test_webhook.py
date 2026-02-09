@@ -266,7 +266,10 @@ async def test_webhook_missing_api_key_when_required(client, added_webhook_test)
     mock_auth_service = MagicMock(spec=AuthService)
     mock_auth_service.settings_service = mock_settings_service
     mock_auth_service.get_webhook_user = AsyncMock(
-        side_effect=HTTPException(status_code=403, detail="API key required when webhook authentication is enabled")
+        side_effect=HTTPException(
+            status_code=403,
+            detail="API key required when webhook authentication is enabled",
+        )
     )
 
     with patch("primeagent.api.v1.endpoints.get_auth_service", return_value=mock_auth_service):
@@ -831,7 +834,10 @@ class TestWebhookEventsStreamAuth:
         mock_user.id = user_id
 
         with (
-            patch("primeagent.api.v1.endpoints.get_current_user_for_sse", new_callable=AsyncMock) as mock_auth,
+            patch(
+                "primeagent.api.v1.endpoints.get_current_user_for_sse",
+                new_callable=AsyncMock,
+            ) as mock_auth,
             patch("primeagent.api.v1.endpoints.webhook_event_manager") as mock_manager,
         ):
             mock_auth.return_value = mock_user
@@ -859,7 +865,10 @@ class TestWebhookEventsStreamAuth:
 
         request = Mock()
 
-        with patch("primeagent.api.v1.endpoints.get_current_user_for_sse", new_callable=AsyncMock) as mock_auth:
+        with patch(
+            "primeagent.api.v1.endpoints.get_current_user_for_sse",
+            new_callable=AsyncMock,
+        ) as mock_auth:
             mock_auth.side_effect = HTTPException(status_code=403, detail="Missing or invalid credentials")
 
             with pytest.raises(HTTPException) as exc_info:
@@ -888,7 +897,10 @@ class TestWebhookEventsStreamAuth:
 
         request = Mock()
 
-        with patch("primeagent.api.v1.endpoints.get_current_user_for_sse", new_callable=AsyncMock) as mock_auth:
+        with patch(
+            "primeagent.api.v1.endpoints.get_current_user_for_sse",
+            new_callable=AsyncMock,
+        ) as mock_auth:
             mock_auth.return_value = mock_user
 
             with pytest.raises(HTTPException) as exc_info:

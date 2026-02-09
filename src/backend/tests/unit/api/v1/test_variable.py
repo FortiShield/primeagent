@@ -188,7 +188,9 @@ async def test_update_variable(client: AsyncClient, generic_variable, logged_in_
     generic_variable["default_fields"] = ["new_field"]
 
     response = await client.patch(
-        f"api/v1/variables/{saved.get('id')}", json=generic_variable, headers=logged_in_headers
+        f"api/v1/variables/{saved.get('id')}",
+        json=generic_variable,
+        headers=logged_in_headers,
     )
     result = response.json()
 
@@ -521,7 +523,11 @@ async def test_delete_provider_credential_cleans_up_enabled_models(client: Async
         enable_response = await client.post(
             "api/v1/models/enabled_models",
             json=[
-                {"provider": "OpenAI", "model_id": "gpt-4-turbo-preview", "enabled": True},
+                {
+                    "provider": "OpenAI",
+                    "model_id": "gpt-4-turbo-preview",
+                    "enabled": True,
+                },
             ],
             headers=logged_in_headers,
         )

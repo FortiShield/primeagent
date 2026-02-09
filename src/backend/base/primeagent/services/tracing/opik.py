@@ -60,7 +60,11 @@ class OpikTracer(BaseTracer):
             from opik import Opik
             from opik.api_objects.trace import TraceData
 
-            self._client = Opik(project_name=self._project_name, _show_misconfiguration_message=False, **config)
+            self._client = Opik(
+                project_name=self._project_name,
+                _show_misconfiguration_message=False,
+                **config,
+            )
 
             missing_configuration, _ = self._client._config.get_misconfiguration_detection_results()
 
@@ -152,7 +156,10 @@ class OpikTracer(BaseTracer):
             output: dict = {}
             output |= outputs or {}
             output |= {"logs": list(logs)} if logs else {}
-            content = {"output": output, "error_info": collect(error) if error else None}
+            content = {
+                "output": output,
+                "error_info": collect(error) if error else None,
+            }
 
             span.init_end_time().update(**content)
 
@@ -174,7 +181,10 @@ class OpikTracer(BaseTracer):
         from opik.decorator.error_info_collector import collect
 
         self.trace.init_end_time().update(
-            input=inputs, output=outputs, error_info=collect(error) if error else None, metadata=metadata
+            input=inputs,
+            output=outputs,
+            error_info=collect(error) if error else None,
+            metadata=metadata,
         )
 
         self._client.trace(**self.trace.__dict__)

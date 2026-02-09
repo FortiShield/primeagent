@@ -129,7 +129,10 @@ def set_value(component, input_name, value):
 
 
 def component_to_node(node_id, node_type, component):
-    return {"id": node_type + node_id, "data": {"node": component, "type": node_type, "id": node_id}}
+    return {
+        "id": node_type + node_id,
+        "data": {"node": component, "type": node_type, "id": node_id},
+    }
 
 
 def add_edge(source, target, from_output, to_input):
@@ -137,8 +140,18 @@ def add_edge(source, target, from_output, to_input):
         "source": source,
         "target": target,
         "data": {
-            "sourceHandle": {"dataType": "ChatInput", "id": source, "name": from_output, "output_types": ["Message"]},
-            "targetHandle": {"fieldName": to_input, "id": target, "inputTypes": ["Message"], "type": "str"},
+            "sourceHandle": {
+                "dataType": "ChatInput",
+                "id": source,
+                "name": from_output,
+                "output_types": ["Message"],
+            },
+            "targetHandle": {
+                "fieldName": to_input,
+                "id": target,
+                "inputTypes": ["Message"],
+                "type": "str",
+            },
         },
     }
 
@@ -156,7 +169,14 @@ async def test_refresh_starter_projects():
             component_to_node("chat-input-1", "ChatInput", chat_input),
             component_to_node("chat-output-1", "ChatOutput", chat_output),
         ],
-        "edges": [add_edge("ChatInput" + "chat-input-1", "ChatOutput" + "chat-output-1", "message", "input_value")],
+        "edges": [
+            add_edge(
+                "ChatInput" + "chat-input-1",
+                "ChatOutput" + "chat-output-1",
+                "message",
+                "input_value",
+            )
+        ],
     }
 
     new_change = update_projects_components_with_latest_component_versions(graph_data, all_types)
@@ -248,7 +268,10 @@ async def test_load_bundles_from_urls():
             username=settings_service.auth_settings.SUPERUSER,
             password=(
                 settings_service.auth_settings.SUPERUSER_PASSWORD.get_secret_value()
-                if hasattr(settings_service.auth_settings.SUPERUSER_PASSWORD, "get_secret_value")
+                if hasattr(
+                    settings_service.auth_settings.SUPERUSER_PASSWORD,
+                    "get_secret_value",
+                )
                 else settings_service.auth_settings.SUPERUSER_PASSWORD
             ),
             db=session,

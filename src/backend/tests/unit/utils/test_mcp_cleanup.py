@@ -31,7 +31,10 @@ class TestCleanupMcpSessions:
                 "primeagent.services.deps.get_shared_component_cache_service",
                 return_value=mock_cache_service,
             ),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock) as mock_kill,
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ) as mock_kill,
             patch("wfx.base.mcp.util.MCPSessionManager", new=type(mock_session_manager)),
         ):
             await cleanup_mcp_sessions()
@@ -51,7 +54,10 @@ class TestCleanupMcpSessions:
                 "primeagent.services.deps.get_shared_component_cache_service",
                 return_value=mock_cache_service,
             ),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock) as mock_kill,
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ) as mock_kill,
         ):
             mock_cache_service.get.return_value = cache_miss_sentinel
 
@@ -64,7 +70,10 @@ class TestCleanupMcpSessions:
         """Test cleanup handles import errors gracefully."""
         with (
             patch.dict("sys.modules", {"wfx.base.mcp.util": None}),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock) as mock_kill,
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ) as mock_kill,
         ):
             # Should not raise, should silently continue
             await cleanup_mcp_sessions()
@@ -83,7 +92,10 @@ class TestCleanupMcpSessions:
                 "primeagent.services.deps.get_shared_component_cache_service",
                 return_value=mock_cache_service,
             ),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock) as mock_kill,
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ) as mock_kill,
             patch("wfx.base.mcp.util.MCPSessionManager", new=type(mock_session_manager)),
         ):
             # Should not raise
@@ -194,7 +206,11 @@ class TestTerminateChildMcpProcesses:
         mock_psutil = MagicMock()
 
         mock_mcp_proc = MagicMock()
-        mock_mcp_proc.cmdline.return_value = ["python", "mcp-server-filesystem", "/tmp"]  # noqa: S108
+        mock_mcp_proc.cmdline.return_value = [
+            "python",
+            "mcp-server-filesystem",
+            "/tmp",
+        ]
         mock_mcp_proc.terminate = MagicMock()
         mock_mcp_proc.wait = MagicMock()
 
@@ -265,7 +281,11 @@ class TestTerminateOrphanedMcpProcesses:
             "cmdline": ["python", "other_script.py"],
         }
 
-        mock_psutil.process_iter.return_value = [mock_orphan_mcp, mock_non_orphan, mock_orphan_other]
+        mock_psutil.process_iter.return_value = [
+            mock_orphan_mcp,
+            mock_non_orphan,
+            mock_orphan_other,
+        ]
         mock_psutil.NoSuchProcess = Exception
         mock_psutil.AccessDenied = Exception
         mock_psutil.ZombieProcess = Exception
@@ -338,7 +358,11 @@ class TestTryTerminateMcpProcess:
         mock_psutil.TimeoutExpired = Exception
 
         mock_proc = MagicMock()
-        mock_proc.cmdline.return_value = ["python", "mcp-server-filesystem", "/tmp"]  # noqa: S108
+        mock_proc.cmdline.return_value = [
+            "python",
+            "mcp-server-filesystem",
+            "/tmp",
+        ]
         mock_proc.terminate = MagicMock()
         mock_proc.wait = MagicMock()
 
@@ -488,7 +512,10 @@ class TestMcpCleanupIntegration:
                 "primeagent.services.deps.get_shared_component_cache_service",
                 return_value=mock_cache_service,
             ),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock),
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ),
             patch("wfx.base.mcp.util.MCPSessionManager", new=type(mock_session_manager)),
         ):
             # Should complete without raising
@@ -523,7 +550,10 @@ class TestMcpCleanupIntegration:
                 "primeagent.services.deps.get_shared_component_cache_service",
                 return_value=mock_cache_service,
             ),
-            patch("primeagent.utils.mcp_cleanup._kill_mcp_processes", new_callable=AsyncMock),
+            patch(
+                "primeagent.utils.mcp_cleanup._kill_mcp_processes",
+                new_callable=AsyncMock,
+            ),
             patch("primeagent.utils.mcp_cleanup.logger") as mock_logger,
         ):
             mock_logger.awarning = AsyncMock()

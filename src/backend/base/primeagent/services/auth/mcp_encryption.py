@@ -13,7 +13,9 @@ SENSITIVE_FIELDS = [
 ]
 
 
-def encrypt_auth_settings(auth_settings: dict[str, Any] | None) -> dict[str, Any] | None:
+def encrypt_auth_settings(
+    auth_settings: dict[str, Any] | None,
+) -> dict[str, Any] | None:
     """Encrypt sensitive fields in auth_settings dictionary.
 
     Args:
@@ -46,7 +48,9 @@ def encrypt_auth_settings(auth_settings: dict[str, Any] | None) -> dict[str, Any
     return encrypted_settings
 
 
-def decrypt_auth_settings(auth_settings: dict[str, Any] | None) -> dict[str, Any] | None:
+def decrypt_auth_settings(
+    auth_settings: dict[str, Any] | None,
+) -> dict[str, Any] | None:
     """Decrypt sensitive fields in auth_settings dictionary.
 
     Args:
