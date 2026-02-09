@@ -26,7 +26,15 @@ from copy import deepcopy
 from typing import Annotated
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Request, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Depends,
+    HTTPException,
+    Query,
+    Request,
+    status,
+)
 from fastapi.responses import StreamingResponse
 from primeagent.api.utils import extract_global_variables_from_headers
 from primeagent.api.v1.schemas import RunResponse
@@ -35,7 +43,9 @@ from primeagent.api.v2.converters import (
     parse_flat_inputs,
     run_response_to_workflow_response,
 )
-from primeagent.api.v2.workflow_reconstruction import reconstruct_workflow_response_from_job_id
+from primeagent.api.v2.workflow_reconstruction import (
+    reconstruct_workflow_response_from_job_id,
+)
 from primeagent.exceptions.api import (
     WorkflowQueueFullError,
     WorkflowResourceError,
@@ -93,7 +103,11 @@ def check_developer_api_enabled() -> None:
         )
 
 
-router = APIRouter(prefix="/workflows", tags=["Workflow"], dependencies=[Depends(check_developer_api_enabled)])
+router = APIRouter(
+    prefix="/workflows",
+    tags=["Workflow"],
+    dependencies=[Depends(check_developer_api_enabled)],
+)
 
 
 @router.post(
@@ -363,7 +377,11 @@ async def execute_sync_workflow(
         # Pass context to graph (similar to V1's simple_run_flow)
         # This allows components to access request metadata via graph.context
         graph = Graph.from_payload(
-            graph_data, flow_id=flow_id_str, user_id=user_id, flow_name=flow.name, context=context
+            graph_data,
+            flow_id=flow_id_str,
+            user_id=user_id,
+            flow_name=flow.name,
+            context=context,
         )
         # Set run_id for tracing/logging (similar to V1's simple_run_flow)
         graph.set_run_id(job_id)
@@ -449,7 +467,11 @@ async def execute_workflow_background(
         graph_data = deepcopy(flow.data)
         graph_data = process_tweaks(graph_data, tweaks, stream=False)
         graph = Graph.from_payload(
-            graph_data, flow_id=flow_id_str, user_id=user_id, flow_name=flow.name, context=context
+            graph_data,
+            flow_id=flow_id_str,
+            user_id=user_id,
+            flow_name=flow.name,
+            context=context,
         )
         graph.set_run_id(job_id)
 
@@ -481,7 +503,11 @@ async def execute_workflow_background(
         status = JobStatus.QUEUED
         return WorkflowJobResponse(job_id=str(job_id), flow_id=workflow_request.flow_id, status=status)
 
-    except (WorkflowResourceError, WorkflowServiceUnavailableError, WorkflowQueueFullError):
+    except (
+        WorkflowResourceError,
+        WorkflowServiceUnavailableError,
+        WorkflowQueueFullError,
+    ):
         # Re-raise infrastructure/resource errors to be handled by the endpoint
         raise
     except MemoryError as exc:

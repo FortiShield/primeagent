@@ -1,7 +1,9 @@
 from wfx.schema.data import Data
 from wfx.schema.table import Column
 
-from tests.unit.components.data_source.table_schema_demo_component import TableSchemaDemoComponent
+from tests.unit.components.data_source.table_schema_demo_component import (
+    TableSchemaDemoComponent,
+)
 
 
 class TestTableSchemaDemoComponent:
@@ -77,8 +79,18 @@ class TestTableSchemaDemoComponent:
         """Test loading table data when rows are dictionaries."""
         component = TableSchemaDemoComponent()
         component.table_data = [
-            {"username": "admin", "email": "admin@example.com", "role": "admin", "active": True},
-            {"username": "user1", "email": "user1@example.com", "role": "user", "active": True},
+            {
+                "username": "admin",
+                "email": "admin@example.com",
+                "role": "admin",
+                "active": True,
+            },
+            {
+                "username": "user1",
+                "email": "user1@example.com",
+                "role": "user",
+                "active": True,
+            },
         ]
 
         result = component.load_table_data()
@@ -209,7 +221,13 @@ class TestTableSchemaDemoIntegration:
 
     def test_column_schema_with_load_from_db_true(self):
         """Test columns configured with load_from_db=True."""
-        column = Column(name="api_key", display_name="API Key", default="default-key", load_from_db=True, type="text")
+        column = Column(
+            name="api_key",
+            display_name="API Key",
+            default="default-key",
+            load_from_db=True,
+            type="text",
+        )
 
         assert column.load_from_db is True
         assert column.default == "default-key"
@@ -217,7 +235,13 @@ class TestTableSchemaDemoIntegration:
 
     def test_column_schema_with_load_from_db_false(self):
         """Test columns configured with load_from_db=False."""
-        column = Column(name="timeout", display_name="Timeout", default=30, load_from_db=False, type="integer")
+        column = Column(
+            name="timeout",
+            display_name="Timeout",
+            default=30,
+            load_from_db=False,
+            type="integer",
+        )
 
         assert column.load_from_db is False
         assert column.default == "30"

@@ -17,16 +17,40 @@ async def messages_with_flow_ids(session):  # noqa: ARG001
         # Create MessageTable objects directly since MessageCreate doesn't have flow_id field
         messagetables = [
             MessageTable(
-                text="Message 1", sender="User", sender_name="User", session_id="session_A", flow_id=flow_id_1
+                text="Message 1",
+                sender="User",
+                sender_name="User",
+                session_id="session_A",
+                flow_id=flow_id_1,
             ),
-            MessageTable(text="Message 2", sender="AI", sender_name="AI", session_id="session_A", flow_id=flow_id_1),
             MessageTable(
-                text="Message 3", sender="User", sender_name="User", session_id="session_B", flow_id=flow_id_1
+                text="Message 2",
+                sender="AI",
+                sender_name="AI",
+                session_id="session_A",
+                flow_id=flow_id_1,
             ),
             MessageTable(
-                text="Message 4", sender="User", sender_name="User", session_id="session_C", flow_id=flow_id_2
+                text="Message 3",
+                sender="User",
+                sender_name="User",
+                session_id="session_B",
+                flow_id=flow_id_1,
             ),
-            MessageTable(text="Message 5", sender="AI", sender_name="AI", session_id="session_D", flow_id=flow_id_2),
+            MessageTable(
+                text="Message 4",
+                sender="User",
+                sender_name="User",
+                session_id="session_C",
+                flow_id=flow_id_2,
+            ),
+            MessageTable(
+                text="Message 5",
+                sender="AI",
+                sender_name="AI",
+                session_id="session_D",
+                flow_id=flow_id_2,
+            ),
             MessageTable(
                 text="Message 6",
                 sender="User",
@@ -43,7 +67,13 @@ async def messages_with_flow_ids(session):  # noqa: ARG001
             "flow_id_2": flow_id_2,
             "expected_sessions_flow_1": {"session_A", "session_B"},
             "expected_sessions_flow_2": {"session_C", "session_D"},
-            "expected_all_sessions": {"session_A", "session_B", "session_C", "session_D", "session_E"},
+            "expected_all_sessions": {
+                "session_A",
+                "session_B",
+                "session_C",
+                "session_D",
+                "session_E",
+            },
         }
 
 
@@ -71,7 +101,9 @@ async def test_get_sessions_with_flow_id_filter(client: AsyncClient, logged_in_h
     flow_id_1 = messages_with_flow_ids["flow_id_1"]
 
     response = await client.get(
-        "api/v1/monitor/messages/sessions", params={"flow_id": str(flow_id_1)}, headers=logged_in_headers
+        "api/v1/monitor/messages/sessions",
+        params={"flow_id": str(flow_id_1)},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -91,7 +123,9 @@ async def test_get_sessions_with_different_flow_id(client: AsyncClient, logged_i
     flow_id_2 = messages_with_flow_ids["flow_id_2"]
 
     response = await client.get(
-        "api/v1/monitor/messages/sessions", params={"flow_id": str(flow_id_2)}, headers=logged_in_headers
+        "api/v1/monitor/messages/sessions",
+        params={"flow_id": str(flow_id_2)},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -111,7 +145,9 @@ async def test_get_sessions_with_non_existent_flow_id(client: AsyncClient, logge
     non_existent_flow_id = uuid4()
 
     response = await client.get(
-        "api/v1/monitor/messages/sessions", params={"flow_id": str(non_existent_flow_id)}, headers=logged_in_headers
+        "api/v1/monitor/messages/sessions",
+        params={"flow_id": str(non_existent_flow_id)},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -135,7 +171,9 @@ async def test_get_sessions_empty_database(client: AsyncClient, logged_in_header
 async def test_get_sessions_invalid_flow_id_format(client: AsyncClient, logged_in_headers):
     """Test getting sessions with invalid flow_id format returns 422."""
     response = await client.get(
-        "api/v1/monitor/messages/sessions", params={"flow_id": "invalid-uuid"}, headers=logged_in_headers
+        "api/v1/monitor/messages/sessions",
+        params={"flow_id": "invalid-uuid"},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 422, response.text

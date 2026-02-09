@@ -1,5 +1,16 @@
-from wfx.components.huggingface.huggingface import DEFAULT_MODEL, HuggingFaceEndpointsComponent
-from wfx.inputs.inputs import DictInput, DropdownInput, FloatInput, IntInput, SecretStrInput, SliderInput, StrInput
+from wfx.components.huggingface.huggingface import (
+    DEFAULT_MODEL,
+    HuggingFaceEndpointsComponent,
+)
+from wfx.inputs.inputs import (
+    DictInput,
+    DropdownInput,
+    FloatInput,
+    IntInput,
+    SecretStrInput,
+    SliderInput,
+    StrInput,
+)
 
 
 def test_huggingface_inputs():

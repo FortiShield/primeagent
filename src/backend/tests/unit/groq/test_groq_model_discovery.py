@@ -36,7 +36,12 @@ class TestGroqModelDiscoverySuccess:
     @patch("wfx.base.models.groq_model_discovery.requests.get")
     @patch("groq.Groq")
     def test_fetch_available_models_success(
-        self, mock_groq, mock_get, mock_api_key, mock_groq_models_response, mock_groq_client_tool_calling_success
+        self,
+        mock_groq,
+        mock_get,
+        mock_api_key,
+        mock_groq_models_response,
+        mock_groq_client_tool_calling_success,
     ):
         """Test successfully fetching models from API."""
         # Mock API response

@@ -193,7 +193,10 @@ def get_data_structure(
 
     result = {
         "structure": analyze_value(
-            data, max_depth=max_depth, size_hints=size_hints, include_samples=include_sample_structure
+            data,
+            max_depth=max_depth,
+            size_hints=size_hints,
+            include_samples=include_sample_structure,
         )
     }
 

@@ -71,15 +71,23 @@ def _next_available_name(conn, user_id: str, base_name: str) -> str:
     base, ext = _split_base_ext(base_name)
 
     # Load all sibling names once
-    rows = conn.execute(
-        sa.text("""
+    rows = (
+        conn.execute(
+            sa.text("""
             SELECT name
             FROM file
             WHERE user_id = :uid
             AND (name = :base_name OR name LIKE :like ESCAPE '\\')
         """),
-        {"uid": user_id, "base_name": base_name, "like": _like_for_suffixes(base, ext)},
-    ).scalars().all()
+            {
+                "uid": user_id,
+                "base_name": base_name,
+                "like": _like_for_suffixes(base, ext),
+            },
+        )
+        .scalars()
+        .all()
+    )
 
     taken: Set[str] = set(rows)
 
@@ -109,26 +117,24 @@ def _handle_duplicates_before_upgrade(conn) -> None:
     Keeps the most recently updated/created/id-highest record; renames the rest with _N suffix.
     """
     logger.info("Scanning for duplicate file names per user...")
-    duplicates = conn.execute(
-        sa.text(
-            """
+    duplicates = conn.execute(sa.text("""
             SELECT user_id, name, COUNT(*) AS cnt
             FROM file
             GROUP BY user_id, name
             HAVING COUNT(*) > 1
-            """
-        )
-    ).fetchall()
+            """)).fetchall()
 
     if not duplicates:
         logger.info("No duplicates found.")
         return
 
     logger.info("Found %d duplicate sets. Resolving...", len(duplicates))
-    
+
     # Add progress indicator for large datasets
     if len(duplicates) > 100:
-        logger.info("Large number of duplicates detected. This may take several minutes...")
+        logger.info(
+            "Large number of duplicates detected. This may take several minutes..."
+        )
 
     # Wrap in a nested transaction so we fail cleanly on any error
     with conn.begin_nested():
@@ -136,25 +142,36 @@ def _handle_duplicates_before_upgrade(conn) -> None:
         for batch_start in range(0, len(duplicates), BATCH_SIZE):
             batch_end = min(batch_start + BATCH_SIZE, len(duplicates))
             batch = duplicates[batch_start:batch_end]
-            
-            if len(duplicates) > BATCH_SIZE:
-                logger.info("Processing batch %d-%d of %d duplicate sets...", 
-                           batch_start + 1, batch_end, len(duplicates))
-            
-            for user_id, name, cnt in batch:
-                logger.debug("Resolving duplicates for user=%s, name=%r (count=%s)", user_id, name, cnt)
 
-                file_ids = conn.execute(
-                    sa.text(
-                        """
+            if len(duplicates) > BATCH_SIZE:
+                logger.info(
+                    "Processing batch %d-%d of %d duplicate sets...",
+                    batch_start + 1,
+                    batch_end,
+                    len(duplicates),
+                )
+
+            for user_id, name, cnt in batch:
+                logger.debug(
+                    "Resolving duplicates for user=%s, name=%r (count=%s)",
+                    user_id,
+                    name,
+                    cnt,
+                )
+
+                file_ids = (
+                    conn.execute(
+                        sa.text("""
                         SELECT id
                         FROM file
                         WHERE user_id = :uid AND name = :name
                         ORDER BY updated_at DESC, created_at DESC, id DESC
-                        """
-                    ),
-                    {"uid": user_id, "name": name},
-                ).scalars().all()
+                        """),
+                        {"uid": user_id, "name": name},
+                    )
+                    .scalars()
+                    .all()
+                )
 
                 # Keep the first (most recent), rename the rest
                 for file_id in file_ids[1:]:
@@ -164,11 +181,15 @@ def _handle_duplicates_before_upgrade(conn) -> None:
                         {"new_name": new_name, "fid": file_id},
                     )
                     logger.debug("Renamed id=%s: %r -> %r", file_id, name, new_name)
-            
+
             # Progress update for large batches
             if len(duplicates) > BATCH_SIZE and batch_end < len(duplicates):
-                logger.info("Completed %d of %d duplicate sets (%.1f%%)", 
-                           batch_end, len(duplicates), (batch_end / len(duplicates)) * 100)
+                logger.info(
+                    "Completed %d of %d duplicate sets (%.1f%%)",
+                    batch_end,
+                    len(duplicates),
+                    (batch_end / len(duplicates)) * 100,
+                )
 
     logger.info("Duplicate resolution completed.")
 
@@ -184,14 +205,18 @@ def upgrade() -> None:
     duplicate_start = time.time()
     _handle_duplicates_before_upgrade(conn)
     duplicate_duration = time.time() - duplicate_start
-    
+
     if duplicate_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info("Duplicate resolution completed in %.2f seconds", duplicate_duration)
+        logger.info(
+            "Duplicate resolution completed in %.2f seconds", duplicate_duration
+        )
 
     # 2) Detect existing single-column unique on name (if any)
     inspector = inspect(conn)  # refresh inspector
     single_name_uc = _get_unique_constraints_by_columns(inspector, "file", {"name"})
-    composite_uc = _get_unique_constraints_by_columns(inspector, "file", {"name", "user_id"})
+    composite_uc = _get_unique_constraints_by_columns(
+        inspector, "file", {"name", "user_id"}
+    )
 
     # 3) Use a unified, reflection-based batch_alter_table for both Postgres and SQLite.
     #    recreate="always" ensures a safe table rebuild on SQLite and a standard alter on Postgres.
@@ -204,14 +229,20 @@ def upgrade() -> None:
 
         # Create composite unique if not already present
         if not composite_uc:
-            logger.info("Creating composite unique: file_name_user_id_key on (name, user_id)")
-            batch_op.create_unique_constraint("file_name_user_id_key", ["name", "user_id"])
+            logger.info(
+                "Creating composite unique: file_name_user_id_key on (name, user_id)"
+            )
+            batch_op.create_unique_constraint(
+                "file_name_user_id_key", ["name", "user_id"]
+            )
         else:
             logger.info("Composite unique already present: %s", composite_uc)
-    
+
     constraint_duration = time.time() - constraint_start
     if constraint_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info("Constraint operations completed in %.2f seconds", constraint_duration)
+        logger.info(
+            "Constraint operations completed in %.2f seconds", constraint_duration
+        )
 
     total_duration = time.time() - start_time
     logger.info("Upgrade completed successfully in %.2f seconds", total_duration)
@@ -227,17 +258,13 @@ def downgrade() -> None:
     # 1) Ensure no cross-user duplicates on name (since we'll enforce global uniqueness on name)
     logger.info("Checking for cross-user duplicate names prior to downgrade...")
     validation_start = time.time()
-    
-    dup_names = conn.execute(
-        sa.text(
-            """
+
+    dup_names = conn.execute(sa.text("""
             SELECT name, COUNT(*) AS cnt
             FROM file
             GROUP BY name
             HAVING COUNT(*) > 1
-            """
-        )
-    ).fetchall()
+            """)).fetchall()
 
     validation_duration = time.time() - validation_start
     if validation_duration > 1.0:  # Only log if it took more than 1 second
@@ -253,7 +280,9 @@ def downgrade() -> None:
 
     # 2) Detect constraints
     inspector = inspect(conn)  # refresh
-    composite_uc = _get_unique_constraints_by_columns(inspector, "file", {"name", "user_id"})
+    composite_uc = _get_unique_constraints_by_columns(
+        inspector, "file", {"name", "user_id"}
+    )
     single_name_uc = _get_unique_constraints_by_columns(inspector, "file", {"name"})
 
     # 3) Perform alteration using batch with reflect to preserve other objects
@@ -270,10 +299,12 @@ def downgrade() -> None:
             batch_op.create_unique_constraint("file_name_key", ["name"])
         else:
             logger.info("Single-column unique already present: %s", single_name_uc)
-    
+
     constraint_duration = time.time() - constraint_start
     if constraint_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info("Constraint operations completed in %.2f seconds", constraint_duration)
+        logger.info(
+            "Constraint operations completed in %.2f seconds", constraint_duration
+        )
 
     total_duration = time.time() - start_time
     logger.info("Downgrade completed successfully in %.2f seconds", total_duration)

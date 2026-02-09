@@ -7,7 +7,11 @@ from typing import TYPE_CHECKING
 from primeagent.services.database.models.message.model import MessageTable
 from primeagent.services.database.models.transactions.model import TransactionTable
 from primeagent.services.database.models.vertex_builds.model import VertexBuildTable
-from primeagent.services.deps import get_settings_service, get_storage_service, session_scope
+from primeagent.services.deps import (
+    get_settings_service,
+    get_storage_service,
+    session_scope,
+)
 from sqlmodel import col, delete, select
 from wfx.log.logger import logger
 

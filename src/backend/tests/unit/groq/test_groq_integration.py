@@ -308,7 +308,10 @@ class TestGroqModelEdgeCases:
         mock_get_groq_models.return_value = {
             "llama-3.1-8b-instant": {"tool_calling": True},  # Missing not_supported
             "gemma-7b-it": {"not_supported": False},  # Missing tool_calling
-            "mixtral-8x7b-32768": {"tool_calling": True, "not_supported": False},  # Complete
+            "mixtral-8x7b-32768": {
+                "tool_calling": True,
+                "not_supported": False,
+            },  # Complete
         }
 
         groq_model_instance.api_key = mock_api_key
@@ -424,7 +427,10 @@ class TestGroqModelBackwardCompatibility:
         groq_model_instance.api_key = mock_api_key
 
         # ValueError is one of the exceptions that's caught and triggers fallback
-        with patch("wfx.components.groq.groq.get_groq_models", side_effect=ValueError("API error")):
+        with patch(
+            "wfx.components.groq.groq.get_groq_models",
+            side_effect=ValueError("API error"),
+        ):
             models = groq_model_instance.get_models()
 
             # Should return GROQ_MODELS

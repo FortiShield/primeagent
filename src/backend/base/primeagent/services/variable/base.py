@@ -2,7 +2,11 @@ import abc
 from uuid import UUID
 
 from primeagent.services.base import Service
-from primeagent.services.database.models.variable.model import Variable, VariableRead, VariableUpdate
+from primeagent.services.database.models.variable.model import (
+    Variable,
+    VariableRead,
+    VariableUpdate,
+)
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 
@@ -145,7 +149,11 @@ class VariableService(Service):
 
     @abc.abstractmethod
     async def update_variable_fields(
-        self, user_id: UUID | str, variable_id: UUID | str, variable: VariableUpdate, session: AsyncSession
+        self,
+        user_id: UUID | str,
+        variable_id: UUID | str,
+        variable: VariableUpdate,
+        session: AsyncSession,
     ) -> Variable:
         """Update specific fields of a variable.
 

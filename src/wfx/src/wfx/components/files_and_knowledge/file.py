@@ -18,7 +18,7 @@ import textwrap
 from copy import deepcopy
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wfx.base.data.base_file import BaseFileComponent
 from wfx.base.data.storage_utils import parse_storage_path, read_file_bytes, validate_image_content_type
@@ -27,11 +27,13 @@ from wfx.inputs import SortableListInput
 from wfx.inputs.inputs import DropdownInput, MessageTextInput, StrInput
 from wfx.io import BoolInput, FileInput, IntInput, Output, SecretStrInput
 from wfx.schema.data import Data
-from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message
 from wfx.services.deps import get_settings_service, get_storage_service
 from wfx.utils.async_helpers import run_until_complete
 from wfx.utils.validate_cloud import is_astra_cloud_environment
+
+if TYPE_CHECKING:
+    from wfx.schema.dataframe import DataFrame
 
 
 def _get_storage_location_options():

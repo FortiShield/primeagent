@@ -50,8 +50,18 @@ class TableSchemaDemoComponent(Component):
                 ),
             ],
             value=[
-                {"username": "admin", "email": "admin@example.com", "role": "admin", "active": True},
-                {"username": "user1", "email": "user1@example.com", "role": "user", "active": True},
+                {
+                    "username": "admin",
+                    "email": "admin@example.com",
+                    "role": "admin",
+                    "active": True,
+                },
+                {
+                    "username": "user1",
+                    "email": "user1@example.com",
+                    "role": "user",
+                    "active": True,
+                },
             ],
         ),
     ]

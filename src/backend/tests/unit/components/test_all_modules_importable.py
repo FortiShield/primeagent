@@ -448,7 +448,10 @@ class TestDirectModuleImports:
         deprecated_patterns = [
             ("langchain.embeddings.base", "langchain_core.embeddings"),
             ("langchain.llms.base", "langchain_core.language_models.llms"),
-            ("langchain.chat_models.base", "langchain_core.language_models.chat_models"),
+            (
+                "langchain.chat_models.base",
+                "langchain_core.language_models.chat_models",
+            ),
             ("langchain.schema", "langchain_core.messages"),
             ("langchain.vectorstores", "langchain_community.vectorstores"),
             ("langchain.document_loaders", "langchain_community.document_loaders"),
@@ -530,7 +533,12 @@ class TestDirectModuleImports:
                         "langchain_community",
                     ]
                 ):
-                    return ("skipped", module_name, class_name, "missing optional dependency")
+                    return (
+                        "skipped",
+                        module_name,
+                        class_name,
+                        "missing optional dependency",
+                    )
                 return ("failed", module_name, class_name, error_msg)
             else:
                 return ("success", module_name, class_name, None)

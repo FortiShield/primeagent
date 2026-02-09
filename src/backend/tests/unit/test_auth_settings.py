@@ -32,7 +32,9 @@ def test_auto_login_true_forces_default_and_scrubs_password(tmp_path: Path):
     assert settings.SUPERUSER_PASSWORD.get_secret_value() == "primeagent"
 
 
-def test_auto_login_false_preserves_username_and_scrubs_password_on_reset(tmp_path: Path):
+def test_auto_login_false_preserves_username_and_scrubs_password_on_reset(
+    tmp_path: Path,
+):
     cfg_dir = tmp_path.as_posix()
     settings = AuthSettings(
         CONFIG_DIR=cfg_dir,

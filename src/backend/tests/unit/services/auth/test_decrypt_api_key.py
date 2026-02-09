@@ -26,7 +26,10 @@ def primeagent_auth_service(tmp_path):
 @pytest.fixture(autouse=True)
 def use_primeagent_auth_for_encryption(primeagent_auth_service):
     """Ensure utils use Primeagent AuthService (real encrypt/decrypt), not WFX stub."""
-    with patch("primeagent.services.auth.utils.get_auth_service", return_value=primeagent_auth_service):
+    with patch(
+        "primeagent.services.auth.utils.get_auth_service",
+        return_value=primeagent_auth_service,
+    ):
         yield
 
 

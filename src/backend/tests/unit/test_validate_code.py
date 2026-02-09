@@ -104,7 +104,10 @@ import requests
 def my_function(x):
     return requests.get(x).text
     """
-    with mock.patch("requests.get", side_effect=MissingSchema), pytest.raises(MissingSchema):
+    with (
+        mock.patch("requests.get", side_effect=MissingSchema),
+        pytest.raises(MissingSchema),
+    ):
         execute_function(code, "my_function", "invalid_url")
 
 

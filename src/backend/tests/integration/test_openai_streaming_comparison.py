@@ -34,7 +34,12 @@ load_env_vars()
 
 async def create_global_variable(client: AsyncClient, headers, name, value, variable_type="credential"):
     """Create a global variable in Primeagent."""
-    payload = {"name": name, "value": value, "type": variable_type, "default_fields": []}
+    payload = {
+        "name": name,
+        "value": value,
+        "type": variable_type,
+        "default_fields": [],
+    }
 
     response = await client.post("/api/v1/variables/", json=payload, headers=headers)
     if response.status_code != 201:
@@ -135,11 +140,19 @@ async def test_openai_streaming_format_comparison(client: AsyncClient, created_a
     logger.info("=== Testing OpenAI API Raw HTTP Format ===")
 
     async with httpx.AsyncClient() as openai_client:
-        openai_payload = {"model": "gpt-4o-mini", "input": input_msg, "tools": tools, "stream": True}
+        openai_payload = {
+            "model": "gpt-4o-mini",
+            "input": input_msg,
+            "tools": tools,
+            "stream": True,
+        }
 
         openai_response = await openai_client.post(
             "https://api.openai.com/v1/responses",
-            headers={"Authorization": f"Bearer {openai_api_key}", "Content-Type": "application/json"},
+            headers={
+                "Authorization": f"Bearer {openai_api_key}",
+                "Content-Type": "application/json",
+            },
             json=openai_payload,
         )
 
@@ -160,7 +173,12 @@ async def test_openai_streaming_format_comparison(client: AsyncClient, created_a
 
     flow, headers = await load_and_prepare_flow(client, created_api_key)
 
-    our_payload = {"model": flow["id"], "input": input_msg, "stream": True, "include": ["tool_call.results"]}
+    our_payload = {
+        "model": flow["id"],
+        "input": input_msg,
+        "stream": True,
+        "include": ["tool_call.results"],
+    }
 
     our_response = await client.post("/api/v1/responses", json=our_payload, headers=headers)
     assert our_response.status_code == 200

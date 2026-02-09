@@ -5,7 +5,10 @@ from collections.abc import Callable, Coroutine
 from typing import TYPE_CHECKING, Any
 from uuid import UUID, uuid4
 
-from primeagent.exceptions.api import WorkflowResourceError, WorkflowServiceUnavailableError
+from primeagent.exceptions.api import (
+    WorkflowResourceError,
+    WorkflowServiceUnavailableError,
+)
 from primeagent.services.base import Service
 from primeagent.services.deps import get_queue_service
 from primeagent.services.task.backends.anyio import AnyIOBackend

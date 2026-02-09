@@ -6,9 +6,21 @@ import traceback
 import uuid
 from typing import TYPE_CHECKING, Annotated
 
-from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Request, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Body,
+    Depends,
+    HTTPException,
+    Request,
+    status,
+)
 from fastapi.responses import StreamingResponse
-from primeagent.api.build import cancel_flow_build, get_flow_events_response, start_flow_build
+from primeagent.api.build import (
+    cancel_flow_build,
+    get_flow_events_response,
+    start_flow_build,
+)
 from primeagent.api.limited_background_tasks import LimitVertexBuildBackgroundTasks
 from primeagent.api.utils import (
     CurrentActiveUser,
@@ -54,7 +66,11 @@ if TYPE_CHECKING:
 router = APIRouter(tags=["Chat"])
 
 
-@router.post("/build/{flow_id}/vertices", deprecated=True, dependencies=[Depends(get_current_active_user)])
+@router.post(
+    "/build/{flow_id}/vertices",
+    deprecated=True,
+    dependencies=[Depends(get_current_active_user)],
+)
 async def retrieve_vertices_order(
     *,
     flow_id: uuid.UUID,

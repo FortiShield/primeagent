@@ -52,7 +52,12 @@ class TestNewsSearchComponent(ComponentTestBaseWithoutClient):
             assert isinstance(result, DataFrame)
             news_results_df = result
             assert len(news_results_df) == 2
-            assert list(news_results_df.columns) == ["title", "link", "published", "summary"]
+            assert list(news_results_df.columns) == [
+                "title",
+                "link",
+                "published",
+                "summary",
+            ]
             assert news_results_df.iloc[0]["title"] == "Test News 1"
             assert news_results_df.iloc[1]["title"] == "Test News 2"
 

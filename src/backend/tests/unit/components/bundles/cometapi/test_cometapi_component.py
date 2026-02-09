@@ -126,7 +126,11 @@ class TestCometAPIComponent(ComponentTestBaseWithoutClient):
         """Test successful model fetching from API."""
         mock_response = MagicMock()
         mock_response.json.return_value = {
-            "data": [{"id": "gpt-4o-mini"}, {"id": "claude-3-5-haiku-latest"}, {"id": "gemini-2.5-flash"}]
+            "data": [
+                {"id": "gpt-4o-mini"},
+                {"id": "claude-3-5-haiku-latest"},
+                {"id": "gemini-2.5-flash"},
+            ]
         }
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
@@ -138,7 +142,10 @@ class TestCometAPIComponent(ComponentTestBaseWithoutClient):
         assert models == ["gpt-4o-mini", "claude-3-5-haiku-latest", "gemini-2.5-flash"]
         mock_get.assert_called_once_with(
             "https://api.cometapi.com/v1/models",
-            headers={"Content-Type": "application/json", "Authorization": "Bearer test-cometapi-key"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer test-cometapi-key",
+            },
             timeout=10,
         )
 

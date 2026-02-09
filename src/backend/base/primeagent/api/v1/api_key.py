@@ -6,8 +6,15 @@ from primeagent.api.v1.schemas import ApiKeyCreateRequest, ApiKeysResponse
 from primeagent.services.auth import utils as auth_utils
 
 # Assuming you have these methods in your service layer
-from primeagent.services.database.models.api_key.crud import create_api_key, delete_api_key, get_api_keys
-from primeagent.services.database.models.api_key.model import ApiKeyCreate, UnmaskedApiKeyRead
+from primeagent.services.database.models.api_key.crud import (
+    create_api_key,
+    delete_api_key,
+    get_api_keys,
+)
+from primeagent.services.database.models.api_key.model import (
+    ApiKeyCreate,
+    UnmaskedApiKeyRead,
+)
 from primeagent.services.deps import get_settings_service
 
 router = APIRouter(tags=["APIKey"], prefix="/api_key")

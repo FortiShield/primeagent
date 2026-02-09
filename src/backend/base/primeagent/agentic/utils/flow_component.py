@@ -268,11 +268,17 @@ async def update_component_field_value(
             db_flow = await session.get(Flow, UUID(flow_id_str))
 
             if not db_flow:
-                return {"error": f"Flow {flow_id_str} not found in database", "success": False}
+                return {
+                    "error": f"Flow {flow_id_str} not found in database",
+                    "success": False,
+                }
 
             # Verify user has permission
             if str(db_flow.user_id) != str(user_id):
-                return {"error": "User does not have permission to update this flow", "success": False}
+                return {
+                    "error": "User does not have permission to update this flow",
+                    "success": False,
+                }
 
             # Update the flow data
             db_flow.data = flow_data

@@ -4,7 +4,10 @@ from uuid import uuid4
 
 import pytest
 from primeagent.services.database.models.vertex_builds.crud import log_vertex_build
-from primeagent.services.database.models.vertex_builds.model import VertexBuildBase, VertexBuildTable
+from primeagent.services.database.models.vertex_builds.model import (
+    VertexBuildBase,
+    VertexBuildTable,
+)
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from wfx.services.settings.base import Settings
@@ -52,7 +55,13 @@ def timestamp_generator():
     return get_timestamp
 
 
-async def create_test_builds(async_session: AsyncSession, count: int, flow_id, vertex_id, timestamp_generator=None):
+async def create_test_builds(
+    async_session: AsyncSession,
+    count: int,
+    flow_id,
+    vertex_id,
+    timestamp_generator=None,
+):
     """Helper function to create test build entries."""
     base_time = datetime.now(timezone.utc) if timestamp_generator is None else timestamp_generator(0)
 
@@ -62,7 +71,7 @@ async def create_test_builds(async_session: AsyncSession, count: int, flow_id, v
         build = VertexBuildBase(
             id=vertex_id,
             flow_id=flow_id,
-            timestamp=base_time - timedelta(minutes=i) if timestamp_generator is None else timestamp_generator(i),
+            timestamp=(base_time - timedelta(minutes=i) if timestamp_generator is None else timestamp_generator(i)),
             artifacts={},
             valid=True,
         )
@@ -124,7 +133,10 @@ async def test_log_vertex_build_max_per_vertex_limit(async_session: AsyncSession
         stmt = (
             select(func.count())
             .select_from(VertexBuildTable)
-            .where(VertexBuildTable.flow_id == vertex_build_data.flow_id, VertexBuildTable.id == vertex_build_data.id)
+            .where(
+                VertexBuildTable.flow_id == vertex_build_data.flow_id,
+                VertexBuildTable.id == vertex_build_data.id,
+            )
         )
         count = await async_session.scalar(stmt)
 
@@ -206,7 +218,11 @@ async def test_log_vertex_build_ordering(async_session: AsyncSession, timestamp_
     ],
 )
 async def test_log_vertex_build_with_different_limits(
-    async_session: AsyncSession, vertex_build_data, max_global: int, max_per_vertex: int, timestamp_generator
+    async_session: AsyncSession,
+    vertex_build_data,
+    max_global: int,
+    max_per_vertex: int,
+    timestamp_generator,
 ):
     """Test build logging with different limit configurations."""
     # Create builds with different vertex IDs
@@ -230,7 +246,10 @@ async def test_log_vertex_build_with_different_limits(
     # Insert builds one by one
     for build in builds_to_insert:
         await log_vertex_build(
-            async_session, build, max_builds_to_keep=max_global, max_builds_per_vertex=max_per_vertex
+            async_session,
+            build,
+            max_builds_to_keep=max_global,
+            max_builds_per_vertex=max_per_vertex,
         )
         await async_session.commit()
 
@@ -266,7 +285,10 @@ async def test_log_vertex_build_with_different_limits(
     vertex_count = await async_session.scalar(
         select(func.count())
         .select_from(VertexBuildTable)
-        .where(VertexBuildTable.flow_id == vertex_build_data.flow_id, VertexBuildTable.id == vertex_id)
+        .where(
+            VertexBuildTable.flow_id == vertex_build_data.flow_id,
+            VertexBuildTable.id == vertex_id,
+        )
     )
     assert vertex_count <= max_per_vertex
 

@@ -4,7 +4,15 @@ import base64
 from typing import TYPE_CHECKING, Annotated, Final
 
 from cryptography.fernet import Fernet
-from fastapi import Depends, HTTPException, Request, Security, WebSocket, WebSocketException, status
+from fastapi import (
+    Depends,
+    HTTPException,
+    Request,
+    Security,
+    WebSocket,
+    WebSocketException,
+    status,
+)
 from fastapi.security import APIKeyHeader, APIKeyQuery, OAuth2PasswordBearer
 from fastapi.security.utils import get_authorization_scheme_param
 from primeagent.services.auth.exceptions import (
@@ -145,7 +153,11 @@ def _auth_error_to_http(e: AuthenticationError) -> HTTPException:
     """
     if isinstance(
         e,
-        (MissingCredentialsError, InvalidCredentialsError, InsufficientPermissionsError),
+        (
+            MissingCredentialsError,
+            InvalidCredentialsError,
+            InsufficientPermissionsError,
+        ),
     ):
         return HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=e.message)
     return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=e.message)
@@ -224,7 +236,9 @@ async def get_current_user_for_sse(
         ) from e
 
 
-async def get_current_active_user(user: User = Depends(get_current_user)) -> User | UserRead:
+async def get_current_active_user(
+    user: User = Depends(get_current_user),
+) -> User | UserRead:
     result = await _auth_service().get_current_active_user(user)
     if result is None:
         raise HTTPException(
@@ -234,7 +248,9 @@ async def get_current_active_user(user: User = Depends(get_current_user)) -> Use
     return result
 
 
-async def get_current_active_superuser(user: User = Depends(get_current_user)) -> User | UserRead:
+async def get_current_active_superuser(
+    user: User = Depends(get_current_user),
+) -> User | UserRead:
     result = await _auth_service().get_current_active_superuser(user)
     if result is None:
         raise HTTPException(
@@ -323,5 +339,7 @@ async def get_current_user_mcp(
         raise _auth_error_to_http(e) from e
 
 
-async def get_current_active_user_mcp(user: User = Depends(get_current_user_mcp)) -> User:
+async def get_current_active_user_mcp(
+    user: User = Depends(get_current_user_mcp),
+) -> User:
     return await _auth_service().get_current_active_user_mcp(user)

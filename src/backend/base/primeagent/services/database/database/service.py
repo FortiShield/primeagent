@@ -185,7 +185,10 @@ class DatabaseService(Service):
         return {}
 
     def on_connection(self, dbapi_connection, _connection_record) -> None:
-        if isinstance(dbapi_connection, sqlite3.Connection | dialect_sqlite.aiosqlite.AsyncAdapt_aiosqlite_connection):
+        if isinstance(
+            dbapi_connection,
+            sqlite3.Connection | dialect_sqlite.aiosqlite.AsyncAdapt_aiosqlite_connection,
+        ):
             pragmas: dict = self.settings_service.settings.sqlite_pragmas or {}
             pragmas_list = []
             for key, val in pragmas.items():
@@ -431,7 +434,10 @@ class DatabaseService(Service):
         # Use engine.begin() for proper async connection management with NullPool
         async with self.engine.begin() as conn:
             return [
-                TableResults(sql_model.__tablename__, await conn.run_sync(self.check_table, sql_model))
+                TableResults(
+                    sql_model.__tablename__,
+                    await conn.run_sync(self.check_table, sql_model),
+                )
                 for sql_model in sql_models
             ]
 

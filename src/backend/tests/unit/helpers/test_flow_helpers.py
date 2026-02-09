@@ -70,10 +70,18 @@ class TestListFlowsByFlowFolder:
 
         # Mock database results
         mock_row1 = MagicMock()
-        mock_row1._mapping = {"id": str(uuid4()), "name": "Flow 1", "updated_at": "2024-01-01"}
+        mock_row1._mapping = {
+            "id": str(uuid4()),
+            "name": "Flow 1",
+            "updated_at": "2024-01-01",
+        }
 
         mock_row2 = MagicMock()
-        mock_row2._mapping = {"id": str(uuid4()), "name": "Flow 2", "updated_at": "2024-01-02"}
+        mock_row2._mapping = {
+            "id": str(uuid4()),
+            "name": "Flow 2",
+            "updated_at": "2024-01-02",
+        }
 
         with patch("primeagent.helpers.flow.session_scope") as mock_session_scope:
             mock_session = MagicMock()

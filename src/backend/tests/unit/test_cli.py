@@ -72,7 +72,11 @@ class TestSuperuserCommand:
             patch("primeagent.__main__.get_settings_service") as mock_settings2,
         ):
             # Configure settings for production mode (AUTO_LOGIN=False)
-            mock_auth_settings = type("MockAuthSettings", (), {"AUTO_LOGIN": False, "ENABLE_SUPERUSER_CLI": True})()
+            mock_auth_settings = type(
+                "MockAuthSettings",
+                (),
+                {"AUTO_LOGIN": False, "ENABLE_SUPERUSER_CLI": True},
+            )()
             mock_settings.return_value.auth_settings = mock_auth_settings
             mock_settings2.return_value.auth_settings = mock_auth_settings
 
@@ -91,7 +95,11 @@ class TestSuperuserCommand:
             patch("primeagent.__main__.get_settings_service") as mock_settings2,
         ):
             # Configure settings for AUTO_LOGIN mode
-            mock_auth_settings = type("MockAuthSettings", (), {"AUTO_LOGIN": True, "ENABLE_SUPERUSER_CLI": True})()
+            mock_auth_settings = type(
+                "MockAuthSettings",
+                (),
+                {"AUTO_LOGIN": True, "ENABLE_SUPERUSER_CLI": True},
+            )()
             mock_settings.return_value.auth_settings = mock_auth_settings
             mock_settings2.return_value.auth_settings = mock_auth_settings
 
@@ -108,7 +116,11 @@ class TestSuperuserCommand:
             patch("primeagent.services.deps.get_settings_service") as mock_settings,
             patch("primeagent.__main__.get_settings_service") as mock_settings2,
         ):
-            mock_auth_settings = type("MockAuthSettings", (), {"AUTO_LOGIN": True, "ENABLE_SUPERUSER_CLI": False})()
+            mock_auth_settings = type(
+                "MockAuthSettings",
+                (),
+                {"AUTO_LOGIN": True, "ENABLE_SUPERUSER_CLI": False},
+            )()
             mock_settings.return_value.auth_settings = mock_auth_settings
             mock_settings2.return_value.auth_settings = mock_auth_settings
 
@@ -132,11 +144,18 @@ class TestSuperuserCommand:
         with (
             patch("primeagent.services.deps.get_settings_service") as mock_settings,
             patch("primeagent.__main__.get_settings_service") as mock_settings2,
-            patch("primeagent.__main__.get_current_user_from_access_token", side_effect=Exception("Invalid token")),
+            patch(
+                "primeagent.__main__.get_current_user_from_access_token",
+                side_effect=Exception("Invalid token"),
+            ),
             patch("primeagent.__main__.check_key", return_value=None),
         ):
             # Configure settings for production mode (AUTO_LOGIN=False)
-            mock_auth_settings = type("MockAuthSettings", (), {"AUTO_LOGIN": False, "ENABLE_SUPERUSER_CLI": True})()
+            mock_auth_settings = type(
+                "MockAuthSettings",
+                (),
+                {"AUTO_LOGIN": False, "ENABLE_SUPERUSER_CLI": True},
+            )()
             mock_settings.return_value.auth_settings = mock_auth_settings
             mock_settings2.return_value.auth_settings = mock_auth_settings
 

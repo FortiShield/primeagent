@@ -28,7 +28,9 @@ def upgrade() -> None:
 
     # Suppress the SQLite foreign key warning
     with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", message=".*SQL-parsed foreign key constraint.*")
+        warnings.filterwarnings(
+            "ignore", message=".*SQL-parsed foreign key constraint.*"
+        )
         flow_fks = {fk["name"] for fk in inspector.get_foreign_keys("flow")}
 
     with op.batch_alter_table("flow", schema=None) as batch_op:
@@ -37,13 +39,21 @@ def upgrade() -> None:
         if "updated_at" not in flow_columns:
             batch_op.add_column(sa.Column("updated_at", sa.DateTime(), nullable=True))
         if "folder" not in flow_columns:
-            batch_op.add_column(sa.Column("folder", sqlmodel.sql.sqltypes.AutoString(), nullable=True))
+            batch_op.add_column(
+                sa.Column("folder", sqlmodel.sql.sqltypes.AutoString(), nullable=True)
+            )
         if "user_id" not in flow_columns:
-            batch_op.add_column(sa.Column("user_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=True))
+            batch_op.add_column(
+                sa.Column("user_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=True)
+            )
         if "ix_flow_user_id" not in flow_indexes:
-            batch_op.create_index(batch_op.f("ix_flow_user_id"), ["user_id"], unique=False)
+            batch_op.create_index(
+                batch_op.f("ix_flow_user_id"), ["user_id"], unique=False
+            )
         if "flow_user_id_fkey" not in flow_fks:
-            batch_op.create_foreign_key("flow_user_id_fkey", "user", ["user_id"], ["id"])
+            batch_op.create_foreign_key(
+                "flow_user_id_fkey", "user", ["user_id"], ["id"]
+            )
 
 
 def downgrade() -> None:
@@ -54,7 +64,9 @@ def downgrade() -> None:
 
     # Suppress the SQLite foreign key warning
     with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", message=".*SQL-parsed foreign key constraint.*")
+        warnings.filterwarnings(
+            "ignore", message=".*SQL-parsed foreign key constraint.*"
+        )
         flow_fks = {fk["name"] for fk in inspector.get_foreign_keys("flow")}
 
     with op.batch_alter_table("flow", schema=None) as batch_op:

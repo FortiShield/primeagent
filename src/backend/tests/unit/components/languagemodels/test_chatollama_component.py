@@ -745,7 +745,10 @@ class TestChatOllamaComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.ollama.ollama.ChatOllamaComponent._parse_json_response")
     async def test_build_dataframe_output_with_list_of_dicts(self, mock_parse_json, component_class, default_kwargs):
         """Test build_dataframe_output with list of dicts."""
-        mock_parse_json.return_value = [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]
+        mock_parse_json.return_value = [
+            {"name": "Alice", "age": 30},
+            {"name": "Bob", "age": 25},
+        ]
 
         component = component_class(**default_kwargs)
         result = await component.build_dataframe_output()

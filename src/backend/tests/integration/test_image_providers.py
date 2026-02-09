@@ -59,7 +59,13 @@ def test_openai_vision_api_real_call(sample_image):
     messages = [
         {
             "role": "user",
-            "content": [{"type": "text", "text": "What color is this image? Just answer with one word."}, content_dict],
+            "content": [
+                {
+                    "type": "text",
+                    "text": "What color is this image? Just answer with one word.",
+                },
+                content_dict,
+            ],
         }
     ]
 
@@ -90,7 +96,13 @@ def test_openai_vision_api_with_jpeg(sample_jpeg_image):
     assert "data:image/jpeg;base64," in content_dict["image_url"]["url"]
 
     messages = [
-        {"role": "user", "content": [{"type": "text", "text": "Describe this image in one word."}, content_dict]}
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Describe this image in one word."},
+                content_dict,
+            ],
+        }
     ]
 
     try:
@@ -120,13 +132,19 @@ def test_anthropic_vision_api_real_call(sample_image):
     mime_type = mime_type.replace("data:", "")
 
     # Anthropic format
-    anthropic_image = {"type": "image", "source": {"type": "base64", "media_type": mime_type, "data": base64_data}}
+    anthropic_image = {
+        "type": "image",
+        "source": {"type": "base64", "media_type": mime_type, "data": base64_data},
+    }
 
     # Test the message structure with Anthropic Claude
     messages = [
         {
             "role": "user",
-            "content": [{"type": "text", "text": "What is in this image? Answer in one word."}, anthropic_image],
+            "content": [
+                {"type": "text", "text": "What is in this image? Answer in one word."},
+                anthropic_image,
+            ],
         }
     ]
 
@@ -161,10 +179,19 @@ def test_anthropic_vision_api_with_jpeg(sample_jpeg_image):
     mime_type = mime_type.replace("data:", "")
 
     # Anthropic format
-    anthropic_image = {"type": "image", "source": {"type": "base64", "media_type": mime_type, "data": base64_data}}
+    anthropic_image = {
+        "type": "image",
+        "source": {"type": "base64", "media_type": mime_type, "data": base64_data},
+    }
 
     messages = [
-        {"role": "user", "content": [{"type": "text", "text": "What do you see? One word answer."}, anthropic_image]}
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What do you see? One word answer."},
+                anthropic_image,
+            ],
+        }
     ]
 
     try:
@@ -291,7 +318,13 @@ def test_cross_provider_consistency(sample_image):
         openai_response = openai_client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "user", "content": [{"type": "text", "text": "What color is this? One word."}, content_dict]}
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "What color is this? One word."},
+                        content_dict,
+                    ],
+                }
             ],
             max_tokens=5,
         )
@@ -313,7 +346,10 @@ def test_cross_provider_consistency(sample_image):
         mime_type, base64_data = data_url.split(";base64,")
         mime_type = mime_type.replace("data:", "")
 
-        anthropic_image = {"type": "image", "source": {"type": "base64", "media_type": mime_type, "data": base64_data}}
+        anthropic_image = {
+            "type": "image",
+            "source": {"type": "base64", "media_type": mime_type, "data": base64_data},
+        }
 
         anthropic_response = anthropic_client.messages.create(
             model="claude-3-haiku-20240307",
@@ -321,7 +357,10 @@ def test_cross_provider_consistency(sample_image):
             messages=[
                 {
                     "role": "user",
-                    "content": [{"type": "text", "text": "What color is this? One word."}, anthropic_image],
+                    "content": [
+                        {"type": "text", "text": "What color is this? One word."},
+                        anthropic_image,
+                    ],
                 }
             ],
         )

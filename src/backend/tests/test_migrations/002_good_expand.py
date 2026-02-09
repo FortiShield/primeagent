@@ -21,7 +21,10 @@ def upgrade():
 
     # ✅ Good: nullable column with existence check
     if "email_verified" not in columns:
-        op.add_column("users", sa.Column("email_verified", sa.Boolean(), nullable=True, server_default="false"))
+        op.add_column(
+            "users",
+            sa.Column("email_verified", sa.Boolean(), nullable=True, server_default="false"),
+        )
 
 
 def downgrade():

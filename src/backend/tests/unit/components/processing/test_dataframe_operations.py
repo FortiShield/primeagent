@@ -8,8 +8,20 @@ from wfx.schema.dataframe import DataFrame
 def sample_dataframe():
     """Create a comprehensive sample DataFrame for testing."""
     data = {
-        "name": ["John Doe", "Jane Smith", "Bob Johnson", "Alice Brown", "Charlie Wilson"],
-        "email": ["john@gmail.com", "jane@yahoo.com", "bob@gmail.com", "alice@hotmail.com", "charlie@outlook.com"],
+        "name": [
+            "John Doe",
+            "Jane Smith",
+            "Bob Johnson",
+            "Alice Brown",
+            "Charlie Wilson",
+        ],
+        "email": [
+            "john@gmail.com",
+            "jane@yahoo.com",
+            "bob@gmail.com",
+            "alice@hotmail.com",
+            "charlie@outlook.com",
+        ],
         "age": [25, 30, 35, 28, 42],
         "salary": [50000, 60000, 70000, 55000, 80000],
         "department": ["IT", "HR", "Finance", "IT", "Marketing"],
@@ -391,7 +403,12 @@ def test_all_filter_operators_comprehensive():
     data = pd.DataFrame(
         {
             "name": ["John", "Jane", "Bob", "Alice"],
-            "email": ["john@gmail.com", "jane@yahoo.com", "bob@gmail.com", "alice@test.org"],
+            "email": [
+                "john@gmail.com",
+                "jane@yahoo.com",
+                "bob@gmail.com",
+                "alice@test.org",
+            ],
             "age": [25, 30, 35, 28],
             "score": [85.5, 92.0, 78.5, 88.0],
         }

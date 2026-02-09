@@ -15,7 +15,11 @@ pytestmark = pytest.mark.asyncio
 @pytest.fixture
 def mock_user():
     return User(
-        id=uuid4(), username="testuser", password=get_password_hash("testpassword"), is_active=True, is_superuser=False
+        id=uuid4(),
+        username="testuser",
+        password=get_password_hash("testpassword"),
+        is_active=True,
+        is_superuser=False,
     )
 
 
@@ -285,7 +289,10 @@ async def test_streamable_http_start_stop_lifecycle():
     manager_instance.run.return_value = _DummyRunContext(entered, exited)
 
     with (
-        patch("primeagent.api.v1.mcp.StreamableHTTPSessionManager", return_value=manager_instance),
+        patch(
+            "primeagent.api.v1.mcp.StreamableHTTPSessionManager",
+            return_value=manager_instance,
+        ),
         patch("primeagent.api.v1.mcp.logger.adebug", new_callable=AsyncMock),
     ):
         streamable_http = StreamableHTTP()
@@ -306,7 +313,10 @@ async def test_streamable_http_start_failure_keeps_manager_unavailable():
     manager_instance.run.return_value = _FailingRunContext(failure)
 
     with (
-        patch("primeagent.api.v1.mcp.StreamableHTTPSessionManager", return_value=manager_instance),
+        patch(
+            "primeagent.api.v1.mcp.StreamableHTTPSessionManager",
+            return_value=manager_instance,
+        ),
         patch("primeagent.api.v1.mcp.logger.adebug", new_callable=AsyncMock),
         patch("primeagent.api.v1.mcp.logger.aexception", new_callable=AsyncMock),
     ):
@@ -328,7 +338,10 @@ async def test_streamable_http_start_failure_surfaces_exception_once():
 
     async_logger = AsyncMock()
     with (
-        patch("primeagent.api.v1.mcp.StreamableHTTPSessionManager", return_value=manager_instance),
+        patch(
+            "primeagent.api.v1.mcp.StreamableHTTPSessionManager",
+            return_value=manager_instance,
+        ),
         patch("primeagent.api.v1.mcp.logger.aexception", new=async_logger),
     ):
         streamable_http = StreamableHTTP()

@@ -218,8 +218,14 @@ class TestAPIRequestComponent(ComponentTestBaseWithoutClient):
         assert component._process_body(json_str) == {"key": "value"}
 
         # Test list body
-        list_body = [{"key": "key1", "value": "value1"}, {"key": "key2", "value": "value2"}]
-        assert component._process_body(list_body) == {"key1": "value1", "key2": "value2"}
+        list_body = [
+            {"key": "key1", "value": "value1"},
+            {"key": "key2", "value": "value2"},
+        ]
+        assert component._process_body(list_body) == {
+            "key1": "value1",
+            "key2": "value2",
+        }
 
         # Test Data object body
         data_body = Data(data={"id": 123, "name": "John Doe"})
@@ -277,7 +283,10 @@ class TestAPIRequestComponent(ComponentTestBaseWithoutClient):
                 "headers": {"value": [], "advanced": True},
                 "body": {"value": [], "advanced": True},
                 "mode": {"value": "URL", "advanced": False},
-                "curl_input": {"value": "curl -X GET https://example.com/api/test", "advanced": True},
+                "curl_input": {
+                    "value": "curl -X GET https://example.com/api/test",
+                    "advanced": True,
+                },
                 "timeout": {"value": 30, "advanced": True},
                 "follow_redirects": {"value": True, "advanced": True},
                 "save_to_file": {"value": False, "advanced": True},
@@ -334,7 +343,10 @@ class TestAPIRequestComponent(ComponentTestBaseWithoutClient):
 
         # Test binary response
         binary_response = Response(
-            200, content=b"binary content", headers={"Content-Type": "application/octet-stream"}, request=request
+            200,
+            content=b"binary content",
+            headers={"Content-Type": "application/octet-stream"},
+            request=request,
         )
         is_binary, file_path = await component._response_info(binary_response, with_file_path=True)
 
@@ -462,7 +474,10 @@ class TestAPIRequestSSRFProtection:
         with (
             patch.dict(
                 os.environ,
-                {"PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true", "PRIMEAGENT_SSRF_ALLOWED_HOSTS": "internal.company.local"},
+                {
+                    "PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true",
+                    "PRIMEAGENT_SSRF_ALLOWED_HOSTS": "internal.company.local",
+                },
             ),
             respx.mock,
         ):
@@ -479,7 +494,10 @@ class TestAPIRequestSSRFProtection:
         with (
             patch.dict(
                 os.environ,
-                {"PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true", "PRIMEAGENT_SSRF_ALLOWED_HOSTS": "192.168.1.0/24"},
+                {
+                    "PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true",
+                    "PRIMEAGENT_SSRF_ALLOWED_HOSTS": "192.168.1.0/24",
+                },
             ),
             respx.mock,
         ):
@@ -493,7 +511,10 @@ class TestAPIRequestSSRFProtection:
         """Test that warn_only mode logs warnings instead of blocking."""
         component.url_input = "http://127.0.0.1:8080/admin"
 
-        with patch.dict(os.environ, {"PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true"}), respx.mock:
+        with (
+            patch.dict(os.environ, {"PRIMEAGENT_SSRF_PROTECTION_ENABLED": "true"}),
+            respx.mock,
+        ):
             respx.get("http://127.0.0.1:8080/admin").mock(return_value=Response(200, json={"status": "ok"}))
 
             # In warn_only mode (default), should not raise but should log

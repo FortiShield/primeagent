@@ -96,9 +96,18 @@ def embeddings_with_models_ollama(embedding_bge):
 def sample_documents():
     """Create sample documents for testing."""
     return [
-        Data(text="Python is a programming language", data={"text": "Python is a programming language"}),
-        Data(text="Machine learning uses neural networks", data={"text": "Machine learning uses neural networks"}),
-        Data(text="OpenSearch is a search engine", data={"text": "OpenSearch is a search engine"}),
+        Data(
+            text="Python is a programming language",
+            data={"text": "Python is a programming language"},
+        ),
+        Data(
+            text="Machine learning uses neural networks",
+            data={"text": "Machine learning uses neural networks"},
+        ),
+        Data(
+            text="OpenSearch is a search engine",
+            data={"text": "OpenSearch is a search engine"},
+        ),
     ]
 
 
@@ -472,7 +481,10 @@ class TestOpenSearchMultimodalIntegration:
             {
                 "opensearch_url": "http://localhost:9200",
                 "index_name": "test_index",
-                "embedding": [embeddings_with_models_openai, embeddings_with_models_ollama],
+                "embedding": [
+                    embeddings_with_models_openai,
+                    embeddings_with_models_ollama,
+                ],
                 "auth_mode": "No Authentication",
                 "number_of_results": 5,
             }

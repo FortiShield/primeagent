@@ -334,7 +334,10 @@ class S3StorageService(StorageService):
 
         except Exception as e:
             # Check if it's a 404 error
-            if hasattr(e, "response") and e.response.get("Error", {}).get("Code") in ["NoSuchKey", "404"]:
+            if hasattr(e, "response") and e.response.get("Error", {}).get("Code") in [
+                "NoSuchKey",
+                "404",
+            ]:
                 await logger.awarning(f"File {file_name} not found in S3 flow {flow_id}")
                 msg = f"File not found: {file_name}"
                 raise FileNotFoundError(msg) from e

@@ -53,7 +53,10 @@ from primeagent.api.v1.schemas import (
     MCPSettings,
 )
 from primeagent.services.auth.constants import AUTO_LOGIN_WARNING
-from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
+from primeagent.services.auth.mcp_encryption import (
+    decrypt_auth_settings,
+    encrypt_auth_settings,
+)
 from primeagent.services.database.models import Flow, Folder
 from primeagent.services.database.models.api_key.crud import check_key, create_api_key
 from primeagent.services.database.models.api_key.model import ApiKey, ApiKeyCreate
@@ -178,7 +181,10 @@ async def verify_project_auth_conditional(
         from primeagent.services.auth.utils import get_current_user_mcp
 
         user = await get_current_user_mcp(
-            token=token or "", query_param=api_key_query_value, header_param=api_key_header_value, db=session
+            token=token or "",
+            query_param=api_key_query_value,
+            header_param=api_key_header_value,
+            db=session,
         )
 
         # Verify project access
@@ -606,7 +612,10 @@ async def update_project_mcp_settings(
                     streamable_http_url = await get_project_streamable_http_url(project_id)
                     legacy_sse_url = await get_project_sse_url(project_id)
                     if not streamable_http_url:
-                        raise HTTPException(status_code=500, detail="Failed to get direct Streamable HTTP URL")
+                        raise HTTPException(
+                            status_code=500,
+                            detail="Failed to get direct Streamable HTTP URL",
+                        )
 
                     response["result"] = {
                         "project_id": str(project_id),
@@ -690,7 +699,10 @@ async def install_mcp_config(
     # Check if the request is coming from a local IP address
     client_ip = get_client_ip(request)
     if not is_local_ip(client_ip):
-        raise HTTPException(status_code=500, detail="MCP configuration can only be installed from a local connection")
+        raise HTTPException(
+            status_code=500,
+            detail="MCP configuration can only be installed from a local connection",
+        )
 
     removed_servers: list[str] = []  # Track removed servers for reinstallation
     try:
@@ -734,7 +746,10 @@ async def install_mcp_config(
         connection_urls: list[str]
         transport_mode = (body.transport or "sse").lower()
         if transport_mode not in {"sse", "streamablehttp"}:
-            raise HTTPException(status_code=400, detail="Invalid transport. Use 'sse' or 'streamablehttp'.")
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid transport. Use 'sse' or 'streamablehttp'.",
+            )
 
         if use_mcp_composer:
             try:
@@ -812,7 +827,11 @@ async def install_mcp_config(
 
         mcp_config = {"mcpServers": {server_name: server_config}}
 
-        await logger.adebug("Installing MCP config for project: %s (server name: %s)", project.name, server_name)
+        await logger.adebug(
+            "Installing MCP config for project: %s (server name: %s)",
+            project.name,
+            server_name,
+        )
 
         # Get the config file path and check if client is available
         try:
@@ -849,7 +868,10 @@ async def install_mcp_config(
         existing_config, removed_servers = remove_server_by_urls(existing_config, connection_urls)
 
         if removed_servers:
-            await logger.adebug("Removed existing MCP servers with same SSE URL for reinstall: %s", removed_servers)
+            await logger.adebug(
+                "Removed existing MCP servers with same SSE URL for reinstall: %s",
+                removed_servers,
+            )
 
         # Merge new config with existing config
         existing_config["mcpServers"].update(mcp_config["mcpServers"])
@@ -980,7 +1002,9 @@ async def check_installed_mcp_servers(
             project_sse_url = await get_project_sse_url(project_id)
 
         await logger.adebug(
-            "Checking for installed MCP servers for project: %s (SSE URL: %s)", project.name, project_sse_url
+            "Checking for installed MCP servers for project: %s (SSE URL: %s)",
+            project.name,
+            project_sse_url,
         )
 
         # Define supported clients
@@ -994,7 +1018,12 @@ async def check_installed_mcp_servers(
                 available = config_path.parent.exists()
                 installed = False
 
-                await logger.adebug("Checking %s config at: %s (exists: %s)", client_name, config_path, available)
+                await logger.adebug(
+                    "Checking %s config at: %s (exists: %s)",
+                    client_name,
+                    config_path,
+                    available,
+                )
 
                 # If config file exists, check if project is installed
                 if available:
@@ -1003,7 +1032,9 @@ async def check_installed_mcp_servers(
                             config_data = json.load(f)
                         if config_contains_server_url(config_data, [project_streamable_url, project_sse_url]):
                             await logger.adebug(
-                                "Found %s config with matching URL for project %s", client_name, project.name
+                                "Found %s config with matching URL for project %s",
+                                client_name,
+                                project.name,
                             )
                             installed = True
                         else:
@@ -1014,13 +1045,27 @@ async def check_installed_mcp_servers(
                                 list(config_data.get("mcpServers", {}).keys()),
                             )
                     except json.JSONDecodeError:
-                        await logger.awarning("Failed to parse %s config JSON at: %s", client_name, config_path)
+                        await logger.awarning(
+                            "Failed to parse %s config JSON at: %s",
+                            client_name,
+                            config_path,
+                        )
                         # available is True but installed remains False due to parse error
                 else:
-                    await logger.adebug("%s config path not found or doesn't exist: %s", client_name, config_path)
+                    await logger.adebug(
+                        "%s config path not found or doesn't exist: %s",
+                        client_name,
+                        config_path,
+                    )
 
                 # Add result for this client
-                results.append({"name": client_name, "installed": installed, "available": available})
+                results.append(
+                    {
+                        "name": client_name,
+                        "installed": installed,
+                        "available": available,
+                    }
+                )
 
             except Exception as e:  # noqa: BLE001
                 # If there's an error getting config path or checking the client,

@@ -7,7 +7,12 @@ from uuid import UUID
 
 from primeagent.services.auth import utils as auth_utils
 from primeagent.services.base import Service
-from primeagent.services.database.models.variable.model import Variable, VariableCreate, VariableRead, VariableUpdate
+from primeagent.services.database.models.variable.model import (
+    Variable,
+    VariableCreate,
+    VariableRead,
+    VariableUpdate,
+)
 from primeagent.services.variable.base import VariableService
 from primeagent.services.variable.constants import CREDENTIAL_TYPE, GENERIC_TYPE
 from sqlmodel import select
@@ -31,7 +36,9 @@ class DatabaseVariableService(VariableService, Service):
 
         # Import the provider mapping to set default_fields for known providers
         try:
-            from wfx.base.models.unified_models import get_model_provider_variable_mapping
+            from wfx.base.models.unified_models import (
+                get_model_provider_variable_mapping,
+            )
 
             provider_mapping = get_model_provider_variable_mapping()
             # Reverse the mapping to go from variable name to provider
@@ -70,13 +77,18 @@ class DatabaseVariableService(VariableService, Service):
                         # Validate the API key before setting default_fields
                         # This prevents invalid keys from enabling providers during migration
                         try:
-                            from wfx.base.models.unified_models import validate_model_provider_key
+                            from wfx.base.models.unified_models import (
+                                validate_model_provider_key,
+                            )
 
                             validate_model_provider_key(var_name, value)
                             # Only set default_fields if validation passes
                             default_fields = [provider_name, "api_key"]
                             await logger.adebug(f"Validated {var_name} - provider will be enabled")
-                        except (ValueError, Exception) as validation_error:  # noqa: BLE001
+                        except (
+                            ValueError,
+                            Exception,
+                        ) as validation_error:
                             # Validation failed - don't set default_fields
                             # This prevents the provider from appearing as "Enabled"
                             default_fields = []

@@ -218,9 +218,15 @@ class TestTokenCreation:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
             mock_auth_service = AuthService(mock_settings_service)
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "access"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "access",
+                    },
                     expires_delta=timedelta(hours=1),
                 )
 
@@ -238,7 +244,10 @@ class TestTokenCreation:
             mock_settings_service = self._create_mock_settings_service("RS256", tmpdir)
             mock_auth_service = AuthService(mock_settings_service)
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 token = create_token(
                     data={"sub": "user-456", "type": "access"},
                     expires_delta=timedelta(hours=1),
@@ -258,7 +267,10 @@ class TestTokenCreation:
             mock_settings_service = self._create_mock_settings_service("RS512", tmpdir)
             mock_auth_service = AuthService(mock_settings_service)
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 token = create_token(
                     data={"sub": "user-789", "type": "access"},
                     expires_delta=timedelta(hours=1),
@@ -278,9 +290,15 @@ class TestTokenCreation:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
             mock_auth_service = AuthService(mock_settings_service)
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "access"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "access",
+                    },
                     expires_delta=timedelta(hours=1),
                 )
 
@@ -306,7 +324,10 @@ class TestTokenVerification:
     async def test_verify_hs256_token_success(self):
         """Valid HS256 token should be verified successfully."""
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
@@ -324,11 +345,20 @@ class TestTokenVerification:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "access"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "access",
+                    },
                     expires_delta=timedelta(hours=1),
                 )
 
@@ -339,7 +369,10 @@ class TestTokenVerification:
     async def test_verify_rs256_token_success(self):
         """Valid RS256 token should be verified successfully."""
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("RS256", tmpdir)
@@ -356,8 +389,14 @@ class TestTokenVerification:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 token = create_token(
                     data={"sub": "user-456", "type": "access"},
@@ -371,7 +410,10 @@ class TestTokenVerification:
     async def test_verify_rs512_token_success(self):
         """Valid RS512 token should be verified successfully."""
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("RS512", tmpdir)
@@ -388,8 +430,14 @@ class TestTokenVerification:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 token = create_token(
                     data={"sub": "user-789", "type": "access"},
@@ -429,7 +477,10 @@ class TestAuthenticationFailures:
 
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 with pytest.raises(HTTPException) as exc_info:
                     await get_current_user_from_access_token("some-token", mock_db)
 
@@ -456,7 +507,10 @@ class TestAuthenticationFailures:
 
         mock_db = AsyncMock()
 
-        with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+        with patch(
+            "primeagent.services.auth.utils.get_auth_service",
+            return_value=mock_auth_service,
+        ):
             with pytest.raises(HTTPException) as exc_info:
                 await get_current_user_from_access_token("some-token", mock_db)
 
@@ -474,7 +528,10 @@ class TestAuthenticationFailures:
             mock_auth_service = AuthService(mock_settings_service)
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 with pytest.raises(HTTPException) as exc_info:
                     await get_current_user_from_access_token("invalid-token-format", mock_db)
 
@@ -500,7 +557,10 @@ class TestAuthenticationFailures:
 
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 with pytest.raises(HTTPException) as exc_info:
                     await get_current_user_from_access_token(wrong_token, mock_db)
 
@@ -510,17 +570,26 @@ class TestAuthenticationFailures:
     async def test_expired_token_raises_401(self):
         """Expired token should raise 401."""
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
             mock_auth_service = AuthService(mock_settings_service)
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 # Create token that's already expired
                 token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "access"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "access",
+                    },
                     expires_delta=timedelta(seconds=-10),  # Negative = already expired
                 )
 
@@ -550,7 +619,10 @@ class TestAuthenticationFailures:
 
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 with pytest.raises(HTTPException) as exc_info:
                     await get_current_user_from_access_token(token, mock_db)
 
@@ -576,7 +648,10 @@ class TestAuthenticationFailures:
 
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 with pytest.raises(HTTPException) as exc_info:
                     await get_current_user_from_access_token(token, mock_db)
 
@@ -592,7 +667,10 @@ class TestAuthenticationFailures:
         from uuid import uuid4
 
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
@@ -607,8 +685,14 @@ class TestAuthenticationFailures:
                 return None
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 token = create_token(
                     data={"sub": user_id, "type": "access"},
@@ -627,7 +711,10 @@ class TestAuthenticationFailures:
         from uuid import uuid4
 
         from primeagent.services.auth.service import AuthService
-        from primeagent.services.auth.utils import create_token, get_current_user_from_access_token
+        from primeagent.services.auth.utils import (
+            create_token,
+            get_current_user_from_access_token,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_settings_service = self._create_mock_settings_service("HS256", tmpdir)
@@ -647,8 +734,14 @@ class TestAuthenticationFailures:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 token = create_token(
                     data={"sub": user_id, "type": "access"},
@@ -696,12 +789,21 @@ class TestRefreshTokenVerification:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 # Create refresh token
                 refresh_token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "refresh"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "refresh",
+                    },
                     expires_delta=timedelta(days=7),
                 )
 
@@ -723,10 +825,16 @@ class TestRefreshTokenVerification:
             mock_auth_service = AuthService(mock_settings_service)
             mock_db = AsyncMock()
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 # Create access token (not refresh)
                 access_token = create_token(
-                    data={"sub": "9cd4172c-0190-4124-a749-671d23e3c6dd", "type": "access"},
+                    data={
+                        "sub": "9cd4172c-0190-4124-a749-671d23e3c6dd",
+                        "type": "access",
+                    },
                     expires_delta=timedelta(hours=1),
                 )
 
@@ -877,8 +985,14 @@ class TestEdgeCases:
                 return mock_user
 
             with (
-                patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service),
-                patch("primeagent.services.auth.service.get_user_by_id", side_effect=mock_get_user_by_id),
+                patch(
+                    "primeagent.services.auth.utils.get_auth_service",
+                    return_value=mock_auth_service,
+                ),
+                patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    side_effect=mock_get_user_by_id,
+                ),
             ):
                 import asyncio
 
@@ -901,7 +1015,10 @@ class TestEdgeCases:
 
             long_user_id = "a" * 1000
 
-            with patch("primeagent.services.auth.utils.get_auth_service", return_value=mock_auth_service):
+            with patch(
+                "primeagent.services.auth.utils.get_auth_service",
+                return_value=mock_auth_service,
+            ):
                 token = create_token(
                     data={"sub": long_user_id, "type": "access"},
                     expires_delta=timedelta(hours=1),
@@ -1030,7 +1147,10 @@ class TestJWTKeyHelpers:
 
     def test_verification_and_signing_keys_work_together_hs256(self):
         """Verification and signing keys should work together for HS256."""
-        from primeagent.services.auth.utils import get_jwt_signing_key, get_jwt_verification_key
+        from primeagent.services.auth.utils import (
+            get_jwt_signing_key,
+            get_jwt_verification_key,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_service = self._create_mock_settings_service("HS256", tmpdir)
@@ -1050,7 +1170,10 @@ class TestJWTKeyHelpers:
 
     def test_verification_and_signing_keys_work_together_rs256(self):
         """Verification and signing keys should work together for RS256."""
-        from primeagent.services.auth.utils import get_jwt_signing_key, get_jwt_verification_key
+        from primeagent.services.auth.utils import (
+            get_jwt_signing_key,
+            get_jwt_verification_key,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             mock_service = self._create_mock_settings_service("RS256", tmpdir)

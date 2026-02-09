@@ -219,7 +219,10 @@ class TestGetChatOutputSenderName:
 
         chat_output = Mock()
         chat_output.data = {"type": "ChatOutput"}
-        chat_output.raw_params = {"sender_name": "AI Assistant", "should_store_message": True}
+        chat_output.raw_params = {
+            "sender_name": "AI Assistant",
+            "should_store_message": True,
+        }
 
         llm = Mock()
         llm.data = {"type": "OpenAI"}
@@ -241,7 +244,11 @@ class TestGetChatOutputSenderName:
         # Create a mock graph with ChatOutput
         chat_output_vertex = Mock()
         chat_output_vertex.data = {"type": "ChatOutput"}
-        chat_output_vertex.raw_params = {"sender_name": "My Custom Agent", "should_store_message": True, "sender": "AI"}
+        chat_output_vertex.raw_params = {
+            "sender_name": "My Custom Agent",
+            "should_store_message": True,
+            "sender": "AI",
+        }
 
         agent_component.graph = Mock()
         agent_component.graph.vertices = [chat_output_vertex]

@@ -41,7 +41,11 @@ async def test_create_flow(client: AsyncClient, json_flow: str, logged_in_header
     assert response.json()["data"] == flow.data
     # flow is optional so we can create a flow without a flow
     flow = FlowCreate(name=str(uuid4()))
-    response = await client.post("api/v1/flows/", json=flow.model_dump(exclude_unset=True), headers=logged_in_headers)
+    response = await client.post(
+        "api/v1/flows/",
+        json=flow.model_dump(exclude_unset=True),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 201
     assert response.json()["name"] == flow.name
     assert response.json()["data"] == flow.data
@@ -70,7 +74,9 @@ async def test_read_flows(client: AsyncClient, json_flow: str, logged_in_headers
 
 async def test_read_flows_pagination_with_params(client: AsyncClient, logged_in_headers):
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 3, "size": 10, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 3, "size": 10, "get_all": False},
     )
     assert response.status_code == 200
     assert response.json()["page"] == 3
@@ -90,7 +96,9 @@ async def test_read_flows_pagination_with_flows(client: AsyncClient, logged_in_h
         flow_ids.append(response.json()["id"])
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 3, "size": 10, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 3, "size": 10, "get_all": False},
     )
     assert response.status_code == 200
     assert response.json()["page"] == 3
@@ -100,7 +108,9 @@ async def test_read_flows_pagination_with_flows(client: AsyncClient, logged_in_h
     assert len(response.json()["items"]) == 10
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 4, "size": 10, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 4, "size": 10, "get_all": False},
     )
     assert response.status_code == 200
     assert response.json()["page"] == 4
@@ -118,7 +128,9 @@ async def test_read_flows_custom_page_size(client: AsyncClient, logged_in_header
         assert response.status_code == 201
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 1, "size": 15, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 1, "size": 15, "get_all": False},
     )
     assert response.status_code == 200
     assert response.json()["page"] == 1
@@ -138,7 +150,9 @@ async def test_read_flows_invalid_page(client: AsyncClient, logged_in_headers):
         flow_ids.append(response.json()["id"])
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 0, "size": 10, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 0, "size": 10, "get_all": False},
     )
     assert response.status_code == 422  # Assuming 422 is the status code for invalid input
 
@@ -153,7 +167,9 @@ async def test_read_flows_invalid_size(client: AsyncClient, logged_in_headers):
         flow_ids.append(response.json()["id"])
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"page": 1, "size": 0, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"page": 1, "size": 0, "get_all": False},
     )
     assert response.status_code == 422  # Assuming 422 is the status code for invalid input
 
@@ -187,7 +203,9 @@ async def test_read_flows_components_only_paginated(client: AsyncClient, logged_
         assert response.status_code == 201
 
     response = await client.get(
-        "api/v1/flows/", headers=logged_in_headers, params={"components_only": True, "get_all": False}
+        "api/v1/flows/",
+        headers=logged_in_headers,
+        params={"components_only": True, "get_all": False},
     )
 
     assert response.status_code == 200
@@ -244,7 +262,11 @@ async def test_update_flow(client: AsyncClient, json_flow: str, logged_in_header
         description="updated description",
         data=data,
     )
-    response = await client.patch(f"api/v1/flows/{flow_id}", json=updated_flow.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"api/v1/flows/{flow_id}",
+        json=updated_flow.model_dump(),
+        headers=logged_in_headers,
+    )
 
     assert response.status_code == 200
     assert response.json()["name"] == updated_flow.name
@@ -297,7 +319,10 @@ async def test_delete_flows_with_transaction_and_build(client: AsyncClient, logg
     # Create a transaction for each flow
     for flow_id in flow_ids:
         await log_transaction(
-            str(flow_id), source=VertexTuple(id="vid"), target=VertexTuple(id="tid"), status="success"
+            str(flow_id),
+            source=VertexTuple(id="vid"),
+            target=VertexTuple(id="tid"),
+            status="success",
         )
 
     # Create a build for each flow
@@ -325,7 +350,10 @@ async def test_delete_flows_with_transaction_and_build(client: AsyncClient, logg
 
     for flow_id in flow_ids:
         response = await client.request(
-            "GET", "api/v1/monitor/transactions", params={"flow_id": flow_id}, headers=logged_in_headers
+            "GET",
+            "api/v1/monitor/transactions",
+            params={"flow_id": flow_id},
+            headers=logged_in_headers,
         )
         assert response.status_code == 200
         json_response = response.json()
@@ -333,7 +361,10 @@ async def test_delete_flows_with_transaction_and_build(client: AsyncClient, logg
 
     for flow_id in flow_ids:
         response = await client.request(
-            "GET", "api/v1/monitor/builds", params={"flow_id": flow_id}, headers=logged_in_headers
+            "GET",
+            "api/v1/monitor/builds",
+            params={"flow_id": flow_id},
+            headers=logged_in_headers,
         )
         assert response.status_code == 200
         assert response.json() == {"vertex_builds": {}}
@@ -343,7 +374,12 @@ async def test_delete_flows_with_transaction_and_build(client: AsyncClient, logg
 async def test_delete_folder_with_flows_with_transaction_and_build(client: AsyncClient, logged_in_headers):
     # Create a new project
     folder_name = f"Test Project {uuid4()}"
-    project = FolderCreate(name=folder_name, description="Test project description", components_list=[], flows_list=[])
+    project = FolderCreate(
+        name=folder_name,
+        description="Test project description",
+        components_list=[],
+        flows_list=[],
+    )
 
     response = await client.post("api/v1/projects/", json=project.model_dump(), headers=logged_in_headers)
     assert response.status_code == 201, f"Expected status code 201, but got {response.status_code}"
@@ -398,7 +434,10 @@ async def test_delete_folder_with_flows_with_transaction_and_build(client: Async
 
     for flow_id in flow_ids:
         response = await client.request(
-            "GET", "api/v1/monitor/transactions", params={"flow_id": flow_id}, headers=logged_in_headers
+            "GET",
+            "api/v1/monitor/transactions",
+            params={"flow_id": flow_id},
+            headers=logged_in_headers,
         )
         assert response.status_code == 200, response.json()
         json_response = response.json()
@@ -406,7 +445,10 @@ async def test_delete_folder_with_flows_with_transaction_and_build(client: Async
 
     for flow_id in flow_ids:
         response = await client.request(
-            "GET", "api/v1/monitor/builds", params={"flow_id": flow_id}, headers=logged_in_headers
+            "GET",
+            "api/v1/monitor/builds",
+            params={"flow_id": flow_id},
+            headers=logged_in_headers,
         )
         assert response.status_code == 200
         assert response.json() == {"vertex_builds": {}}
@@ -415,7 +457,12 @@ async def test_delete_folder_with_flows_with_transaction_and_build(client: Async
 async def test_get_flows_from_folder_pagination(client: AsyncClient, logged_in_headers):
     # Create a new project
     folder_name = f"Test Project {uuid4()}"
-    project = FolderCreate(name=folder_name, description="Test project description", components_list=[], flows_list=[])
+    project = FolderCreate(
+        name=folder_name,
+        description="Test project description",
+        components_list=[],
+        flows_list=[],
+    )
 
     response = await client.post("api/v1/projects/", json=project.model_dump(), headers=logged_in_headers)
     assert response.status_code == 201, f"Expected status code 201, but got {response.status_code}"
@@ -424,7 +471,9 @@ async def test_get_flows_from_folder_pagination(client: AsyncClient, logged_in_h
     folder_id = created_folder["id"]
 
     response = await client.get(
-        f"api/v1/projects/{folder_id}", headers=logged_in_headers, params={"page": 1, "size": 50}
+        f"api/v1/projects/{folder_id}",
+        headers=logged_in_headers,
+        params={"page": 1, "size": 50},
     )
     assert response.status_code == 200
     assert response.json()["folder"]["name"] == folder_name
@@ -439,7 +488,12 @@ async def test_get_flows_from_folder_pagination(client: AsyncClient, logged_in_h
 async def test_get_flows_from_folder_pagination_with_params(client: AsyncClient, logged_in_headers):
     # Create a new project
     folder_name = f"Test Project {uuid4()}"
-    project = FolderCreate(name=folder_name, description="Test project description", components_list=[], flows_list=[])
+    project = FolderCreate(
+        name=folder_name,
+        description="Test project description",
+        components_list=[],
+        flows_list=[],
+    )
 
     response = await client.post("api/v1/projects/", json=project.model_dump(), headers=logged_in_headers)
     assert response.status_code == 201, f"Expected status code 201, but got {response.status_code}"
@@ -448,7 +502,9 @@ async def test_get_flows_from_folder_pagination_with_params(client: AsyncClient,
     folder_id = created_folder["id"]
 
     response = await client.get(
-        f"api/v1/projects/{folder_id}", headers=logged_in_headers, params={"page": 3, "size": 10}
+        f"api/v1/projects/{folder_id}",
+        headers=logged_in_headers,
+        params={"page": 3, "size": 10},
     )
     assert response.status_code == 200
     assert response.json()["folder"]["name"] == folder_name
@@ -585,8 +641,16 @@ async def test_update_flow_idempotency(client: AsyncClient, json_flow: str, logg
     response = await client.post("api/v1/flows/", json=flow_data.dict(), headers=logged_in_headers)
     flow_id = response.json()["id"]
     updated_flow = FlowCreate(name="Updated Flow", description="description", data=data)
-    response1 = await client.put(f"api/v1/flows/{flow_id}", json=updated_flow.model_dump(), headers=logged_in_headers)
-    response2 = await client.put(f"api/v1/flows/{flow_id}", json=updated_flow.model_dump(), headers=logged_in_headers)
+    response1 = await client.put(
+        f"api/v1/flows/{flow_id}",
+        json=updated_flow.model_dump(),
+        headers=logged_in_headers,
+    )
+    response2 = await client.put(
+        f"api/v1/flows/{flow_id}",
+        json=updated_flow.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response1.json() == response2.json()
 
 
@@ -600,7 +664,11 @@ async def test_update_nonexistent_flow(client: AsyncClient, json_flow: str, logg
         description="description",
         data=data,
     )
-    response = await client.patch(f"api/v1/flows/{uuid}", json=updated_flow.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"api/v1/flows/{uuid}",
+        json=updated_flow.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 404, response.text
 
 
@@ -689,7 +757,9 @@ async def test_read_folder_with_pagination(client: AsyncClient, logged_in_header
 
     # Read the project with pagination
     response = await client.get(
-        f"api/v1/projects/{folder_id}", headers=logged_in_headers, params={"page": 1, "size": 10}
+        f"api/v1/projects/{folder_id}",
+        headers=logged_in_headers,
+        params={"page": 1, "size": 10},
     )
     assert response.status_code == 200
     folder_data = response.json()
@@ -756,10 +826,16 @@ async def test_read_folder_with_search(client: AsyncClient, json_flow: str, logg
     flow_name_2 = f"Another Flow {uuid4()}"
 
     flow1 = FlowCreate(
-        name=flow_name_1, description="Test flow description", data=flow_data["data"], folder_id=folder_id
+        name=flow_name_1,
+        description="Test flow description",
+        data=flow_data["data"],
+        folder_id=folder_id,
     )
     flow2 = FlowCreate(
-        name=flow_name_2, description="Another flow description", data=flow_data["data"], folder_id=folder_id
+        name=flow_name_2,
+        description="Another flow description",
+        data=flow_data["data"],
+        folder_id=folder_id,
     )
     flow1.folder_id = folder_id
     flow2.folder_id = folder_id
@@ -768,7 +844,9 @@ async def test_read_folder_with_search(client: AsyncClient, json_flow: str, logg
 
     # Read the project with search
     response = await client.get(
-        f"api/v1/projects/{folder_id}", headers=logged_in_headers, params={"search": "Test", "page": 1, "size": 10}
+        f"api/v1/projects/{folder_id}",
+        headers=logged_in_headers,
+        params={"search": "Test", "page": 1, "size": 10},
     )
     assert response.status_code == 200
     folder_data = response.json()
@@ -801,7 +879,9 @@ async def test_read_folder_with_component_filter(client: AsyncClient, json_flow:
 
     # Read the project with component filter
     response = await client.get(
-        f"api/v1/projects/{folder_id}", headers=logged_in_headers, params={"is_component": True, "page": 1, "size": 10}
+        f"api/v1/projects/{folder_id}",
+        headers=logged_in_headers,
+        params={"is_component": True, "page": 1, "size": 10},
     )
     assert response.status_code == 200
     folder_data = response.json()
@@ -821,7 +901,11 @@ def test_transaction_excludes_code_key(session):
     session.refresh(flow)
 
     # Create input data with a code key
-    input_data = {"param1": "value1", "param2": "value2", "code": "print('Hello, world!')"}
+    input_data = {
+        "param1": "value1",
+        "param2": "value2",
+        "code": "print('Hello, world!')",
+    }
 
     # Create a transaction with inputs containing a code key
     transaction = TransactionTable(

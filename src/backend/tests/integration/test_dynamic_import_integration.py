@@ -9,7 +9,9 @@ import time
 
 import pytest
 from primeagent.components.data import APIRequestComponent
-from primeagent.components.models_and_agents import AgentComponent  # Backwards compatibility alias
+from primeagent.components.models_and_agents import (
+    AgentComponent,
+)  # Backwards compatibility alias
 from primeagent.components.openai import OpenAIModelComponent
 
 

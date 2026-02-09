@@ -74,7 +74,10 @@ class TestTransactionService:
 
         with (
             patch("primeagent.services.transaction.service.session_scope") as mock_session_scope,
-            patch("primeagent.services.transaction.service.crud_log_transaction", mock_crud) as mock_log,
+            patch(
+                "primeagent.services.transaction.service.crud_log_transaction",
+                mock_crud,
+            ) as mock_log,
         ):
             mock_session_scope.return_value.__aenter__ = AsyncMock(return_value=mock_session)
             mock_session_scope.return_value.__aexit__ = AsyncMock(return_value=None)
@@ -102,7 +105,10 @@ class TestTransactionService:
 
         with (
             patch("primeagent.services.transaction.service.session_scope") as mock_session_scope,
-            patch("primeagent.services.transaction.service.crud_log_transaction", mock_crud),
+            patch(
+                "primeagent.services.transaction.service.crud_log_transaction",
+                mock_crud,
+            ),
         ):
             mock_session_scope.return_value.__aenter__ = AsyncMock(return_value=mock_session)
             mock_session_scope.return_value.__aexit__ = AsyncMock(return_value=None)
@@ -127,7 +133,10 @@ class TestTransactionService:
 
         with (
             patch("primeagent.services.transaction.service.session_scope") as mock_session_scope,
-            patch("primeagent.services.transaction.service.crud_log_transaction", mock_crud),
+            patch(
+                "primeagent.services.transaction.service.crud_log_transaction",
+                mock_crud,
+            ),
         ):
             mock_session_scope.return_value.__aenter__ = AsyncMock(return_value=mock_session)
             mock_session_scope.return_value.__aexit__ = AsyncMock(return_value=None)
@@ -154,7 +163,10 @@ class TestTransactionService:
 
         with (
             patch("primeagent.services.transaction.service.session_scope") as mock_session_scope,
-            patch("primeagent.services.transaction.service.crud_log_transaction", mock_crud),
+            patch(
+                "primeagent.services.transaction.service.crud_log_transaction",
+                mock_crud,
+            ),
         ):
             mock_session_scope.return_value.__aenter__ = AsyncMock(return_value=mock_session)
             mock_session_scope.return_value.__aexit__ = AsyncMock(return_value=None)

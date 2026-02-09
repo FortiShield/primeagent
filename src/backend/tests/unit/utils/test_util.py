@@ -111,7 +111,11 @@ class TestBuildTemplateFromFunction:
     @patch("wfx.utils.util.get_base_classes")
     @patch("wfx.utils.util.format_dict")
     def test_successful_template_build(
-        self, mock_format_dict, mock_get_base_classes, mock_get_default_factory, mock_parse
+        self,
+        mock_format_dict,
+        mock_get_base_classes,
+        mock_get_default_factory,
+        mock_parse,
     ):
         """Test successful template building."""
         # Mock class with model_fields
@@ -295,7 +299,10 @@ class TestGetDefaultFactory:
 
     def test_valid_function_pattern(self):
         """Test extracting function from valid pattern."""
-        with patch("importlib.import_module") as mock_import, patch("warnings.catch_warnings"):
+        with (
+            patch("importlib.import_module") as mock_import,
+            patch("warnings.catch_warnings"),
+        ):
             mock_module = Mock()
             mock_module.test_function = Mock(return_value="factory_result")
             mock_import.return_value = mock_module
@@ -325,7 +332,13 @@ class TestUpdateVerbose:
 
     def test_update_nested_verbose(self):
         """Test updating verbose in nested dictionary."""
-        test_dict = {"level1": {"verbose": False, "level2": {"verbose": True, "other_key": "value"}}, "verbose": False}
+        test_dict = {
+            "level1": {
+                "verbose": False,
+                "level2": {"verbose": True, "other_key": "value"},
+            },
+            "verbose": False,
+        }
 
         result = update_verbose(test_dict, new_value=True)
 

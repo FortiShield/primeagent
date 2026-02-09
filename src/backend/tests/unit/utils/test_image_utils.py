@@ -1,7 +1,11 @@
 import base64
 
 import pytest
-from primeagent.utils.image import convert_image_to_base64, create_data_url, create_image_content_dict
+from primeagent.utils.image import (
+    convert_image_to_base64,
+    create_data_url,
+    create_image_content_dict,
+)
 
 
 @pytest.fixture
@@ -185,7 +189,10 @@ def test_image_content_dict_langchain_message_compatibility(sample_image):
     content_dict = create_image_content_dict(sample_image)
 
     # Simulate how this would be used in a LangChain message
-    message_content = [{"type": "text", "text": "What do you see in this image?"}, content_dict]
+    message_content = [
+        {"type": "text", "text": "What do you see in this image?"},
+        content_dict,
+    ]
 
     # Verify the message structure is valid
     text_part = message_content[0]

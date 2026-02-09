@@ -322,7 +322,14 @@ class TestFetchLatestVersion:
         """Test fetching with complex version numbers."""
         mock_response = Mock()
         mock_response.json.return_value = {
-            "releases": {"1.0.0": [], "1.0.1": [], "1.0.10": [], "1.0.2": [], "1.1.0": [], "2.0.0": []}
+            "releases": {
+                "1.0.0": [],
+                "1.0.1": [],
+                "1.0.10": [],
+                "1.0.2": [],
+                "1.1.0": [],
+                "2.0.0": [],
+            }
         }
         mock_httpx.get.return_value = mock_response
 
@@ -338,7 +345,11 @@ class TestGetVersionInfoFunction:
     @patch("primeagent.utils.version.VERSION_INFO")
     def test_get_version_info_returns_version_info(self, mock_version_info):
         """Test that get_version_info returns VERSION_INFO."""
-        mock_version_info = {"version": "1.0.0", "main_version": "1.0.0", "package": "Primeagent"}
+        mock_version_info = {
+            "version": "1.0.0",
+            "main_version": "1.0.0",
+            "package": "Primeagent",
+        }
 
         with patch("primeagent.utils.version.VERSION_INFO", mock_version_info):
             result = get_version_info()

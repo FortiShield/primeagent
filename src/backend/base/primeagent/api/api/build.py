@@ -17,15 +17,27 @@ from primeagent.api.utils import (
     get_top_level_vertices,
     parse_exception,
 )
-from primeagent.api.v1.schemas import FlowDataRequest, ResultDataResponse, VertexBuildResponse
+from primeagent.api.v1.schemas import (
+    FlowDataRequest,
+    ResultDataResponse,
+    VertexBuildResponse,
+)
 from primeagent.events.event_manager import EventManager
 from primeagent.exceptions.component import ComponentBuildError
 from primeagent.schema.message import ErrorMessage
 from primeagent.schema.schema import OutputValue
 from primeagent.services.database.models.flow.model import Flow
-from primeagent.services.deps import get_chat_service, get_telemetry_service, session_scope
+from primeagent.services.deps import (
+    get_chat_service,
+    get_telemetry_service,
+    session_scope,
+)
 from primeagent.services.job_queue.service import JobQueueNotFoundError, JobQueueService
-from primeagent.services.telemetry.schema import ComponentInputsPayload, ComponentPayload, PlaygroundPayload
+from primeagent.services.telemetry.schema import (
+    ComponentInputsPayload,
+    ComponentPayload,
+    PlaygroundPayload,
+)
 from sqlmodel import select
 from wfx.graph.graph.base import Graph
 from wfx.graph.utils import log_vertex_build
@@ -248,7 +260,13 @@ async def generate_flow_events(
             await log_telemetry(start_time, components_count, run_id=run_id, success=True)
 
         except Exception as exc:
-            await log_telemetry(start_time, components_count, run_id=run_id, success=False, error_message=str(exc))
+            await log_telemetry(
+                start_time,
+                components_count,
+                run_id=run_id,
+                success=False,
+                error_message=str(exc),
+            )
 
             if "stream or streaming set to True" in str(exc):
                 raise HTTPException(status_code=400, detail=str(exc)) from exc

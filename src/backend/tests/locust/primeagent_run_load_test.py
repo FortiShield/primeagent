@@ -27,7 +27,13 @@ def run_command(cmd, check=True, capture_output=False):
     print(f"Running: {' '.join(cmd) if isinstance(cmd, list) else cmd}")
     try:
         if capture_output:
-            result = subprocess.run(cmd, shell=isinstance(cmd, str), capture_output=True, text=True, check=check)
+            result = subprocess.run(
+                cmd,
+                shell=isinstance(cmd, str),
+                capture_output=True,
+                text=True,
+                check=check,
+            )
             return result.stdout.strip()
         subprocess.run(cmd, shell=isinstance(cmd, str), check=check)
     except subprocess.CalledProcessError as e:
@@ -267,7 +273,12 @@ Examples:
         default="http://localhost:7860",
         help="Primeagent host URL (default: http://localhost:7860, use https:// for remote instances)",
     )
-    parser.add_argument("--port", type=int, default=7860, help="Port to start Primeagent on (default: 7860)")
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=7860,
+        help="Port to start Primeagent on (default: 7860)",
+    )
     parser.add_argument(
         "--no-start-primeagent",
         action="store_true",
@@ -278,9 +289,17 @@ Examples:
     parser.add_argument("--headless", action="store_true", help="Run in headless mode (no web UI)")
     parser.add_argument("--users", type=int, default=50, help="Number of concurrent users (default: 20)")
     parser.add_argument(
-        "--spawn-rate", type=int, default=2, help="Rate to spawn users at (users per second, default: 2)"
+        "--spawn-rate",
+        type=int,
+        default=2,
+        help="Rate to spawn users at (users per second, default: 2)",
     )
-    parser.add_argument("--duration", type=int, default=60, help="Test duration in seconds (default: 60)")
+    parser.add_argument(
+        "--duration",
+        type=int,
+        default=60,
+        help="Test duration in seconds (default: 60)",
+    )
     parser.add_argument("--shape", choices=["ramp100", "stepramp"], help="Load test shape to use")
     parser.add_argument("--csv", help="Save results to CSV files with this prefix")
     parser.add_argument("--html", help="Generate HTML report with this filename (e.g., report.html)")

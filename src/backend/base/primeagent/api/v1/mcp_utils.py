@@ -21,7 +21,11 @@ from primeagent.schema.message import Message
 from primeagent.services.database.models import Flow
 from primeagent.services.database.models.file.model import File as UserFile
 from primeagent.services.database.models.user.model import User
-from primeagent.services.deps import get_settings_service, get_storage_service, session_scope
+from primeagent.services.deps import (
+    get_settings_service,
+    get_storage_service,
+    session_scope,
+)
 from sqlmodel import select
 from wfx.base.mcp.constants import MAX_MCP_TOOL_NAME_LENGTH
 from wfx.base.mcp.util import get_flow_snake_case, get_unique_name, sanitize_mcp_name
@@ -238,7 +242,8 @@ async def handle_call_tool(
 
         conversation_id = str(uuid4())
         input_request = SimplifiedAPIRequest(
-            input_value=processed_inputs.get("input_value", ""), session_id=conversation_id
+            input_value=processed_inputs.get("input_value", ""),
+            session_id=conversation_id,
         )
 
         async def send_progress_updates(progress_token):
@@ -246,7 +251,9 @@ async def handle_call_tool(
                 progress = 0.0
                 while True:
                     await server.request_context.session.send_progress_notification(
-                        progress_token=progress_token, progress=min(0.9, progress), total=1.0
+                        progress_token=progress_token,
+                        progress=min(0.9, progress),
+                        total=1.0,
                     )
                     progress += 0.1
                     await asyncio.sleep(1.0)

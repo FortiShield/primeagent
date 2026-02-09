@@ -209,19 +209,34 @@ def create_primeagent_shutdown_progress(*, verbose: bool = False, multiple_worke
         import os
 
         steps = [
-            (f"[Worker PID {os.getpid()}] Stopping Server", "Gracefully stopping the web server"),
+            (
+                f"[Worker PID {os.getpid()}] Stopping Server",
+                "Gracefully stopping the web server",
+            ),
             (
                 f"[Worker PID {os.getpid()}] Cancelling Background Tasks",
                 "Stopping file synchronization and background jobs",
             ),
-            (f"[Worker PID {os.getpid()}] Cleaning Up Services", "Teardown database connections and services"),
-            (f"[Worker PID {os.getpid()}] Clearing Temporary Files", "Removing temporary directories and cache"),
-            (f"[Worker PID {os.getpid()}] Finalizing Shutdown", "Completing cleanup and logging"),
+            (
+                f"[Worker PID {os.getpid()}] Cleaning Up Services",
+                "Teardown database connections and services",
+            ),
+            (
+                f"[Worker PID {os.getpid()}] Clearing Temporary Files",
+                "Removing temporary directories and cache",
+            ),
+            (
+                f"[Worker PID {os.getpid()}] Finalizing Shutdown",
+                "Completing cleanup and logging",
+            ),
         ]
     else:
         steps = [
             ("Stopping Server", "Gracefully stopping the web server"),
-            ("Cancelling Background Tasks", "Stopping file synchronization and background jobs"),
+            (
+                "Cancelling Background Tasks",
+                "Stopping file synchronization and background jobs",
+            ),
             ("Cleaning Up Services", "Teardown database connections and services"),
             ("Clearing Temporary Files", "Removing temporary directories and cache"),
             ("Finalizing Shutdown", "Completing cleanup and logging"),

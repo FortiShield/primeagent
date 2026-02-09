@@ -9231,7 +9231,7 @@ name = "primeagent"
 version = "1.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "primeagent-base", extra = ["complete"] },
+    { name = "primeagent-base" },
 ]
 
 [package.optional-dependencies]
@@ -9284,6 +9284,7 @@ dev = [
     { name = "pandas-stubs", version = "2.3.3.260113", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pandas-stubs", version = "3.0.0.260204", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pre-commit" },
+    { name = "primeagent" },
     { name = "pydantic-ai" },
     { name = "pyleak" },
     { name = "pytest" },
@@ -9329,7 +9330,7 @@ requires-dist = [
     { name = "nv-ingest-api", marker = "python_full_version >= '3.12' and extra == 'nv-ingest'", specifier = "==25.6.2,<26.0.0" },
     { name = "nv-ingest-client", marker = "python_full_version >= '3.12' and extra == 'nv-ingest'", specifier = "==25.6.3,<26.0.0" },
     { name = "ocrmac", marker = "sys_platform == 'darwin' and extra == 'docling'", specifier = ">=1.0.0" },
-    { name = "primeagent-base", extras = ["complete"], editable = "src/backend/base" },
+    { name = "primeagent-base", editable = "src/backend/base" },
     { name = "rapidocr-onnxruntime", marker = "extra == 'docling'", specifier = ">=1.4.4" },
     { name = "sentence-transformers", marker = "extra == 'local'", specifier = ">=2.3.1" },
     { name = "sqlalchemy", extras = ["postgresql-psycopg"], marker = "extra == 'postgresql'", specifier = ">=2.0.38,<3.0.0" },
@@ -9356,6 +9357,7 @@ dev = [
     { name = "packaging", specifier = ">=24.1,<25.0" },
     { name = "pandas-stubs", specifier = ">=2.1.4.231227" },
     { name = "pre-commit", specifier = ">=3.7.0" },
+    { name = "primeagent", extras = ["dev"], editable = "." },
     { name = "pydantic-ai", specifier = ">=0.0.19" },
     { name = "pyleak", specifier = ">=0.1.14" },
     { name = "pytest", specifier = ">=8.2.0" },

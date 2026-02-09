@@ -199,7 +199,11 @@ class TestRunFlowBaseComponentFlowRetrieval:
         stale_graph.updated_at = old_updated_at
 
         flow_data = Data(
-            data={"data": {"nodes": [], "edges": []}, "description": "Test flow", "updated_at": new_updated_at}
+            data={
+                "data": {"nodes": [], "edges": []},
+                "description": "Test flow",
+                "updated_at": new_updated_at,
+            }
         )
 
         fresh_graph = MagicMock(spec=Graph)
@@ -377,7 +381,9 @@ class TestRunFlowBaseComponentFlowCaching:
 
         assert result is False
 
-    def test_is_cached_flow_up_to_date_returns_false_when_cached_timestamp_missing(self):
+    def test_is_cached_flow_up_to_date_returns_false_when_cached_timestamp_missing(
+        self,
+    ):
         """Test that cached flow is considered stale when cached updated_at is None."""
         component = RunFlowBaseComponent()
 
@@ -639,7 +645,11 @@ class TestRunFlowBaseComponentToolGeneration:
         mock_vertex.data = {
             "node": {
                 "template": {
-                    "input1": {"name": "input1", "display_name": "Input 1", "advanced": False},
+                    "input1": {
+                        "name": "input1",
+                        "display_name": "Input 1",
+                        "advanced": False,
+                    },
                 },
                 "field_order": ["input1"],
             }

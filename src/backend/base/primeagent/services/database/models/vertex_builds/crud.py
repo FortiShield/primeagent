@@ -1,6 +1,9 @@
 from uuid import UUID
 
-from primeagent.services.database.models.vertex_builds.model import VertexBuildBase, VertexBuildTable
+from primeagent.services.database.models.vertex_builds.model import (
+    VertexBuildBase,
+    VertexBuildTable,
+)
 from primeagent.services.deps import get_settings_service
 from sqlmodel import col, delete, func, select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -29,7 +32,10 @@ async def get_vertex_builds_by_flow_id(
     if isinstance(flow_id, str):
         flow_id = UUID(flow_id)
     subquery = (
-        select(VertexBuildTable.id, func.max(VertexBuildTable.timestamp).label("max_timestamp"))
+        select(
+            VertexBuildTable.id,
+            func.max(VertexBuildTable.timestamp).label("max_timestamp"),
+        )
         .where(VertexBuildTable.flow_id == flow_id)
         .group_by(VertexBuildTable.id)
         .subquery()
@@ -37,7 +43,8 @@ async def get_vertex_builds_by_flow_id(
     stmt = (
         select(VertexBuildTable)
         .join(
-            subquery, (VertexBuildTable.id == subquery.c.id) & (VertexBuildTable.timestamp == subquery.c.max_timestamp)
+            subquery,
+            (VertexBuildTable.id == subquery.c.id) & (VertexBuildTable.timestamp == subquery.c.max_timestamp),
         )
         .where(VertexBuildTable.flow_id == flow_id)
         .order_by(col(VertexBuildTable.timestamp))
@@ -100,7 +107,10 @@ async def log_vertex_build(
                 VertexBuildTable.flow_id == vertex_build.flow_id,
                 VertexBuildTable.id == vertex_build.id,
             )
-            .order_by(col(VertexBuildTable.timestamp).desc(), col(VertexBuildTable.build_id).desc())
+            .order_by(
+                col(VertexBuildTable.timestamp).desc(),
+                col(VertexBuildTable.build_id).desc(),
+            )
             .limit(max_per_vertex)
         )
         delete_vertex_older = delete(VertexBuildTable).where(
@@ -113,7 +123,10 @@ async def log_vertex_build(
         # 3) Delete older builds globally, keeping newest max_global
         keep_global_subq = (
             select(VertexBuildTable.build_id)
-            .order_by(col(VertexBuildTable.timestamp).desc(), col(VertexBuildTable.build_id).desc())
+            .order_by(
+                col(VertexBuildTable.timestamp).desc(),
+                col(VertexBuildTable.build_id).desc(),
+            )
             .limit(max_global)
         )
         delete_global_older = delete(VertexBuildTable).where(col(VertexBuildTable.build_id).not_in(keep_global_subq))

@@ -1,7 +1,9 @@
 from typing import TYPE_CHECKING
 
 from primeagent.services.factory import ServiceFactory
-from primeagent.services.shared_component_cache.service import SharedComponentCacheService
+from primeagent.services.shared_component_cache.service import (
+    SharedComponentCacheService,
+)
 from typing_extensions import override
 
 if TYPE_CHECKING:

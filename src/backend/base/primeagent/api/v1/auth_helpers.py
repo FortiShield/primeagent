@@ -1,6 +1,9 @@
 from typing import Any
 
-from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
+from primeagent.services.auth.mcp_encryption import (
+    decrypt_auth_settings,
+    encrypt_auth_settings,
+)
 from primeagent.services.database.models.folder.model import Folder
 from pydantic import SecretStr
 
@@ -33,7 +36,10 @@ def handle_auth_settings_update(
         # Explicitly set to None - clear auth settings
         existing_project.auth_settings = None
         # If we were using OAuth, stop the composer
-        return {"should_start_composer": False, "should_stop_composer": current_auth_type == "oauth"}
+        return {
+            "should_start_composer": False,
+            "should_stop_composer": current_auth_type == "oauth",
+        }
 
     # Handle different input types (dict vs Pydantic model)
     if isinstance(new_auth_settings, dict):

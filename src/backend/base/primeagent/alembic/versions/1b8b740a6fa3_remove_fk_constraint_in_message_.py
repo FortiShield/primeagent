@@ -160,7 +160,9 @@ def upgrade() -> None:
             temp_table_name,
             sa.Column("timestamp", sa.DateTime(), nullable=False),
             sa.Column("sender", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-            sa.Column("sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+            sa.Column(
+                "sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False
+            ),
             sa.Column("session_id", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
             sa.Column("text", sa.Text(), nullable=True),
             sa.Column("id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),
@@ -309,7 +311,9 @@ def downgrade() -> None:
             temp_table_name,
             sa.Column("timestamp", sa.DateTime(), nullable=False),
             sa.Column("sender", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-            sa.Column("sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+            sa.Column(
+                "sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False
+            ),
             sa.Column("session_id", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
             sa.Column("text", sa.Text(), nullable=True),
             sa.Column("id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),

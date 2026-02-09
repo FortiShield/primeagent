@@ -2,7 +2,12 @@ from unittest.mock import Mock, patch
 
 import pytest
 import sqlalchemy as sa
-from primeagent.utils.migration import column_exists, constraint_exists, foreign_key_exists, table_exists
+from primeagent.utils.migration import (
+    column_exists,
+    constraint_exists,
+    foreign_key_exists,
+    table_exists,
+)
 
 
 class TestTableExists:
@@ -374,7 +379,10 @@ class TestConstraintExists:
         mock_inspector = Mock()
         mock_inspector.get_unique_constraints.return_value = [
             {"name": "uq_single_column", "column_names": ["email"]},
-            {"name": "uq_composite", "column_names": ["first_name", "last_name", "birth_date"]},
+            {
+                "name": "uq_composite",
+                "column_names": ["first_name", "last_name", "birth_date"],
+            },
             {"name": "uq_another", "column_names": ["phone_number"]},
         ]
         mock_inspect.return_value = mock_inspector

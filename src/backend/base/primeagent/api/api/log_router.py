@@ -73,7 +73,10 @@ async def stream_logs(
 
 @log_router.get("/logs", dependencies=[Depends(get_current_active_user)])
 async def logs(
-    lines_before: Annotated[int, Query(description="The number of logs before the timestamp or the last log")] = 0,
+    lines_before: Annotated[
+        int,
+        Query(description="The number of logs before the timestamp or the last log"),
+    ] = 0,
     lines_after: Annotated[int, Query(description="The number of logs after the timestamp")] = 0,
     timestamp: Annotated[int, Query(description="The timestamp to start getting logs from")] = 0,
 ):

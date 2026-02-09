@@ -320,7 +320,10 @@ async def test_successful_run_no_payload(client, simple_api_test, created_api_ke
     output_results_has_results = all("results" in output.get("results") for output in outputs_dict.get("outputs"))
     inner_results = [output.get("results") for output in outputs_dict.get("outputs")]
 
-    assert all(result is not None for result in inner_results), (outputs_dict, output_results_has_results)
+    assert all(result is not None for result in inner_results), (
+        outputs_dict,
+        output_results_has_results,
+    )
 
 
 async def test_successful_run_with_output_type_text(client, simple_api_test, created_api_key):
@@ -663,7 +666,11 @@ async def _run_single_stream_test(client: AsyncClient, flow_id: str, headers: di
 @pytest.mark.benchmark
 async def test_concurrent_stream_run_with_input_type_chat(client: AsyncClient, starter_project, created_api_key):
     """Test concurrent streaming requests to the run endpoint with chat input type."""
-    headers = {"x-api-key": created_api_key.api_key, "Accept": "text/event-stream", "Content-Type": "application/json"}
+    headers = {
+        "x-api-key": created_api_key.api_key,
+        "Accept": "text/event-stream",
+        "Content-Type": "application/json",
+    }
     flow_id = starter_project["id"]
     payload = {
         "input_type": "chat",

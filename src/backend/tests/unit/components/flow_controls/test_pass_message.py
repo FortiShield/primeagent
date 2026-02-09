@@ -195,7 +195,10 @@ class TestPassMessageComponent(ComponentTestBaseWithoutClient):
         component = await self.component_setup(component_class, default_kwargs)
         # Create a message with various attributes
         test_message = Message(
-            content="Test content", sender="Test Sender", sender_name="Test Name", session_id="test_session"
+            content="Test content",
+            sender="Test Sender",
+            sender_name="Test Name",
+            session_id="test_session",
         )
 
         component.input_message = test_message

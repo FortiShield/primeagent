@@ -63,7 +63,11 @@ class TestGroqConstantsStructure:
 
     def test_groq_models_combined_list(self):
         """Test that GROQ_MODELS is the combination of production and preview."""
-        from wfx.base.models.groq_constants import GROQ_MODELS, GROQ_PREVIEW_MODELS, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS,
+            GROQ_PREVIEW_MODELS,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         combined = GROQ_PRODUCTION_MODELS + GROQ_PREVIEW_MODELS
         assert combined == GROQ_MODELS
@@ -105,7 +109,10 @@ class TestFallbackProductionModels:
 
     def test_production_models_not_deprecated(self):
         """Test that production models are not deprecated."""
-        from wfx.base.models.groq_constants import GROQ_MODELS_DETAILED, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS_DETAILED,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in GROQ_PRODUCTION_MODELS:
@@ -113,7 +120,10 @@ class TestFallbackProductionModels:
 
     def test_production_models_not_unsupported(self):
         """Test that production models are not marked as unsupported."""
-        from wfx.base.models.groq_constants import GROQ_MODELS_DETAILED, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS_DETAILED,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in GROQ_PRODUCTION_MODELS:
@@ -121,7 +131,10 @@ class TestFallbackProductionModels:
 
     def test_production_models_not_preview(self):
         """Test that production models are not preview models."""
-        from wfx.base.models.groq_constants import GROQ_MODELS_DETAILED, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS_DETAILED,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in GROQ_PRODUCTION_MODELS:
@@ -133,7 +146,10 @@ class TestDeprecatedModels:
 
     def test_deprecated_models_marked_correctly(self):
         """Test that deprecated models have the deprecated flag."""
-        from wfx.base.models.groq_constants import DEPRECATED_GROQ_MODELS, GROQ_MODELS_DETAILED
+        from wfx.base.models.groq_constants import (
+            DEPRECATED_GROQ_MODELS,
+            GROQ_MODELS_DETAILED,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in DEPRECATED_GROQ_MODELS:
@@ -141,7 +157,10 @@ class TestDeprecatedModels:
 
     def test_deprecated_models_not_in_production(self):
         """Test that deprecated models are not in production list."""
-        from wfx.base.models.groq_constants import DEPRECATED_GROQ_MODELS, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            DEPRECATED_GROQ_MODELS,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         for model_name in DEPRECATED_GROQ_MODELS:
             assert model_name not in GROQ_PRODUCTION_MODELS
@@ -168,7 +187,10 @@ class TestUnsupportedModels:
 
     def test_unsupported_models_marked_correctly(self):
         """Test that unsupported models have the not_supported flag."""
-        from wfx.base.models.groq_constants import GROQ_MODELS_DETAILED, UNSUPPORTED_GROQ_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS_DETAILED,
+            UNSUPPORTED_GROQ_MODELS,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in UNSUPPORTED_GROQ_MODELS:
@@ -176,7 +198,10 @@ class TestUnsupportedModels:
 
     def test_unsupported_models_not_in_production(self):
         """Test that unsupported models are not in production list."""
-        from wfx.base.models.groq_constants import GROQ_PRODUCTION_MODELS, UNSUPPORTED_GROQ_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_PRODUCTION_MODELS,
+            UNSUPPORTED_GROQ_MODELS,
+        )
 
         for model_name in UNSUPPORTED_GROQ_MODELS:
             assert model_name not in GROQ_PRODUCTION_MODELS
@@ -236,7 +261,10 @@ class TestPreviewModels:
 
     def test_preview_models_marked_correctly(self):
         """Test that preview models have the preview flag."""
-        from wfx.base.models.groq_constants import GROQ_MODELS_DETAILED, GROQ_PREVIEW_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_MODELS_DETAILED,
+            GROQ_PREVIEW_MODELS,
+        )
 
         for model in GROQ_MODELS_DETAILED:
             if model["name"] in GROQ_PREVIEW_MODELS:
@@ -244,7 +272,10 @@ class TestPreviewModels:
 
     def test_preview_models_not_in_production(self):
         """Test that preview models are separate from production."""
-        from wfx.base.models.groq_constants import GROQ_PREVIEW_MODELS, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_PREVIEW_MODELS,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         for model_name in GROQ_PREVIEW_MODELS:
             assert model_name not in GROQ_PRODUCTION_MODELS
@@ -281,28 +312,40 @@ class TestModelCategorization:
 
     def test_no_overlap_production_deprecated(self):
         """Test no overlap between production and deprecated models."""
-        from wfx.base.models.groq_constants import DEPRECATED_GROQ_MODELS, GROQ_PRODUCTION_MODELS
+        from wfx.base.models.groq_constants import (
+            DEPRECATED_GROQ_MODELS,
+            GROQ_PRODUCTION_MODELS,
+        )
 
         overlap = set(GROQ_PRODUCTION_MODELS) & set(DEPRECATED_GROQ_MODELS)
         assert len(overlap) == 0, f"Found overlap: {overlap}"
 
     def test_no_overlap_production_unsupported(self):
         """Test no overlap between production and unsupported models."""
-        from wfx.base.models.groq_constants import GROQ_PRODUCTION_MODELS, UNSUPPORTED_GROQ_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_PRODUCTION_MODELS,
+            UNSUPPORTED_GROQ_MODELS,
+        )
 
         overlap = set(GROQ_PRODUCTION_MODELS) & set(UNSUPPORTED_GROQ_MODELS)
         assert len(overlap) == 0, f"Found overlap: {overlap}"
 
     def test_no_overlap_preview_deprecated(self):
         """Test no overlap between preview and deprecated models."""
-        from wfx.base.models.groq_constants import DEPRECATED_GROQ_MODELS, GROQ_PREVIEW_MODELS
+        from wfx.base.models.groq_constants import (
+            DEPRECATED_GROQ_MODELS,
+            GROQ_PREVIEW_MODELS,
+        )
 
         overlap = set(GROQ_PREVIEW_MODELS) & set(DEPRECATED_GROQ_MODELS)
         assert len(overlap) == 0, f"Found overlap: {overlap}"
 
     def test_no_overlap_preview_unsupported(self):
         """Test no overlap between preview and unsupported models."""
-        from wfx.base.models.groq_constants import GROQ_PREVIEW_MODELS, UNSUPPORTED_GROQ_MODELS
+        from wfx.base.models.groq_constants import (
+            GROQ_PREVIEW_MODELS,
+            UNSUPPORTED_GROQ_MODELS,
+        )
 
         overlap = set(GROQ_PREVIEW_MODELS) & set(UNSUPPORTED_GROQ_MODELS)
         assert len(overlap) == 0, f"Found overlap: {overlap}"

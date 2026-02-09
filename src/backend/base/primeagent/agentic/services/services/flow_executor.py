@@ -15,7 +15,10 @@ from primeagent.agentic.services.flow_types import (
     FlowExecutionResult,
 )
 from primeagent.agentic.services.helpers.event_consumer import consume_streaming_events
-from primeagent.agentic.services.helpers.flow_loader import load_graph_for_execution, resolve_flow_path
+from primeagent.agentic.services.helpers.flow_loader import (
+    load_graph_for_execution,
+    resolve_flow_path,
+)
 from wfx.cli.script_loader import extract_structured_result
 from wfx.events.event_manager import EventManager, create_default_event_manager
 from wfx.log.logger import logger

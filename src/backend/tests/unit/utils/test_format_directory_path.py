@@ -16,9 +16,15 @@ from wfx.base.data.utils import format_directory_path
         # Test case 5: Empty path (as per the original function, this remains an empty string)
         ("", ""),
         # Test case 6: Path with mixed newlines and other special characters
-        ("/home/user/my-\ndocs/special_file!.pdf", "/home/user/my-\\ndocs/special_file!.pdf"),
+        (
+            "/home/user/my-\ndocs/special_file!.pdf",
+            "/home/user/my-\\ndocs/special_file!.pdf",
+        ),
         # Test case 7: Windows-style path with newline
-        ("C:\\Users\\\nDocuments\\file.txt", "C:\\Users\\\\nDocuments\\file.txt"),  # No conversion of backslashes
+        (
+            "C:\\Users\\\nDocuments\\file.txt",
+            "C:\\Users\\\\nDocuments\\file.txt",
+        ),  # No conversion of backslashes
         # Test case 8: Path with trailing newline
         ("/home/user/documents/\n", "/home/user/documents/\\n"),
         # Test case 9: Path with leading newline

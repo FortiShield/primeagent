@@ -498,7 +498,13 @@ class TestTextOperationsUpdateBuildConfig:
         component = TextOperations()
         build_config = {
             field: {"show": True}
-            for field in ["count_words", "count_characters", "count_lines", "case_type", "search_pattern"]
+            for field in [
+                "count_words",
+                "count_characters",
+                "count_lines",
+                "case_type",
+                "search_pattern",
+            ]
         }
 
         result = component.update_build_config(build_config, [{"name": "Word Count"}], "operation")
@@ -523,7 +529,13 @@ class TestTextOperationsUpdateBuildConfig:
         """Test build config update for Text Replace operation."""
         component = TextOperations()
         build_config = {
-            field: {"show": True} for field in ["search_pattern", "replacement_text", "use_regex", "case_type"]
+            field: {"show": True}
+            for field in [
+                "search_pattern",
+                "replacement_text",
+                "use_regex",
+                "case_type",
+            ]
         }
 
         result = component.update_build_config(build_config, [{"name": "Text Replace"}], "operation")

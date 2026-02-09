@@ -32,7 +32,10 @@ class TestMCPComponentCache(ComponentTestBaseWithoutClient):
     def default_kwargs(self):
         """Return the default kwargs for the component."""
         return {
-            "mcp_server": {"name": "test_server", "config": {"command": "uvx test-mcp-server"}},
+            "mcp_server": {
+                "name": "test_server",
+                "config": {"command": "uvx test-mcp-server"},
+            },
             "tool": "",
             "use_cache": False,
         }
@@ -489,7 +492,10 @@ class TestMCPComponentCache(ComponentTestBaseWithoutClient):
             patch.object(component, "update_tool_list") as mock_update_tool_list,
         ):
             mock_get_inputs.return_value = {"test_tool": []}
-            mock_update_tool_list.return_value = (mock_tools_list, {"name": "test_server", "config": {}})
+            mock_update_tool_list.return_value = (
+                mock_tools_list,
+                {"name": "test_server", "config": {}},
+            )
 
             # Build output should work with cached tools
             result = await component.build_output()

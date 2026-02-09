@@ -100,7 +100,11 @@ async def list_available_flows(host: str, access_token: str) -> list[tuple[str, 
             "Document Q&A",
             "Question and answer system for document content ⚠️  Requires file uploads - not ideal for load testing",
         ),
-        ("Memory Chatbot", "Memory Chatbot", "Chatbot with conversation memory using context ✅ Good for load testing"),
+        (
+            "Memory Chatbot",
+            "Memory Chatbot",
+            "Chatbot with conversation memory using context ✅ Good for load testing",
+        ),
         (
             "Vector Store RAG",
             "Vector Store RAG",
@@ -453,7 +457,11 @@ Examples:
     )
     parser.add_argument("--flow", help="Name of the starter project flow to use")
     parser.add_argument("--interactive", action="store_true", help="Interactive flow selection")
-    parser.add_argument("--list-flows", action="store_true", help="List available starter project flows and exit")
+    parser.add_argument(
+        "--list-flows",
+        action="store_true",
+        help="List available starter project flows and exit",
+    )
     parser.add_argument("--save-credentials", metavar="FILE", help="Save credentials to a JSON file")
 
     args = parser.parse_args()

@@ -50,7 +50,12 @@ class TestEmbeddingModelComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.models_and_agents.embedding_model.get_api_key_for_provider")
     @patch("wfx.components.models_and_agents.embedding_model.get_embedding_classes")
     def test_build_embeddings_openai(
-        self, mock_get_embedding_classes, mock_get_api_key, mock_get_unified_models, component_class, default_kwargs
+        self,
+        mock_get_embedding_classes,
+        mock_get_api_key,
+        mock_get_unified_models,
+        component_class,
+        default_kwargs,
     ):
         # Setup mock for get_api_key_for_provider
         mock_get_api_key.return_value = "test-key"
@@ -118,7 +123,11 @@ class TestEmbeddingModelComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.models_and_agents.embedding_model.get_api_key_for_provider")
     @patch("wfx.components.models_and_agents.embedding_model.get_embedding_classes")
     def test_build_embeddings_unknown_embedding_class(
-        self, mock_get_embedding_classes, mock_get_api_key, component_class, default_kwargs
+        self,
+        mock_get_embedding_classes,
+        mock_get_api_key,
+        component_class,
+        default_kwargs,
     ):
         # Setup mock for get_api_key_for_provider
         mock_get_api_key.return_value = "test-key"
@@ -147,7 +156,11 @@ class TestEmbeddingModelComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.models_and_agents.embedding_model.get_api_key_for_provider")
     @patch("wfx.components.models_and_agents.embedding_model.get_embedding_classes")
     def test_build_embeddings_google(
-        self, mock_get_embedding_classes, mock_get_api_key, mock_get_unified_models, component_class
+        self,
+        mock_get_embedding_classes,
+        mock_get_api_key,
+        mock_get_unified_models,
+        component_class,
     ):
         # Setup mock for get_api_key_for_provider
         mock_get_api_key.return_value = "test-google-key"
@@ -211,7 +224,12 @@ class TestEmbeddingModelComponent(ComponentTestBaseWithoutClient):
     @patch("wfx.components.models_and_agents.embedding_model.get_api_key_for_provider")
     @patch("wfx.components.models_and_agents.embedding_model.get_embedding_classes")
     def test_build_embeddings_with_available_models(
-        self, mock_get_embedding_classes, mock_get_api_key, mock_get_unified_models, component_class, default_kwargs
+        self,
+        mock_get_embedding_classes,
+        mock_get_api_key,
+        mock_get_unified_models,
+        component_class,
+        default_kwargs,
     ):
         """Test that available_models dict is populated from unified models."""
         # Setup mock for get_api_key_for_provider

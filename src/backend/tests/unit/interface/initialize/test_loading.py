@@ -63,7 +63,10 @@ async def test_update_params_raises_when_variable_not_found_and_no_fallback():
 
         with pytest.raises(ValueError, match="TEST_API_KEY variable not found"):
             await update_params_with_load_from_db_fields(
-                custom_component, params, load_from_db_fields, fallback_to_env_vars=False
+                custom_component,
+                params,
+                load_from_db_fields,
+                fallback_to_env_vars=False,
             )
 
 
@@ -156,7 +159,10 @@ async def test_update_params_raises_on_user_id_not_set():
 
         with pytest.raises(ValueError, match="User id is not set"):
             await update_params_with_load_from_db_fields(
-                custom_component, params, load_from_db_fields, fallback_to_env_vars=False
+                custom_component,
+                params,
+                load_from_db_fields,
+                fallback_to_env_vars=False,
             )
 
 

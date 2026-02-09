@@ -7,7 +7,11 @@ from uuid import UUID
 import httpx
 from httpx import HTTPError, HTTPStatusError
 from primeagent.services.base import Service
-from primeagent.services.store.exceptions import APIKeyError, FilterError, ForbiddenError
+from primeagent.services.store.exceptions import (
+    APIKeyError,
+    FilterError,
+    ForbiddenError,
+)
 from primeagent.services.store.schema import (
     CreateComponentResponse,
     DownloadComponentResponse,
@@ -154,7 +158,10 @@ class StoreService(Service):
             headers = {"Authorization": f"Bearer {api_key}"}
             async with httpx.AsyncClient() as client:
                 response = await client.post(
-                    webhook_url, headers=headers, json={"component_id": str(component_id)}, timeout=self.timeout
+                    webhook_url,
+                    headers=headers,
+                    json={"component_id": str(component_id)},
+                    timeout=self.timeout,
                 )
                 response.raise_for_status()
             return response.json()
@@ -272,7 +279,7 @@ class StoreService(Service):
         params: dict[str, Any] = {
             "page": page,
             "limit": limit,
-            "fields": ",".join(fields) if fields is not None else ",".join(self.default_fields),
+            "fields": (",".join(fields) if fields is not None else ",".join(self.default_fields)),
             "meta": "filter_count",  # !This is DEPRECATED so we should remove it ASAP
         }
         # ?aggregate[count]=likes
@@ -378,7 +385,10 @@ class StoreService(Service):
             # response.raise_for_status()
             async with httpx.AsyncClient() as client:
                 response = await client.post(
-                    self.components_url, headers=headers, json=component_dict, timeout=self.timeout
+                    self.components_url,
+                    headers=headers,
+                    json=component_dict,
+                    timeout=self.timeout,
                 )
                 response.raise_for_status()
             component = response.json()["data"]
@@ -415,7 +425,10 @@ class StoreService(Service):
             # response.raise_for_status()
             async with httpx.AsyncClient() as client:
                 response = await client.patch(
-                    self.components_url + f"/{component_id}", headers=headers, json=component_dict, timeout=self.timeout
+                    self.components_url + f"/{component_id}",
+                    headers=headers,
+                    json=component_dict,
+                    timeout=self.timeout,
                 )
                 response.raise_for_status()
             component = response.json()["data"]

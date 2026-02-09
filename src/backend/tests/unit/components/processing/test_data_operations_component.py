@@ -72,7 +72,12 @@ class TestDataOperationsComponent(ComponentTestBaseWithoutClient):
     def test_literal_eval(self):
         """Test the Literal Eval operation."""
         component = DataOperationsComponent(
-            data=Data(data={"list_as_string": "[1, 2, 3]", "dict_as_string": "{'a': 1, 'b': 2}"}),
+            data=Data(
+                data={
+                    "list_as_string": "[1, 2, 3]",
+                    "dict_as_string": "{'a': 1, 'b': 2}",
+                }
+            ),
             operations=[{"name": "Literal Eval"}],
         )
 
@@ -112,7 +117,10 @@ class TestDataOperationsComponent(ComponentTestBaseWithoutClient):
 
         result = component.as_data()
         assert isinstance(result, Data)
-        assert result.data["common_key"] == ["value1", "value2"]  # Combined string values
+        assert result.data["common_key"] == [
+            "value1",
+            "value2",
+        ]  # Combined string values
         assert result.data["key1"] == "value1"
         assert result.data["key2"] == "value2"
 
@@ -121,7 +129,10 @@ class TestDataOperationsComponent(ComponentTestBaseWithoutClient):
         component = DataOperationsComponent(
             data=Data(data={"existing_key": "existing_value"}),
             operations=[{"name": "Append or Update"}],
-            append_update_data={"new_key": "new_value", "existing_key": "updated_value"},
+            append_update_data={
+                "new_key": "new_value",
+                "existing_key": "updated_value",
+            },
         )
 
         result = component.as_data()
@@ -189,5 +200,8 @@ class TestDataOperationsComponent(ComponentTestBaseWithoutClient):
             select_keys_input=["key1"],
         )
 
-        with pytest.raises(ValueError, match="Select Keys operation is not supported for multiple data objects"):
+        with pytest.raises(
+            ValueError,
+            match="Select Keys operation is not supported for multiple data objects",
+        ):
             component.as_data()

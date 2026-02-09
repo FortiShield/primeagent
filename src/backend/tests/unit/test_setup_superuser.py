@@ -155,11 +155,17 @@ async def test_create_super_user_race_condition():
     # 2. commit() raises IntegrityError (simulating race condition)
     # 3. After rollback, second call to get_user_by_username returns the existing user
     mock_get_user_by_username = AsyncMock()
-    mock_get_user_by_username.side_effect = [None, mock_user]  # None first, then existing user
+    mock_get_user_by_username.side_effect = [
+        None,
+        mock_user,
+    ]  # None first, then existing user
 
     mock_session.commit.side_effect = IntegrityError("statement", "params", Exception("orig"))
     with (
-        patch("primeagent.services.auth.service.get_user_by_username", mock_get_user_by_username),
+        patch(
+            "primeagent.services.auth.service.get_user_by_username",
+            mock_get_user_by_username,
+        ),
         patch("primeagent.services.auth.utils.get_password_hash", mock_get_password_hash),
         patch("primeagent.services.database.models.user.model.User") as mock_user_class,
     ):
@@ -184,7 +190,10 @@ async def test_create_super_user_race_condition_no_user_found():
 
     # Mock get_user_by_username to always return None (even after rollback)
     mock_get_user_by_username = AsyncMock()
-    mock_get_user_by_username.side_effect = [None, None]  # None for initial check and after rollback
+    mock_get_user_by_username.side_effect = [
+        None,
+        None,
+    ]  # None for initial check and after rollback
 
     # Mock other dependencies
     mock_get_password_hash = MagicMock(return_value="hashed_password")
@@ -195,9 +204,15 @@ async def test_create_super_user_race_condition_no_user_found():
     mock_session.commit.side_effect = integrity_error
 
     with (
-        patch("primeagent.services.auth.service.get_user_by_username", mock_get_user_by_username),
+        patch(
+            "primeagent.services.auth.service.get_user_by_username",
+            mock_get_user_by_username,
+        ),
         patch("primeagent.services.auth.utils.get_password_hash", mock_get_password_hash),
-        patch("primeagent.services.database.models.user.model.User", return_value=mock_user),
+        patch(
+            "primeagent.services.database.models.user.model.User",
+            return_value=mock_user,
+        ),
         pytest.raises(IntegrityError),
     ):
         await create_super_user("testuser", "password", mock_session)
@@ -230,7 +245,10 @@ async def test_create_super_user_concurrent_workers():
     # get_user_by_username returns None initially, then the created user for worker 2
     mock_get_user_by_username.side_effect = [None, None, mock_user]
 
-    with patch("primeagent.services.auth.service.get_user_by_username", mock_get_user_by_username):
+    with patch(
+        "primeagent.services.auth.service.get_user_by_username",
+        mock_get_user_by_username,
+    ):
         # Simulate concurrent execution using asyncio.gather
         result1, result2 = await asyncio.gather(
             create_super_user("admin", "password", mock_session1),

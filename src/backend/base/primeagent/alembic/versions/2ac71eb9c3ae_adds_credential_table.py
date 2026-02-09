@@ -30,8 +30,12 @@ def upgrade() -> None:
                 "credential",
                 sa.Column("name", sqlmodel.sql.sqltypes.AutoString(), nullable=True),
                 sa.Column("value", sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-                sa.Column("provider", sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-                sa.Column("user_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),
+                sa.Column(
+                    "provider", sqlmodel.sql.sqltypes.AutoString(), nullable=True
+                ),
+                sa.Column(
+                    "user_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False
+                ),
                 sa.Column("id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),
                 sa.Column("created_at", sa.DateTime(), nullable=False),
                 sa.Column("updated_at", sa.DateTime(), nullable=True),

@@ -173,7 +173,10 @@ def apply_tweaks_on_vertex(vertex: Vertex, node_tweaks: dict[str, Any]) -> None:
 
 
 def process_tweaks(
-    graph_data: dict[str, Any], tweaks: Tweaks | dict[str, dict[str, Any]], *, stream: bool = False
+    graph_data: dict[str, Any],
+    tweaks: Tweaks | dict[str, dict[str, Any]],
+    *,
+    stream: bool = False,
 ) -> dict[str, Any]:
     """This function is used to tweak the graph data using the node id and the tweaks dict.
 

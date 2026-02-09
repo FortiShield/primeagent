@@ -75,5 +75,9 @@ async def test_post_validate_code_with_unauthenticated_user(client: AsyncClient)
     code = """
     print("Hello World")
     """
-    response = await client.post("api/v1/validate/code", json={"code": code}, headers={"Authorization": "Bearer fake"})
+    response = await client.post(
+        "api/v1/validate/code",
+        json={"code": code},
+        headers={"Authorization": "Bearer fake"},
+    )
     assert response.status_code == status.HTTP_401_UNAUTHORIZED

@@ -2,7 +2,11 @@ import pytest
 from anyio import Path
 from wfx.components.input_output import ChatInput, TextInputComponent
 from wfx.schema.message import Message
-from wfx.utils.constants import MESSAGE_SENDER_AI, MESSAGE_SENDER_NAME_USER, MESSAGE_SENDER_USER
+from wfx.utils.constants import (
+    MESSAGE_SENDER_AI,
+    MESSAGE_SENDER_NAME_USER,
+    MESSAGE_SENDER_USER,
+)
 
 from tests.base import ComponentTestBaseWithClient, ComponentTestBaseWithoutClient
 

@@ -177,7 +177,9 @@ async def get_component_by_name(
         await logger.ainfo("Getting component completed")
 
 
-async def get_all_component_types(settings_service: SettingsService | None = None) -> list[str]:
+async def get_all_component_types(
+    settings_service: SettingsService | None = None,
+) -> list[str]:
     """Get a list of all available component types.
 
     Args:

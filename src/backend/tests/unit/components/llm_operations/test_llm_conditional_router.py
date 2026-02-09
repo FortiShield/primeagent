@@ -54,8 +54,16 @@ class TestSmartRouterComponent(ComponentTestBaseWithoutClient):
         """Helper to create a component with a mocked categorization result."""
         component = SmartRouterComponent()
         component.routes = [
-            {"route_category": "Positive", "route_description": "Good feedback", "output_value": ""},
-            {"route_category": "Negative", "route_description": "Bad feedback", "output_value": ""},
+            {
+                "route_category": "Positive",
+                "route_description": "Good feedback",
+                "output_value": "",
+            },
+            {
+                "route_category": "Negative",
+                "route_description": "Bad feedback",
+                "output_value": "",
+            },
         ]
         component.input_text = "Test input"
         component.enable_else_output = enable_else
@@ -120,7 +128,10 @@ class TestSmartRouterComponent(ComponentTestBaseWithoutClient):
         mock_response.content = "Positive"
         mock_llm.invoke.return_value = mock_response
 
-        with patch("wfx.components.llm_operations.llm_conditional_router.get_llm", return_value=mock_llm):
+        with patch(
+            "wfx.components.llm_operations.llm_conditional_router.get_llm",
+            return_value=mock_llm,
+        ):
             result1 = component._get_categorization()
             result2 = component._get_categorization()
 

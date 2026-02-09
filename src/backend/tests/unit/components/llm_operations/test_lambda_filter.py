@@ -40,7 +40,16 @@ class TestLambdaFilterComponent(ComponentTestBaseWithoutClient):
     def default_kwargs(self, model_metadata):
         """Return the default kwargs for the component with proper model metadata."""
         return {
-            "data": [Data(data={"items": [{"name": "test1", "value": 10}, {"name": "test2", "value": 20}]})],
+            "data": [
+                Data(
+                    data={
+                        "items": [
+                            {"name": "test1", "value": 10},
+                            {"name": "test2", "value": 20},
+                        ]
+                    }
+                )
+            ],
             "model": model_metadata,
             "api_key": "test-api-key",
             "filter_instruction": "Filter items with value greater than 15",

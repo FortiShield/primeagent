@@ -24,7 +24,10 @@ class TestExtractInputVariables:
 
         result = extract_input_variables(nodes)
 
-        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == ["name", "place"]
+        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == [
+            "name",
+            "place",
+        ]
 
     def test_extract_input_variables_few_shot_type(self):
         """Test extracting input variables from few_shot type node."""
@@ -45,7 +48,10 @@ class TestExtractInputVariables:
 
         result = extract_input_variables(nodes)
 
-        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == ["prefix_var", "suffix_var"]
+        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == [
+            "prefix_var",
+            "suffix_var",
+        ]
 
     def test_extract_input_variables_other_type(self):
         """Test extracting input variables from other type nodes."""
@@ -57,7 +63,18 @@ class TestExtractInputVariables:
 
     def test_extract_input_variables_no_input_variables_field(self):
         """Test handling nodes without input_variables field."""
-        nodes = [{"data": {"node": {"template": {"_type": "prompt", "template": {"value": "Hello {name}!"}}}}}]
+        nodes = [
+            {
+                "data": {
+                    "node": {
+                        "template": {
+                            "_type": "prompt",
+                            "template": {"value": "Hello {name}!"},
+                        }
+                    }
+                }
+            }
+        ]
 
         # Should not raise exception due to contextlib.suppress
         result = extract_input_variables(nodes)
@@ -95,7 +112,10 @@ class TestExtractInputVariables:
         result = extract_input_variables(nodes)
 
         assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == ["user"]
-        assert result[1]["data"]["node"]["template"]["input_variables"]["value"] == ["var1", "var2"]
+        assert result[1]["data"]["node"]["template"]["input_variables"]["value"] == [
+            "var1",
+            "var2",
+        ]
 
     def test_extract_input_variables_nested_brackets(self):
         """Test extracting variables with nested brackets."""
@@ -157,7 +177,10 @@ class TestExtractInputVariables:
         result = extract_input_variables(nodes)
 
         # Should contain duplicates as found by regex
-        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == ["name", "name"]
+        assert result[0]["data"]["node"]["template"]["input_variables"]["value"] == [
+            "name",
+            "name",
+        ]
 
     def test_extract_input_variables_malformed_node(self):
         """Test handling malformed node structure."""

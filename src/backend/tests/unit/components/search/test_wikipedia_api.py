@@ -46,7 +46,13 @@ class TestWikipediaComponent(ComponentTestBaseWithoutClient):
         assert "template" in frontend_node
         input_names = [input_["name"] for input_ in frontend_node["template"].values() if isinstance(input_, dict)]
 
-        expected_inputs = ["input_value", "lang", "k", "load_all_available_meta", "doc_content_chars_max"]
+        expected_inputs = [
+            "input_value",
+            "lang",
+            "k",
+            "load_all_available_meta",
+            "doc_content_chars_max",
+        ]
 
         for input_name in expected_inputs:
             assert input_name in input_names

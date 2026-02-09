@@ -32,7 +32,15 @@ import random
 import time
 
 import gevent
-from locust import FastHttpUser, LoadTestShape, between, constant, constant_pacing, events, task
+from locust import (
+    FastHttpUser,
+    LoadTestShape,
+    between,
+    constant,
+    constant_pacing,
+    events,
+    task,
+)
 
 # Configuration
 FLOW_ID = os.getenv("FLOW_ID", "5523731d-5ef3-56de-b4ef-59b0a224fdbc")
@@ -49,7 +57,13 @@ TEST_MESSAGES = {
 }
 
 # Weighted message distribution for realistic load
-MESSAGE_WEIGHTS = [("simple", 50), ("medium", 30), ("minimal", 15), ("complex", 4), ("large", 1)]
+MESSAGE_WEIGHTS = [
+    ("simple", 50),
+    ("medium", 30),
+    ("minimal", 15),
+    ("complex", 4),
+    ("large", 1),
+]
 
 
 # Load test shapes
@@ -196,7 +210,10 @@ class BaseWfxUser(FastHttpUser):
         """
         message = TEST_MESSAGES.get(message_type, TEST_MESSAGES["simple"])
 
-        payload = {"input_value": message, "session_id": f"{self.session_id}_{self.request_count}"}
+        payload = {
+            "input_value": message,
+            "session_id": f"{self.session_id}_{self.request_count}",
+        }
 
         headers = {"x-api-key": API_KEY, "Content-Type": "application/json"}
 
@@ -253,7 +270,11 @@ class NormalUser(BaseWfxUser):
     @task(80)
     def send_message(self):
         """Main task: Send a message with weighted distribution."""
-        message_type = random.choices([w[0] for w in MESSAGE_WEIGHTS], weights=[w[1] for w in MESSAGE_WEIGHTS], k=1)[0]  # noqa: S311
+        message_type = random.choices(
+            [w[0] for w in MESSAGE_WEIGHTS],
+            weights=[w[1] for w in MESSAGE_WEIGHTS],
+            k=1,
+        )[0]
         self.make_request(message_type=message_type)
 
     @task(15)

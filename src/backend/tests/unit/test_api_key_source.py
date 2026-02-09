@@ -540,7 +540,7 @@ class TestCheckKeyIntegration:
 
         monkeypatch.setattr(
             "primeagent.services.database.models.api_key.crud.auth_utils.decrypt_api_key",
-            lambda v, _settings_service=None: "sk-wrong-key" if v == "sk-wrong-key" else v,
+            lambda v, _settings_service=None: ("sk-wrong-key" if v == "sk-wrong-key" else v),
         )
 
         mock_result = MagicMock()

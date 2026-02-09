@@ -179,7 +179,8 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
 
         component = component_class(**default_kwargs)
         with pytest.raises(
-            ValueError, match=re.escape("Authentication error: Unable to refresh authentication token.")
+            ValueError,
+            match=re.escape("Authentication error: Unable to refresh authentication token."),
         ):
             component.execute_sql()
 
@@ -193,20 +194,48 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
 
         # Create mock rows with complex data
         mock_row1 = MagicMock()
-        mock_row1.items.return_value = [("id", 1), ("name", "Test 1"), ("value", 10.5), ("active", True)]
+        mock_row1.items.return_value = [
+            ("id", 1),
+            ("name", "Test 1"),
+            ("value", 10.5),
+            ("active", True),
+        ]
         mock_row1.__iter__.return_value = iter([("id", 1), ("name", "Test 1"), ("value", 10.5), ("active", True)])
         mock_row1.keys.return_value = ["id", "name", "value", "active"]
-        mock_row1.to_numpy.return_value = [1, "Test 1", 10.5, True]  # Changed from values to to_numpy
-        mock_row1.__getitem__.side_effect = lambda key: {"id": 1, "name": "Test 1", "value": 10.5, "active": True}[key]
+        mock_row1.to_numpy.return_value = [
+            1,
+            "Test 1",
+            10.5,
+            True,
+        ]  # Changed from values to to_numpy
+        mock_row1.__getitem__.side_effect = lambda key: {
+            "id": 1,
+            "name": "Test 1",
+            "value": 10.5,
+            "active": True,
+        }[key]
 
         mock_row2 = MagicMock()
-        mock_row2.items.return_value = [("id", 2), ("name", "Test 2"), ("value", 20.75), ("active", False)]
+        mock_row2.items.return_value = [
+            ("id", 2),
+            ("name", "Test 2"),
+            ("value", 20.75),
+            ("active", False),
+        ]
         mock_row2.__iter__.return_value = iter([("id", 2), ("name", "Test 2"), ("value", 20.75), ("active", False)])
         mock_row2.keys.return_value = ["id", "name", "value", "active"]
-        mock_row2.to_numpy.return_value = [2, "Test 2", 20.75, False]  # Changed from values to to_numpy
-        mock_row2.__getitem__.side_effect = lambda key: {"id": 2, "name": "Test 2", "value": 20.75, "active": False}[
-            key
-        ]
+        mock_row2.to_numpy.return_value = [
+            2,
+            "Test 2",
+            20.75,
+            False,
+        ]  # Changed from values to to_numpy
+        mock_row2.__getitem__.side_effect = lambda key: {
+            "id": 2,
+            "name": "Test 2",
+            "value": 20.75,
+            "active": False,
+        }[key]
 
         # Create mock result with the mock rows
         mock_result = MagicMock()
@@ -230,7 +259,12 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
         # Verify the result
         assert isinstance(result, DataFrame)
         assert len(result) == 2  # Check number of rows
-        assert list(result.columns) == ["id", "name", "value", "active"]  # Check columns
+        assert list(result.columns) == [
+            "id",
+            "name",
+            "value",
+            "active",
+        ]  # Check columns
 
         # Convert DataFrame to dictionary for easier comparison
         result_dict = result.to_dict(orient="records")
@@ -409,7 +443,10 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
         mock_row.items.return_value = [("id", 1), ("name", "test_name")]
         mock_row.__iter__.return_value = iter([("id", 1), ("name", "test_name")])
         mock_row.keys.return_value = ["id", "name"]
-        mock_row.to_numpy.return_value = [1, "test_name"]  # Changed from values to to_numpy
+        mock_row.to_numpy.return_value = [
+            1,
+            "test_name",
+        ]  # Changed from values to to_numpy
         mock_row.__getitem__.side_effect = lambda key: {"id": 1, "name": "test_name"}[key]
 
         # Create mock result with the mock row
@@ -527,7 +564,11 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
         # Test with SQL code block and quotes
         query_with_code_block_and_quotes = '```sql\n"SELECT * FROM table"\n```'
         component = component_class(
-            **{**default_kwargs, "query": query_with_code_block_and_quotes, "clean_query": True}
+            **{
+                **default_kwargs,
+                "query": query_with_code_block_and_quotes,
+                "clean_query": True,
+            }
         )
         result = component.execute_sql()
         mock_client.query.assert_called_once_with("SELECT * FROM table")
@@ -558,7 +599,13 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
 
         # Test with backticks in the middle of the query
         query_with_middle_backticks = "SELECT * FROM project.dataset.table"
-        component = component_class(**{**default_kwargs, "query": query_with_middle_backticks, "clean_query": True})
+        component = component_class(
+            **{
+                **default_kwargs,
+                "query": query_with_middle_backticks,
+                "clean_query": True,
+            }
+        )
         result = component.execute_sql()
         mock_client.query.assert_called_once_with("SELECT * FROM project.dataset.table")
         assert isinstance(result, DataFrame)
@@ -568,7 +615,13 @@ class TestBigQueryExecutorComponent(ComponentTestBaseWithoutClient):
 
         # Test with multiple backticks in the query
         query_with_multiple_backticks = "SELECT * FROM project.dataset.table WHERE column = 'value'"
-        component = component_class(**{**default_kwargs, "query": query_with_multiple_backticks, "clean_query": True})
+        component = component_class(
+            **{
+                **default_kwargs,
+                "query": query_with_multiple_backticks,
+                "clean_query": True,
+            }
+        )
         result = component.execute_sql()
         mock_client.query.assert_called_once_with("SELECT * FROM project.dataset.table WHERE column = 'value'")
         assert isinstance(result, DataFrame)

@@ -34,7 +34,11 @@ class TestColumn:
     # Invalid formatter raises ValueError
     def test_invalid_formatter_raises_value_error(self):
         with pytest.raises(ValueError, match="'invalid' is not a valid FormatterType"):
-            Column(display_name="Invalid Column", name="invalid_column", formatter="invalid")
+            Column(
+                display_name="Invalid Column",
+                name="invalid_column",
+                formatter="invalid",
+            )
 
     # Formatter is None when not provided
     def test_formatter_none_when_not_provided(self):
@@ -44,7 +48,10 @@ class TestColumn:
     # Description and default can be set
     def test_description_and_default(self):
         column = Column(
-            display_name="Test Column", name="test_column", description="A test column", default="default_value"
+            display_name="Test Column",
+            name="test_column",
+            description="A test column",
+            default="default_value",
         )
         assert column.description == "A test column"
         assert column.default == "default_value"

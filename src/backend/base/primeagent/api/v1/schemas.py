@@ -7,7 +7,11 @@ from uuid import UUID
 from primeagent.schema.dotdict import dotdict
 from primeagent.schema.graph import Tweaks
 from primeagent.schema.schema import InputType, OutputType, OutputValue
-from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
+from primeagent.serialization.serialization import (
+    get_max_items_length,
+    get_max_text_length,
+    serialize,
+)
 from primeagent.services.database.models.api_key.model import ApiKeyRead
 from primeagent.services.database.models.base import orjson_dumps
 from primeagent.services.database.models.flow.model import FlowCreate, FlowRead
@@ -293,10 +297,26 @@ class ResultDataResponse(BaseModel):
         """
         return {
             "results": self.serialize_results(self.results),
-            "outputs": serialize(self.outputs, max_length=get_max_text_length(), max_items=get_max_items_length()),
-            "logs": serialize(self.logs, max_length=get_max_text_length(), max_items=get_max_items_length()),
-            "message": serialize(self.message, max_length=get_max_text_length(), max_items=get_max_items_length()),
-            "artifacts": serialize(self.artifacts, max_length=get_max_text_length(), max_items=get_max_items_length()),
+            "outputs": serialize(
+                self.outputs,
+                max_length=get_max_text_length(),
+                max_items=get_max_items_length(),
+            ),
+            "logs": serialize(
+                self.logs,
+                max_length=get_max_text_length(),
+                max_items=get_max_items_length(),
+            ),
+            "message": serialize(
+                self.message,
+                max_length=get_max_text_length(),
+                max_items=get_max_items_length(),
+            ),
+            "artifacts": serialize(
+                self.artifacts,
+                max_length=get_max_text_length(),
+                max_items=get_max_items_length(),
+            ),
             "timedelta": self.timedelta,
             "duration": self.duration,
             "used_frozen_result": self.used_frozen_result,
@@ -389,7 +409,9 @@ class ConfigResponse(BaseModel):
         """
         import os
 
-        from primeagent.services.database.models.folder.constants import DEFAULT_FOLDER_NAME
+        from primeagent.services.database.models.folder.constants import (
+            DEFAULT_FOLDER_NAME,
+        )
 
         return cls(
             feature_flags=FEATURE_FLAGS,

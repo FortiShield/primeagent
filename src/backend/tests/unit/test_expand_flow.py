@@ -443,11 +443,21 @@ class TestExpandEdge:
         }
 
         edge1 = _expand_edge(
-            CompactEdge(source="1", source_output="message", target="2", target_input="input_value"),
+            CompactEdge(
+                source="1",
+                source_output="message",
+                target="2",
+                target_input="input_value",
+            ),
             expanded_nodes,
         )
         edge2 = _expand_edge(
-            CompactEdge(source="2", source_output="text_output", target="3", target_input="input_value"),
+            CompactEdge(
+                source="2",
+                source_output="text_output",
+                target="3",
+                target_input="input_value",
+            ),
             expanded_nodes,
         )
 
@@ -549,7 +559,10 @@ class TestExpandFlowEndpoint:
         response = await client.post("api/v1/flows/expand/", json=compact_data)
 
         # Should return 401 or 403 without auth
-        assert response.status_code in [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN]
+        assert response.status_code in [
+            status.HTTP_401_UNAUTHORIZED,
+            status.HTTP_403_FORBIDDEN,
+        ]
 
     async def test_expand_flow_endpoint_success(self, client: AsyncClient, logged_in_headers):
         compact_data = {

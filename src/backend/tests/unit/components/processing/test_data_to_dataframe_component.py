@@ -69,7 +69,10 @@ class TestDataToDataFrameComponent(ComponentTestBaseWithoutClient):
 
     def test_data_without_text(self, component_class):
         """Test handling Data objects without text field."""
-        data_without_text = [Data(data={"field1": "value1"}), Data(data={"field1": "value2"})]
+        data_without_text = [
+            Data(data={"field1": "value1"}),
+            Data(data={"field1": "value2"}),
+        ]
         component = component_class()
         component.set_attributes({"data_list": data_without_text})
 

@@ -28,13 +28,17 @@ def upgrade() -> None:
     try:
         if "is_component" not in flow_columns:
             with op.batch_alter_table("flow", schema=None) as batch_op:
-                batch_op.add_column(sa.Column("is_component", sa.Boolean(), nullable=True))
+                batch_op.add_column(
+                    sa.Column("is_component", sa.Boolean(), nullable=True)
+                )
     except Exception:
         pass
     try:
         if "store_api_key" not in user_columns:
             with op.batch_alter_table("user", schema=None) as batch_op:
-                batch_op.add_column(sa.Column("store_api_key", sqlmodel.AutoString(), nullable=True))
+                batch_op.add_column(
+                    sa.Column("store_api_key", sqlmodel.AutoString(), nullable=True)
+                )
     except Exception:
         pass
     # ### end Alembic commands ###

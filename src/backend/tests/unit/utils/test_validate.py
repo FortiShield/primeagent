@@ -162,7 +162,15 @@ class TestCreatePrimeagentExecutionContext:
         # The actual imports may succeed or fail, but the function should handle both cases
         assert isinstance(context, dict)
         # These keys should be present regardless of import success/failure
-        expected_keys = ["DataFrame", "Message", "Data", "Component", "HandleInput", "Output", "TabInput"]
+        expected_keys = [
+            "DataFrame",
+            "Message",
+            "Data",
+            "Component",
+            "HandleInput",
+            "Output",
+            "TabInput",
+        ]
         for key in expected_keys:
             assert key in context, f"Expected key '{key}' not found in context"
 
@@ -621,7 +629,10 @@ class SimpleClass:
 class TestGetDefaultImports:
     """Test cases for get_default_imports function."""
 
-    @patch("wfx.field_typing.constants.CUSTOM_COMPONENT_SUPPORTED_TYPES", {"TestType": Mock()})
+    @patch(
+        "wfx.field_typing.constants.CUSTOM_COMPONENT_SUPPORTED_TYPES",
+        {"TestType": Mock()},
+    )
     def test_returns_default_imports(self):
         """Test that default imports are returned."""
         code = "TestType and Optional"

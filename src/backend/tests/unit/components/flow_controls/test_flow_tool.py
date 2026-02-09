@@ -49,7 +49,12 @@ class TestFlowToolComponent(ComponentTestBaseWithClient):
     async def test_inputs_configuration(self, component_class, default_kwargs):
         """Test that inputs are properly configured."""
         component = await self.component_setup(component_class, default_kwargs)
-        expected_inputs = {"flow_name", "tool_name", "tool_description", "return_direct"}
+        expected_inputs = {
+            "flow_name",
+            "tool_name",
+            "tool_description",
+            "return_direct",
+        }
         input_names = {inp.name for inp in component.inputs}
 
         assert expected_inputs.issubset(input_names)

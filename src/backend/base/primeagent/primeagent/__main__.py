@@ -27,7 +27,10 @@ from rich.panel import Panel
 from rich.table import Table
 from sqlmodel import select
 from wfx.log.logger import configure, logger
-from wfx.services.settings.constants import DEFAULT_SUPERUSER, DEFAULT_SUPERUSER_PASSWORD
+from wfx.services.settings.constants import (
+    DEFAULT_SUPERUSER,
+    DEFAULT_SUPERUSER_PASSWORD,
+)
 
 from primeagent.cli.progress import create_primeagent_progress
 from primeagent.initial_setup.setup import get_or_create_default_folder
@@ -544,7 +547,9 @@ def build_version_notice(current_version: str, package_name: str) -> str:
         'A new version of primeagent is available: 1.1.0'
     """
     with suppress(httpx.ConnectError):
-        latest_version = fetch_latest_version(package_name, include_prerelease=primeagent_is_pre_release(current_version))
+        latest_version = fetch_latest_version(
+            package_name, include_prerelease=primeagent_is_pre_release(current_version)
+        )
         if latest_version and pkg_version.parse(current_version) < pkg_version.parse(latest_version):
             release_type = "pre-release" if primeagent_is_pre_release(latest_version) else "version"
             return f"A new {release_type} of {package_name} is available: {latest_version}"
@@ -594,7 +599,9 @@ def print_banner(host: str, port: int, protocol: str) -> None:
 
     [f"[bold]{notice}[/bold]" for notice in notices if notice]
     styled_package_name = stylize_text(
-        package_name, package_name, is_prerelease=any("pre-release" in notice for notice in notices)
+        package_name,
+        package_name,
+        is_prerelease=any("pre-release" in notice for notice in notices),
     )
 
     title = f"[bold]Welcome to {styled_package_name}[/bold]\n"
@@ -660,14 +667,18 @@ def print_banner(host: str, port: int, protocol: str) -> None:
 @app.command()
 def superuser(
     username: str = typer.Option(
-        None, help="Username for the superuser. Defaults to 'primeagent' when AUTO_LOGIN is enabled."
+        None,
+        help="Username for the superuser. Defaults to 'primeagent' when AUTO_LOGIN is enabled.",
     ),
     password: str = typer.Option(
-        None, help="Password for the superuser. Defaults to 'primeagent' when AUTO_LOGIN is enabled."
+        None,
+        help="Password for the superuser. Defaults to 'primeagent' when AUTO_LOGIN is enabled.",
     ),
     log_level: str = typer.Option("error", help="Logging level.", envvar="PRIMEAGENT_LOG_LEVEL"),
     auth_token: str = typer.Option(
-        None, help="Authentication token of existing superuser.", envvar="PRIMEAGENT_SUPERUSER_TOKEN"
+        None,
+        help="Authentication token of existing superuser.",
+        envvar="PRIMEAGENT_SUPERUSER_TOKEN",
     ),
 ) -> None:
     """Create a superuser.
@@ -888,8 +899,14 @@ def api_key(
                     "Default superuser not found. This command requires a superuser and AUTO_LOGIN to be enabled."
                 )
                 return None
-            from primeagent.services.database.models.api_key.crud import create_api_key, delete_api_key
-            from primeagent.services.database.models.api_key.model import ApiKey, ApiKeyCreate
+            from primeagent.services.database.models.api_key.crud import (
+                create_api_key,
+                delete_api_key,
+            )
+            from primeagent.services.database.models.api_key.model import (
+                ApiKey,
+                ApiKeyCreate,
+            )
 
             stmt = select(ApiKey).where(ApiKey.user_id == superuser.id)
             api_key = (await session.exec(stmt)).first()
