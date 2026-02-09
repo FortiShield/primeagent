@@ -170,7 +170,7 @@ def get_text():
 #         _pytest.skip("OPENAI_API_KEY is not set or is empty")
 
 
-def pytest_collection_modifyitems(config, items):  # noqa: ARG001
+def pytest_collection_modifyitems(config, items):
     """Automatically add markers based on test file location."""
     for item in items:
         if "tests/unit/" in str(item.fspath):
@@ -239,7 +239,7 @@ def session_fixture():
     from sqlalchemy import event
 
     @event.listens_for(engine, "connect")
-    def set_sqlite_pragma(dbapi_connection, connection_record):  # noqa: ARG001
+    def set_sqlite_pragma(dbapi_connection, connection_record):
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
@@ -298,9 +298,9 @@ def _setup_env(monkeypatch):
 
 @pytest.fixture(name="distributed_client")
 def distributed_client_fixture(
-    session: Session,  # noqa: ARG001
+    session: Session,
     monkeypatch,
-    distributed_env,  # noqa: ARG001
+    distributed_env,
 ):
     # Here we load the .env from ../deploy/.env
     from primeagent.core import celery_app
@@ -437,7 +437,7 @@ def use_noop_session(monkeypatch):
 
 @pytest.fixture(name="client")
 async def client_fixture(
-    session: Session,  # noqa: ARG001
+    session: Session,
     monkeypatch,
     request,
     load_flows_dir,
@@ -509,7 +509,7 @@ async def test_user(client):
 
 
 @pytest.fixture
-async def active_user(client):  # noqa: ARG001
+async def active_user(client):
     async with session_scope() as session:
         user = User(
             username="activeuser",
@@ -554,7 +554,7 @@ async def logged_in_headers(client, active_user):
 
 
 @pytest.fixture
-async def active_super_user(client):  # noqa: ARG001
+async def active_super_user(client):
     async with session_scope() as session:
         user = User(
             username="activeuser",
@@ -591,7 +591,7 @@ async def logged_in_headers_super_user(client, active_super_user):
 
 @pytest.fixture
 async def flow(
-    client,  # noqa: ARG001
+    client,
     json_flow: str,
     active_user,
 ):
@@ -741,7 +741,7 @@ def user_one_api_key(created_api_key: ApiKey) -> str:
 
 @pytest.fixture
 async def user_two(
-    client: AsyncClient,  # noqa: ARG001
+    client: AsyncClient,
 ) -> AsyncGenerator[User, None]:
     """Creates a second user for multi-user access tests."""
     user_id = uuid4()
@@ -817,7 +817,7 @@ async def get_simple_api_test(client, logged_in_headers, json_simple_api_test):
 
 
 @pytest.fixture(name="starter_project")
-async def get_starter_project(client, active_user):  # noqa: ARG001
+async def get_starter_project(client, active_user):
     # once the client is created, we can get the starter project
     async with session_scope() as session:
         stmt = (

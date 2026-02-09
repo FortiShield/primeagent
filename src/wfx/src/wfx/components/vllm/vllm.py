@@ -135,6 +135,8 @@ class VllmComponent(LCModelComponent):
                 return message
         return None
 
-    def update_build_config(self, build_config: dict, field_value: Any, field_name: str | None = None) -> dict:  # noqa: ARG002
+    def update_build_config(
+        self, build_config: dict, field_value: Any, field_name: str | None = None
+    ) -> dict:  # noqa: ARG002
         # vLLM models support all parameters, so no special handling needed
         return build_config

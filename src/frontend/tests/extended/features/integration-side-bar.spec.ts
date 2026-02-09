@@ -15,7 +15,7 @@ test(
     await expect(
       page.locator('[data-sidebar="group-label"]', { hasText: "Bundles" }),
     ).toBeVisible();
-    await expect(page.getByText("Notion")).toBeVisible();
+    await expect(page.getByText("notion")).toBeVisible();
     await expect(page.getByText("AssemblyAI")).toBeVisible();
   },
 );

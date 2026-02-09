@@ -490,9 +490,9 @@ def assert_execution_equivalence(
     """
     # Both should succeed or both should fail
     if trace1.error or trace2.error:
-        assert (trace1.error is None) == (trace2.error is None), (
-            f"{trace1.path_name} error: {trace1.error}, {trace2.path_name} error: {trace2.error}"
-        )
+        assert (trace1.error is None) == (
+            trace2.error is None
+        ), f"{trace1.path_name} error: {trace1.error}, {trace2.path_name} error: {trace2.error}"
 
     # Should execute the same set of vertices
     vertices1 = set(trace1.vertices_executed)

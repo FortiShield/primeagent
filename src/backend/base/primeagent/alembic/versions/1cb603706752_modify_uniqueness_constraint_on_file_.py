@@ -29,9 +29,7 @@ DUPLICATE_SUFFIX_START = 2  # first suffix to use, e.g., "name_2.ext"
 BATCH_SIZE = 1000  # Process duplicates in batches for large datasets
 
 
-def _get_unique_constraints_by_columns(
-    inspector, table: str, expected_cols: Iterable[str]
-) -> Optional[str]:
+def _get_unique_constraints_by_columns(inspector, table: str, expected_cols: Iterable[str]) -> Optional[str]:
     """Return the name of a unique constraint that matches the exact set of expected columns."""
     expected = set(expected_cols)
     for c in inspector.get_unique_constraints(table):
@@ -132,9 +130,7 @@ def _handle_duplicates_before_upgrade(conn) -> None:
 
     # Add progress indicator for large datasets
     if len(duplicates) > 100:
-        logger.info(
-            "Large number of duplicates detected. This may take several minutes..."
-        )
+        logger.info("Large number of duplicates detected. This may take several minutes...")
 
     # Wrap in a nested transaction so we fail cleanly on any error
     with conn.begin_nested():
@@ -207,16 +203,12 @@ def upgrade() -> None:
     duplicate_duration = time.time() - duplicate_start
 
     if duplicate_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info(
-            "Duplicate resolution completed in %.2f seconds", duplicate_duration
-        )
+        logger.info("Duplicate resolution completed in %.2f seconds", duplicate_duration)
 
     # 2) Detect existing single-column unique on name (if any)
     inspector = inspect(conn)  # refresh inspector
     single_name_uc = _get_unique_constraints_by_columns(inspector, "file", {"name"})
-    composite_uc = _get_unique_constraints_by_columns(
-        inspector, "file", {"name", "user_id"}
-    )
+    composite_uc = _get_unique_constraints_by_columns(inspector, "file", {"name", "user_id"})
 
     # 3) Use a unified, reflection-based batch_alter_table for both Postgres and SQLite.
     #    recreate="always" ensures a safe table rebuild on SQLite and a standard alter on Postgres.
@@ -229,20 +221,14 @@ def upgrade() -> None:
 
         # Create composite unique if not already present
         if not composite_uc:
-            logger.info(
-                "Creating composite unique: file_name_user_id_key on (name, user_id)"
-            )
-            batch_op.create_unique_constraint(
-                "file_name_user_id_key", ["name", "user_id"]
-            )
+            logger.info("Creating composite unique: file_name_user_id_key on (name, user_id)")
+            batch_op.create_unique_constraint("file_name_user_id_key", ["name", "user_id"])
         else:
             logger.info("Composite unique already present: %s", composite_uc)
 
     constraint_duration = time.time() - constraint_start
     if constraint_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info(
-            "Constraint operations completed in %.2f seconds", constraint_duration
-        )
+        logger.info("Constraint operations completed in %.2f seconds", constraint_duration)
 
     total_duration = time.time() - start_time
     logger.info("Upgrade completed successfully in %.2f seconds", total_duration)
@@ -280,9 +266,7 @@ def downgrade() -> None:
 
     # 2) Detect constraints
     inspector = inspect(conn)  # refresh
-    composite_uc = _get_unique_constraints_by_columns(
-        inspector, "file", {"name", "user_id"}
-    )
+    composite_uc = _get_unique_constraints_by_columns(inspector, "file", {"name", "user_id"})
     single_name_uc = _get_unique_constraints_by_columns(inspector, "file", {"name"})
 
     # 3) Perform alteration using batch with reflect to preserve other objects
@@ -302,9 +286,7 @@ def downgrade() -> None:
 
     constraint_duration = time.time() - constraint_start
     if constraint_duration > 1.0:  # Only log if it took more than 1 second
-        logger.info(
-            "Constraint operations completed in %.2f seconds", constraint_duration
-        )
+        logger.info("Constraint operations completed in %.2f seconds", constraint_duration)
 
     total_duration = time.time() - start_time
     logger.info("Downgrade completed successfully in %.2f seconds", total_duration)

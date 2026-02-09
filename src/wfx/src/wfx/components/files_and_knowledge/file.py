@@ -493,7 +493,9 @@ class FileComponent(BaseFileComponent):
 
         return build_config
 
-    def update_outputs(self, frontend_node: dict[str, Any], field_name: str, field_value: Any) -> dict[str, Any]:  # noqa: ARG002
+    def update_outputs(
+        self, frontend_node: dict[str, Any], field_name: str, field_value: Any
+    ) -> dict[str, Any]:  # noqa: ARG002
         """Dynamically show outputs based on file count/type and advanced mode."""
         if field_name not in ["path", "advanced_mode", "pipeline"]:
             return frontend_node
@@ -825,8 +827,7 @@ class FileComponent(BaseFileComponent):
         }
 
         # Child script for isolating the docling processing
-        child_script = textwrap.dedent(
-            r"""
+        child_script = textwrap.dedent(r"""
             import json, sys
 
             def try_imports():
@@ -998,8 +999,7 @@ class FileComponent(BaseFileComponent):
 
             if __name__ == "__main__":
                 main()
-            """
-        )
+            """)
 
         # Validate file_path to avoid command injection or unsafe input
         if not isinstance(args["file_path"], str) or any(c in args["file_path"] for c in [";", "|", "&", "$", "`"]):

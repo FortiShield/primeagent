@@ -37,11 +37,7 @@ def upgrade() -> None:
             return
 
         # Query all folders with auth_settings
-        result = conn.execute(
-            sa.text(
-                "SELECT id, auth_settings FROM folder WHERE auth_settings IS NOT NULL"
-            )
-        )
+        result = conn.execute(sa.text("SELECT id, auth_settings FROM folder WHERE auth_settings IS NOT NULL"))
 
         # Encrypt auth_settings for each folder
         for row in result:
@@ -62,9 +58,7 @@ def upgrade() -> None:
                     # Update the record with encrypted data
                     if encrypted_settings:
                         conn.execute(
-                            sa.text(
-                                "UPDATE folder SET auth_settings = :auth_settings WHERE id = :id"
-                            ),
+                            sa.text("UPDATE folder SET auth_settings = :auth_settings WHERE id = :id"),
                             {
                                 "auth_settings": json.dumps(encrypted_settings),
                                 "id": folder_id,
@@ -72,15 +66,11 @@ def upgrade() -> None:
                         )
                 except Exception as e:
                     # Log the error but continue with other records
-                    print(
-                        f"Warning: Failed to encrypt auth_settings for folder {folder_id}: {e}"
-                    )
+                    print(f"Warning: Failed to encrypt auth_settings for folder {folder_id}: {e}")
 
     except ImportError as e:
         # If encryption utilities are not available, skip the migration
-        print(
-            f"Warning: Encryption utilities not available, skipping encryption migration: {e}"
-        )
+        print(f"Warning: Encryption utilities not available, skipping encryption migration: {e}")
 
 
 def downgrade() -> None:
@@ -98,11 +88,7 @@ def downgrade() -> None:
             return
 
         # Query all folders with auth_settings
-        result = conn.execute(
-            sa.text(
-                "SELECT id, auth_settings FROM folder WHERE auth_settings IS NOT NULL"
-            )
-        )
+        result = conn.execute(sa.text("SELECT id, auth_settings FROM folder WHERE auth_settings IS NOT NULL"))
 
         # Decrypt auth_settings for each folder
         for row in result:
@@ -123,9 +109,7 @@ def downgrade() -> None:
                     # Update the record with decrypted data
                     if decrypted_settings:
                         conn.execute(
-                            sa.text(
-                                "UPDATE folder SET auth_settings = :auth_settings WHERE id = :id"
-                            ),
+                            sa.text("UPDATE folder SET auth_settings = :auth_settings WHERE id = :id"),
                             {
                                 "auth_settings": json.dumps(decrypted_settings),
                                 "id": folder_id,
@@ -133,12 +117,8 @@ def downgrade() -> None:
                         )
                 except Exception as e:
                     # Log the error but continue with other records
-                    print(
-                        f"Warning: Failed to decrypt auth_settings for folder {folder_id}: {e}"
-                    )
+                    print(f"Warning: Failed to decrypt auth_settings for folder {folder_id}: {e}")
 
     except ImportError as e:
         # If decryption utilities are not available, skip the migration
-        print(
-            f"Warning: Decryption utilities not available, skipping decryption migration: {e}"
-        )
+        print(f"Warning: Decryption utilities not available, skipping decryption migration: {e}")

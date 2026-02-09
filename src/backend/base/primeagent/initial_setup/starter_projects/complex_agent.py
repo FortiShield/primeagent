@@ -16,14 +16,12 @@ def complex_agent_graph():
     dynamic_agent = CrewAIAgentComponent()
     chat_input = ChatInput()
     role_prompt = PromptComponent(_display_name="Role Prompt")
-    role_prompt.set(
-        template="""Define a Role that could execute or answer well the user's query.
+    role_prompt.set(template="""Define a Role that could execute or answer well the user's query.
 
 User's query: {query}
 
 Role should be two words max. Something like "Researcher" or "Software Developer".
-"""
-    )
+""")
 
     goal_prompt = PromptComponent(_display_name="Goal Prompt")
     goal_prompt.set(

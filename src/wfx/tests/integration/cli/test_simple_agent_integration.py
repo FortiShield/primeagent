@@ -144,9 +144,9 @@ class TestSimpleAgentFlowLoading:
 
             # Verify Agent component is in the graph
             component_types = {v.display_name for v in graph.vertices if hasattr(v, "display_name")}
-            assert "Agent" in component_types or any("Agent" in ct for ct in component_types), (
-                f"Expected Agent in graph, found: {component_types}"
-            )
+            assert "Agent" in component_types or any(
+                "Agent" in ct for ct in component_types
+            ), f"Expected Agent in graph, found: {component_types}"
 
         except ModuleNotFoundError as e:
             pytest.fail(f"ModuleNotFoundError loading graph: {e}")

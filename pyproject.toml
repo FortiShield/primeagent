@@ -229,6 +229,15 @@ ignore = [
 external = ["RUF027"]
 
 [tool.ruff.lint.per-file-ignores]
+# Pytest fixtures intentionally unused
+"**/tests/**" = ["ARG001", "S108"]
+
+# Plugin / dynamic component system (intentional internals + exec)
+"src/wfx/src/wfx/custom/**" = ["SLF001", "S102"]
+
+# Component discovery uses internal attributes by design
+"src/wfx/src/wfx/components/**" = ["SLF001"]
+
 "scripts/*" = ["D1", "INP", "T201"]
 "src/backend/base/primeagent/alembic/versions/*" = ["INP001", "D415", "PGH003"]
 "src/backend/base/primeagent/custom/__init__.py" = [

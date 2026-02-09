@@ -47,18 +47,14 @@ def upgrade() -> None:
             sa.PrimaryKeyConstraint("job_id"),
         )
         with op.batch_alter_table("job", schema=None) as batch_op:
-            batch_op.create_index(
-                batch_op.f("ix_job_flow_id"), ["flow_id"], unique=False
-            )
+            batch_op.create_index(batch_op.f("ix_job_flow_id"), ["flow_id"], unique=False)
             batch_op.create_index(batch_op.f("ix_job_job_id"), ["job_id"], unique=False)
             batch_op.create_index(batch_op.f("ix_job_status"), ["status"], unique=False)
 
     if not migration.column_exists("vertex_build", "job_id", conn):
         with op.batch_alter_table("vertex_build", schema=None) as batch_op:
             batch_op.add_column(sa.Column("job_id", sa.Uuid(), nullable=True))
-            batch_op.create_index(
-                batch_op.f("ix_vertex_build_job_id"), ["job_id"], unique=False
-            )
+            batch_op.create_index(batch_op.f("ix_vertex_build_job_id"), ["job_id"], unique=False)
 
     # ### end Alembic commands ###
 

@@ -317,12 +317,12 @@ class TestComponentLoading:
         all_types_variance = max(all_types_times) - min(all_types_times)
 
         # Variance shouldn't be too high (more than 10x difference between min and max)
-        assert primeagent_variance < primeagent_avg * 10, (
-            f"import_primeagent_components performance too inconsistent: {primeagent_variance}s variance"
-        )
-        assert all_types_variance < all_types_avg * 10, (
-            f"aget_all_types_dict performance too inconsistent: {all_types_variance}s variance"
-        )
+        assert (
+            primeagent_variance < primeagent_avg * 10
+        ), f"import_primeagent_components performance too inconsistent: {primeagent_variance}s variance"
+        assert (
+            all_types_variance < all_types_avg * 10
+        ), f"aget_all_types_dict performance too inconsistent: {all_types_variance}s variance"
 
     @pytest.mark.no_blockbuster
     @pytest.mark.asyncio
@@ -336,12 +336,8 @@ class TestComponentLoading:
         # Test invalid paths separately with proper error handling
         invalid_test_cases = [
             [""],  # Empty string path
-            ["/tmp"],  # Non-existent or invalid path #noqa: S108
-            (
-                [BASE_COMPONENTS_PATH, "/tmp"]  # noqa: S108
-                if BASE_COMPONENTS_PATH
-                else ["/tmp"]
-            ),  # Mixed valid/invalid paths
+            ["/tmp"],  # Non-existent or invalid path
+            ([BASE_COMPONENTS_PATH, "/tmp"] if BASE_COMPONENTS_PATH else ["/tmp"]),  # Mixed valid/invalid paths
         ]
 
         # Test valid cases
@@ -476,9 +472,9 @@ class TestComponentLoading:
                 print(f"Note: Component counts vary ({min_count}-{max_count}) - may be due to OS file limits")
             else:
                 print(f"Component counts consistent: {min_count}")
-        assert all(isinstance(result, dict) for _, result in primeagent_results), (
-            "All primeagent results should be dicts"
-        )
+        assert all(
+            isinstance(result, dict) for _, result in primeagent_results
+        ), "All primeagent results should be dicts"
         assert all(isinstance(result, dict) for _, result in all_types_results), "All all_types results should be dicts"
 
         # Log steady-state performance instead of asserting

@@ -30,9 +30,7 @@ def upgrade() -> None:
 
     with op.batch_alter_table("variable", schema=None) as batch_op:
         if "created_at" in column_names:
-            created_at_colunmn = next(
-                column for column in columns if column["name"] == "created_at"
-            )
+            created_at_colunmn = next(column for column in columns if column["name"] == "created_at")
             if created_at_colunmn["nullable"] is False:
                 batch_op.alter_column(
                     "created_at",
@@ -57,9 +55,7 @@ def downgrade() -> None:
     column_names = [column["name"] for column in columns]
     with op.batch_alter_table("variable", schema=None) as batch_op:
         if "created_at" in column_names:
-            created_at_colunmn = next(
-                column for column in columns if column["name"] == "created_at"
-            )
+            created_at_colunmn = next(column for column in columns if column["name"] == "created_at")
             if created_at_colunmn["nullable"] is True:
                 batch_op.alter_column(
                     "created_at",

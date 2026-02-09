@@ -73,16 +73,16 @@ class TestSubgraphIsolation:
             # Create second subgraph (nested to allow comparison)
             async with parent_graph.create_subgraph({"chat_input", "chat_output"}) as subgraph2:
                 # Verify parent context is unchanged
-                assert parent_graph.context["shared_key"] == "original_value", (
-                    "Parent context should not be modified by subgraph"
-                )
+                assert (
+                    parent_graph.context["shared_key"] == "original_value"
+                ), "Parent context should not be modified by subgraph"
                 assert "new_key" not in parent_graph.context, "New key should not appear in parent context"
 
                 # Verify subgraph2 has original context (shallow copy behavior)
                 # Note: This tests if the context is properly copied
-                assert subgraph2.context["shared_key"] == "original_value", (
-                    "Subgraph2 should have original context value"
-                )
+                assert (
+                    subgraph2.context["shared_key"] == "original_value"
+                ), "Subgraph2 should have original context value"
 
     @pytest.mark.asyncio
     async def test_create_subgraph_isolates_run_state(self):
@@ -183,15 +183,15 @@ class TestSubgraphIsolation:
             # Create second subgraph (nested to allow comparison)
             async with parent_graph.create_subgraph({"chat_input", "chat_output"}) as subgraph2:
                 # Mutable objects SHOULD be shared (intentional for loop state communication)
-                assert subgraph2.context["mutable_list"] is subgraph1.context["mutable_list"], (
-                    "Mutable list should be shared between subgraphs"
-                )
-                assert subgraph2.context["mutable_dict"] is subgraph1.context["mutable_dict"], (
-                    "Mutable dict should be shared between subgraphs"
-                )
+                assert (
+                    subgraph2.context["mutable_list"] is subgraph1.context["mutable_list"]
+                ), "Mutable list should be shared between subgraphs"
+                assert (
+                    subgraph2.context["mutable_dict"] is subgraph1.context["mutable_dict"]
+                ), "Mutable dict should be shared between subgraphs"
 
                 # Changes from subgraph1 should be visible in subgraph2
                 assert "item2" in subgraph2.context["mutable_list"], "Subgraph2 should see item2 added by subgraph1"
-                assert subgraph2.context["mutable_dict"]["new_key"] == "new_value", (
-                    "Subgraph2 should see new_key added by subgraph1"
-                )
+                assert (
+                    subgraph2.context["mutable_dict"]["new_key"] == "new_value"
+                ), "Subgraph2 should see new_key added by subgraph1"

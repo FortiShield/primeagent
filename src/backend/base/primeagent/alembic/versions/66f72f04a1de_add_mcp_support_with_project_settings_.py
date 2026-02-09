@@ -28,15 +28,9 @@ def upgrade() -> None:
         if "mcp_enabled" not in column_names:
             batch_op.add_column(sa.Column("mcp_enabled", sa.Boolean(), nullable=True))
         if "action_name" not in column_names:
-            batch_op.add_column(
-                sa.Column(
-                    "action_name", sqlmodel.sql.sqltypes.AutoString(), nullable=True
-                )
-            )
+            batch_op.add_column(sa.Column("action_name", sqlmodel.sql.sqltypes.AutoString(), nullable=True))
         if "action_description" not in column_names:
-            batch_op.add_column(
-                sa.Column("action_description", sa.Text(), nullable=True)
-            )
+            batch_op.add_column(sa.Column("action_description", sa.Text(), nullable=True))
 
     # ### end Alembic commands ###
 

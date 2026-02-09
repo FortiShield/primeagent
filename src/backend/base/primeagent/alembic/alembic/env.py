@@ -106,12 +106,8 @@ def _do_run_migrations(connection):
             # Use namespace from environment variable if provided, otherwise use default static key
             namespace = os.getenv("PRIMEAGENT_MIGRATION_LOCK_NAMESPACE")
             if namespace:
-                lock_key = int(
-                    hashlib.sha256(namespace.encode()).hexdigest()[:16], 16
-                ) % (2**63 - 1)
-                logger.info(
-                    f"Using migration lock namespace: {namespace}, lock_key: {lock_key}"
-                )
+                lock_key = int(hashlib.sha256(namespace.encode()).hexdigest()[:16], 16) % (2**63 - 1)
+                logger.info(f"Using migration lock namespace: {namespace}, lock_key: {lock_key}")
             else:
                 lock_key = 11223344
                 logger.info(f"Using default migration lock_key: {lock_key}")

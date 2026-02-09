@@ -301,7 +301,9 @@ class TestValidateMcpServerForProject:
         )
 
     @pytest.mark.asyncio
-    async def test_validate_server_exception_handling(self, active_user, test_project, client: AsyncClient):  # noqa: ARG002
+    async def test_validate_server_exception_handling(
+        self, active_user, test_project, client: AsyncClient
+    ):  # noqa: ARG002
         """Test exception handling during validation."""
         from primeagent.services.deps import get_settings_service, get_storage_service
 

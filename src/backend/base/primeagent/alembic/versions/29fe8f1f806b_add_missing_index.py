@@ -25,9 +25,7 @@ def upgrade() -> None:
     with op.batch_alter_table("flow", schema=None) as batch_op:
         indexes_names = [index["name"] for index in indexes]
         if "ix_flow_folder_id" not in indexes_names:
-            batch_op.create_index(
-                batch_op.f("ix_flow_folder_id"), ["folder_id"], unique=False
-            )
+            batch_op.create_index(batch_op.f("ix_flow_folder_id"), ["folder_id"], unique=False)
 
     # ### end Alembic commands ###
 

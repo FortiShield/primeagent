@@ -50,14 +50,8 @@ def upgrade() -> None:
     column_names = [column["name"] for column in inspector.get_columns("flow")]
     with op.batch_alter_table("flow", schema=None) as batch_op:
         if "folder_id" not in column_names:
-            batch_op.add_column(
-                sa.Column(
-                    "folder_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=True
-                )
-            )
-            batch_op.create_foreign_key(
-                "flow_folder_id_fkey", "folder", ["folder_id"], ["id"]
-            )
+            batch_op.add_column(sa.Column("folder_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=True))
+            batch_op.create_foreign_key("flow_folder_id_fkey", "folder", ["folder_id"], ["id"])
         if "folder" in column_names:
             batch_op.drop_column("folder")
 

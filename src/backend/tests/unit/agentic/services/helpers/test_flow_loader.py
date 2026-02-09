@@ -192,9 +192,9 @@ class TestLoadGraphFromPython:
         mock_graph = MagicMock()
 
         def mock_get_graph(
-            provider=None,  # noqa: ARG001
-            model_name=None,  # noqa: ARG001
-            api_key_var=None,  # noqa: ARG001
+            provider=None,
+            model_name=None,
+            api_key_var=None,
         ):
             return mock_graph
 

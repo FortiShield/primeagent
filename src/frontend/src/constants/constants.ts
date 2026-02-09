@@ -786,7 +786,7 @@ export const PRIORITY_SIDEBAR_ORDER = [
 
 export const BUNDLES_SIDEBAR_FOLDER_NAMES = [
   "notion",
-  "Notion",
+  "notion",
   "AssemblyAI",
   "assemblyai",
   "LangWatch",
@@ -806,7 +806,7 @@ export const BUNDLES_SIDEBAR_FOLDER_NAMES = [
   "upstash",
   "vectara",
   "cassandra",
-  "FAISS",
+  "faiss",
   "pgvector",
 ];
 

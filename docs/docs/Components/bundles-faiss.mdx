@@ -1,5 +1,5 @@
 ---
-title: FAISS
+title: faiss
 slug: /bundles-faiss
 ---
 
@@ -13,11 +13,11 @@ import PartialVectorStoreInstance from '@site/docs/_partial-vector-store-instanc
 [**Bundles**](/components-bundle-components) contain custom components that
 support specific third-party integrations with Primeagent.
 
-This page describes the components that are available in the **FAISS** bundle.
+This page describes the components that are available in the **faiss** bundle.
 
-## FAISS vector store
+## faiss vector store
 
-The **FAISS** component provides access to the Facebook AI Similarity Search (FAISS) library through an instance of `FAISS` vector store.
+The **faiss** component provides access to the Facebook AI Similarity Search (faiss) library through an instance of `faiss` vector store.
 
 <details>
 <summary>About vector store instances</summary>
@@ -28,7 +28,7 @@ The **FAISS** component provides access to the Facebook AI Similarity Search (FA
 
 <PartialVectorSearchResults />
 
-### FAISS vector store parameters
+### faiss vector store parameters
 
 You can inspect a vector store component's parameters to learn more about the inputs it accepts, the features it supports, and how to configure it.
 
@@ -36,12 +36,12 @@ You can inspect a vector store component's parameters to learn more about the in
 
 <PartialConditionalParams />
 
-For information about accepted values and functionality, see the [FAISS documentation](https://faiss.ai/index.html) or inspect [component code](/concepts-components#component-code).
+For information about accepted values and functionality, see the [faiss documentation](https://faiss.ai/index.html) or inspect [component code](/concepts-components#component-code).
 
 | Name                            | Type       | Description                                                                                           |
 | ------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- |
-| index_name                      | String     | Input parameter. The name of the FAISS index. Default: "primeagent_index".                            |
-| persist_directory               | String     | Input parameter. Path to save the FAISS index. It is relative to where Primeagent is running.         |
+| index_name                      | String     | Input parameter. The name of the faiss index. Default: "primeagent_index".                            |
+| persist_directory               | String     | Input parameter. Path to save the faiss index. It is relative to where Primeagent is running.         |
 | search_query                    | String     | Input parameter. The query to search for in the vector store.                                         |
 | ingest_data                     | Data       | Input parameter. The list of data to ingest into the vector store.                                    |
 | allow_dangerous_deserialization | Boolean    | Input parameter. Set to `True` to allow loading pickle files from untrusted sources. Default: `True`. |

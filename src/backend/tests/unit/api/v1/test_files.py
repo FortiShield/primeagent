@@ -24,7 +24,7 @@ from tests.conftest import _delete_transactions_and_vertex_builds
 
 
 @pytest.fixture(name="files_created_api_key")
-async def files_created_api_key(files_client, files_active_user):  # noqa: ARG001
+async def files_created_api_key(files_client, files_active_user):
     hashed = get_password_hash("random_key")
     api_key = ApiKey(
         name="files_created_api_key",
@@ -51,7 +51,7 @@ async def files_created_api_key(files_client, files_active_user):  # noqa: ARG00
 
 
 @pytest.fixture(name="files_active_user")
-async def files_active_user(files_client):  # noqa: ARG001
+async def files_active_user(files_client):
     async with session_scope() as session:
         user = User(
             username="files_active_user",
@@ -78,7 +78,7 @@ async def files_active_user(files_client):  # noqa: ARG001
 
 @pytest.fixture(name="files_flow")
 async def files_flow(
-    files_client,  # noqa: ARG001
+    files_client,
     json_flow: str,
     files_active_user,
 ):
@@ -337,7 +337,7 @@ async def setup_profile_pictures(monkeypatch):
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-async def test_list_profile_pictures(setup_profile_pictures, files_client):  # noqa: ARG001
+async def test_list_profile_pictures(setup_profile_pictures, files_client):
     """Test listing profile pictures from local filesystem.
 
     Args:
@@ -363,7 +363,7 @@ async def test_list_profile_pictures(setup_profile_pictures, files_client):  # n
     assert "Space/046-rocket.svg" in files, "Should have the rocket profile picture"
 
 
-async def test_download_profile_picture_space_rocket(setup_profile_pictures, files_client):  # noqa: ARG001
+async def test_download_profile_picture_space_rocket(setup_profile_pictures, files_client):
     """Test downloading the rocket profile picture from Space folder.
 
     Args:
@@ -384,7 +384,7 @@ async def test_download_profile_picture_space_rocket(setup_profile_pictures, fil
     assert len(content) > 100, "SVG content should be substantial"
 
 
-async def test_download_profile_picture_people(setup_profile_pictures, files_client):  # noqa: ARG001
+async def test_download_profile_picture_people(setup_profile_pictures, files_client):
     """Test downloading a profile picture from People folder.
 
     Note: The actual people profile pictures are copied during app init,
@@ -420,7 +420,7 @@ async def test_download_profile_picture_people(setup_profile_pictures, files_cli
     assert len(content) > 100, "SVG content should be substantial"
 
 
-async def test_download_profile_picture_not_found(setup_profile_pictures, files_client):  # noqa: ARG001
+async def test_download_profile_picture_not_found(setup_profile_pictures, files_client):
     """Test downloading a non-existent profile picture returns 404.
 
     Args:
@@ -434,7 +434,7 @@ async def test_download_profile_picture_not_found(setup_profile_pictures, files_
     assert "not found" in data["detail"].lower()
 
 
-async def test_profile_pictures_with_s3_storage(setup_profile_pictures, files_client, monkeypatch):  # noqa: ARG001
+async def test_profile_pictures_with_s3_storage(setup_profile_pictures, files_client, monkeypatch):
     """Test that profile pictures work with S3 storage type.
 
     Profile pictures should always be served from local filesystem,
@@ -462,7 +462,7 @@ async def test_profile_pictures_with_s3_storage(setup_profile_pictures, files_cl
     assert b"<svg" in response.content
 
 
-async def test_profile_pictures_different_file_types(setup_profile_pictures, files_client):  # noqa: ARG001
+async def test_profile_pictures_different_file_types(setup_profile_pictures, files_client):
     """Test that content-type headers are correct for SVG files.
 
     The real profile pictures are all SVG files. This test verifies
@@ -518,7 +518,7 @@ async def empty_config_dir(monkeypatch):
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-async def test_download_profile_picture_fallback_to_package(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_fallback_to_package(empty_config_dir, files_client):
     """Test that profile pictures fallback to package when not in config_dir.
 
     This tests the core fix from PR #10758 - when profile pictures don't exist
@@ -526,9 +526,9 @@ async def test_download_profile_picture_fallback_to_package(empty_config_dir, fi
     """
     # The 046-rocket.svg should be found in the package's bundled directory
     response = await files_client.get("api/v1/files/profile_pictures/Space/046-rocket.svg")
-    assert response.status_code == 200, (
-        f"Expected 200, got {response.status_code}. Fallback to package profile pictures should work."
-    )
+    assert (
+        response.status_code == 200
+    ), f"Expected 200, got {response.status_code}. Fallback to package profile pictures should work."
 
     # Verify content type
     assert "image/svg+xml" in response.headers["content-type"]
@@ -539,7 +539,7 @@ async def test_download_profile_picture_fallback_to_package(empty_config_dir, fi
     assert b"</svg>" in content
 
 
-async def test_list_profile_pictures_fallback_to_package(empty_config_dir, files_client):  # noqa: ARG001
+async def test_list_profile_pictures_fallback_to_package(empty_config_dir, files_client):
     """Test that list endpoint fallbacks to package when config_dir is empty.
 
     This tests the list fallback from PR #10758 - when config_dir has no
@@ -561,7 +561,7 @@ async def test_list_profile_pictures_fallback_to_package(empty_config_dir, files
     assert "Space/046-rocket.svg" in files
 
 
-async def test_download_profile_picture_not_found_in_both_locations(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_not_found_in_both_locations(empty_config_dir, files_client):
     """Test 404 when profile picture doesn't exist in config_dir OR package.
 
     This ensures the fallback logic correctly returns 404 when the file
@@ -575,7 +575,7 @@ async def test_download_profile_picture_not_found_in_both_locations(empty_config
     assert "Space/nonexistent-file-xyz.svg" in data["detail"]
 
 
-async def test_download_profile_picture_invalid_folder(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_invalid_folder(empty_config_dir, files_client):
     """Test 400 when using an invalid folder name.
 
     Only 'People' and 'Space' folders are whitelisted for security.
@@ -634,7 +634,7 @@ async def test_list_profile_pictures_config_dir_takes_precedence(setup_profile_p
     assert "Space/custom-test-file.svg" in files
 
 
-async def test_download_profile_picture_path_traversal_attempt(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_path_traversal_attempt(empty_config_dir, files_client):
     """Test that path traversal attacks are prevented.
 
     Attempting to access files outside the profile_pictures directory
@@ -646,7 +646,7 @@ async def test_download_profile_picture_path_traversal_attempt(empty_config_dir,
     assert response.status_code in [404, 500]
 
 
-async def test_download_profile_picture_special_characters_in_filename(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_special_characters_in_filename(empty_config_dir, files_client):
     """Test handling of special characters in filename.
 
     Filenames with spaces or special characters should be handled properly.
@@ -657,7 +657,7 @@ async def test_download_profile_picture_special_characters_in_filename(empty_con
     assert response.status_code in [200, 404]
 
 
-async def test_list_profile_pictures_empty_response_format(empty_config_dir, files_client):  # noqa: ARG001
+async def test_list_profile_pictures_empty_response_format(empty_config_dir, files_client):
     """Test that the list response format is correct even with fallback.
 
     The response should always have the correct format: {"files": [...]}
@@ -680,7 +680,7 @@ async def test_list_profile_pictures_empty_response_format(empty_config_dir, fil
         assert len(filename) > 0, "Filename should not be empty"
 
 
-async def test_download_profile_picture_content_is_valid_svg(empty_config_dir, files_client):  # noqa: ARG001
+async def test_download_profile_picture_content_is_valid_svg(empty_config_dir, files_client):
     """Test that downloaded profile pictures are valid SVG files.
 
     This ensures the fallback serves actual SVG content, not corrupted data.
@@ -724,7 +724,7 @@ async def partial_config_dir(monkeypatch):
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-async def test_profile_pictures_fallback_with_partial_config_dir(partial_config_dir, files_client):  # noqa: ARG001
+async def test_profile_pictures_fallback_with_partial_config_dir(partial_config_dir, files_client):
     """Test fallback when config_dir has only People folder but not Space.
 
     This is an edge case where config_dir is partially populated.
@@ -783,9 +783,9 @@ async def test_download_image_for_browser(files_client, files_created_api_key, f
         f"api/v1/files/images/{files_flow.id}/{file_name}",
     )
 
-    assert response.status_code == 200, (
-        f"Image download failed with {response.status_code}. This breaks browser <img> tags in chat."
-    )
+    assert (
+        response.status_code == 200
+    ), f"Image download failed with {response.status_code}. This breaks browser <img> tags in chat."
 
     # Verify content type is image
     assert "image" in response.headers.get("content-type", ""), "Response should be an image"
@@ -946,9 +946,9 @@ async def test_download_file_forward_slash_traversal_blocked(
     response = await files_client.get(url, headers=headers)
 
     # FastAPI returns 404 because the path with slashes doesn't match any route
-    assert response.status_code == 404, (
-        f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"
-    )
+    assert (
+        response.status_code == 404
+    ), f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"
 
 
 @pytest.mark.parametrize(
@@ -991,9 +991,9 @@ async def test_download_image_forward_slash_traversal_blocked(files_client, file
     response = await files_client.get(url)
 
     # FastAPI returns 404 because the path with slashes doesn't match any route
-    assert response.status_code == 404, (
-        f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"
-    )
+    assert (
+        response.status_code == 404
+    ), f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"
 
 
 @pytest.mark.parametrize(
@@ -1042,6 +1042,6 @@ async def test_delete_file_forward_slash_traversal_blocked(
     response = await files_client.delete(url, headers=headers)
 
     # FastAPI returns 404 because the path with slashes doesn't match any route
-    assert response.status_code == 404, (
-        f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"
-    )
+    assert (
+        response.status_code == 404
+    ), f"Forward slash traversal should be blocked by routing: {malicious_filename}, got {response.status_code}"

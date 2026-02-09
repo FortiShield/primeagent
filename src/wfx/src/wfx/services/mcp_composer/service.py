@@ -73,15 +73,15 @@ class MCPComposerService(Service):
 
     def __init__(self):
         super().__init__()
-        self.project_composers: dict[
-            str, dict
-        ] = {}  # project_id -> {process, host, port, streamable_http_url, auth_config}
-        self._start_locks: dict[
-            str, asyncio.Lock
-        ] = {}  # Lock to prevent concurrent start operations for the same project
-        self._active_start_tasks: dict[
-            str, asyncio.Task
-        ] = {}  # Track active start tasks to cancel them when new request arrives
+        self.project_composers: dict[str, dict] = (
+            {}
+        )  # project_id -> {process, host, port, streamable_http_url, auth_config}
+        self._start_locks: dict[str, asyncio.Lock] = (
+            {}
+        )  # Lock to prevent concurrent start operations for the same project
+        self._active_start_tasks: dict[str, asyncio.Task] = (
+            {}
+        )  # Track active start tasks to cancel them when new request arrives
         self._port_to_project: dict[int, str] = {}  # Track which project is using which port
         self._pid_to_project: dict[int, str] = {}  # Track which PID belongs to which project
         self._last_errors: dict[str, str] = {}  # Track last error message per project for UI display
@@ -166,7 +166,9 @@ class MCPComposerService(Service):
             # Platform-specific command to find PID
             if os_type == "Windows":
                 # Use netstat on Windows - use full path to avoid PATH issues
-                netstat_cmd = os.path.join(os.environ.get("SYSTEMROOT", "C:\\Windows"), "System32", "netstat.exe")  # noqa: PTH118
+                netstat_cmd = os.path.join(
+                    os.environ.get("SYSTEMROOT", "C:\\Windows"), "System32", "netstat.exe"
+                )  # noqa: PTH118
                 result = await asyncio.to_thread(
                     subprocess.run,
                     [netstat_cmd, "-ano"],
@@ -292,7 +294,9 @@ class MCPComposerService(Service):
 
             # First, try to find and kill any process using the port directly
             # Use full path to netstat on Windows to avoid PATH issues
-            netstat_cmd = os.path.join(os.environ.get("SYSTEMROOT", "C:\\Windows"), "System32", "netstat.exe")  # noqa: PTH118
+            netstat_cmd = os.path.join(
+                os.environ.get("SYSTEMROOT", "C:\\Windows"), "System32", "netstat.exe"
+            )  # noqa: PTH118
             netstat_result = await asyncio.to_thread(
                 subprocess.run,
                 [netstat_cmd, "-ano"],

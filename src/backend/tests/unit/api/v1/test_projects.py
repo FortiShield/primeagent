@@ -340,9 +340,9 @@ async def test_update_project_preserves_components(client: AsyncClient, logged_i
     flows_after = project_after.get("flows", [])
     components_after = [f for f in flows_after if f.get("is_component", False)]
 
-    assert len(components_after) == 2, (
-        f"Expected 2 components after rename, got {len(components_after)}. Components lost!"
-    )
+    assert (
+        len(components_after) == 2
+    ), f"Expected 2 components after rename, got {len(components_after)}. Components lost!"
 
     component_ids_after = [c["id"] for c in components_after]
     assert str(comp1_id) in component_ids_after, "Component 1 was lost after project rename!"
@@ -1557,9 +1557,9 @@ class TestReadProjectBugFix:
                 assert "name" in result, f"Non-paginated response missing 'name' for params: {test_case['params']}"
                 assert "flows" in result, f"Non-paginated response missing 'flows' for params: {test_case['params']}"
                 # Should NOT have pagination structure
-                assert "folder" not in result, (
-                    f"Non-paginated response should not have 'folder' for params: {test_case['params']}"
-                )
+                assert (
+                    "folder" not in result
+                ), f"Non-paginated response should not have 'folder' for params: {test_case['params']}"
 
     async def test_read_project_error_handling_consistency(self, client: AsyncClient, logged_in_headers):
         """Test that error handling is consistent across both response paths."""
@@ -1579,9 +1579,9 @@ class TestReadProjectBugFix:
 
             result = response.json()
             assert "detail" in result, f"Error response should have 'detail' for params: {params}"
-            assert "not found" in result["detail"].lower(), (
-                f"Error message should mention 'not found' for params: {params}"
-            )
+            assert (
+                "not found" in result["detail"].lower()
+            ), f"Error message should mention 'not found' for params: {params}"
 
 
 async def test_download_file_starter_project(client: AsyncClient, logged_in_headers, active_user, json_flow):

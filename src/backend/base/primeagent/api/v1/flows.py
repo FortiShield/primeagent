@@ -386,9 +386,7 @@ async def read_flows(
             folder_id = default_folder_id
 
         if auth_settings.AUTO_LOGIN:
-            stmt = select(Flow).where(
-                (Flow.user_id == None) | (Flow.user_id == current_user.id)  # noqa: E711
-            )
+            stmt = select(Flow).where((Flow.user_id == None) | (Flow.user_id == current_user.id))  # noqa: E711
         else:
             stmt = select(Flow).where(Flow.user_id == current_user.id)
 

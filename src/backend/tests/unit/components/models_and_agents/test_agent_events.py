@@ -37,7 +37,7 @@ def create_mock_send_message():
     """
     call_count = [0]
 
-    def mock_send_message(message, skip_db_update=False):  # noqa: ARG001, FBT002
+    def mock_send_message(message, skip_db_update=False):  # noqa: FBT002
         call_count[0] += 1
         if call_count[0] == 1:
             # Simulate production: add ID on first call (when persisting to DB)
@@ -107,7 +107,7 @@ async def test_tool_start_event():
     """Test handling of on_tool_start event."""
     call_count = [0]
 
-    def update_message(message, skip_db_update=False):  # noqa: ARG001, FBT002
+    def update_message(message, skip_db_update=False):  # noqa: FBT002
         call_count[0] += 1
         if call_count[0] == 1:
             # Simulate production: add ID on first call (when persisting to DB)

@@ -376,6 +376,6 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
 
         for input_text, match_text, operator, case_sensitive, expected in test_cases:
             result = component.evaluate_condition(input_text, match_text, operator, case_sensitive=case_sensitive)
-            assert result == expected, (
-                f"Failed for {input_text} {operator} {match_text} (case_sensitive={case_sensitive})"
-            )
+            assert (
+                result == expected
+            ), f"Failed for {input_text} {operator} {match_text} (case_sensitive={case_sensitive})"

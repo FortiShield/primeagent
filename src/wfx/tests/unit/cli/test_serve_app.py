@@ -183,7 +183,7 @@ class TestServeAppEndpoints:
         original_async_start = graph.async_start
 
         # Mock successful execution with real ResultData
-        async def mock_async_start(inputs):  # noqa: ARG001
+        async def mock_async_start(inputs):
             # Create real Message and ResultData objects
             message = Message(text="Hello from flow")
             result_data = ResultData(
@@ -236,7 +236,7 @@ class TestServeAppEndpoints:
         # Create second real graph using the same JSON structure
         graph2 = Graph.from_payload(simple_chat_json, flow_id="flow-2")
 
-        async def mock_async_start2(inputs):  # noqa: ARG001
+        async def mock_async_start2(inputs):
             # Return empty results for this test
             yield MagicMock(outputs=[])
 
@@ -346,7 +346,7 @@ class TestServeAppEndpoints:
         headers = {"x-api-key": "test-api-key"}
 
         # Mock execute_graph_with_capture to raise an error
-        async def mock_execute_error(graph, input_value):  # noqa: ARG001
+        async def mock_execute_error(graph, input_value):
             msg = "Flow execution failed"
             raise RuntimeError(msg)
 
@@ -371,7 +371,7 @@ class TestServeAppEndpoints:
         headers = {"x-api-key": "test-api-key"}
 
         # Mock execute_graph_with_capture to return empty results
-        async def mock_execute_empty(graph, input_value):  # noqa: ARG001
+        async def mock_execute_empty(graph, input_value):
             return [], ""  # Empty results and logs
 
         with (
@@ -444,7 +444,7 @@ class TestServeAppEndpoints:
         """Test flow execution with message-type output."""
 
         # Create a real message output scenario
-        async def mock_async_start_message(inputs):  # noqa: ARG001
+        async def mock_async_start_message(inputs):
             # Create real Message and ResultData objects
             message = Message(text="Message output")
             result_data = ResultData(

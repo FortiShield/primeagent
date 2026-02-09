@@ -539,8 +539,7 @@ class TestResponseWithTextAndCode:
     @pytest.mark.asyncio
     async def test_extracts_code_from_response_with_text_before(self):
         """Should correctly extract and validate code when text comes before it."""
-        response_with_text = {
-            "result": f"""I apologize for the rate limit issue. Let me help you create the component.
+        response_with_text = {"result": f"""I apologize for the rate limit issue. Let me help you create the component.
 
 Here's the implementation:
 
@@ -548,8 +547,7 @@ Here's the implementation:
 {VALID_COMPONENT_CODE}
 ```
 
-This component will process your input."""
-        }
+This component will process your input."""}
 
         with (
             patch(
@@ -585,12 +583,10 @@ This component will process your input."""
     @pytest.mark.asyncio
     async def test_extracts_code_from_unclosed_block_with_text(self):
         """Should correctly extract code from unclosed block with text before it."""
-        response_with_unclosed = {
-            "result": f"""I apologize for the rate limit issue.
+        response_with_unclosed = {"result": f"""I apologize for the rate limit issue.
 
 ```python
-{VALID_COMPONENT_CODE}"""
-        }
+{VALID_COMPONENT_CODE}"""}
 
         with (
             patch(
@@ -699,14 +695,12 @@ class TestRealWorldScenarios:
     async def test_response_with_apology_and_cutoff_code(self):
         """Should handle response with apology text and cut-off/incomplete code."""
         # This simulates the exact response the user showed
-        response_with_apology = {
-            "result": f"""I apologize for the rate limit issue. Let me create the component.
+        response_with_apology = {"result": f"""I apologize for the rate limit issue. Let me create the component.
 
 Here's the implementation:
 
 ```python
-{CUTOFF_COMPONENT_CODE}"""
-        }
+{CUTOFF_COMPONENT_CODE}"""}
 
         with (
             patch(
@@ -753,12 +747,10 @@ Here's the implementation:
     @pytest.mark.asyncio
     async def test_response_with_apology_and_cutoff_code_with_retries(self):
         """After exhausting retries with cutoff code, should return validated=False."""
-        cutoff_response = {
-            "result": f"""I apologize for the issue.
+        cutoff_response = {"result": f"""I apologize for the issue.
 
 ```python
-{CUTOFF_COMPONENT_CODE}"""
-        }
+{CUTOFF_COMPONENT_CODE}"""}
 
         with (
             patch(
@@ -802,12 +794,10 @@ Here's the implementation:
     @pytest.mark.asyncio
     async def test_cutoff_code_retry_gets_valid_code(self):
         """If retry gets valid code, should return validated=True."""
-        cutoff_response = {
-            "result": f"""Error occurred.
+        cutoff_response = {"result": f"""Error occurred.
 
 ```python
-{CUTOFF_COMPONENT_CODE}"""
-        }
+{CUTOFF_COMPONENT_CODE}"""}
         valid_response = {"result": f"```python\n{VALID_COMPONENT_CODE}\n```"}
 
         with (

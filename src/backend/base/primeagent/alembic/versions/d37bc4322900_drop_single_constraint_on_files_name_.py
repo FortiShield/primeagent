@@ -39,9 +39,7 @@ def upgrade() -> None:
     try:
         if db_dialect == "sqlite":
             # SQLite: Recreate table without single UNIQUE constraint
-            logger.info(
-                "SQLite: Recreating table to remove single UNIQUE constraint on name"
-            )
+            logger.info("SQLite: Recreating table to remove single UNIQUE constraint on name")
 
             # Guard against schema drift: ensure expected columns before destructive rebuild
             res = conn.execute(sa.text('PRAGMA table_info("file")'))
@@ -93,15 +91,11 @@ def upgrade() -> None:
             finally:
                 op.execute("PRAGMA foreign_keys=ON")
 
-            logger.info(
-                "SQLite: Successfully recreated file table without single UNIQUE constraint on name"
-            )
+            logger.info("SQLite: Successfully recreated file table without single UNIQUE constraint on name")
 
         elif db_dialect == "postgresql":
             # PostgreSQL: Find and drop single-column unique constraints on 'name'
-            logger.info(
-                "PostgreSQL: Finding and dropping single UNIQUE constraints and indexes on name"
-            )
+            logger.info("PostgreSQL: Finding and dropping single UNIQUE constraints and indexes on name")
 
             # Determine target schema
             schema = sa.inspect(conn).default_schema_name or "public"
@@ -131,14 +125,10 @@ def upgrade() -> None:
 
             if constraints_to_drop:
                 for constraint_name in constraints_to_drop:
-                    op.drop_constraint(
-                        constraint_name, "file", type_="unique", schema=schema
-                    )
+                    op.drop_constraint(constraint_name, "file", type_="unique", schema=schema)
                     logger.info(f"PostgreSQL: Dropped constraint {constraint_name}")
             else:
-                logger.info(
-                    "PostgreSQL: No single UNIQUE constraints found on name column"
-                )
+                logger.info("PostgreSQL: No single UNIQUE constraints found on name column")
 
             # Also drop any single-column UNIQUE indexes on name not backed by constraints
             idx_result = conn.execute(
@@ -185,9 +175,7 @@ def downgrade() -> None:
 
     try:
         # Pre-check for duplicates that would violate UNIQUE(name)
-        dup = conn.execute(
-            sa.text("SELECT name FROM file GROUP BY name HAVING COUNT(*) > 1 LIMIT 1")
-        ).first()
+        dup = conn.execute(sa.text("SELECT name FROM file GROUP BY name HAVING COUNT(*) > 1 LIMIT 1")).first()
         if dup:
             raise RuntimeError(
                 "Downgrade aborted: duplicates in file.name would violate UNIQUE(name). "
@@ -208,9 +196,7 @@ def downgrade() -> None:
                 "updated_at",
             ]
             if set(cols) != set(expected):
-                raise RuntimeError(
-                    f"SQLite: Unexpected columns on file table: {cols}. Aborting downgrade."
-                )
+                raise RuntimeError(f"SQLite: Unexpected columns on file table: {cols}. Aborting downgrade.")
             # SQLite: Recreate table with both constraints
             logger.info("SQLite: Recreating table with both constraints")
 
@@ -251,12 +237,8 @@ def downgrade() -> None:
         elif db_dialect == "postgresql":
             # PostgreSQL: Add constraint back
             schema = sa.inspect(conn).default_schema_name or "public"
-            op.create_unique_constraint(
-                "file_name_unique", "file", ["name"], schema=schema
-            )
-            logger.info(
-                "PostgreSQL: Added back single unique constraint on 'name' column"
-            )
+            op.create_unique_constraint("file_name_unique", "file", ["name"], schema=schema)
+            logger.info("PostgreSQL: Added back single unique constraint on 'name' column")
 
         else:
             logger.info(f"Downgrade not supported for dialect: {db_dialect}")

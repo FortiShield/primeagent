@@ -331,9 +331,7 @@ class TestVLMRunTranscription(ComponentTestBaseWithoutClient):
         mock_client.predictions.wait.assert_called_once_with(mock_response.id, timeout=600)
 
         # Verify API key was passed correctly
-        mock_vlmrun_class.assert_called_once_with(
-            api_key="test-api-key"  # pragma: allowlist secret
-        )
+        mock_vlmrun_class.assert_called_once_with(api_key="test-api-key")  # pragma: allowlist secret
 
     @patch("vlmrun.client.VLMRun")
     def test_video_file_with_audio_content(self, mock_vlmrun_class, component_class, default_kwargs):

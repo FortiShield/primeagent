@@ -219,7 +219,9 @@ def run(
         help="Type of cache to use. (InMemoryCache, SQLiteCache)",
         show_default=False,
     ),
-    dev: bool | None = typer.Option(None, help="Run in development mode (may contain bugs)", show_default=False),  # noqa: ARG001
+    dev: bool | None = typer.Option(
+        None, help="Run in development mode (may contain bugs)", show_default=False
+    ),  # noqa: ARG001
     frontend_path: str | None = typer.Option(
         None,
         help="Path to the frontend directory containing build files. This is for development purposes only.",

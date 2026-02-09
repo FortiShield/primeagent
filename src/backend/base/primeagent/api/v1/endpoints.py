@@ -762,7 +762,9 @@ async def webhook_events_stream(
     )
 
 
-@router.post("/webhook/{flow_id_or_name}", response_model=dict, status_code=HTTPStatus.ACCEPTED)  # noqa: RUF100, FAST003
+@router.post(
+    "/webhook/{flow_id_or_name}", response_model=dict, status_code=HTTPStatus.ACCEPTED
+)  # noqa: RUF100, FAST003
 async def webhook_run_flow(
     flow_id_or_name: str,
     flow: Annotated[Flow, Depends(get_flow_by_id_or_endpoint_name)],

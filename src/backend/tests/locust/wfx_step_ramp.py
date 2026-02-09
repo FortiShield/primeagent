@@ -72,7 +72,7 @@ def on_test_start(environment, **_kwargs):
 
 
 @events.request.add_listener
-def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):  # noqa: ARG001
+def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):
     """Track slow requests using Locust's built-in timing."""
     # response_time is in milliseconds from Locust
     bag = _env_bags.get(context.get("environment") if context else None)

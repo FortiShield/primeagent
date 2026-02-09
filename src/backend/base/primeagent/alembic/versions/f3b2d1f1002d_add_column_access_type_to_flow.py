@@ -25,9 +25,7 @@ def upgrade() -> None:
     access_type_enum = sa.Enum("PRIVATE", "PUBLIC", name="access_type_enum")
     access_type_enum.create(conn, checkfirst=True)
     with op.batch_alter_table("flow", schema=None) as batch_op:
-        if not migration.column_exists(
-            table_name="flow", column_name="access_type", conn=conn
-        ):
+        if not migration.column_exists(table_name="flow", column_name="access_type", conn=conn):
             batch_op.add_column(
                 sa.Column(
                     "access_type",
@@ -41,9 +39,7 @@ def upgrade() -> None:
 def downgrade() -> None:
     conn = op.get_bind()
     with op.batch_alter_table("flow", schema=None) as batch_op:
-        if migration.column_exists(
-            table_name="flow", column_name="access_type", conn=conn
-        ):
+        if migration.column_exists(table_name="flow", column_name="access_type", conn=conn):
             batch_op.drop_column("access_type")
 
     access_type_enum = sa.Enum("PRIVATE", "PUBLIC", name="access_type_enum")

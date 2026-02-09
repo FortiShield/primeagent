@@ -28,15 +28,9 @@ def upgrade() -> None:
     index_names = [index["name"] for index in indexes]
     with op.batch_alter_table("flow", schema=None) as batch_op:
         if "endpoint_name" not in column_names:
-            batch_op.add_column(
-                sa.Column(
-                    "endpoint_name", sqlmodel.sql.sqltypes.AutoString(), nullable=True
-                )
-            )
+            batch_op.add_column(sa.Column("endpoint_name", sqlmodel.sql.sqltypes.AutoString(), nullable=True))
         if "ix_flow_endpoint_name" not in index_names:
-            batch_op.create_index(
-                batch_op.f("ix_flow_endpoint_name"), ["endpoint_name"], unique=True
-            )
+            batch_op.create_index(batch_op.f("ix_flow_endpoint_name"), ["endpoint_name"], unique=True)
 
     # ### end Alembic commands ###
 

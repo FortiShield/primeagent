@@ -29,9 +29,7 @@ def upgrade() -> None:
             "message",
             sa.Column("timestamp", sa.DateTime(), nullable=False),
             sa.Column("sender", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-            sa.Column(
-                "sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False
-            ),
+            sa.Column("sender_name", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
             sa.Column("session_id", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
             sa.Column("text", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
             sa.Column("id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),

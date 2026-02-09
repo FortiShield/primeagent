@@ -341,7 +341,7 @@ class TestTokenVerification:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (
@@ -385,7 +385,7 @@ class TestTokenVerification:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (
@@ -426,7 +426,7 @@ class TestTokenVerification:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (
@@ -681,7 +681,7 @@ class TestAuthenticationFailures:
             user_id = str(uuid4())
 
             # Create async function that returns None
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return None
 
             with (
@@ -730,7 +730,7 @@ class TestAuthenticationFailures:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (
@@ -785,7 +785,7 @@ class TestRefreshTokenVerification:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (
@@ -981,7 +981,7 @@ class TestEdgeCases:
             mock_db = AsyncMock()
 
             # Create async function that returns mock_user
-            async def mock_get_user_by_id(*args, **kwargs):  # noqa: ARG001
+            async def mock_get_user_by_id(*args, **kwargs):
                 return mock_user
 
             with (

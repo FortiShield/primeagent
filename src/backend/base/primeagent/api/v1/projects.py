@@ -246,9 +246,7 @@ async def read_projects(
     try:
         projects = (
             await session.exec(
-                select(Folder).where(
-                    or_(Folder.user_id == current_user.id, Folder.user_id == None)  # noqa: E711
-                )
+                select(Folder).where(or_(Folder.user_id == current_user.id, Folder.user_id == None))  # noqa: E711
             )
         ).all()
         projects = [project for project in projects if project.name != STARTER_FOLDER_NAME]

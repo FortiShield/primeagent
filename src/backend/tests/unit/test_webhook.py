@@ -71,7 +71,7 @@ async def test_webhook_endpoint_requires_api_key_when_auto_login_false(client, a
         endpoint_name = added_webhook_test["endpoint_name"]
         endpoint = f"api/v1/webhook/{endpoint_name}"
 
-        payload = {"path": "/tmp/test_file.txt"}  # noqa: S108
+        payload = {"path": "/tmp/test_file.txt"}
 
         # Should fail without API key when webhook auth is enabled
         response = await client.post(endpoint, json=payload)
@@ -119,7 +119,7 @@ async def test_webhook_endpoint_unauthorized_user_flow(client, added_webhook_tes
         endpoint_name = added_webhook_test["endpoint_name"]
         endpoint = f"api/v1/webhook/{endpoint_name}"
 
-        payload = {"path": "/tmp/test_file.txt"}  # noqa: S108
+        payload = {"path": "/tmp/test_file.txt"}
 
         # Should fail with invalid API key
         response = await client.post(endpoint, headers={"x-api-key": "invalid_key"}, json=payload)
@@ -156,7 +156,7 @@ async def test_webhook_with_auto_login_enabled(client, added_webhook_test):
         endpoint_name = added_webhook_test["endpoint_name"]
         endpoint = f"api/v1/webhook/{endpoint_name}"
 
-        payload = {"path": "/tmp/test_auto_login.txt"}  # noqa: S108
+        payload = {"path": "/tmp/test_auto_login.txt"}
 
         # Should work without API key when webhook auth is disabled
         response = await client.post(endpoint, json=payload)

@@ -50,7 +50,7 @@ if TYPE_CHECKING:
     from .mem0_composio import ComposioMem0APIComponent
     from .miro_composio import ComposioMiroAPIComponent
     from .missive_composio import ComposioMissiveAPIComponent
-    from .notion_composio import ComposioNotionAPIComponent
+    from .notion_composio import ComposionotionAPIComponent
     from .onedrive_composio import ComposioOneDriveAPIComponent
     from .outlook_composio import ComposioOutlookAPIComponent
     from .pandadoc_composio import ComposioPandadocAPIComponent
@@ -126,7 +126,7 @@ _dynamic_imports = {
     "ComposioMem0APIComponent": "mem0_composio",
     "ComposioMiroAPIComponent": "miro_composio",
     "ComposioMissiveAPIComponent": "missive_composio",
-    "ComposioNotionAPIComponent": "notion_composio",
+    "ComposionotionAPIComponent": "notion_composio",
     "ComposioOneDriveAPIComponent": "onedrive_composio",
     "ComposioOutlookAPIComponent": "outlook_composio",
     "ComposioPandadocAPIComponent": "pandadoc_composio",
@@ -184,7 +184,6 @@ __all__ = [
     "ComposioMem0APIComponent",
     "ComposioMiroAPIComponent",
     "ComposioMissiveAPIComponent",
-    "ComposioNotionAPIComponent",
     "ComposioOneDriveAPIComponent",
     "ComposioOutlookAPIComponent",
     "ComposioPandadocAPIComponent",
@@ -201,6 +200,7 @@ __all__ = [
     "ComposioTodoistAPIComponent",
     "ComposioWrikeAPIComponent",
     "ComposioYoutubeAPIComponent",
+    "ComposionotionAPIComponent",
 ]
 
 

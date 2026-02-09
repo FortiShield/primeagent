@@ -123,11 +123,7 @@ class TestRunFlowComponentHelperMethods:
         )
 
         build_config = dotdict(
-            {
-                "flow_name_selected": {
-                    "selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}  # Older
-                }
-            }
+            {"flow_name_selected": {"selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}}}  # Older
         )
 
         result = component.should_update_stale_flow(flow, build_config)
@@ -146,11 +142,7 @@ class TestRunFlowComponentHelperMethods:
         )
 
         build_config = dotdict(
-            {
-                "flow_name_selected": {
-                    "selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}  # Same
-                }
-            }
+            {"flow_name_selected": {"selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}}}  # Same
         )
 
         result = component.should_update_stale_flow(flow, build_config)

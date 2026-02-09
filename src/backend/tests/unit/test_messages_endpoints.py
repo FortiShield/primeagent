@@ -42,7 +42,7 @@ async def created_message(active_user):
 
 
 @pytest.fixture
-async def created_messages(session, active_user):  # noqa: ARG001
+async def created_messages(session, active_user):
     async with session_scope() as _session:
         # Create a flow for the user so messages can be filtered by user
         flow = Flow(
@@ -80,7 +80,7 @@ async def created_messages(session, active_user):  # noqa: ARG001
 
 
 @pytest.fixture
-async def messages_with_datetime_session_id(session, active_user):  # noqa: ARG001
+async def messages_with_datetime_session_id(session, active_user):
     """Create messages with datetime-like session IDs that contain characters requiring URL encoding."""
     datetime_session_id = "2024-01-15 10:30:45 UTC"  # Contains spaces and colons
     async with session_scope() as _session:

@@ -79,7 +79,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
 
     @patch("wfx.base.models.unified_models.get_model_classes")
     def test_successful_structured_output_generation_with_patch_with_config(self, mock_get_model_classes, mock_llm):
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"field": "value"}]}
@@ -499,7 +499,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {
@@ -850,7 +850,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             # Return trustcall-style response but without BaseModel that creates "objects" key
             return {
                 "messages": ["mock_message"],
@@ -886,7 +886,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             # Return a string response (edge case)
             return "Simple string response"
 
@@ -917,7 +917,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             # Return trustcall-style response with empty responses
             return {
                 "messages": ["mock_message"],
@@ -956,7 +956,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             # Return a dict instead of list with objects
             return {
                 "messages": ["mock_message"],
@@ -992,7 +992,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"field": "value2", "number": 24}]}  # Return only one object
@@ -1049,7 +1049,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {
@@ -1109,7 +1109,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"name": "John Doe", "age": 30}]}
@@ -1159,7 +1159,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"product": "iPhone", "price": 999.99, "available": True}]}
@@ -1225,7 +1225,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"field": "value2", "number": 24}]}
@@ -1277,7 +1277,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {
@@ -1341,7 +1341,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             return {
                 "messages": ["mock_message"],
                 "responses": [{"single_item": "value"}],
@@ -1376,7 +1376,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": []}
@@ -1595,7 +1595,7 @@ class TestStructuredOutputComponent(ComponentTestBaseWithoutClient):
         # Mock get_model_classes
         mock_get_model_classes.return_value = mock_model_classes(mock_llm)
 
-        def mock_get_chat_result(runnable, system_message, input_value, config):  # noqa: ARG001
+        def mock_get_chat_result(runnable, system_message, input_value, config):
             class MockBaseModel(BaseModel):
                 def model_dump(self, **__):
                     return {"objects": [{"field": "trustcall_value"}]}

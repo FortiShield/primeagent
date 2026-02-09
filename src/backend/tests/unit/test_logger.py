@@ -224,7 +224,7 @@ class TestConfigure:
         assert config is not None
         # The wrapper_class should be configured for WARNING level
 
-    @patch.dict(os.environ, {"PRIMEAGENT_LOG_FILE": "/tmp/test.log"})  # noqa: S108
+    @patch.dict(os.environ, {"PRIMEAGENT_LOG_FILE": "/tmp/test.log"})
     def test_configure_env_log_file_override(self):
         """Test configure() respects PRIMEAGENT_LOG_FILE environment variable."""
         configure()

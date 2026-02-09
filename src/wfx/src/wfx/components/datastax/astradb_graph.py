@@ -109,9 +109,11 @@ class AstraDBGraphVectorStoreComponent(AstraDBBaseComponent, LCVectorStoreCompon
                 pre_delete_collection=self.pre_delete_collection,
                 metadata_indexing_include=[s for s in self.metadata_indexing_include if s] or None,
                 metadata_indexing_exclude=[s for s in self.metadata_indexing_exclude if s] or None,
-                collection_indexing_policy=orjson.loads(self.collection_indexing_policy.encode("utf-8"))
-                if self.collection_indexing_policy
-                else None,
+                collection_indexing_policy=(
+                    orjson.loads(self.collection_indexing_policy.encode("utf-8"))
+                    if self.collection_indexing_policy
+                    else None
+                ),
             )
         except Exception as e:
             msg = f"Error initializing AstraDBGraphVectorStore: {e}"

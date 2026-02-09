@@ -242,9 +242,7 @@ async def run_flow(
         vertex.id
         for vertex in graph.vertices
         if output_type == "debug"
-        or (
-            vertex.is_output and (output_type == "any" or output_type in vertex.id.lower())  # type: ignore[operator]
-        )
+        or (vertex.is_output and (output_type == "any" or output_type in vertex.id.lower()))  # type: ignore[operator]
     ]
 
     fallback_to_env_vars = get_settings_service().settings.fallback_to_env_var

@@ -89,9 +89,9 @@ class TestUnifiedModelsDefaults:
             num_to_check = min(5, len(models))
             for i in range(num_to_check):
                 model = models[i]
-                assert model["metadata"].get("default") is True, (
-                    f"Model {i} in provider {provider} should be marked as default"
-                )
+                assert (
+                    model["metadata"].get("default") is True
+                ), f"Model {i} in provider {provider} should be marked as default"
 
     def test_models_after_five_not_default(self):
         """Models after the first 5 should not be marked as default."""
@@ -106,9 +106,9 @@ class TestUnifiedModelsDefaults:
                 for i in range(5, len(models)):
                     model = models[i]
                     # These should not have default=True
-                    assert model["metadata"].get("default") is not True, (
-                        f"Model {i} in provider {provider} should not be marked as default"
-                    )
+                    assert (
+                        model["metadata"].get("default") is not True
+                    ), f"Model {i} in provider {provider} should not be marked as default"
 
     def test_only_defaults_filter_works(self):
         """When only_defaults=True, only first 5 models per provider are returned."""
@@ -123,9 +123,9 @@ class TestUnifiedModelsDefaults:
 
             # All returned models should have default=True
             for model in models:
-                assert model["metadata"].get("default") is True, (
-                    f"All models from {provider} with only_defaults=True should be marked as default"
-                )
+                assert (
+                    model["metadata"].get("default") is True
+                ), f"All models from {provider} with only_defaults=True should be marked as default"
 
     def test_defaults_not_affected_by_deprecated_filter(self):
         """Default marking should work independently of deprecated filtering."""

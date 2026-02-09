@@ -118,7 +118,7 @@ def mock_streamable_http_manager():
         async_cm = AsyncContextManagerMock()
         manager_instance.run = MagicMock(return_value=async_cm)
 
-        async def _fake_handle_request(scope, receive, send):  # noqa: ARG001
+        async def _fake_handle_request(scope, receive, send):
             await send({"type": "http.response.start", "status": 200, "headers": []})
             await send({"type": "http.response.body", "body": b"", "more_body": False})
 
@@ -709,7 +709,7 @@ def _prepare_install_test_env(monkeypatch, tmp_path, filename="cursor.json"):
 
     monkeypatch.setattr("primeagent.api.v1.mcp_projects.get_client_ip", lambda request: "127.0.0.1")  # noqa: ARG005
 
-    async def fake_get_config_path(client_name):  # noqa: ARG001
+    async def fake_get_config_path(client_name):
         return config_path
 
     monkeypatch.setattr("primeagent.api.v1.mcp_projects.get_config_path", fake_get_config_path)

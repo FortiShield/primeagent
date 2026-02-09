@@ -152,7 +152,7 @@ class DoclingInlineComponent(BaseFileComponent):
                 "Docling is an optional dependency. Install with "
                 "`uv pip install 'primeagent[docling]'` or refer to the "
                 "documentation on how to install optional dependencies."
-                )
+            )
             raise ImportError(msg) from e
 
         file_paths = [file.path for file in file_list if file.path]

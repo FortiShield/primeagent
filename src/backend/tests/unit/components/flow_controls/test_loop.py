@@ -416,7 +416,7 @@ class TestLoopComponentSubgraphExecution:
 
         # Create async context manager for create_subgraph
         @asynccontextmanager
-        async def mock_create_subgraph(vertex_ids):  # noqa: ARG001
+        async def mock_create_subgraph(vertex_ids):
             yield mock_subgraph
 
         with (

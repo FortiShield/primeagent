@@ -262,7 +262,7 @@ class TestTerminateOrphanedMcpProcesses:
         mock_orphan_mcp.info = {
             "pid": 12345,
             "ppid": 1,
-            "cmdline": ["python", "mcp-server-filesystem", "/tmp"],  # noqa: S108
+            "cmdline": ["python", "mcp-server-filesystem", "/tmp"],
         }
 
         # Non-orphaned MCP process
@@ -270,7 +270,7 @@ class TestTerminateOrphanedMcpProcesses:
         mock_non_orphan.info = {
             "pid": 12346,
             "ppid": 1000,
-            "cmdline": ["python", "mcp-server-filesystem", "/tmp"],  # noqa: S108
+            "cmdline": ["python", "mcp-server-filesystem", "/tmp"],
         }
 
         # Orphaned non-MCP process

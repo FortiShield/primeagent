@@ -247,20 +247,17 @@ class TestCLISubprocessIntegration:
         db_path = tmp_path / unique_db_name
 
         env_file = tmp_path / "integration_test.env"
-        env_file.write_text(
-            f"""
+        env_file.write_text(f"""
 PRIMEAGENT_DATABASE_URL=sqlite:///{db_path}
 PRIMEAGENT_AUTO_SAVING=false
 PRIMEAGENT_AUTO_LOGIN=false
 PRIMEAGENT_LOG_LEVEL=ERROR
-        """.strip()
-        )
+        """.strip())
 
         # Create a test script that starts primeagent and checks if the database was created
         # at the location specified in the env file
         test_script = tmp_path / "verify_startup.py"
-        test_script.write_text(
-            f"""
+        test_script.write_text(f"""
 import sys
 import time
 import subprocess
@@ -316,8 +313,7 @@ finally:
             proc.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc.kill()
-        """.strip()
-        )
+        """.strip())
 
         # Run the integration test (increased timeout for CI)
         result = subprocess.run(  # noqa: S603
@@ -333,7 +329,7 @@ finally:
             db_path.unlink()
 
         # Verify the test passed
-        assert result.returncode == 0, (
-            f"Integration test failed - env file values not used\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
-        )
+        assert (
+            result.returncode == 0
+        ), f"Integration test failed - env file values not used\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
         assert "SUCCESS" in result.stdout, f"Database not created at env file location\n{result.stdout}"

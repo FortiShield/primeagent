@@ -34,9 +34,7 @@ def upgrade() -> None:
             sa.Column("created_at", sa.DateTime(), nullable=False),
             sa.Column("updated_at", sa.DateTime(), nullable=True),
             sa.Column("user_id", sqlmodel.sql.sqltypes.types.Uuid(), nullable=False),
-            sa.ForeignKeyConstraint(
-                ["user_id"], ["user.id"], name="fk_variable_user_id"
-            ),
+            sa.ForeignKeyConstraint(["user_id"], ["user.id"], name="fk_variable_user_id"),
             sa.PrimaryKeyConstraint("id"),
         )
     if "credential" in table_names:
@@ -59,9 +57,7 @@ def downgrade() -> None:
             sa.Column("id", sa.CHAR(length=32), nullable=False),
             sa.Column("created_at", sa.DATETIME(), nullable=False),
             sa.Column("updated_at", sa.DATETIME(), nullable=True),
-            sa.ForeignKeyConstraint(
-                ["user_id"], ["user.id"], name="fk_credential_user_id"
-            ),
+            sa.ForeignKeyConstraint(["user_id"], ["user.id"], name="fk_credential_user_id"),
             sa.PrimaryKeyConstraint("id"),
         )
     if "variable" in table_names:

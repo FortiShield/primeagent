@@ -503,12 +503,12 @@ class TestWfxReexportModules:
 
                 # Verify that at least some of the re-exported symbols come from wfx
                 wfx_sourced = [sym for sym in available_symbols if sym in wfx_symbols]
-                assert len(wfx_sourced) > 0, (
-                    f"Module {lf_module} should re-export some symbols from {expected_wfx_source}"
-                )
+                assert (
+                    len(wfx_sourced) > 0
+                ), f"Module {lf_module} should re-export some symbols from {expected_wfx_source}"
             else:
                 # If no __all__, just check that some wfx symbols are accessible
                 available_symbols = [sym for sym in wfx_symbols[:10] if hasattr(lf_module_obj, sym)]
-                assert len(available_symbols) > 0, (
-                    f"Module {lf_module} should have some symbols from {expected_wfx_source}"
-                )
+                assert (
+                    len(available_symbols) > 0
+                ), f"Module {lf_module} should have some symbols from {expected_wfx_source}"

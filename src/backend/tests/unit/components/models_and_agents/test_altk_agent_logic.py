@@ -1209,9 +1209,9 @@ class TestConversationContextOrdering:
         assert msg3_pos is not None, "Third message should be present"
 
         # This assertion will likely FAIL and expose the bug
-        assert msg1_pos < msg2_pos < msg3_pos, (
-            f"Messages should be in chronological order, but got positions: {msg1_pos} < {msg2_pos} < {msg3_pos}"
-        )
+        assert (
+            msg1_pos < msg2_pos < msg3_pos
+        ), f"Messages should be in chronological order, but got positions: {msg1_pos} < {msg2_pos} < {msg3_pos}"
 
     def test_sparc_tool_wrapper_context_order(self):
         """Test conversation context order specifically in SPARC tool wrapper.
@@ -1562,9 +1562,9 @@ class TestConversationContextOrdering:
                 # This assertion will verify our fix works
                 oldest_pos = positions.get("oldest")
                 newest_pos = positions.get("newest")
-                assert chronological, (
-                    f"Messages should be chronological: oldest at {oldest_pos}, newest at {newest_pos}"
-                )
+                assert (
+                    chronological
+                ), f"Messages should be chronological: oldest at {oldest_pos}, newest at {newest_pos}"
 
         except Exception as e:
             logger.debug(f"ValidatedTool test failed: {e}")

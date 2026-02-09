@@ -191,9 +191,9 @@ class TestCORSConfiguration:
         # The actual warning message is different from what we expected
         warning_calls = [str(call) for call in mock_logger.warning.call_args_list]
         # We expect warnings about the insecure configuration - check for the actual message
-        assert any("CORS" in str(call) and "permissive" in str(call) for call in warning_calls), (
-            f"Expected CORS security warning but got: {warning_calls}"
-        )
+        assert any(
+            "CORS" in str(call) and "permissive" in str(call) for call in warning_calls
+        ), f"Expected CORS security warning but got: {warning_calls}"
 
         # Find CORS middleware and verify credentials are still allowed (current insecure behavior)
         cors_middleware = None

@@ -106,7 +106,7 @@ class TestS3CompatibleComponents:
 
         # Mock tempfile
         mock_temp_file = MagicMock()
-        mock_temp_file.name = "/tmp/temp_file.pdf"  # noqa: S108
+        mock_temp_file.name = "/tmp/temp_file.pdf"
         mock_temp_file.write = MagicMock()
 
         with (
@@ -127,7 +127,7 @@ class TestS3CompatibleComponents:
             mock_storage_service.get_file.assert_called_once_with("user_123", "document.pdf")
             # Verify temp file was created
             assert should_delete is True
-            assert local_path == "/tmp/temp_file.pdf"  # noqa: S108
+            assert local_path == "/tmp/temp_file.pdf"
 
     @pytest.mark.asyncio
     async def test_file_component_get_local_file_for_docling_local(self, local_settings):

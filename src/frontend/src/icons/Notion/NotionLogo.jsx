@@ -1,4 +1,4 @@
-const SvgNotionLogo = (props) => (
+const SvgnotionLogo = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -17,4 +17,4 @@ const SvgNotionLogo = (props) => (
     />
   </svg>
 );
-export default SvgNotionLogo;
+export default SvgnotionLogo;

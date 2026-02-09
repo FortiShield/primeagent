@@ -28,7 +28,7 @@ class TestModelInputStaticOptions:
         build_config = {"model": {"options": static_options}}
 
         # Mock the get_options_func that would normally fetch from global settings
-        def mock_get_options(user_id):  # noqa: ARG001
+        def mock_get_options(user_id):
             return [
                 {"name": "gpt-4o", "provider": "OpenAI"},
                 {"name": "claude-3", "provider": "Anthropic"},
@@ -63,7 +63,7 @@ class TestModelInputStaticOptions:
 
         build_config = {"model": {"options": static_options}}
 
-        def mock_get_options(user_id):  # noqa: ARG001
+        def mock_get_options(user_id):
             return [
                 {"name": "gpt-4o", "provider": "OpenAI"},
                 {"name": "claude-3", "provider": "Anthropic"},
@@ -108,7 +108,7 @@ class TestModelInputStaticOptions:
             {"name": "claude-3", "provider": "Anthropic"},
         ]
 
-        def mock_get_options(user_id):  # noqa: ARG001
+        def mock_get_options(user_id):
             return global_options
 
         # Call with initial load
@@ -138,7 +138,7 @@ class TestModelInputStaticOptions:
 
         build_config = {"model": {"options": static_options, "input_types": []}}
 
-        def mock_get_options(user_id):  # noqa: ARG001
+        def mock_get_options(user_id):
             return [{"name": "gpt-4o", "provider": "OpenAI"}]
 
         # First call: initial load to detect static options
@@ -180,7 +180,7 @@ class TestModelInputStaticOptions:
             {"name": "gpt-4o", "provider": "OpenAI"},
         ]
 
-        def mock_get_options(user_id):  # noqa: ARG001
+        def mock_get_options(user_id):
             return global_options
 
         # Call with initial load

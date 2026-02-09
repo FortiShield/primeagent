@@ -163,9 +163,7 @@ class TestWorkflowDeveloperAPIProtection:
         mock_settings_dev_api_enabled,  # noqa: ARG002
     ):
         """Test POST workflow/stop endpoint is allowed when developer API is enabled - job not found."""
-        request_data = {
-            "job_id": "550e8400-e29b-41d4-a716-446655440001"  # Non-existent job ID
-        }
+        request_data = {"job_id": "550e8400-e29b-41d4-a716-446655440001"}  # Non-existent job ID
 
         headers = {"x-api-key": created_api_key.api_key}
         response = await client.post(
@@ -512,7 +510,7 @@ class TestWorkflowErrorHandling:
             }
 
             # Mock execute_sync_workflow to sleep longer than timeout
-            async def slow_execution(*args, **kwargs):  # noqa: ARG001
+            async def slow_execution(*args, **kwargs):
                 await asyncio.sleep(2)  # Sleep for 2 seconds
                 return MagicMock()
 
@@ -1025,7 +1023,7 @@ class TestWorkflowSyncExecution:
                 "stream": False,
                 "inputs": {
                     "TextInput-abc.text": "Content to save",
-                    "SaveToFile-xyz.file_path": "/tmp/output.txt",  # noqa: S108
+                    "SaveToFile-xyz.file_path": "/tmp/output.txt",
                 },
             }
 

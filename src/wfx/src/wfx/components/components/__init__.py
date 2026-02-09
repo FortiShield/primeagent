@@ -7,8 +7,6 @@ from wfx.components._importing import import_mod
 if TYPE_CHECKING:
     # These imports are only for type checking and match _dynamic_imports
     from wfx.components import (
-        FAISS,
-        Notion,
         agentql,
         aiml,
         altk,
@@ -43,6 +41,7 @@ if TYPE_CHECKING:
         elastic,
         embeddings,
         exa,
+        faiss,
         firecrawl,
         git,
         glean,
@@ -68,6 +67,7 @@ if TYPE_CHECKING:
         mongodb,
         needle,
         notdiamond,
+        notion,
         novita,
         nvidia,
         olivya,
@@ -145,7 +145,7 @@ _dynamic_imports = {
     "elastic": "__module__",
     "embeddings": "__module__",
     "exa": "__module__",
-    "FAISS": "__module__",
+    "faiss": "__module__",
     "firecrawl": "__module__",
     "git": "__module__",
     "glean": "__module__",
@@ -171,7 +171,7 @@ _dynamic_imports = {
     "mongodb": "__module__",
     "needle": "__module__",
     "notdiamond": "__module__",
-    "Notion": "__module__",
+    "notion": "__module__",
     "novita": "__module__",
     "nvidia": "__module__",
     "olivya": "__module__",
@@ -217,7 +217,7 @@ _discovered_modules = set()
 
 def _discover_components_from_module(module_name):
     """Discover individual components from a specific module on-demand."""
-    if module_name in _discovered_modules or module_name == "Notion":
+    if module_name in _discovered_modules or module_name == "notion":
         return
 
     try:
@@ -241,8 +241,6 @@ def _discover_components_from_module(module_name):
 
 # Static base __all__ with module names
 __all__ = [
-    "FAISS",
-    "Notion",
     "agentql",
     "aiml",
     "altk",
@@ -277,6 +275,7 @@ __all__ = [
     "elastic",
     "embeddings",
     "exa",
+    "faiss",
     "firecrawl",
     "git",
     "glean",
@@ -302,6 +301,7 @@ __all__ = [
     "mongodb",
     "needle",
     "notdiamond",
+    "notion",
     "novita",
     "nvidia",
     "olivya",
@@ -358,7 +358,7 @@ def __getattr__(attr_name: str) -> Any:
         undiscovered_modules = [
             name
             for name in _dynamic_imports
-            if _dynamic_imports[name] == "__module__" and name not in _discovered_modules and name != "Notion"
+            if _dynamic_imports[name] == "__module__" and name not in _discovered_modules and name != "notion"
         ]
 
         # Discover components from undiscovered modules

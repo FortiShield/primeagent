@@ -94,9 +94,9 @@ class TestClientRequestTimeHandling:
         client_duration = time.time() - (client_start_ms / 1000)
 
         # Client duration should include both network and processing
-        assert client_duration > perf_duration, (
-            f"Client duration ({client_duration}s) should be greater than perf_counter duration ({perf_duration}s)"
-        )
+        assert (
+            client_duration > perf_duration
+        ), f"Client duration ({client_duration}s) should be greater than perf_counter duration ({perf_duration}s)"
         assert 0.14 < client_duration < 0.2, f"Expected ~0.15s total, got {client_duration}s"
         assert 0.04 < perf_duration < 0.1, f"Expected ~0.05s processing, got {perf_duration}s"
 
@@ -382,7 +382,7 @@ class TestVertexDurationUsesOwnPerfCounter:
         cumulative = time.time() - pipeline_start
 
         # Assert
-        assert duration_b < cumulative / 2, (
-            f"Vertex B ({duration_b}s) must be much less than cumulative ({cumulative}s)"
-        )
+        assert (
+            duration_b < cumulative / 2
+        ), f"Vertex B ({duration_b}s) must be much less than cumulative ({cumulative}s)"
         assert duration_b < duration_a, "Fast vertex B must be shorter than slow vertex A"

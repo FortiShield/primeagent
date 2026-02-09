@@ -134,9 +134,9 @@ def test_tool_with_list_parameter():
 
     # Now it should correctly identify as array type
     assert urls_spec["type"] == "array", "urls type should be array"
-    assert urls_spec["description"] == "Enter one or more URLs to crawl recursively, by clicking the '+' button.", (
-        "Incorrect urls description"
-    )
+    assert (
+        urls_spec["description"] == "Enter one or more URLs to crawl recursively, by clicking the '+' button."
+    ), "Incorrect urls description"
 
     # Should have items specification
     assert "items" in urls_spec, "Array should have items specification"

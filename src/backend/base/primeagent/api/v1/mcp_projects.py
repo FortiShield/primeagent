@@ -443,7 +443,9 @@ async def _dispatch_project_streamable_http(
     request_vars_token = current_request_variables_ctx.set(variables or None)
 
     try:
-        await project_server.session_manager.handle_request(request.scope, request.receive, request._send)  # noqa: SLF001
+        await project_server.session_manager.handle_request(
+            request.scope, request.receive, request._send
+        )  # noqa: SLF001
     except HTTPException:
         raise
     except Exception as exc:

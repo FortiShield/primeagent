@@ -515,7 +515,7 @@ def _process_single_module(modname: str) -> tuple[str, dict] | None:
         logger.error(f"Failed to import module {modname}: {e}", exc_info=True)
         return None
     # Extract the top-level subpackage name after "wfx.components."
-    # e.g., "wfx.components.Notion.add_content_to_page" -> "Notion"
+    # e.g., "wfx.components.notion.add_content_to_page" -> "notion"
     mod_parts = modname.split(".")
     if len(mod_parts) <= MIN_MODULE_PARTS:
         return None
