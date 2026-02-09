@@ -1,6 +1,9 @@
 name: Primeagent Release
 run-name: Primeagent Release by @${{ github.actor }}
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
