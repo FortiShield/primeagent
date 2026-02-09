@@ -120,7 +120,7 @@ jobs:
         run: |
           # If the main tag does not exist in GH, we create the base tag from the existing codebase.
 
-          git config --global user.email "bot-nightly-builds@primeagent.org"
+          git config --global user.email "bot-nightly-builds@agent.khulnasoft.com"
           git config --global user.name "Primeagent Bot"
 
           MAIN_TAG="${{ steps.generate_main_tag.outputs.main_tag }}"
@@ -228,7 +228,7 @@ jobs:
       - name: Commit and push hash history changes
         run: |
           echo "=== Configuring git ==="
-          git config --global user.email "bot-nightly-builds@primeagent.org"
+          git config --global user.email "bot-nightly-builds@agent.khulnasoft.com"
           git config --global user.name "Primeagent Bot"
           
           echo "=== Checking for hash history changes ==="
@@ -398,7 +398,7 @@ jobs:
       
       - name: Configure Git
         run: |
-          git config --global user.email "bot-nightly-builds@primeagent.org"
+          git config --global user.email "bot-nightly-builds@agent.khulnasoft.com"
           git config --global user.name "Primeagent Bot"
       
       - name: "Setup Environment"

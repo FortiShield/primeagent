@@ -12,7 +12,7 @@ from wfx.schema.data import Data
 class NotionSearch(LCToolComponent):
     display_name: str = "Search "
     description: str = "Searches all pages and databases that have been shared with an integration."
-    documentation: str = "https://docs.primeagent.org/bundles-notion"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

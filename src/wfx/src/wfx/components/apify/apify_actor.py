@@ -21,7 +21,7 @@ class ApifyActorsComponent(Component):
         "Use Apify Actors to extract data from hundreds of places fast. "
         "This component can be used in a flow to retrieve data or as a tool with an agent."
     )
-    documentation: str = "https://docs.primeagent.org/bundles-apify"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-apify"
     icon = "Apify"
     name = "ApifyActors"
 

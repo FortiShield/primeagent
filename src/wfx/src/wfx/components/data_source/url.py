@@ -49,7 +49,7 @@ class URLComponent(Component):
 
     display_name = "URL"
     description = "Fetch content from one or more web pages, following links recursively."
-    documentation: str = "https://docs.primeagent.org/url"
+    documentation: str = "https://docs.agent.khulnasoft.com/url"
     icon = "layout-template"
     name = "URLComponent"
 

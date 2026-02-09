@@ -44,7 +44,7 @@ DEFAULT_FIELDS = ["mode"]
 class APIRequestComponent(Component):
     display_name = "API Request"
     description = "Make HTTP requests using URL or cURL commands."
-    documentation: str = "https://docs.primeagent.org/api-request"
+    documentation: str = "https://docs.agent.khulnasoft.com/api-request"
     icon = "Globe"
     name = "APIRequest"
 

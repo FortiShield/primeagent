@@ -13,7 +13,7 @@ const config = {
   tagline:
     "Primeagent is a low-code app builder for RAG and multi-agent AI applications.",
   favicon: "img/favicon.ico",
-  url: "https://docs.primeagent.org",
+  url: "https://docs.agent.khulnasoft.com",
   baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "/",
   onBrokenLinks: "throw",
   onBrokenAnchors: "warn",

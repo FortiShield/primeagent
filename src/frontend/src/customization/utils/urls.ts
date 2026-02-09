@@ -12,5 +12,5 @@ export function getHealthCheckUrl(): string {
 }
 
 export const PrimeagentButtonRedirectTarget = () => {
-  return "https://primeagent.org";
+  return "https://agent.khulnasoft.com";
 };

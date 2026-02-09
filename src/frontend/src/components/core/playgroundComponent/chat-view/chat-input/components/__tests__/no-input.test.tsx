@@ -77,7 +77,7 @@ describe("NoInputView", () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
-      "https://docs.primeagent.org/components-io#chat-input",
+      "https://docs.agent.khulnasoft.com/components-io#chat-input",
     );
     expect(link).toHaveAttribute("target", "_blank");
   });

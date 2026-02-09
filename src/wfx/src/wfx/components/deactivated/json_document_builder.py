@@ -22,7 +22,7 @@ class JSONDocumentBuilder(CustomComponent):
     display_name: str = "JSON Document Builder"
     description: str = "Build a Document containing a JSON object using a key and another Document page content."
     name = "JSONDocumentBuilder"
-    documentation: str = "https://docs.primeagent.org/legacy-core-components"
+    documentation: str = "https://docs.agent.khulnasoft.com/legacy-core-components"
     legacy = True
 
     inputs = [

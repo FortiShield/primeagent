@@ -338,7 +338,7 @@ module.exports = {
 module.exports = {
   title: 'Primeagent Documentation',
   tagline: 'Build AI flows visually',
-  url: 'https://docs.primeagent.org',
+  url: 'https://docs.agent.khulnasoft.com',
   baseUrl: '/',
 
   themeConfig: {

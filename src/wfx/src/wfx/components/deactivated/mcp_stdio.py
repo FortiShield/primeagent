@@ -21,7 +21,7 @@ class MCPStdio(Component):
     description = (
         "Connects to an MCP server over stdio and exposes it's tools as primeagent tools to be used by an Agent."
     )
-    documentation: str = "https://docs.primeagent.org/components-custom-components"
+    documentation: str = "https://docs.agent.khulnasoft.com/components-custom-components"
     icon = "code"
     name = "MCPStdio"
     legacy = True

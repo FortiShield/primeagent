@@ -6,7 +6,7 @@ from wfx.schema.message import Message
 class TextOutputComponent(TextComponent):
     display_name = "Text Output"
     description = "Sends text output via API."
-    documentation: str = "https://docs.primeagent.org/text-input-and-output"
+    documentation: str = "https://docs.agent.khulnasoft.com/text-input-and-output"
     icon = "type"
     name = "TextOutput"
 

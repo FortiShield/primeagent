@@ -10,7 +10,7 @@ from wfx.template.field.base import Output
 class ParserComponent(Component):
     display_name = "Parser"
     description = "Extracts text using a template."
-    documentation: str = "https://docs.primeagent.org/parser"
+    documentation: str = "https://docs.agent.khulnasoft.com/parser"
     icon = "braces"
 
     inputs = [

@@ -227,7 +227,7 @@ test(
     await expect(page.getByText("setup guide")).toBeVisible();
     await expect(page.getByText("setup guide")).toHaveAttribute(
       "href",
-      "https://docs.primeagent.org/mcp-server#connect-clients-to-use-the-servers-actions",
+      "https://docs.agent.khulnasoft.com/mcp-server#connect-clients-to-use-the-servers-actions",
     );
 
     await awaitBootstrapTest(page);

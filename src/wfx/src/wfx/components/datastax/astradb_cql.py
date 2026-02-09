@@ -18,7 +18,7 @@ from wfx.schema.table import EditMode
 class AstraDBCQLToolComponent(AstraDBBaseComponent, LCToolComponent):
     display_name: str = "Astra DB CQL"
     description: str = "Create a tool to get transactional data from DataStax Astra DB CQL Table"
-    documentation: str = "https://docs.primeagent.org/bundles-datastax"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-datastax"
     icon: str = "AstraDB"
 
     inputs = [

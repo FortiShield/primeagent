@@ -65,7 +65,7 @@ class CugaComponent(ToolCallingAgentComponent):
 
     display_name: str = "Cuga"
     description: str = "Define the Cuga agent's instructions, then assign it a task."
-    documentation: str = "https://docs.primeagent.org/bundles-cuga"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-cuga"
     icon = "bot"
     name = "Cuga"
 

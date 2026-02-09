@@ -68,7 +68,7 @@ export function SaveChangesModal({
             <a
               target="_blank"
               className="text-accent-pink-foreground hover:underline"
-              href="https://docs.primeagent.org/environment-variables#visual-editor-and-playground-behavior"
+              href="https://docs.agent.khulnasoft.com/environment-variables#visual-editor-and-playground-behavior"
               rel="noopener"
             >
               Enable auto-saving

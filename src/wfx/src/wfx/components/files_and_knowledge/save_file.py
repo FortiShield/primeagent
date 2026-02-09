@@ -27,7 +27,7 @@ def _get_storage_location_options():
 class SaveToFileComponent(Component):
     display_name = "Write File"
     description = "Save data to local file, AWS S3, or Google Drive in the selected format."
-    documentation: str = "https://docs.primeagent.org/write-file"
+    documentation: str = "https://docs.agent.khulnasoft.com/write-file"
     icon = "file-text"
     name = "SaveToFile"
 

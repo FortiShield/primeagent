@@ -259,7 +259,7 @@ class TestAssistantPrompt:
     def test_should_contain_primeagent_references(self):
         """Should contain Primeagent documentation references."""
         assert "primeagent" in ASSISTANT_PROMPT.lower()
-        assert "docs.primeagent.org" in ASSISTANT_PROMPT
+        assert "docs.agent.khulnasoft.com" in ASSISTANT_PROMPT
 
     def test_should_contain_code_requirements(self):
         """Should contain code requirements for components."""

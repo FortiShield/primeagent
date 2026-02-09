@@ -35,7 +35,7 @@ const mockAPIData: APIDataType = {
       icon: "cirleQuestionMark",
       base_classes: ["Data"],
       display_name: "Mock Component",
-      documentation: "https://docs.primeagent.org/",
+      documentation: "https://docs.agent.khulnasoft.com/",
       minimized: false,
       custom_fields: {},
       output_types: [],

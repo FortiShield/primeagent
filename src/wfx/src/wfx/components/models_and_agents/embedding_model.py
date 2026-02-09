@@ -27,7 +27,7 @@ from wfx.log.logger import logger
 class EmbeddingModelComponent(LCEmbeddingsModel):
     display_name = "Embedding Model"
     description = "Generate embeddings using a specified provider."
-    documentation: str = "https://docs.primeagent.org/components-embedding-models"
+    documentation: str = "https://docs.agent.khulnasoft.com/components-embedding-models"
     icon = "binary"
     name = "EmbeddingModel"
     category = "models"

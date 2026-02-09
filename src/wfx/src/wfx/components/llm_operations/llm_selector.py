@@ -16,7 +16,7 @@ from wfx.template.field.base import Output
 class LLMSelectorComponent(Component):
     display_name = "LLM Selector"
     description = "Routes the input to the most appropriate LLM based on OpenRouter model specifications"
-    documentation: str = "https://docs.primeagent.org/llm-selector"
+    documentation: str = "https://docs.agent.khulnasoft.com/llm-selector"
     icon = "git-branch"
 
     # Constants for magic values
