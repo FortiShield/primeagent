@@ -6,21 +6,19 @@ from typing import TYPE_CHECKING, Any
 
 from langchain_core.documents import Document
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
-from typing_extensions import override
-from wfx.log.logger import logger
-
 from primeagent.schema.data import Data
 from primeagent.schema.message import Message
 from primeagent.services.tracing.base import BaseTracer
+from typing_extensions import override
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from uuid import UUID
 
     from langchain.callbacks.base import BaseCallbackHandler
-    from wfx.graph.vertex.base import Vertex
-
     from primeagent.services.tracing.schema import Log
+    from wfx.graph.vertex.base import Vertex
 
 
 def get_distributed_trace_headers(trace_id, span_id):

@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any
 
 from langchain_core.tools import BaseTool, ToolException
 from typing_extensions import override
-
 from wfx.base.flow_processing.utils import build_data_from_result_data, format_flow_output_data
 from wfx.helpers import build_schema_from_inputs, get_arg_names, get_flow_inputs, run_flow
 from wfx.log.logger import logger
@@ -13,7 +12,6 @@ from wfx.utils.async_helpers import run_until_complete
 if TYPE_CHECKING:
     from langchain_core.runnables import RunnableConfig
     from pydantic.v1 import BaseModel
-
     from wfx.graph.graph.base import Graph
     from wfx.graph.vertex.base import Vertex
 

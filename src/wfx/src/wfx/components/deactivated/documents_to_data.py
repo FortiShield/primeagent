@@ -1,5 +1,4 @@
 from langchain_core.documents import Document
-
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.schema.data import Data
 

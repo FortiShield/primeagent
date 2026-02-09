@@ -1,7 +1,6 @@
 from typing import Any
 
 from langchain_text_splitters import NLTKTextSplitter, TextSplitter
-
 from wfx.base.textsplitters.model import LCTextSplitterComponent
 from wfx.inputs.inputs import DataInput, IntInput, MessageTextInput
 from wfx.utils.util import unescape_string

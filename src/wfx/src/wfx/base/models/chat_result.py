@@ -1,7 +1,6 @@
 import warnings
 
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
-
 from wfx.field_typing.constants import LanguageModel
 from wfx.schema.message import Message
 

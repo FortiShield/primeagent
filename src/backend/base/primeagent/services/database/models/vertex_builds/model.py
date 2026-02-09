@@ -1,11 +1,10 @@
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
+from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
 from pydantic import BaseModel, field_serializer, field_validator
 from sqlalchemy import Text
 from sqlmodel import JSON, Column, Field, SQLModel
-
-from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
 
 
 class VertexBuildBase(SQLModel):
@@ -16,6 +15,7 @@ class VertexBuildBase(SQLModel):
     params: str | None = Field(default=None, sa_column=Column(Text, nullable=True))
     valid: bool = Field(nullable=False)
     flow_id: UUID = Field()
+    job_id: UUID | None = Field(default=None, index=True)
 
     # Needed for Column(JSON)
     class Config:

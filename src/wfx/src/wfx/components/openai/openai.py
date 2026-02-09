@@ -1,5 +1,4 @@
 from langchain_openai import OpenAIEmbeddings
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.base.models.openai_constants import OPENAI_EMBEDDING_MODEL_NAMES
 from wfx.field_typing import Embeddings

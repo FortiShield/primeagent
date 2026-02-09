@@ -3,7 +3,6 @@ from pathlib import Path
 
 from langchain_chroma import Chroma
 from typing_extensions import override
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.base.vectorstores.utils import chroma_collection_to_data
 from wfx.inputs.inputs import MultilineInput

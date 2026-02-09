@@ -22,7 +22,6 @@ from urllib.parse import urlparse
 
 import httpx
 import typer
-
 from wfx.cli.script_loader import (
     extract_structured_result,
     find_graph_variable,

@@ -1,5 +1,4 @@
 from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import MultilineInput, SecretStrInput

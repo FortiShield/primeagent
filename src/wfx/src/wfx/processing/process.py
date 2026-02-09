@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Any, cast
 
 from json_repair import repair_json
 from pydantic import BaseModel
-
 from wfx.graph.vertex.base import Vertex
 from wfx.log.logger import logger
 from wfx.schema.graph import InputValue, Tweaks

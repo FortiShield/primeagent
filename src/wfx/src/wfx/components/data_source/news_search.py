@@ -3,7 +3,6 @@ from urllib.parse import quote_plus
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-
 from wfx.custom import Component
 from wfx.io import IntInput, MessageTextInput, Output
 from wfx.schema import DataFrame
@@ -12,7 +11,7 @@ from wfx.schema import DataFrame
 class NewsSearchComponent(Component):
     display_name = "News Search"
     description = "Searches Google News via RSS. Returns clean article data."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/web-search"
+    documentation: str = "https://docs.primeagent.org/web-search"
     icon = "newspaper"
     name = "NewsSearch"
     legacy = True

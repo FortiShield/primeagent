@@ -7,9 +7,6 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
-from wfx.log.logger import logger
-from wfx.schema.openai_responses_schemas import create_openai_error
-
 from primeagent.api.utils import extract_global_variables_from_headers
 from primeagent.api.v1.endpoints import consume_and_yield, run_flow_generator, simple_run_flow
 from primeagent.api.v1.schemas import SimplifiedAPIRequest
@@ -28,6 +25,8 @@ from primeagent.services.database.models.user.model import UserRead
 from primeagent.services.deps import get_telemetry_service
 from primeagent.services.telemetry.schema import RunPayload
 from primeagent.services.telemetry.service import TelemetryService
+from wfx.log.logger import logger
+from wfx.schema.openai_responses_schemas import create_openai_error
 
 router = APIRouter(tags=["OpenAI Responses API"])
 

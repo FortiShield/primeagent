@@ -2,11 +2,10 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any
 from uuid import UUID, uuid4
 
+from primeagent.schema.serialize import UUIDstr
 from pydantic import BaseModel
 from sqlalchemy import JSON, Column
 from sqlmodel import Field, Relationship, SQLModel
-
-from primeagent.schema.serialize import UUIDstr
 
 if TYPE_CHECKING:
     from primeagent.services.database.models.api_key.model import ApiKey

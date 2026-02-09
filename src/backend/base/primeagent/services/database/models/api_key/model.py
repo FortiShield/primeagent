@@ -2,10 +2,9 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 from uuid import uuid4
 
+from primeagent.schema.serialize import UUIDstr
 from pydantic import field_validator
 from sqlmodel import Column, DateTime, Field, Relationship, SQLModel, func
-
-from primeagent.schema.serialize import UUIDstr
 
 if TYPE_CHECKING:
     from primeagent.services.database.models.user.model import User

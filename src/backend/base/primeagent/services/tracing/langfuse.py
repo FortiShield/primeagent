@@ -5,20 +5,18 @@ from collections import OrderedDict
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any
 
-from typing_extensions import override
-from wfx.log.logger import logger
-
 from primeagent.serialization.serialization import serialize
 from primeagent.services.tracing.base import BaseTracer
+from typing_extensions import override
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from uuid import UUID
 
     from langchain.callbacks.base import BaseCallbackHandler
-    from wfx.graph.vertex.base import Vertex
-
     from primeagent.services.tracing.schema import Log
+    from wfx.graph.vertex.base import Vertex
 
 
 class LangFuseTracer(BaseTracer):

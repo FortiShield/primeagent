@@ -4,12 +4,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, EmailStr
-
 from primeagent.logging import logger
 from primeagent.services.auth.utils import get_current_active_user
 from primeagent.services.deps import get_telemetry_service
 from primeagent.services.telemetry.schema import EmailPayload
+from pydantic import BaseModel, EmailStr
 
 router = APIRouter(tags=["Registration API"], prefix="/registration")
 

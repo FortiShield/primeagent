@@ -1,10 +1,9 @@
 import abc
 from uuid import UUID
 
-from sqlmodel.ext.asyncio.session import AsyncSession
-
 from primeagent.services.base import Service
 from primeagent.services.database.models.variable.model import Variable, VariableRead, VariableUpdate
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 
 class VariableService(Service):

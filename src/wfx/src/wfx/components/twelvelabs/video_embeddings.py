@@ -2,11 +2,11 @@ import time
 from pathlib import Path
 from typing import Any, cast
 
-from twelvelabs import TwelveLabs
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.io import DropdownInput, IntInput, SecretStrInput
+
+from twelvelabs import TwelveLabs
 
 
 class TwelveLabsVideoEmbeddings(Embeddings):

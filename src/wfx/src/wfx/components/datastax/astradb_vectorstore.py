@@ -1,6 +1,5 @@
 from astrapy import DataAPIClient
 from langchain_core.documents import Document
-
 from wfx.base.datastax.astradb_base import AstraDBBaseComponent
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.base.vectorstores.vector_store_connection_decorator import vector_store_connection
@@ -15,7 +14,7 @@ from wfx.utils.version import get_version_info
 class AstraDBVectorStoreComponent(AstraDBBaseComponent, LCVectorStoreComponent):
     display_name: str = "Astra DB"
     description: str = "Ingest and search documents in Astra DB"
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-datastax"
+    documentation: str = "https://docs.primeagent.org/bundles-datastax"
     name = "AstraDB"
     icon: str = "AstraDB"
 

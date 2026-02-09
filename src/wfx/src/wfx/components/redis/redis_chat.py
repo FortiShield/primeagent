@@ -1,7 +1,6 @@
 from urllib import parse
 
 from langchain_community.chat_message_histories.redis import RedisChatMessageHistory
-
 from wfx.base.memory.model import LCChatMemoryComponent
 from wfx.field_typing.constants import Memory
 from wfx.inputs.inputs import IntInput, MessageTextInput, SecretStrInput, StrInput

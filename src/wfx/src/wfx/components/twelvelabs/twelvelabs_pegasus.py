@@ -5,13 +5,13 @@ from pathlib import Path
 from typing import Any
 
 from tenacity import retry, stop_after_attempt, wait_exponential
-from twelvelabs import TwelveLabs
-
 from wfx.custom import Component
 from wfx.field_typing.range_spec import RangeSpec
 from wfx.inputs import DataInput, DropdownInput, MessageInput, MultilineInput, SecretStrInput, SliderInput
 from wfx.io import Output
 from wfx.schema.message import Message
+
+from twelvelabs import TwelveLabs
 
 
 class TaskError(Exception):

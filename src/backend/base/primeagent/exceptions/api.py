@@ -1,13 +1,36 @@
 from fastapi import HTTPException
-from pydantic import BaseModel
-
 from primeagent.api.utils import get_suggestion_message
 from primeagent.services.database.models.flow.model import Flow
 from primeagent.services.database.models.flow.utils import get_outdated_components
+from pydantic import BaseModel
 
 
 class InvalidChatInputError(Exception):
     pass
+
+
+class WorkflowExecutionError(Exception):
+    """Base exception for workflow execution errors."""
+
+
+class WorkflowTimeoutError(WorkflowExecutionError):
+    """Workflow execution timeout."""
+
+
+class WorkflowValidationError(WorkflowExecutionError):
+    """Workflow validation error (e.g., invalid flow data, graph build failure)."""
+
+
+class WorkflowQueueFullError(WorkflowExecutionError):
+    """Raised when the background task queue is full."""
+
+
+class WorkflowResourceError(WorkflowExecutionError):
+    """Raised when the server is out of memory or other resources."""
+
+
+class WorkflowServiceUnavailableError(WorkflowExecutionError):
+    """Raised when the task queue service is unavailable (e.g., broker down)."""
 
 
 # create a pidantic documentation for this class

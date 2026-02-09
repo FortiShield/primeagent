@@ -3,10 +3,7 @@ import json
 from io import BytesIO
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile
-from wfx.base.agents.utils import safe_cache_get, safe_cache_set
-from wfx.base.mcp.util import update_tools
-
+from fastapi import APIRouter, Body, Depends, HTTPException, UploadFile
 from primeagent.api.utils import CurrentActiveUser, DbSession
 from primeagent.api.v2.files import (
     MCP_SERVERS_FILE,
@@ -17,10 +14,13 @@ from primeagent.api.v2.files import (
     get_mcp_file,
     upload_user_file,
 )
+from primeagent.api.v2.schemas import MCPServerConfig
 from primeagent.logging import logger
 from primeagent.services.deps import get_settings_service, get_shared_component_cache_service, get_storage_service
 from primeagent.services.settings.service import SettingsService
 from primeagent.services.storage.service import StorageService
+from wfx.base.agents.utils import safe_cache_get, safe_cache_set
+from wfx.base.mcp.util import update_tools
 
 router = APIRouter(tags=["MCP"], prefix="/mcp")
 
@@ -156,11 +156,39 @@ async def get_servers(
         mcp_stdio_client = MCPStdioClient()
         mcp_streamable_http_client = MCPStreamableHttpClient()
         try:
+            # Get global variables from database for header resolution
+            request_variables = {}
+            try:
+                from primeagent.services.auth import utils as auth_utils
+                from primeagent.services.database.models.variable.model import Variable
+                from sqlmodel import select
+
+                # Load variables directly from database and decrypt ALL types (including CREDENTIAL)
+                stmt = select(Variable).where(Variable.user_id == current_user.id)
+                variables = list((await session.exec(stmt)).all())
+
+                # Decrypt variables based on type (following the pattern from get_all_decrypted_variables)
+                for variable in variables:
+                    if variable.name and variable.value:
+                        # Prior to v1.8, both Generic and Credential variables were encrypted.
+                        # As such, must attempt to decrypt both types to ensure backwards-compatibility.
+                        try:
+                            decrypted_value = auth_utils.decrypt_api_key(variable.value)
+                            request_variables[variable.name] = decrypted_value
+                        except Exception as e:  # noqa: BLE001
+                            await logger.aerror(
+                                f"Failed to decrypt credential variable '{variable.name}': {e}. "
+                                "This credential will not be available for MCP server."
+                            )
+            except Exception as e:  # noqa: BLE001
+                await logger.awarning(f"Failed to load global variables for MCP server test: {e}")
+
             mode, tool_list, _ = await update_tools(
                 server_name=server_name,
                 server_config=server_list["mcpServers"][server_name],
                 mcp_stdio_client=mcp_stdio_client,
                 mcp_streamable_http_client=mcp_streamable_http_client,
+                request_variables=request_variables,
             )
             server_info["mode"] = mode.lower()
             server_info["toolsCount"] = len(tool_list)
@@ -290,7 +318,8 @@ async def update_server(
 @router.post("/servers/{server_name}")
 async def add_server(
     server_name: str,
-    server_config: dict,
+    *,
+    server_config: Annotated[MCPServerConfig, Body()],
     current_user: CurrentActiveUser,
     session: DbSession,
     storage_service: Annotated[StorageService, Depends(get_storage_service)],
@@ -298,7 +327,7 @@ async def add_server(
 ):
     return await update_server(
         server_name,
-        server_config,
+        server_config.model_dump(exclude_unset=True),
         current_user,
         session,
         storage_service,
@@ -310,7 +339,8 @@ async def add_server(
 @router.patch("/servers/{server_name}")
 async def update_server_endpoint(
     server_name: str,
-    server_config: dict,
+    *,
+    server_config: Annotated[MCPServerConfig, Body()],
     current_user: CurrentActiveUser,
     session: DbSession,
     storage_service: Annotated[StorageService, Depends(get_storage_service)],
@@ -318,7 +348,7 @@ async def update_server_endpoint(
 ):
     return await update_server(
         server_name,
-        server_config,
+        server_config.model_dump(exclude_unset=True),
         current_user,
         session,
         storage_service,

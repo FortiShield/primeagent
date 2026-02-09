@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING, Any, cast
 
 import yaml
 from langchain_core.messages import AIMessage, AIMessageChunk
-
 from wfx.graph.schema import CHAT_COMPONENTS, RECORDS_COMPONENTS, InterfaceComponentTypes, ResultData
 from wfx.graph.utils import UnbuiltObject, log_vertex_build, rewrite_file_path
 from wfx.graph.vertex.base import Vertex

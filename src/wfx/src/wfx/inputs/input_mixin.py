@@ -9,7 +9,6 @@ from pydantic import (
     field_validator,
     model_serializer,
 )
-
 from wfx.field_typing.range_spec import RangeSpec
 from wfx.inputs.validators import CoalesceBool
 from wfx.schema.cross_module import CrossModuleModel

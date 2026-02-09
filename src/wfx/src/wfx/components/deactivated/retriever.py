@@ -1,5 +1,4 @@
 from langchain_core.tools import create_retriever_tool
-
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.field_typing import BaseRetriever, Tool
 from wfx.io import HandleInput, StrInput

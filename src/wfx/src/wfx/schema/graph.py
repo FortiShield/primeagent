@@ -1,7 +1,6 @@
 from typing import Any
 
 from pydantic import BaseModel, Field, RootModel
-
 from wfx.schema.schema import InputType
 
 

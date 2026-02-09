@@ -4,7 +4,6 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 import anyio
-
 from wfx.services.base import Service
 
 if TYPE_CHECKING:
@@ -191,6 +190,6 @@ class StorageService(Service):
     async def teardown(self) -> None:
         """Perform cleanup operations when the service is being shut down.
 
-        Subclasses should override this to clean up any resources (connections, etc.)
+        Subclasses can override this to clean up any resources (connections, etc.).
+        Default implementation is a no-op.
         """
-        raise NotImplementedError

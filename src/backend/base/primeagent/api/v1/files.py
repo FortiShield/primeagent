@@ -9,14 +9,13 @@ from uuid import UUID
 import anyio
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
-from wfx.services.settings.service import SettingsService
-from wfx.utils.helpers import build_content_type_from_extension
-
 from primeagent.api.utils import CurrentActiveUser, DbSession, ValidatedFileName
 from primeagent.api.v1.schemas import UploadFileResponse
 from primeagent.services.database.models.flow.model import Flow
 from primeagent.services.deps import get_settings_service, get_storage_service
 from primeagent.services.storage.service import StorageService
+from wfx.services.settings.service import SettingsService
+from wfx.utils.helpers import build_content_type_from_extension
 
 router = APIRouter(tags=["Files"], prefix="/files")
 

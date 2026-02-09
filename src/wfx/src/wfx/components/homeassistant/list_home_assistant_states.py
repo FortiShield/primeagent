@@ -4,7 +4,6 @@ from typing import Any
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import SecretStrInput, StrInput

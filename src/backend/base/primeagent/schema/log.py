@@ -1,10 +1,9 @@
 from typing import Any, Literal, TypeAlias
 
-from pydantic import BaseModel
-from typing_extensions import Protocol
-
 from primeagent.schema.message import ContentBlock, Message
 from primeagent.schema.playground_events import PlaygroundEvent
+from pydantic import BaseModel
+from typing_extensions import Protocol
 
 LoggableType: TypeAlias = str | dict | list | int | float | bool | BaseModel | PlaygroundEvent | None
 

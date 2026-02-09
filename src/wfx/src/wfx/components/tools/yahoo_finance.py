@@ -5,7 +5,6 @@ from enum import Enum
 from langchain.tools import StructuredTool
 from langchain_core.tools import ToolException
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import DropdownInput, IntInput, MessageTextInput

@@ -56,7 +56,6 @@ build/Release
 node_modules/
 jspm_packages/
 
-.pnpm-store/
 # TypeScript v1 declaration files
 typings/
 
@@ -291,3 +290,4 @@ member_servers.json
 # data files used for desktop registration
 data/user
 
+sso-config.yaml

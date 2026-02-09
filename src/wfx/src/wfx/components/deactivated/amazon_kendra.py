@@ -1,6 +1,5 @@
 # mypy: disable-error-code="attr-defined"
 from langchain_community.retrievers import AmazonKendraRetriever
-
 from wfx.base.vectorstores.model import check_cached_vector_store
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.io import DictInput, IntInput, StrInput

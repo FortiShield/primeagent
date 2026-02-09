@@ -1,13 +1,13 @@
 import json
 
-from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DropdownInput, MessageTextInput
 from wfx.io import SecretStrInput
 from wfx.schema.data import Data
 from wfx.template.field.base import Output
+
+from google.oauth2.credentials import Credentials
 
 
 class GoogleDriveSearchComponent(Component):

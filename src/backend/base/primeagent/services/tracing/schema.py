@@ -1,8 +1,7 @@
-from pydantic import BaseModel, field_serializer
-from pydantic_core import PydanticSerializationError
-
 from primeagent.schema.log import LoggableType
 from primeagent.serialization.serialization import serialize
+from pydantic import BaseModel, field_serializer
+from pydantic_core import PydanticSerializationError
 
 
 class Log(BaseModel):

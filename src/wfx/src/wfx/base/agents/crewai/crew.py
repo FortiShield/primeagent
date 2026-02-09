@@ -3,7 +3,6 @@ from typing import Any, cast
 
 import litellm
 from pydantic import SecretStr
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import HandleInput, InputTypes
 from wfx.io import BoolInput, IntInput, Output

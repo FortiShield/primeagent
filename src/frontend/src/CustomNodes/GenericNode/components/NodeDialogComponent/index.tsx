@@ -18,19 +18,10 @@ import useAlertStore from "@/stores/alertStore";
 import useFlowStore from "@/stores/flowStore";
 import type { APIClassType, InputFieldType } from "@/types/api";
 
-interface DialogInputs {
-  fields?: {
-    data?: {
-      node?: APIClassType;
-    };
-  };
-  functionality?: string;
-}
-
 interface NodeDialogProps {
   open: boolean;
   onClose: () => void;
-  dialogInputs: DialogInputs;
+  dialogInputs: any;
   nodeId: string;
   name: string;
   nodeClass: APIClassType;
@@ -242,39 +233,40 @@ export const NodeDialog: React.FC<NodeDialogProps> = ({
         </DialogHeader>
 
         <div className="flex flex-col gap-5 overflow-y-auto px-5">
-          {dialogNodeData &&
-            Object.entries(dialogTemplate).map(([fieldKey, fieldValue]) => (
-              <div key={fieldKey}>
-                <div className="flex items-center gap-2">
-                  {getCustomParameterTitle({
-                    title:
-                      (fieldValue as { display_name: string })?.display_name ??
-                      "",
-                    nodeId,
-                    isFlexView: false,
-                    required:
-                      (fieldValue as { required: boolean })?.required ?? false,
-                  })}
-                </div>
-                <ParameterRenderComponent
-                  handleOnNewValue={(changes) =>
-                    updateFieldValue(changes, fieldKey)
-                  }
-                  name={fieldKey}
-                  nodeId={nodeId}
-                  templateData={fieldValue as Partial<InputFieldType>}
-                  templateValue={(fieldValue as { value: string })?.value ?? ""}
-                  editNode={false}
-                  handleNodeClass={() => {}}
-                  nodeClass={dialogNodeData}
-                  disabled={fieldValue.disabled ?? false}
-                  placeholder={
-                    (fieldValue as { placeholder: string })?.placeholder ?? ""
-                  }
-                  isToolMode={false}
-                />
+          {Object.entries(dialogTemplate).map(([fieldKey, fieldValue]) => (
+            <div key={fieldKey}>
+              <div className="flex items-center gap-2">
+                {getCustomParameterTitle({
+                  title:
+                    (fieldValue as { display_name: string })?.display_name ??
+                    "",
+                  nodeId,
+                  isFlexView: false,
+                  required:
+                    (fieldValue as { required: boolean })?.required ?? false,
+                })}
               </div>
-            ))}
+              <ParameterRenderComponent
+                handleOnNewValue={(changes) =>
+                  updateFieldValue(changes, fieldKey)
+                }
+                name={fieldKey}
+                nodeId={nodeId}
+                templateData={fieldValue as Partial<InputFieldType>}
+                templateValue={(fieldValue as { value: string })?.value ?? ""}
+                editNode={false}
+                handleNodeClass={() => {}}
+                nodeClass={dialogNodeData}
+                disabled={
+                  (fieldValue as { disabled: boolean })?.disabled ?? false
+                }
+                placeholder={
+                  (fieldValue as { placeholder: string })?.placeholder ?? ""
+                }
+                isToolMode={false}
+              />
+            </div>
+          ))}
         </div>
 
         <DialogFooter className="px-5 pt-3">

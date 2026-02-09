@@ -1,5 +1,4 @@
 from langchain_community.embeddings.cloudflare_workersai import CloudflareWorkersAIEmbeddings
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import Embeddings
 from wfx.io import BoolInput, DictInput, IntInput, MessageTextInput, Output, SecretStrInput

@@ -5,7 +5,6 @@ from typing import Any
 import orjson
 from fastapi.encoders import jsonable_encoder
 from langchain_core.documents import Document
-
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message

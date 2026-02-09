@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from aiofile import async_open
 from dotenv import dotenv_values
-
 from wfx.graph.schema import RunOutputs
 
 if TYPE_CHECKING:

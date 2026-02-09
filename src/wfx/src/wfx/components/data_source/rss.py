@@ -1,7 +1,6 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-
 from wfx.custom import Component
 from wfx.io import IntInput, MessageTextInput, Output
 from wfx.log.logger import logger
@@ -11,7 +10,7 @@ from wfx.schema import DataFrame
 class RSSReaderComponent(Component):
     display_name = "RSS Reader"
     description = "Fetches and parses an RSS feed."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/web-search"
+    documentation: str = "https://docs.primeagent.org/web-search"
     icon = "rss"
     name = "RSSReaderSimple"
     legacy = True

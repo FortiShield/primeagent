@@ -5,19 +5,19 @@ from collections.abc import Iterator
 from json.decoder import JSONDecodeError
 from typing import Any
 
-from google.auth.exceptions import RefreshError
-from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from langchain_core.chat_sessions import ChatSession
 from langchain_core.messages import HumanMessage
 from langchain_google_community.gmail.loader import GMailLoader
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import MessageTextInput
 from wfx.io import SecretStrInput
 from wfx.log.logger import logger
 from wfx.schema.data import Data
 from wfx.template.field.base import Output
+
+from google.auth.exceptions import RefreshError
+from google.oauth2.credentials import Credentials
 
 
 class GmailLoaderComponent(Component):

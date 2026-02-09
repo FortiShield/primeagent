@@ -1,7 +1,6 @@
 from typing import Any
 
 from openai.lib.streaming import AssistantEventHandler
-
 from wfx.base.astra_assistants.util import get_patched_openai_client
 from wfx.custom.custom_component.component_with_cache import ComponentWithCache
 from wfx.inputs.inputs import MultilineInput

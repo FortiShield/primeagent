@@ -4,15 +4,14 @@ import asyncio
 import os
 from typing import TYPE_CHECKING
 
-from typing_extensions import override
-from wfx.log.logger import logger
-
 from primeagent.services.auth import utils as auth_utils
 from primeagent.services.base import Service
 from primeagent.services.database.models.variable.model import Variable, VariableCreate, VariableRead, VariableUpdate
 from primeagent.services.variable.base import VariableService
 from primeagent.services.variable.constants import CREDENTIAL_TYPE, GENERIC_TYPE
 from primeagent.services.variable.kubernetes_secrets import KubernetesSecretManager, encode_user_id
+from typing_extensions import override
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from uuid import UUID
@@ -165,7 +164,7 @@ class KubernetesSecretService(VariableService, Service):
         variable_base = VariableCreate(
             name=name,
             type=type_,
-            value=auth_utils.encrypt_api_key(value, settings_service=self.settings_service),
+            value=auth_utils.encrypt_api_key(value),
             default_fields=default_fields,
         )
         return Variable.model_validate(variable_base, from_attributes=True, update={"user_id": user_id})
@@ -192,7 +191,7 @@ class KubernetesSecretService(VariableService, Service):
             variable_base = VariableCreate(
                 name=name,
                 type=type_,
-                value=auth_utils.encrypt_api_key(value, settings_service=self.settings_service),
+                value=auth_utils.encrypt_api_key(value),
                 default_fields=[],
             )
             variable = Variable.model_validate(variable_base, from_attributes=True, update={"user_id": user_id})
@@ -220,7 +219,7 @@ class KubernetesSecretService(VariableService, Service):
         variable_base = VariableCreate(
             name=name,
             type=type_,
-            value=auth_utils.encrypt_api_key(value, settings_service=self.settings_service),
+            value=auth_utils.encrypt_api_key(value),
             default_fields=[],
         )
         return Variable.model_validate(variable_base, from_attributes=True, update={"user_id": user_id})
@@ -240,7 +239,7 @@ class KubernetesSecretService(VariableService, Service):
         variable_base = VariableCreate(
             name=var_name,
             type=type_,
-            value=auth_utils.encrypt_api_key(value, settings_service=self.settings_service),
+            value=auth_utils.encrypt_api_key(value),
             default_fields=[],
         )
         return Variable.model_validate(variable_base, from_attributes=True, update={"user_id": user_id})

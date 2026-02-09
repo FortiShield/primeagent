@@ -9,16 +9,16 @@ from json.decoder import JSONDecodeError
 from pathlib import Path
 from typing import Any
 
-import astra_assistants.tools as astra_assistants_tools
 import requests
-from astra_assistants import OpenAIWithDefaultKey, patch
-from astra_assistants.tools.tool_interface import ToolInterface
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel
 from requests.exceptions import RequestException
-
 from wfx.base.mcp.util import create_input_schema_from_json_schema
 from wfx.services.cache.utils import CacheMiss
+
+import astra_assistants.tools as astra_assistants_tools
+from astra_assistants import OpenAIWithDefaultKey, patch
+from astra_assistants.tools.tool_interface import ToolInterface
 
 client_lock = threading.Lock()
 client = None

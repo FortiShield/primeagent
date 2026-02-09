@@ -13,15 +13,19 @@ const config = {
   tagline:
     "Primeagent is a low-code app builder for RAG and multi-agent AI applications.",
   favicon: "img/favicon.ico",
-  url: "https://docs-primeagent.khulnasoft.com",
+  url: "https://docs.primeagent.org",
   baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   onBrokenAnchors: "warn",
   organizationName: "khulnasoft-bot",
   projectName: "primeagent",
   trailingSlash: false,
   staticDirectories: ["static"],
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -132,11 +136,6 @@ const config = {
           customCss: [
             require.resolve("@code-hike/mdx/styles.css"),
             require.resolve("./css/custom.css"),
-            require.resolve("./css/docu-notion-styles.css"),
-            require.resolve(
-              "./css/gifplayer.css"
-              //"./node_modules/react-gif-player/dist/gifplayer.css" // this gave a big red compile warning which is seaming unrelated "  Replace Autoprefixer browsers option to Browserslist config..."
-            ),
           ],
         },
       }),
@@ -144,6 +143,10 @@ const config = {
     [
       "redocusaurus",
       {
+        openapi: {
+          path: "openapi",
+          routeBasePath: "/api",
+        },
         specs: [
           {
             id: "api",
@@ -153,7 +156,6 @@ const config = {
         ],
         theme: {
           primaryColor: "#7528FC",
-          // primaryColorDark: "#7528FC", // Force dark mode for Redoc
         },
       },
     ],

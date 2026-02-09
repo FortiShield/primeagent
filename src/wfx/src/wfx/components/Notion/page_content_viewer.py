@@ -1,7 +1,6 @@
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import SecretStrInput, StrInput
@@ -12,7 +11,7 @@ from wfx.schema.data import Data
 class NotionPageContent(LCToolComponent):
     display_name = "Page Content Viewer "
     description = "Retrieve the content of a Notion page as plain text."
-    documentation = "https://docs-primeagent.khulnasoft.com/bundles-notion"
+    documentation = "https://docs.primeagent.org/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

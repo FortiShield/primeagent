@@ -6,8 +6,6 @@ from uuid import UUID
 
 import httpx
 from httpx import HTTPError, HTTPStatusError
-from wfx.log.logger import logger
-
 from primeagent.services.base import Service
 from primeagent.services.store.exceptions import APIKeyError, FilterError, ForbiddenError
 from primeagent.services.store.schema import (
@@ -22,6 +20,7 @@ from primeagent.services.store.utils import (
     process_tags_for_post,
     update_components_with_user_data,
 )
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from wfx.services.settings.service import SettingsService

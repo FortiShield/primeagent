@@ -1,11 +1,11 @@
 from pathlib import Path
 
-import assemblyai as aai
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import BoolInput, DropdownInput, FileInput, MessageTextInput, Output, SecretStrInput
 from wfx.log.logger import logger
 from wfx.schema.data import Data
+
+import assemblyai as aai
 
 
 class AssemblyAITranscriptionJobCreator(Component):

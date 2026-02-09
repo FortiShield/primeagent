@@ -2,10 +2,9 @@ from collections import defaultdict
 from collections.abc import Callable
 from threading import Lock
 
+from primeagent.services.base import Service
 from wfx.log.logger import logger
 from wfx.services.settings.service import SettingsService
-
-from primeagent.services.base import Service
 
 
 class StateService(Service):

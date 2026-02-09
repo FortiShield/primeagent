@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
-from typing_extensions import override
-
 from primeagent.services.factory import ServiceFactory
 from primeagent.services.shared_component_cache.service import SharedComponentCacheService
+from typing_extensions import override
 
 if TYPE_CHECKING:
     from wfx.services.settings.service import SettingsService

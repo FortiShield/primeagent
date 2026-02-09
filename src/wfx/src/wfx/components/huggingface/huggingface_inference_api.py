@@ -6,7 +6,6 @@ from langchain_community.embeddings.huggingface import HuggingFaceInferenceAPIEm
 # Next update: use langchain_huggingface
 from pydantic import SecretStr
 from tenacity import retry, stop_after_attempt, wait_fixed
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.io import MessageTextInput, Output, SecretStrInput

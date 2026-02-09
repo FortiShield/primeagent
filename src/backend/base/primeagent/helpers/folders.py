@@ -1,6 +1,5 @@
-from sqlalchemy import select
-
 from primeagent.services.database.models.folder.model import Folder
+from sqlalchemy import select
 
 
 async def generate_unique_folder_name(folder_name, user_id, session):

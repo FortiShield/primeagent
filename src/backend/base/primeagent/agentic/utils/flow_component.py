@@ -3,12 +3,11 @@
 from typing import Any
 from uuid import UUID
 
-from wfx.graph.graph.base import Graph
-from wfx.log.logger import logger
-
 from primeagent.helpers.flow import get_flow_by_id_or_endpoint_name
 from primeagent.services.database.models.flow.model import Flow
 from primeagent.services.deps import session_scope
+from wfx.graph.graph.base import Graph
+from wfx.log.logger import logger
 
 
 async def get_component_details(

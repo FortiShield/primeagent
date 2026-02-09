@@ -7,7 +7,6 @@ import orjson
 import pandas as pd
 from fastapi import UploadFile
 from fastapi.encoders import jsonable_encoder
-
 from wfx.custom import Component
 from wfx.inputs import SortableListInput
 from wfx.io import BoolInput, DropdownInput, HandleInput, SecretStrInput, StrInput
@@ -28,7 +27,7 @@ def _get_storage_location_options():
 class SaveToFileComponent(Component):
     display_name = "Write File"
     description = "Save data to local file, AWS S3, or Google Drive in the selected format."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/write-file"
+    documentation: str = "https://docs.primeagent.org/write-file"
     icon = "file-text"
     name = "SaveToFile"
 
@@ -53,7 +52,6 @@ class SaveToFileComponent(Component):
     GDRIVE_FORMAT_CHOICES = ["txt", "json", "csv", "xlsx", "slides", "docs", "jpg", "mp3"]
 
     inputs = [
-        # Storage location selection
         SortableListInput(
             name="storage_location",
             display_name="Storage Location",
@@ -62,6 +60,8 @@ class SaveToFileComponent(Component):
             options=_get_storage_location_options(),
             real_time_refresh=True,
             limit=1,
+            value=[{"name": "Local", "icon": "hard-drive"}],
+            advanced=True,
         ),
         # Common inputs
         HandleInput(
@@ -566,7 +566,6 @@ class SaveToFileComponent(Component):
         import os
 
         import boto3
-
         from wfx.base.data.cloud_storage_utils import create_s3_client, validate_aws_credentials
 
         # Get AWS credentials from component inputs or fall back to environment variables
@@ -660,7 +659,6 @@ class SaveToFileComponent(Component):
         import tempfile
 
         from googleapiclient.http import MediaFileUpload
-
         from wfx.base.data.cloud_storage_utils import create_google_drive_service
 
         # Validate Google Drive credentials

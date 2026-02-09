@@ -9,7 +9,6 @@ from typing import Any
 
 from opensearchpy import OpenSearch, helpers
 from opensearchpy.exceptions import OpenSearchException, RequestError
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.base.vectorstores.vector_store_connection_decorator import vector_store_connection
 from wfx.io import BoolInput, DropdownInput, HandleInput, IntInput, MultilineInput, SecretStrInput, StrInput, TableInput

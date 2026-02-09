@@ -1,7 +1,6 @@
 from abc import abstractmethod
 
 from langchain.memory import ConversationBufferMemory
-
 from wfx.custom.custom_component.component import Component
 from wfx.field_typing import BaseChatMemory
 from wfx.field_typing.constants import Memory

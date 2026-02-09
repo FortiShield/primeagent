@@ -3,7 +3,6 @@ from typing import Any, Literal
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, ConfigDict, Field, model_serializer
 from typing_extensions import TypedDict
-
 from wfx.schema.encoders import CUSTOM_ENCODERS
 
 

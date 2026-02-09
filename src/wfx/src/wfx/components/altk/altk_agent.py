@@ -43,7 +43,7 @@ class ALTKAgentComponent(ALTKBaseAgentComponent):
 
     display_name: str = "ALTK Agent"
     description: str = "Advanced agent with both pre-tool validation and post-tool processing capabilities."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-altk"
+    documentation: str = "https://docs.primeagent.org/bundles-altk"
     icon = "zap"
     beta = True
     name = "ALTK Agent"
@@ -169,7 +169,6 @@ class ALTKAgentComponent(ALTKBaseAgentComponent):
                 # If content is in list format, normalize it to string
                 if hasattr(original_msg, "content") and isinstance(original_msg.content, list):
                     from langchain_core.messages import AIMessage, HumanMessage
-
                     from wfx.base.agents.altk_base_agent import (
                         normalize_message_content,
                     )

@@ -17,12 +17,11 @@ from opentelemetry.sdk.trace.export import SpanProcessor
 from opentelemetry.semconv.trace import SpanAttributes as OTELSpanAttributes
 from opentelemetry.trace import Span, Status, StatusCode, use_span
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
+from primeagent.schema.message import Message
+from primeagent.services.tracing.base import BaseTracer
 from typing_extensions import override
 from wfx.log.logger import logger
 from wfx.schema.data import Data
-
-from primeagent.schema.message import Message
-from primeagent.services.tracing.base import BaseTracer
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -31,9 +30,8 @@ if TYPE_CHECKING:
     from langchain.callbacks.base import BaseCallbackHandler
     from opentelemetry.propagators.textmap import CarrierT
     from opentelemetry.util.types import AttributeValue
-    from wfx.graph.vertex.base import Vertex
-
     from primeagent.services.tracing.schema import Log
+    from wfx.graph.vertex.base import Vertex
 
 
 class CollectingSpanProcessor(SpanProcessor):

@@ -1,7 +1,6 @@
 from typing import Any
 
 from langchain_community.utilities.searchapi import SearchApiAPIWrapper
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DictInput, DropdownInput, IntInput, MultilineInput, SecretStrInput
 from wfx.io import Output

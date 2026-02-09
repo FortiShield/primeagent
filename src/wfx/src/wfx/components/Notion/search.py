@@ -3,7 +3,6 @@ from typing import Any
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import DropdownInput, SecretStrInput, StrInput
@@ -13,7 +12,7 @@ from wfx.schema.data import Data
 class NotionSearch(LCToolComponent):
     display_name: str = "Search "
     description: str = "Searches all pages and databases that have been shared with an integration."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-notion"
+    documentation: str = "https://docs.primeagent.org/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

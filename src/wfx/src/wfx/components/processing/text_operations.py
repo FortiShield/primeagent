@@ -3,7 +3,6 @@ import re
 from typing import Any
 
 import pandas as pd
-
 from wfx.custom import Component
 from wfx.field_typing import RangeSpec
 from wfx.inputs import (

@@ -2,7 +2,6 @@
 
 from langchain_core.tools import StructuredTool
 from mcp import types
-
 from wfx.base.mcp.util import (
     MCPStdioClient,
     create_input_schema_from_json_schema,
@@ -22,7 +21,7 @@ class MCPStdio(Component):
     description = (
         "Connects to an MCP server over stdio and exposes it's tools as primeagent tools to be used by an Agent."
     )
-    documentation: str = "https://docs-primeagent.khulnasoft.com/components-custom-components"
+    documentation: str = "https://docs.primeagent.org/components-custom-components"
     icon = "code"
     name = "MCPStdio"
     legacy = True

@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 
 from pydantic import BaseModel, Field, create_model
-
 from wfx.log.logger import logger
 from wfx.schema.schema import INPUT_FIELD_NAME
 

@@ -6,7 +6,6 @@ import ast
 from typing import TYPE_CHECKING, Any
 
 import pandas as pd
-
 from wfx.log.logger import logger
 from wfx.schema.data import Data
 from wfx.services.deps import get_storage_service

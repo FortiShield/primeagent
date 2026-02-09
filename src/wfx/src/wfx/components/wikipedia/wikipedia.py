@@ -1,5 +1,4 @@
 from langchain_community.utilities.wikipedia import WikipediaAPIWrapper
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import BoolInput, IntInput, MessageTextInput, MultilineInput
 from wfx.io import Output

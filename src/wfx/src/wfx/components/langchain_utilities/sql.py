@@ -2,7 +2,6 @@ from langchain.agents import AgentExecutor
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_community.agent_toolkits.sql.base import create_sql_agent
 from langchain_community.utilities import SQLDatabase
-
 from wfx.base.agents.agent import LCAgentComponent
 from wfx.inputs.inputs import HandleInput, MessageTextInput
 from wfx.io import Output

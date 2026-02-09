@@ -1,9 +1,8 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
-
 from primeagent.services.auth.utils import get_current_active_user
+from pydantic import BaseModel
 
 router = APIRouter(prefix="/starter-projects", tags=["Flows"])
 

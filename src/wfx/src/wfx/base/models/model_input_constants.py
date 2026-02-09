@@ -1,5 +1,4 @@
 from typing_extensions import TypedDict
-
 from wfx.base.models.model import LCModelComponent
 from wfx.inputs.inputs import InputTypes, SecretStrInput
 from wfx.template.field.base import Input

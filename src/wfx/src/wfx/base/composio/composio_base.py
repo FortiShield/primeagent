@@ -4,10 +4,8 @@ import re
 from contextlib import suppress
 from typing import Any
 
-from composio import Composio
 from composio_langchain import LangchainProvider
 from langchain_core.tools import Tool
-
 from wfx.base.mcp.util import create_input_schema_from_json_schema
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import (
@@ -29,6 +27,8 @@ from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message
 from wfx.utils.validate_cloud import raise_error_if_astra_cloud_disable_component
+
+from composio import Composio
 
 disable_component_in_astra_cloud_msg = (
     "Composio tools are not supported in Astra cloud environment. "

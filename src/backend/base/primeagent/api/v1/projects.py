@@ -12,12 +12,6 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import StreamingResponse
 from fastapi_pagination import Params
 from fastapi_pagination.ext.sqlmodel import apaginate
-from sqlalchemy import or_, update
-from sqlalchemy.orm import selectinload
-from sqlmodel import select
-from wfx.log.logger import logger
-from wfx.services.mcp_composer.service import MCPComposerService
-
 from primeagent.api.utils import CurrentActiveUser, DbSession, cascade_delete_flow, custom_params, remove_api_keys
 from primeagent.api.utils.mcp.config_utils import validate_mcp_server_for_project
 from primeagent.api.v1.auth_helpers import handle_auth_settings_update
@@ -47,6 +41,11 @@ from primeagent.services.database.models.folder.model import (
 from primeagent.services.database.models.folder.pagination_model import FolderWithPaginatedFlows
 from primeagent.services.deps import get_service, get_settings_service, get_storage_service
 from primeagent.services.schema import ServiceType
+from sqlalchemy import or_, update
+from sqlalchemy.orm import selectinload
+from sqlmodel import select
+from wfx.log.logger import logger
+from wfx.services.mcp_composer.service import MCPComposerService
 
 router = APIRouter(prefix="/projects", tags=["Projects"])
 

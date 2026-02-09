@@ -1,6 +1,5 @@
 from langchain_community.document_loaders import ConfluenceLoader
 from langchain_community.document_loaders.confluence import ContentFormat
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import BoolInput, DropdownInput, IntInput, Output, SecretStrInput, StrInput
 from wfx.schema.data import Data

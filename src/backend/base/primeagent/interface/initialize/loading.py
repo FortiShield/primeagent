@@ -6,20 +6,18 @@ import warnings
 from typing import TYPE_CHECKING, Any
 
 import orjson
+from primeagent.schema.artifact import get_artifact_type, post_process_raw
+from primeagent.schema.data import Data
+from primeagent.services.deps import get_tracing_service, session_scope
 from pydantic import PydanticDeprecatedSince20
 from wfx.custom.eval import eval_custom_component_code
 from wfx.log.logger import logger
 
-from primeagent.schema.artifact import get_artifact_type, post_process_raw
-from primeagent.schema.data import Data
-from primeagent.services.deps import get_tracing_service, session_scope
-
 if TYPE_CHECKING:
+    from primeagent.events.event_manager import EventManager
     from wfx.custom.custom_component.component import Component
     from wfx.custom.custom_component.custom_component import CustomComponent
     from wfx.graph.vertex.base import Vertex
-
-    from primeagent.events.event_manager import EventManager
 
 
 def instantiate_class(

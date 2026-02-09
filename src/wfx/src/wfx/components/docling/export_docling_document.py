@@ -1,7 +1,6 @@
 from typing import Any
 
 from docling_core.types.doc import ImageRefMode
-
 from wfx.base.data.docling_utils import extract_docling_documents
 from wfx.custom import Component
 from wfx.io import DropdownInput, HandleInput, MessageTextInput, Output, StrInput

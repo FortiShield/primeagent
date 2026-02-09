@@ -3,7 +3,6 @@ from typing import Any
 import httpx
 from langchain_core.tools import StructuredTool, ToolException
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import MultilineInput

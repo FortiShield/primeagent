@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 import pandas as pd
 from langchain_core.tools import BaseTool, ToolException
 from langchain_core.tools.structured import StructuredTool
-
 from wfx.base.tools.constants import TOOL_OUTPUT_NAME
 from wfx.schema.data import Data
 from wfx.schema.message import Message
@@ -17,7 +16,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from langchain_core.callbacks import Callbacks
-
     from wfx.custom.custom_component.component import Component
     from wfx.events.event_manager import EventManager
     from wfx.inputs.inputs import InputTypes

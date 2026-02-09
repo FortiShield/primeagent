@@ -2,13 +2,13 @@ import json
 import re
 from pathlib import Path
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import FileInput, MultilineInput, Output
 from wfx.schema.data import Data
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 
 
 class GoogleOAuthToken(Component):

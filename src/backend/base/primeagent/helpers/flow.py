@@ -4,14 +4,13 @@ from typing import TYPE_CHECKING, Any, cast
 from uuid import UUID
 
 from fastapi import HTTPException
+from primeagent.schema.schema import INPUT_FIELD_NAME
+from primeagent.services.database.models.flow.model import Flow, FlowRead
+from primeagent.services.deps import get_settings_service, session_scope
 from pydantic.v1 import BaseModel, Field, create_model
 from sqlalchemy.orm import aliased
 from sqlmodel import asc, desc, select
 from wfx.log.logger import logger
-
-from primeagent.schema.schema import INPUT_FIELD_NAME
-from primeagent.services.database.models.flow.model import Flow, FlowRead
-from primeagent.services.deps import get_settings_service, session_scope
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -166,9 +165,8 @@ async def get_flow_by_id_or_name(
 async def load_flow(
     user_id: str, flow_id: str | None = None, flow_name: str | None = None, tweaks: dict | None = None
 ) -> Graph:
-    from wfx.graph.graph.base import Graph
-
     from primeagent.processing.process import process_tweaks
+    from wfx.graph.graph.base import Graph
 
     if not flow_id and not flow_name:
         msg = "Flow ID or Flow Name is required"
@@ -396,7 +394,7 @@ def get_arg_names(inputs: list[Vertex]) -> list[dict[str, str]]:
     ]
 
 
-async def get_flow_by_id_or_endpoint_name(flow_id_or_name: str, user_id: str | UUID | None = None) -> FlowRead | None:
+async def get_flow_by_id_or_endpoint_name(flow_id_or_name: str, user_id: str | UUID | None = None) -> FlowRead:
     async with session_scope() as session:
         endpoint_name = None
         try:

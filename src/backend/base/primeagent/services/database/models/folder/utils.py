@@ -1,10 +1,9 @@
 from uuid import UUID
 
-from sqlmodel import and_, select, update
-from sqlmodel.ext.asyncio.session import AsyncSession
-
 from primeagent.initial_setup.setup import get_or_create_default_folder
 from primeagent.services.database.models.flow.model import Flow
+from sqlmodel import and_, select, update
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from .constants import DEFAULT_FOLDER_DESCRIPTION, DEFAULT_FOLDER_NAME
 from .model import Folder

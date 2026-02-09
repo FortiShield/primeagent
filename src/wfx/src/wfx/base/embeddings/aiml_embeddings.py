@@ -3,7 +3,6 @@ import json
 
 import httpx
 from pydantic import BaseModel, SecretStr
-
 from wfx.field_typing import Embeddings
 from wfx.log.logger import logger
 

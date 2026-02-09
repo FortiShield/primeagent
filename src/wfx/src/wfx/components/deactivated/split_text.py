@@ -1,5 +1,4 @@
 from langchain_text_splitters import CharacterTextSplitter
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import HandleInput, IntInput, MessageTextInput, Output
 from wfx.schema.data import Data

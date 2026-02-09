@@ -4,10 +4,9 @@ import time
 from typing import Generic
 
 from diskcache import Cache
+from primeagent.services.cache.base import AsyncBaseCacheService, AsyncLockType
 from wfx.log.logger import logger
 from wfx.services.cache.utils import CACHE_MISS
-
-from primeagent.services.cache.base import AsyncBaseCacheService, AsyncLockType
 
 
 class AsyncDiskCache(AsyncBaseCacheService, Generic[AsyncLockType]):

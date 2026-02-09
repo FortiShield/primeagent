@@ -1,7 +1,6 @@
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import SecretStrInput
@@ -11,7 +10,7 @@ from wfx.schema.data import Data
 class NotionUserList(LCToolComponent):
     display_name = "List Users "
     description = "Retrieve users from Notion."
-    documentation = "https://docs-primeagent.khulnasoft.com/bundles-notion"
+    documentation = "https://docs.primeagent.org/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

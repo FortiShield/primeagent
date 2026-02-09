@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any
 
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
-
 from wfx.custom.custom_component.component_with_cache import ComponentWithCache
 from wfx.io import BoolInput, MessageTextInput, MultilineInput, Output
 from wfx.schema.dataframe import DataFrame
@@ -18,7 +17,7 @@ class SQLComponent(ComponentWithCache):
 
     display_name = "SQL Database"
     description = "Executes SQL queries on SQLAlchemy-compatible databases."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/sql-database"
+    documentation: str = "https://docs.primeagent.org/sql-database"
     icon = "database"
     name = "SQLComponent"
     metadata = {"keywords": ["sql", "database", "query", "db", "fetch"]}

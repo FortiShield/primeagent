@@ -1,5 +1,4 @@
 from langchain_core.tools import Tool
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.inputs.inputs import IntInput, MultilineInput, SecretStrInput
 from wfx.schema.data import Data

@@ -1,5 +1,4 @@
 from langchain.agents import AgentExecutor
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import BoolInput, HandleInput, MessageTextInput
 from wfx.schema.message import Message

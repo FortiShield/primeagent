@@ -1,9 +1,9 @@
-import assemblyai as aai
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import DataInput, DropdownInput, FloatInput, IntInput, MultilineInput, Output, SecretStrInput
 from wfx.log.logger import logger
 from wfx.schema.data import Data
+
+import assemblyai as aai
 
 
 class AssemblyAILeMUR(Component):

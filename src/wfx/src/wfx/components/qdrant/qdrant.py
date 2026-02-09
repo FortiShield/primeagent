@@ -1,6 +1,5 @@
 from langchain_community.vectorstores import Qdrant
 from langchain_core.embeddings import Embeddings
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
 from wfx.io import (

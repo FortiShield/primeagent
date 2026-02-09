@@ -8,8 +8,6 @@ from mcp import types
 from mcp.server import NotificationOptions, Server
 from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
-from wfx.log.logger import logger
-
 from primeagent.api.utils import CurrentActiveMCPUser, raise_error_if_astra_cloud_env
 from primeagent.api.v1.mcp_utils import (
     current_user_ctx,
@@ -19,6 +17,7 @@ from primeagent.api.v1.mcp_utils import (
     handle_mcp_errors,
     handle_read_resource,
 )
+from wfx.log.logger import logger
 
 router = APIRouter(prefix="/mcp", tags=["mcp"])
 
@@ -160,7 +159,7 @@ async def handle_messages(request: Request):
 # Streamable HTTP Transport
 ################################################################################
 class StreamableHTTP:
-    def __init__(self):
+    def __init__(self) -> None:
         self.session_manager: StreamableHTTPSessionManager | None = None
         self._started = False
         self._start_stop_lock = asyncio.Lock()

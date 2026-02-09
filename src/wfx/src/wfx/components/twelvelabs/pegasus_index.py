@@ -4,12 +4,12 @@ from pathlib import Path
 from typing import Any
 
 from tenacity import retry, stop_after_attempt, wait_exponential
-from twelvelabs import TwelveLabs
-
 from wfx.custom import Component
 from wfx.inputs import DataInput, DropdownInput, SecretStrInput, StrInput
 from wfx.io import Output
 from wfx.schema import Data
+
+from twelvelabs import TwelveLabs
 
 
 class TwelveLabsError(Exception):

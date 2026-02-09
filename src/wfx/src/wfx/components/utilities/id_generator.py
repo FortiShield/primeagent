@@ -2,7 +2,6 @@ import uuid
 from typing import Any
 
 from typing_extensions import override
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import MessageTextInput, Output
 from wfx.schema.dotdict import dotdict

@@ -2,13 +2,13 @@ import json
 import re
 from pathlib import Path
 
-from google.auth.exceptions import RefreshError
-from google.cloud import bigquery
-from google.oauth2.service_account import Credentials
-
 from wfx.custom import Component
 from wfx.io import BoolInput, FileInput, MessageTextInput, Output
 from wfx.schema.dataframe import DataFrame
+
+from google.auth.exceptions import RefreshError
+from google.cloud import bigquery
+from google.oauth2.service_account import Credentials
 
 
 class BigQueryExecutorComponent(Component):

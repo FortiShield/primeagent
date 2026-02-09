@@ -1,7 +1,6 @@
 from typing import Any
 
 from langchain_text_splitters import Language, RecursiveCharacterTextSplitter, TextSplitter
-
 from wfx.base.textsplitters.model import LCTextSplitterComponent
 from wfx.inputs.inputs import DataInput, DropdownInput, IntInput
 
@@ -9,7 +8,7 @@ from wfx.inputs.inputs import DataInput, DropdownInput, IntInput
 class LanguageRecursiveTextSplitterComponent(LCTextSplitterComponent):
     display_name: str = "Language Recursive Text Splitter"
     description: str = "Split text into chunks of a specified length based on language."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-langchain"
+    documentation: str = "https://docs.primeagent.org/bundles-langchain"
     name = "LanguageRecursiveTextSplitter"
     icon = "LangChain"
 

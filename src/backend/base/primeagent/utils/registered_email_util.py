@@ -1,7 +1,6 @@
-from wfx.log.logger import logger
-
 from primeagent.api.v2.registration import load_registration
 from primeagent.services.telemetry.schema import EmailPayload
+from wfx.log.logger import logger
 
 
 class _RegisteredEmailCache:

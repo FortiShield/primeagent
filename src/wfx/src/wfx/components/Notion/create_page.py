@@ -4,7 +4,6 @@ from typing import Any
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import MultilineInput, SecretStrInput, StrInput
@@ -14,7 +13,7 @@ from wfx.schema.data import Data
 class NotionPageCreator(LCToolComponent):
     display_name: str = "Create Page "
     description: str = "A component for creating Notion pages."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-notion"
+    documentation: str = "https://docs.primeagent.org/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

@@ -1,9 +1,5 @@
 from uuid import UUID
 
-from sqlmodel import col, delete, select
-from sqlmodel.ext.asyncio.session import AsyncSession
-from wfx.log.logger import logger
-
 from primeagent.services.database.models.transactions.model import (
     TransactionBase,
     TransactionLogsResponse,
@@ -11,6 +7,9 @@ from primeagent.services.database.models.transactions.model import (
     TransactionTable,
 )
 from primeagent.services.deps import get_settings_service
+from sqlmodel import col, delete, select
+from sqlmodel.ext.asyncio.session import AsyncSession
+from wfx.log.logger import logger
 
 
 async def get_transactions_by_flow_id(

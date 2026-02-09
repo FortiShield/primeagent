@@ -82,7 +82,7 @@
         "type": "button_preview",
         "trigger": {
           "action": "navigate",
-          "payload": { "path": "https://docs-primeagent.khulnasoft.com" }
+          "payload": { "path": "https://docs.primeagent.org" }
         },
         "ui": {
           "icon": "book-open",

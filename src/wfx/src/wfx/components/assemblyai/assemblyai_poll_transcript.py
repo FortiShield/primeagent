@@ -1,10 +1,10 @@
-import assemblyai as aai
-
 from wfx.custom.custom_component.component import Component
 from wfx.field_typing.range_spec import RangeSpec
 from wfx.io import DataInput, FloatInput, Output, SecretStrInput
 from wfx.log.logger import logger
 from wfx.schema.data import Data
+
+import assemblyai as aai
 
 
 class AssemblyAITranscriptionJobPoller(Component):

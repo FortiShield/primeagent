@@ -1,5 +1,4 @@
 from langchain.chains import LLMMathChain
-
 from wfx.base.chains.model import LCChainComponent
 from wfx.inputs.inputs import HandleInput, MultilineInput
 from wfx.schema import Message

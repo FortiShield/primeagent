@@ -5,7 +5,6 @@ from typing import Any
 
 from astrapy import DataAPIClient, Database
 from langchain_astradb.utils.astradb import _AstraDBCollectionEnvironment
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import (
     BoolInput,

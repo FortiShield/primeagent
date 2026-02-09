@@ -4,9 +4,6 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlmodel import apaginate
-from sqlalchemy import delete
-from sqlmodel import col, select
-
 from primeagent.api.utils import DbSession, custom_params
 from primeagent.schema.message import MessageResponse
 from primeagent.services.auth.utils import get_current_active_user
@@ -20,6 +17,8 @@ from primeagent.services.database.models.vertex_builds.crud import (
     get_vertex_builds_by_flow_id,
 )
 from primeagent.services.database.models.vertex_builds.model import VertexBuildMapModel
+from sqlalchemy import delete
+from sqlmodel import col, select
 
 router = APIRouter(prefix="/monitor", tags=["Monitor"])
 

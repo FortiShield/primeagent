@@ -1,5 +1,4 @@
 from typing_extensions import override
-
 from wfx.services.factory import ServiceFactory
 from wfx.services.settings.service import SettingsService
 

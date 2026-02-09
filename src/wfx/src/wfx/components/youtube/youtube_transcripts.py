@@ -1,14 +1,13 @@
 import re
 
 import pandas as pd
-from youtube_transcript_api import NoTranscriptFound, TranscriptsDisabled, YouTubeTranscriptApi
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DropdownInput, IntInput, MultilineInput
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message
 from wfx.template.field.base import Output
+from youtube_transcript_api import NoTranscriptFound, TranscriptsDisabled, YouTubeTranscriptApi
 
 
 class YouTubeTranscriptsComponent(Component):

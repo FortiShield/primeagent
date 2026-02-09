@@ -6,8 +6,6 @@ This module exposes template search and creation functions as MCP tools using Fa
 from typing import Any
 from uuid import UUID
 
-from mcp.server.fastmcp import FastMCP
-
 from primeagent.agentic.mcp.support import replace_none_and_null_with_empty_str
 from primeagent.agentic.utils.component_search import (
     get_all_component_types,
@@ -38,6 +36,8 @@ from primeagent.agentic.utils.template_search import (
     list_templates,
 )
 from primeagent.services.deps import get_settings_service, session_scope
+
+from mcp.server.fastmcp import FastMCP
 
 # Initialize FastMCP server
 mcp = FastMCP("primeagent-agentic")

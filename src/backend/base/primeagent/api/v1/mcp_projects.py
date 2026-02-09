@@ -21,16 +21,6 @@ from mcp import types
 from mcp.server import NotificationOptions, Server
 from mcp.server.sse import SseServerTransport
 from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
-from sqlalchemy.orm import selectinload
-from sqlmodel import select
-from sqlmodel.ext.asyncio.session import AsyncSession
-from wfx.base.mcp.constants import MAX_MCP_SERVER_NAME_LENGTH
-from wfx.base.mcp.util import sanitize_mcp_name
-from wfx.log import logger
-from wfx.services.deps import get_settings_service, session_scope
-from wfx.services.mcp_composer.service import MCPComposerError, MCPComposerService
-from wfx.services.schema import ServiceType
-
 from primeagent.api.utils import (
     CurrentActiveMCPUser,
     extract_global_variables_from_headers,
@@ -62,14 +52,23 @@ from primeagent.api.v1.schemas import (
     MCPProjectUpdateRequest,
     MCPSettings,
 )
+from primeagent.services.auth.constants import AUTO_LOGIN_WARNING
 from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
-from primeagent.services.auth.utils import AUTO_LOGIN_WARNING
 from primeagent.services.database.models import Flow, Folder
 from primeagent.services.database.models.api_key.crud import check_key, create_api_key
 from primeagent.services.database.models.api_key.model import ApiKey, ApiKeyCreate
 from primeagent.services.database.models.user.crud import get_user_by_username
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import get_service
+from sqlalchemy.orm import selectinload
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
+from wfx.base.mcp.constants import MAX_MCP_SERVER_NAME_LENGTH
+from wfx.base.mcp.util import sanitize_mcp_name
+from wfx.log import logger
+from wfx.services.deps import get_settings_service, session_scope
+from wfx.services.mcp_composer.service import MCPComposerError, MCPComposerService
+from wfx.services.schema import ServiceType
 
 # Constants
 ALL_INTERFACES_HOST = "0.0.0.0"  # noqa: S104
@@ -135,7 +134,7 @@ async def verify_project_auth(
     # For MCP endpoints, always fall back to username lookup when no API key is provided
     result = await get_user_by_username(db, settings_service.auth_settings.SUPERUSER)
     if result:
-        await logger.awarning(AUTO_LOGIN_WARNING)
+        logger.warning(AUTO_LOGIN_WARNING)
         return result
     raise HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
@@ -1297,7 +1296,7 @@ class ProjectTaskGroup:
     otherwise Asyncio will raise a RuntimeError.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._started = False
         self._start_stop_lock = anyio.Lock()
         self._task_group: TaskGroup | None = None

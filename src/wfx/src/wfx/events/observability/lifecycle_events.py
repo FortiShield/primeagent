@@ -3,7 +3,6 @@ from collections.abc import Awaitable, Callable
 from typing import Any
 
 from ag_ui.encoder.encoder import EventEncoder
-
 from wfx.log.logger import logger
 
 AsyncMethod = Callable[..., Awaitable[Any]]

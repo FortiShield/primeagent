@@ -1,10 +1,9 @@
 from typing import Any, Literal
 
 from fastapi.encoders import jsonable_encoder
+from primeagent.schema.encoders import CUSTOM_ENCODERS
 from pydantic import BaseModel, ConfigDict, Field, model_serializer
 from typing_extensions import TypedDict
-
-from primeagent.schema.encoders import CUSTOM_ENCODERS
 
 
 class HeaderDict(TypedDict, total=False):
