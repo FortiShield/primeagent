@@ -8,21 +8,28 @@
   --ifm-navbar-padding-vertical: 0;
   --ifm-global-radius: 16px;
   --ifm-navbar-item-padding-vertical: 0;
-  --ifm-font-family-base: Inter, -apple-system, BlinkMacSystemFont, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI emoji";
-  --ifm-font-family-monospace: "SFMono-Regular", "Roboto Mono", Consolas,
-    "Liberation Mono", Menlo, Courier, monospace;
+  --ifm-font-family-base:
+    Inter, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI emoji';
+  --ifm-font-family-monospace:
+    'SFMono-Regular', 'Roboto Mono', Consolas, 'Liberation Mono', Menlo,
+    Courier, monospace;
 }
 
 /* Light theme - Pure white background */
-html[data-theme="light"] {
-  --ifm-color-primary: hsla(333, 71%, 51%, 1); /* Slightly darker pink for light theme */
+html[data-theme='light'] {
+  --ifm-color-primary: hsla(
+    333,
+    71%,
+    51%,
+    1
+  ); /* Slightly darker pink for light theme */
   --ifm-background-color: var(--ifm-color-white);
   --ifm-background-surface-color: var(--ifm-color-white);
 }
 
 /* Dark theme - Pure black background */
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   --ifm-color-primary: hsla(329, 86%, 70%, 1); /* Lighter pink for dark theme */
   --ifm-background-color: var(--ifm-color-black);
   --ifm-background-surface-color: var(--ifm-color-black);
@@ -53,7 +60,7 @@ html[data-theme="dark"] {
   transform: skewY(6deg);
 }
 
-[class^="announcementBar"] {
+[class^='announcementBar'] {
   z-index: 10;
 }
 
@@ -160,19 +167,19 @@ body {
 }
 
 .header-github-link:before {
-  content: "";
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/gitLight.svg") no-repeat;
+  background: url('/logos/gitLight.svg') no-repeat;
 }
 
-[data-theme="dark"] .header-github-link:before {
-  content: "";
+[data-theme='dark'] .header-github-link:before {
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/gitDark.svg") no-repeat;
+  background: url('/logos/gitDark.svg') no-repeat;
 }
 
 /* Twitter */
@@ -181,20 +188,20 @@ body {
 }
 
 .header-twitter-link::before {
-  content: "";
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/xLight.svg");
+  background: url('/logos/xLight.svg');
   background-size: contain;
 }
 
-[data-theme="dark"] .header-twitter-link::before {
-  content: "";
+[data-theme='dark'] .header-twitter-link::before {
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/xDark.svg");
+  background: url('/logos/xDark.svg');
   background-size: contain;
 }
 
@@ -207,21 +214,21 @@ body {
   opacity: 0.6;
 }
 
-[data-theme="dark"] .header-discord-link::before {
-  content: "";
+[data-theme='dark'] .header-discord-link::before {
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/discordDark.svg");
+  background: url('/logos/discordDark.svg');
   background-size: contain;
 }
 
 .header-discord-link::before {
-  content: "";
+  content: '';
   width: 24px;
   height: 24px;
   display: flex;
-  background: url("/logos/discordLight.svg");
+  background: url('/logos/discordLight.svg');
   background-size: contain;
 }
 
@@ -329,7 +336,7 @@ body {
   border-top: 1px solid var(--ifm-color-emphasis-200);
 }
 
-[data-theme="light"] .footer {
+[data-theme='light'] .footer {
   border-top: 1px solid var(--ifm-color-emphasis-300);
 }
 
@@ -397,11 +404,11 @@ body {
   bottom: 0;
 }
 
-[data-theme="dark"] .sidebar-ad {
+[data-theme='dark'] .sidebar-ad {
   background-color: var(--ifm-background-color);
 }
 
-[data-theme="light"] .sidebar-ad {
+[data-theme='light'] .sidebar-ad {
   background-color: var(--ifm-color-white);
 }
 
@@ -422,7 +429,7 @@ body {
 
 .sidebar-ad-text {
   font-size: 0.875rem;
-  font-family: "Sora", serif;
+  font-family: 'Sora', serif;
 }
 
 .sidebar-ad-text-gradient {
@@ -458,7 +465,7 @@ body {
   outline-offset: 2px;
 }
 
-.markdown details [class^="collapsibleContent"] {
+.markdown details [class^='collapsibleContent'] {
   border-top: none !important;
   padding: 0;
 }

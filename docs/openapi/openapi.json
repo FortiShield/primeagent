@@ -7,9 +7,7 @@
   "paths": {
     "/api/v1/build/{flow_id}/vertices": {
       "post": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Retrieve Vertices Order",
         "description": "Retrieve the vertices order for a given flow.<br><br>Args:<br>    flow_id (str): The ID of the flow.<br>    background_tasks (BackgroundTasks): The background tasks.<br>    data (Optional[FlowDataRequest], optional): The flow data. Defaults to None.<br>    stop_component_id (str, optional): The ID of the stop component. Defaults to None.<br>    start_component_id (str, optional): The ID of the start component. Defaults to None.<br>    session (AsyncSession, optional): The session dependency.<br><br>Returns:<br>    VerticesOrderResponse: The response containing the ordered vertex IDs and the run ID.<br><br>Raises:<br>    HTTPException: If there is an error checking the build status.",
         "operationId": "retrieve_vertices_order_api_v1_build__flow_id__vertices_post",
@@ -112,9 +110,7 @@
     },
     "/api/v1/build/{flow_id}/flow": {
       "post": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Build Flow",
         "description": "Build and process a flow, returning a job ID for event polling.<br><br>This endpoint requires authentication through the CurrentActiveUser dependency.<br>For public flows that don't require authentication, use the /build_public_tmp/flow_id/flow endpoint.<br><br>Args:<br>    flow_id: UUID of the flow to build<br>    background_tasks: Background tasks manager<br>    inputs: Optional input values for the flow<br>    data: Optional flow data<br>    files: Optional files to include<br>    stop_component_id: Optional ID of component to stop at<br>    start_component_id: Optional ID of component to start from<br>    log_builds: Whether to log the build process<br>    current_user: The authenticated user<br>    queue_service: Queue service for job management<br>    flow_name: Optional name for the flow<br>    event_delivery: Optional event delivery type - default is streaming<br><br>Returns:<br>    Dict with job_id that can be used to poll for build status",
         "operationId": "build_flow_api_v1_build__flow_id__flow_post",
@@ -241,9 +237,7 @@
     },
     "/api/v1/build/{job_id}/events": {
       "get": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Get Build Events",
         "description": "Get events for a specific build job.<br><br>Requires authentication to prevent unauthorized access to build events.",
         "operationId": "get_build_events_api_v1_build__job_id__events_get",
@@ -302,9 +296,7 @@
     },
     "/api/v1/build/{job_id}/cancel": {
       "post": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Cancel Build",
         "description": "Cancel a specific build job.<br><br>Requires authentication to prevent unauthorized build cancellation.",
         "operationId": "cancel_build_api_v1_build__job_id__cancel_post",
@@ -356,9 +348,7 @@
     },
     "/api/v1/build/{flow_id}/vertices/{vertex_id}": {
       "post": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Build Vertex",
         "description": "Build a vertex instead of the entire graph.<br><br>Args:<br>    flow_id (str): The ID of the flow.<br>    vertex_id (str): The ID of the vertex to build.<br>    background_tasks (BackgroundTasks): The background tasks dependency.<br>    inputs (Optional[InputValueRequest], optional): The input values for the vertex. Defaults to None.<br>    files (List[str], optional): The files to use. Defaults to None.<br>    current_user (Any, optional): The current user dependency. Defaults to Depends(get_current_active_user).<br><br>Returns:<br>    VertexBuildResponse: The response containing the built vertex information.<br><br>Raises:<br>    HTTPException: If there is an error building the vertex.",
         "operationId": "build_vertex_api_v1_build__flow_id__vertices__vertex_id__post",
@@ -430,9 +420,7 @@
     },
     "/api/v1/build/{flow_id}/{vertex_id}/stream": {
       "get": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Build Vertex Stream",
         "description": "Build a vertex instead of the entire graph.<br><br>This function is responsible for building a single vertex instead of the entire graph.<br>It takes the `flow_id` and `vertex_id` as required parameters, and an optional `session_id`.<br>It also depends on the `ChatService` and `SessionService` services.<br><br>If `session_id` is not provided, it retrieves the graph from the cache using the `chat_service`.<br>If `session_id` is provided, it loads the session data using the `session_service`.<br><br>Once the graph is obtained, it retrieves the specified vertex using the `vertex_id`.<br>If the vertex does not support streaming, an error is raised.<br>If the vertex has a built result, it sends the result as a chunk.<br>If the vertex is not frozen or not built, it streams the vertex data.<br>If the vertex has a result, it sends the result as a chunk.<br>If none of the above conditions are met, an error is raised.<br><br>If any exception occurs during the process, an error message is sent.<br>Finally, the stream is closed.<br><br>Returns:<br>    A `StreamingResponse` object with the streamed vertex data in text/event-stream format.<br><br>Raises:<br>    HTTPException: If an error occurs while building the vertex.",
         "operationId": "build_vertex_stream_api_v1_build__flow_id___vertex_id__stream_get",
@@ -488,9 +476,7 @@
     },
     "/api/v1/build_public_tmp/{flow_id}/flow": {
       "post": {
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "summary": "Build Public Tmp",
         "description": "Build a public flow without requiring authentication.<br><br>This endpoint is specifically for public flows that don't require authentication.<br>It uses a client_id cookie to create a deterministic flow ID for tracking purposes.<br><br>The endpoint:<br>1. Verifies the requested flow is marked as public in the database<br>2. Creates a deterministic UUID based on client_id and flow_id<br>3. Uses the flow owner's permissions to build the flow<br><br>Requirements:<br>- The flow must be marked as PUBLIC in the database<br>- The request must include a client_id cookie<br><br>Args:<br>    flow_id: UUID of the public flow to build<br>    background_tasks: Background tasks manager<br>    inputs: Optional input values for the flow<br>    data: Optional flow data<br>    files: Optional files to include<br>    stop_component_id: Optional ID of component to stop at<br>    start_component_id: Optional ID of component to start from<br>    log_builds: Whether to log the build process<br>    flow_name: Optional name for the flow<br>    request: FastAPI request object (needed for cookie access)<br>    queue_service: Queue service for job management<br>    event_delivery: Optional event delivery type - default is streaming<br><br>Returns:<br>    Dict with job_id that can be used to poll for build status",
         "operationId": "build_public_tmp_api_v1_build_public_tmp__flow_id__flow_post",
@@ -613,9 +599,7 @@
     },
     "/api/v1/all": {
       "get": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Get All",
         "description": "Retrieve all component types with compression for better performance.<br><br>Returns a compressed response containing all available component types.",
         "operationId": "get_all_api_v1_all_get",
@@ -644,9 +628,7 @@
     },
     "/api/v1/run/{flow_id_or_name}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Simplified Run Flow",
         "description": "Executes a specified flow by ID with support for streaming and telemetry (API key auth).<br><br>This endpoint executes a flow identified by ID or name, with options for streaming the response<br>and tracking execution metrics. It handles both streaming and non-streaming execution modes.<br>This endpoint uses API key authentication (Bearer token).<br><br>Args:<br>    background_tasks (BackgroundTasks): FastAPI background task manager<br>    flow (FlowRead | None): The flow to execute, loaded via dependency<br>    input_request (SimplifiedAPIRequest | None): Input parameters for the flow<br>    stream (bool): Whether to stream the response<br>    api_key_user (UserRead): Authenticated user from API key<br>    context (dict | None): Optional context to pass to the flow<br>    http_request (Request): The incoming HTTP request for extracting global variables<br><br>Returns:<br>    Union[StreamingResponse, RunResponse]: Either a streaming response for real-time results<br>    or a RunResponse with the complete execution results<br><br>Raises:<br>    HTTPException: For flow not found (404) or invalid input (400)<br>    APIException: For internal execution errors (500)<br><br>Notes:<br>    - Supports both streaming and non-streaming execution modes<br>    - Tracks execution time and success/failure via telemetry<br>    - Handles graceful client disconnection in streaming mode<br>    - Provides detailed error handling with appropriate HTTP status codes<br>    - Extracts global variables from HTTP headers with prefix X-PRIMEAGENT-GLOBAL-VAR-*<br>    - Merges extracted variables with the context parameter as \"request_variables\"<br>    - In streaming mode, uses EventManager to handle events:<br>        - \"add_message\": New messages during execution<br>        - \"token\": Individual tokens during streaming<br>        - \"end\": Final execution result<br>    - Authentication: Requires API key (Bearer token)",
         "operationId": "simplified_run_flow_api_v1_run__flow_id_or_name__post",
@@ -732,9 +714,7 @@
     },
     "/api/v1/run/session/{flow_id_or_name}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Simplified Run Flow Session",
         "description": "Executes a specified flow by ID with support for streaming and telemetry (session auth).<br><br>This endpoint executes a flow identified by ID or name, with options for streaming the response<br>and tracking execution metrics. It handles both streaming and non-streaming execution modes.<br>This endpoint uses session-based authentication (cookies).<br><br>Args:<br>    background_tasks (BackgroundTasks): FastAPI background task manager<br>    flow (FlowRead | None): The flow to execute, loaded via dependency<br>    input_request (SimplifiedAPIRequest | None): Input parameters for the flow<br>    stream (bool): Whether to stream the response<br>    api_key_user (User): Authenticated user from session<br>    context (dict | None): Optional context to pass to the flow<br>    http_request (Request): The incoming HTTP request for extracting global variables<br><br>Returns:<br>    Union[StreamingResponse, RunResponse]: Either a streaming response for real-time results<br>    or a RunResponse with the complete execution results<br><br>Raises:<br>    HTTPException: For flow not found (404) or invalid input (400)<br>    APIException: For internal execution errors (500)<br><br>Notes:<br>    - Supports both streaming and non-streaming execution modes<br>    - Tracks execution time and success/failure via telemetry<br>    - Handles graceful client disconnection in streaming mode<br>    - Provides detailed error handling with appropriate HTTP status codes<br>    - Extracts global variables from HTTP headers with prefix X-PRIMEAGENT-GLOBAL-VAR-*<br>    - Merges extracted variables with the context parameter as \"request_variables\"<br>    - In streaming mode, uses EventManager to handle events:<br>        - \"add_message\": New messages during execution<br>        - \"token\": Individual tokens during streaming<br>        - \"end\": Final execution result<br>    - Authentication: Requires active session (cookies)<br>    - Feature Flag: Only available when agentic_experience is enabled",
         "operationId": "simplified_run_flow_session_api_v1_run_session__flow_id_or_name__post",
@@ -823,9 +803,7 @@
     },
     "/api/v1/webhook/{flow_id_or_name}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Webhook Run Flow",
         "description": "Run a flow using a webhook request.<br><br>Args:<br>    flow_id_or_name (str): The flow ID or endpoint name.<br>    flow (Flow): The flow to be executed.<br>    request (Request): The incoming HTTP request.<br>    background_tasks (BackgroundTasks): The background tasks manager.<br><br>Returns:<br>    dict: A dictionary containing the status of the task.<br><br>Raises:<br>    HTTPException: If the flow is not found or if there is an error processing the request.",
         "operationId": "webhook_run_flow_api_v1_webhook__flow_id_or_name__post",
@@ -888,9 +866,7 @@
     },
     "/api/v1/run/advanced/{flow_id_or_name}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Experimental Run Flow",
         "description": "Executes a specified flow by ID with optional input values, output selection, tweaks, and streaming capability.<br><br>This endpoint supports running flows with caching to enhance performance and efficiency.<br><br>### Parameters:<br>- `flow` (Flow): The flow object to be executed, resolved via dependency injection.<br>- `inputs` (List[InputValueRequest], optional): A list of inputs specifying the input values and components<br>  for the flow. Each input can target specific components and provide custom values.<br>- `outputs` (List[str], optional): A list of output names to retrieve from the executed flow.<br>  If not provided, all outputs are returned.<br>- `tweaks` (Optional[Tweaks], optional): A dictionary of tweaks to customize the flow execution.<br>  The tweaks can be used to modify the flow's parameters and components.<br>  Tweaks can be overridden by the input values.<br>- `stream` (bool, optional): Specifies whether the results should be streamed. Defaults to False.<br>- `session_id` (Union[None, str], optional): An optional session ID to utilize existing session data for the flow<br>  execution.<br>- `api_key_user` (User): The user associated with the current API key. Automatically resolved from the API key.<br><br>### Returns:<br>A `RunResponse` object containing the selected outputs (or all if not specified) of the executed flow<br>and the session ID.<br>The structure of the response accommodates multiple inputs, providing a nested list of outputs for each input.<br><br>### Raises:<br>HTTPException: Indicates issues with finding the specified flow, invalid input formats, or internal errors during<br>flow execution.<br><br>### Example usage:<br>```json<br>POST /run/flow_id<br>x-api-key: YOUR_API_KEY<br>Payload:<br>{<br>    \"inputs\": [<br>        {\"components\": [\"component1\"], \"input_value\": \"value1\"},<br>        {\"components\": [\"component3\"], \"input_value\": \"value2\"}<br>    ],<br>    \"outputs\": [\"Component Name\", \"component_id\"],<br>    \"tweaks\": {\"parameter_name\": \"value\", \"Component Name\": {\"parameter_name\": \"value\"}, \"component_id\": {\"parameter_name\": \"value\"}}<br>    \"stream\": false<br>}<br>```<br><br>This endpoint facilitates complex flow executions with customized inputs, outputs, and configurations,<br>catering to diverse application requirements.",
         "operationId": "experimental_run_flow_api_v1_run_advanced__flow_id_or_name__post",
@@ -968,9 +944,7 @@
     },
     "/api/v1/process/{_flow_id}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Process",
         "description": "Endpoint to process an input with a given flow_id.",
         "operationId": "process_api_v1_process___flow_id__post",
@@ -1016,9 +990,7 @@
     },
     "/api/v1/predict/{_flow_id}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Process",
         "description": "Endpoint to process an input with a given flow_id.",
         "operationId": "process_api_v1_predict___flow_id__post",
@@ -1064,9 +1036,7 @@
     },
     "/api/v1/task/{_task_id}": {
       "get": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Get Task Status",
         "description": "Get the status of a task by ID (Deprecated).<br><br>This endpoint is deprecated and will be removed in a future version.",
         "operationId": "get_task_status_api_v1_task___task_id__get",
@@ -1108,9 +1078,7 @@
     },
     "/api/v1/upload/{flow_id}": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Create Upload File",
         "description": "Upload a file for a specific flow (Deprecated).<br><br>This endpoint is deprecated and will be removed in a future version.",
         "operationId": "create_upload_file_api_v1_upload__flow_id__post",
@@ -1163,9 +1131,7 @@
     },
     "/api/v1/version": {
       "get": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Get Version",
         "operationId": "get_version_api_v1_version_get",
         "responses": {
@@ -1182,9 +1148,7 @@
     },
     "/api/v1/custom_component": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Custom Component",
         "operationId": "custom_component_api_v1_custom_component_post",
         "requestBody": {
@@ -1234,9 +1198,7 @@
     },
     "/api/v1/custom_component/update": {
       "post": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Custom Component Update",
         "description": "Update an existing custom component with new code and configuration.<br><br>Processes the provided code and template updates, applies parameter changes (including those loaded from the<br>database), updates the component's build configuration, and validates outputs. Returns the updated component node as<br>a JSON-serializable dictionary.<br><br>Raises:<br>    HTTPException: If an error occurs during component building or updating.<br>    SerializationError: If serialization of the updated component node fails.",
         "operationId": "custom_component_update_api_v1_custom_component_update_post",
@@ -1285,9 +1247,7 @@
     },
     "/api/v1/config": {
       "get": {
-        "tags": [
-          "Base"
-        ],
+        "tags": ["Base"],
         "summary": "Get Config",
         "description": "Retrieve the current application configuration settings.<br><br>Requires authentication to prevent exposure of sensitive configuration details.<br><br>Returns:<br>    ConfigResponse: The configuration settings of the application.<br><br>Raises:<br>    HTTPException: If an error occurs while retrieving the configuration.",
         "operationId": "get_config_api_v1_config_get",
@@ -1318,9 +1278,7 @@
     },
     "/api/v1/validate/code": {
       "post": {
-        "tags": [
-          "Validate"
-        ],
+        "tags": ["Validate"],
         "summary": "Post Validate Code",
         "operationId": "post_validate_code_api_v1_validate_code_post",
         "requestBody": {
@@ -1370,9 +1328,7 @@
     },
     "/api/v1/validate/prompt": {
       "post": {
-        "tags": [
-          "Validate"
-        ],
+        "tags": ["Validate"],
         "summary": "Post Validate Prompt",
         "operationId": "post_validate_prompt_api_v1_validate_prompt_post",
         "requestBody": {
@@ -1422,9 +1378,7 @@
     },
     "/api/v1/store/check/": {
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Check If Store Is Enabled",
         "operationId": "check_if_store_is_enabled_api_v1_store_check__get",
         "responses": {
@@ -1441,9 +1395,7 @@
     },
     "/api/v1/store/check/api_key": {
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Check If Store Has Api Key",
         "operationId": "check_if_store_has_api_key_api_v1_store_check_api_key_get",
         "responses": {
@@ -1471,9 +1423,7 @@
     },
     "/api/v1/store/components/": {
       "post": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Share Component",
         "operationId": "share_component_api_v1_store_components__post",
         "security": [
@@ -1521,9 +1471,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Get Components",
         "operationId": "get_components_api_v1_store_components__get",
         "security": [
@@ -1726,9 +1674,7 @@
     },
     "/api/v1/store/components/{component_id}": {
       "patch": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Update Shared Component",
         "operationId": "update_shared_component_api_v1_store_components__component_id__patch",
         "security": [
@@ -1788,9 +1734,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Download Component",
         "operationId": "download_component_api_v1_store_components__component_id__get",
         "security": [
@@ -1842,9 +1786,7 @@
     },
     "/api/v1/store/tags": {
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Get Tags",
         "operationId": "get_tags_api_v1_store_tags_get",
         "responses": {
@@ -1867,9 +1809,7 @@
     },
     "/api/v1/store/users/likes": {
       "get": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Get List Of Components Liked By User",
         "operationId": "get_list_of_components_liked_by_user_api_v1_store_users_likes_get",
         "responses": {
@@ -1903,9 +1843,7 @@
     },
     "/api/v1/store/users/likes/{component_id}": {
       "post": {
-        "tags": [
-          "Components Store"
-        ],
+        "tags": ["Components Store"],
         "summary": "Like Component",
         "operationId": "like_component_api_v1_store_users_likes__component_id__post",
         "security": [
@@ -1957,9 +1895,7 @@
     },
     "/api/v1/flows/": {
       "post": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Create Flow",
         "operationId": "create_flow_api_v1_flows__post",
         "security": [
@@ -2007,9 +1943,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Read Flows",
         "description": "Retrieve a list of flows with pagination support.<br><br>Args:<br>    current_user (User): The current authenticated user.<br>    session (Session): The database session.<br>    settings_service (SettingsService): The settings service.<br>    components_only (bool, optional): Whether to return only components. Defaults to False.<br><br>    get_all (bool, optional): Whether to return all flows without pagination. Defaults to True.<br>    **This field must be True because of backward compatibility with the frontend - Release: 1.0.20**<br><br>    folder_id (UUID, optional): The project ID. Defaults to None.<br>    params (Params): Pagination parameters.<br>    remove_example_flows (bool, optional): Whether to remove example flows. Defaults to False.<br>    header_flows (bool, optional): Whether to return only specific headers of the flows. Defaults to False.<br><br>Returns:<br>    list[FlowRead] | Page[FlowRead] | list[FlowHeader]<br>    A list of flows or a paginated response containing the list of flows or a list of flow headers.",
         "operationId": "read_flows_api_v1_flows__get",
@@ -2147,9 +2081,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Delete Multiple Flows",
         "description": "Delete multiple flows by their IDs.<br><br>Args:<br>    flow_ids (List[str]): The list of flow IDs to delete.<br>    user (User, optional): The user making the request. Defaults to the current active user.<br>    db (Session, optional): The database session.<br><br>Returns:<br>    dict: A dictionary containing the number of flows deleted.",
         "operationId": "delete_multiple_flows_api_v1_flows__delete",
@@ -2203,9 +2135,7 @@
     },
     "/api/v1/flows/{flow_id}": {
       "get": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Read Flow",
         "description": "Read a flow.",
         "operationId": "read_flow_api_v1_flows__flow_id__get",
@@ -2256,9 +2186,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Update Flow",
         "description": "Update a flow.",
         "operationId": "update_flow_api_v1_flows__flow_id__patch",
@@ -2319,9 +2247,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Delete Flow",
         "description": "Delete a flow.",
         "operationId": "delete_flow_api_v1_flows__flow_id__delete",
@@ -2372,9 +2298,7 @@
     },
     "/api/v1/flows/public_flow/{flow_id}": {
       "get": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Read Public Flow",
         "description": "Read a public flow.",
         "operationId": "read_public_flow_api_v1_flows_public_flow__flow_id__get",
@@ -2416,9 +2340,7 @@
     },
     "/api/v1/flows/batch/": {
       "post": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Create Flows",
         "description": "Create multiple new flows.",
         "operationId": "create_flows_api_v1_flows_batch__post",
@@ -2473,9 +2395,7 @@
     },
     "/api/v1/flows/upload/": {
       "post": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Upload File",
         "description": "Upload flows from a file.",
         "operationId": "upload_file_api_v1_flows_upload__post",
@@ -2549,9 +2469,7 @@
     },
     "/api/v1/flows/download/": {
       "post": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Download Multiple File",
         "description": "Download all flows as a zip file.",
         "operationId": "download_multiple_file_api_v1_flows_download__post",
@@ -2605,9 +2523,7 @@
     },
     "/api/v1/flows/basic_examples/": {
       "get": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Read Basic Examples",
         "description": "Retrieve a list of basic example flows.<br><br>Args:<br>    session (Session): The database session.<br><br>Returns:<br>    list[FlowRead]: A list of basic example flows.",
         "operationId": "read_basic_examples_api_v1_flows_basic_examples__get",
@@ -2631,9 +2547,7 @@
     },
     "/api/v1/users/": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Add User",
         "description": "Add a new user to the database.<br><br>Requires superuser authentication to prevent unauthorized account creation.",
         "operationId": "add_user_api_v1_users__post",
@@ -2682,9 +2596,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Read All Users",
         "description": "Retrieve a list of users from the database with pagination.",
         "operationId": "read_all_users_api_v1_users__get",
@@ -2747,9 +2659,7 @@
     },
     "/api/v1/users/whoami": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Read Current User",
         "description": "Retrieve the current user's data.",
         "operationId": "read_current_user_api_v1_users_whoami_get",
@@ -2780,9 +2690,7 @@
     },
     "/api/v1/users/{user_id}": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Patch User",
         "description": "Update an existing user's data.",
         "operationId": "patch_user_api_v1_users__user_id__patch",
@@ -2843,9 +2751,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete User",
         "description": "Delete a user from the database.",
         "operationId": "delete_user_api_v1_users__user_id__delete",
@@ -2900,9 +2806,7 @@
     },
     "/api/v1/users/{user_id}/reset-password": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Reset Password",
         "description": "Reset a user's password.",
         "operationId": "reset_password_api_v1_users__user_id__reset_password_patch",
@@ -2965,9 +2869,7 @@
     },
     "/api/v1/api_key/": {
       "get": {
-        "tags": [
-          "APIKey"
-        ],
+        "tags": ["APIKey"],
         "summary": "Get Api Keys Route",
         "operationId": "get_api_keys_route_api_v1_api_key__get",
         "responses": {
@@ -2995,9 +2897,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "APIKey"
-        ],
+        "tags": ["APIKey"],
         "summary": "Create Api Key Route",
         "operationId": "create_api_key_route_api_v1_api_key__post",
         "requestBody": {
@@ -3047,9 +2947,7 @@
     },
     "/api/v1/api_key/{api_key_id}": {
       "delete": {
-        "tags": [
-          "APIKey"
-        ],
+        "tags": ["APIKey"],
         "summary": "Delete Api Key Route",
         "operationId": "delete_api_key_route_api_v1_api_key__api_key_id__delete",
         "security": [
@@ -3099,9 +2997,7 @@
     },
     "/api/v1/api_key/store": {
       "post": {
-        "tags": [
-          "APIKey"
-        ],
+        "tags": ["APIKey"],
         "summary": "Save Store Api Key",
         "operationId": "save_store_api_key_api_v1_api_key_store_post",
         "requestBody": {
@@ -3149,9 +3045,7 @@
     },
     "/api/v1/login": {
       "post": {
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "summary": "Login To Get Access Token",
         "operationId": "login_to_get_access_token_api_v1_login_post",
         "requestBody": {
@@ -3190,9 +3084,7 @@
     },
     "/api/v1/auto_login": {
       "get": {
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "summary": "Auto Login",
         "operationId": "auto_login_api_v1_auto_login_get",
         "responses": {
@@ -3209,9 +3101,7 @@
     },
     "/api/v1/refresh": {
       "post": {
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "summary": "Refresh Token",
         "operationId": "refresh_token_api_v1_refresh_post",
         "responses": {
@@ -3228,9 +3118,7 @@
     },
     "/api/v1/logout": {
       "post": {
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "summary": "Logout",
         "operationId": "logout_api_v1_logout_post",
         "responses": {
@@ -3247,9 +3135,7 @@
     },
     "/api/v1/variables/": {
       "get": {
-        "tags": [
-          "Variables"
-        ],
+        "tags": ["Variables"],
         "summary": "Read Variables",
         "description": "Read all variables.",
         "operationId": "read_variables_api_v1_variables__get",
@@ -3282,9 +3168,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Variables"
-        ],
+        "tags": ["Variables"],
         "summary": "Create Variable",
         "description": "Create a new variable.",
         "operationId": "create_variable_api_v1_variables__post",
@@ -3335,9 +3219,7 @@
     },
     "/api/v1/variables/{variable_id}": {
       "patch": {
-        "tags": [
-          "Variables"
-        ],
+        "tags": ["Variables"],
         "summary": "Update Variable",
         "description": "Update a variable.",
         "operationId": "update_variable_api_v1_variables__variable_id__patch",
@@ -3398,9 +3280,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Variables"
-        ],
+        "tags": ["Variables"],
         "summary": "Delete Variable",
         "description": "Delete a variable.",
         "operationId": "delete_variable_api_v1_variables__variable_id__delete",
@@ -3446,9 +3326,7 @@
     },
     "/api/v1/files/upload/{flow_id}": {
       "post": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Upload File",
         "operationId": "upload_file_api_v1_files_upload__flow_id__post",
         "security": [
@@ -3510,9 +3388,7 @@
     },
     "/api/v1/files/download/{flow_id}/{file_name}": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Download File",
         "operationId": "download_file_api_v1_files_download__flow_id___file_name__get",
         "security": [
@@ -3571,9 +3447,7 @@
     },
     "/api/v1/files/images/{flow_id}/{file_name}": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Download Image",
         "description": "Download image from storage for browser rendering.",
         "operationId": "download_image_api_v1_files_images__flow_id___file_name__get",
@@ -3622,9 +3496,7 @@
     },
     "/api/v1/files/profile_pictures/{folder_name}/{file_name}": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Download Profile Picture",
         "description": "Download profile picture from local filesystem.<br><br>Profile pictures are first looked up in config_dir/profile_pictures/,<br>then fallback to the package's bundled profile_pictures directory.",
         "operationId": "download_profile_picture_api_v1_files_profile_pictures__folder_name___file_name__get",
@@ -3672,9 +3544,7 @@
     },
     "/api/v1/files/profile_pictures/list": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "List Profile Pictures",
         "description": "List profile pictures from local filesystem.<br><br>Profile pictures are first looked up in config_dir/profile_pictures/,<br>then fallback to the package's bundled profile_pictures directory.",
         "operationId": "list_profile_pictures_api_v1_files_profile_pictures_list_get",
@@ -3692,9 +3562,7 @@
     },
     "/api/v1/files/list/{flow_id}": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "List Files",
         "operationId": "list_files_api_v1_files_list__flow_id__get",
         "security": [
@@ -3744,9 +3612,7 @@
     },
     "/api/v1/files/delete/{flow_id}/{file_name}": {
       "delete": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Delete File",
         "operationId": "delete_file_api_v1_files_delete__flow_id___file_name__delete",
         "security": [
@@ -3805,9 +3671,7 @@
     },
     "/api/v1/monitor/builds": {
       "get": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Get Vertex Builds",
         "operationId": "get_vertex_builds_api_v1_monitor_builds_get",
         "security": [
@@ -3857,9 +3721,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Delete Vertex Builds",
         "operationId": "delete_vertex_builds_api_v1_monitor_builds_delete",
         "security": [
@@ -3904,9 +3766,7 @@
     },
     "/api/v1/monitor/messages/sessions": {
       "get": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Get Message Sessions",
         "operationId": "get_message_sessions_api_v1_monitor_messages_sessions_get",
         "security": [
@@ -3969,9 +3829,7 @@
     },
     "/api/v1/monitor/messages": {
       "get": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Get Messages",
         "operationId": "get_messages_api_v1_monitor_messages_get",
         "security": [
@@ -4097,9 +3955,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Delete Messages",
         "operationId": "delete_messages_api_v1_monitor_messages_delete",
         "security": [
@@ -4147,9 +4003,7 @@
     },
     "/api/v1/monitor/messages/{message_id}": {
       "put": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Update Message",
         "operationId": "update_message_api_v1_monitor_messages__message_id__put",
         "security": [
@@ -4211,9 +4065,7 @@
     },
     "/api/v1/monitor/messages/session/{old_session_id}": {
       "patch": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Update Session Id",
         "operationId": "update_session_id_api_v1_monitor_messages_session__old_session_id__patch",
         "security": [
@@ -4279,9 +4131,7 @@
     },
     "/api/v1/monitor/messages/session/{session_id}": {
       "delete": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Delete Messages Session",
         "operationId": "delete_messages_session_api_v1_monitor_messages_session__session_id__delete",
         "security": [
@@ -4325,9 +4175,7 @@
     },
     "/api/v1/monitor/transactions": {
       "get": {
-        "tags": [
-          "Monitor"
-        ],
+        "tags": ["Monitor"],
         "summary": "Get Transactions",
         "operationId": "get_transactions_api_v1_monitor_transactions_get",
         "security": [
@@ -4406,9 +4254,7 @@
     },
     "/api/v1/folders/": {
       "get": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Read Folders Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "read_folders_redirect_api_v1_folders__get",
@@ -4430,9 +4276,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Create Folder Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "create_folder_redirect_api_v1_folders__post",
@@ -4452,9 +4296,7 @@
     },
     "/api/v1/folders/{folder_id}": {
       "get": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Read Folder Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "read_folder_redirect_api_v1_folders__folder_id__get",
@@ -4564,9 +4406,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Update Folder Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "update_folder_redirect_api_v1_folders__folder_id__patch",
@@ -4606,9 +4446,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Delete Folder Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "delete_folder_redirect_api_v1_folders__folder_id__delete",
@@ -4643,9 +4481,7 @@
     },
     "/api/v1/folders/download/{folder_id}": {
       "get": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Download File Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "download_file_redirect_api_v1_folders_download__folder_id__get",
@@ -4685,9 +4521,7 @@
     },
     "/api/v1/folders/upload/": {
       "post": {
-        "tags": [
-          "Folders"
-        ],
+        "tags": ["Folders"],
         "summary": "Upload File Redirect",
         "description": "Redirect to the projects endpoint.",
         "operationId": "upload_file_redirect_api_v1_folders_upload__post",
@@ -4711,9 +4545,7 @@
     },
     "/api/v1/projects/": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Read Projects",
         "operationId": "read_projects_api_v1_projects__get",
         "responses": {
@@ -4745,9 +4577,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Create Project",
         "operationId": "create_project_api_v1_projects__post",
         "requestBody": {
@@ -4797,9 +4627,7 @@
     },
     "/api/v1/projects/{project_id}": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Read Project",
         "operationId": "read_project_api_v1_projects__project_id__get",
         "security": [
@@ -4919,9 +4747,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Update Project",
         "operationId": "update_project_api_v1_projects__project_id__patch",
         "security": [
@@ -4981,9 +4807,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Delete Project",
         "operationId": "delete_project_api_v1_projects__project_id__delete",
         "security": [
@@ -5028,9 +4852,7 @@
     },
     "/api/v1/projects/download/{project_id}": {
       "get": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Download File",
         "description": "Download all flows from project as a zip file.",
         "operationId": "download_file_api_v1_projects_download__project_id__get",
@@ -5081,9 +4903,7 @@
     },
     "/api/v1/projects/upload/": {
       "post": {
-        "tags": [
-          "Projects"
-        ],
+        "tags": ["Projects"],
         "summary": "Upload File",
         "description": "Upload flows from a file.",
         "operationId": "upload_file_api_v1_projects_upload__post",
@@ -5138,9 +4958,7 @@
     },
     "/api/v1/starter-projects/": {
       "get": {
-        "tags": [
-          "Flows"
-        ],
+        "tags": ["Flows"],
         "summary": "Get Starter Projects",
         "description": "Get a list of starter projects.",
         "operationId": "get_starter_projects_api_v1_starter_projects__get",
@@ -5175,9 +4993,7 @@
     },
     "/api/v1/knowledge_bases/": {
       "get": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "List Knowledge Bases",
         "description": "List all available knowledge bases.",
         "operationId": "list_knowledge_bases_api_v1_knowledge_bases__get",
@@ -5210,9 +5026,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "Delete Knowledge Bases Bulk",
         "description": "Delete multiple knowledge bases.",
         "operationId": "delete_knowledge_bases_bulk_api_v1_knowledge_bases__delete",
@@ -5265,9 +5079,7 @@
     },
     "/api/v1/knowledge_bases": {
       "get": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "List Knowledge Bases",
         "description": "List all available knowledge bases.",
         "operationId": "list_knowledge_bases_api_v1_knowledge_bases_get",
@@ -5300,9 +5112,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "Delete Knowledge Bases Bulk",
         "description": "Delete multiple knowledge bases.",
         "operationId": "delete_knowledge_bases_bulk_api_v1_knowledge_bases_delete",
@@ -5355,9 +5165,7 @@
     },
     "/api/v1/knowledge_bases/{kb_name}": {
       "get": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "Get Knowledge Base",
         "description": "Get detailed information about a specific knowledge base.",
         "operationId": "get_knowledge_base_api_v1_knowledge_bases__kb_name__get",
@@ -5407,9 +5215,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Knowledge Bases"
-        ],
+        "tags": ["Knowledge Bases"],
         "summary": "Delete Knowledge Base",
         "description": "Delete a specific knowledge base.",
         "operationId": "delete_knowledge_base_api_v1_knowledge_bases__kb_name__delete",
@@ -5465,9 +5271,7 @@
     },
     "/api/v1/mcp/sse": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Sse",
         "operationId": "handle_sse_api_v1_mcp_sse_get",
         "responses": {
@@ -5490,9 +5294,7 @@
     },
     "/api/v1/mcp/": {
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Messages",
         "operationId": "handle_messages_api_v1_mcp__post",
         "responses": {
@@ -5509,9 +5311,7 @@
     },
     "/api/v1/mcp/streamable/": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable__post",
@@ -5533,9 +5333,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable__post",
@@ -5557,9 +5355,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable__post",
@@ -5583,9 +5379,7 @@
     },
     "/api/v1/mcp/streamable": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable_post",
@@ -5607,9 +5401,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable_post",
@@ -5631,9 +5423,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_v1_mcp_streamable_post",
@@ -5657,9 +5447,7 @@
     },
     "/api/v1/voice/elevenlabs/voice_ids": {
       "get": {
-        "tags": [
-          "Voice"
-        ],
+        "tags": ["Voice"],
         "summary": "Get Elevenlabs Voice Ids",
         "description": "Get available voice IDs from ElevenLabs API.",
         "operationId": "get_elevenlabs_voice_ids_api_v1_voice_elevenlabs_voice_ids_get",
@@ -5688,9 +5476,7 @@
     },
     "/api/v1/mcp/project/{project_id}": {
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "List Project Tools",
         "description": "List project MCP tools.",
         "operationId": "list_project_tools_api_v1_mcp_project__project_id__get",
@@ -5749,9 +5535,7 @@
         }
       },
       "post": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Messages",
         "description": "Handle POST messages for a project-specific MCP server.",
         "operationId": "handle_project_messages_api_v1_mcp_project__project_id__post",
@@ -5789,9 +5573,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Update Project Mcp Settings",
         "description": "Update the MCP settings of all flows in a project and project-level auth settings.<br><br>On MCP Composer failure, this endpoint should return with a 200 status code and an error message in<br>the body of the response to display to the user.",
         "operationId": "update_project_mcp_settings_api_v1_mcp_project__project_id__patch",
@@ -5852,9 +5634,7 @@
     },
     "/api/v1/mcp/project/{project_id}/sse": {
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Sse",
         "description": "Handle SSE connections for a specific project.",
         "operationId": "handle_project_sse_api_v1_mcp_project__project_id__sse_get",
@@ -5896,9 +5676,7 @@
     },
     "/api/v1/mcp/project/{project_id}/": {
       "post": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Messages",
         "description": "Handle POST messages for a project-specific MCP server.",
         "operationId": "handle_project_messages_api_v1_mcp_project__project_id___post",
@@ -5938,9 +5716,7 @@
     },
     "/api/v1/mcp/project/{project_id}/streamable/": {
       "post": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable__post",
@@ -5973,9 +5749,7 @@
         }
       },
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable__post",
@@ -6008,9 +5782,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable__post",
@@ -6045,9 +5817,7 @@
     },
     "/api/v1/mcp/project/{project_id}/streamable": {
       "post": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable_post",
@@ -6080,9 +5850,7 @@
         }
       },
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable_post",
@@ -6115,9 +5883,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Handle Project Streamable Http",
         "description": "Handle Streamable HTTP connections for a specific project.",
         "operationId": "handle_project_streamable_http_api_v1_mcp_project__project_id__streamable_post",
@@ -6152,9 +5918,7 @@
     },
     "/api/v1/mcp/project/{project_id}/install": {
       "post": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Install Mcp Config",
         "description": "Install MCP server configuration for Cursor, Windsurf, or Claude.",
         "operationId": "install_mcp_config_api_v1_mcp_project__project_id__install_post",
@@ -6215,9 +5979,7 @@
     },
     "/api/v1/mcp/project/{project_id}/composer-url": {
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Get Project Composer Url",
         "description": "Get the MCP Composer URL for a specific project.<br><br>On failure, this endpoint should return with a 200 status code and an error message in<br>the body of the response to display to the user.",
         "operationId": "get_project_composer_url_api_v1_mcp_project__project_id__composer_url_get",
@@ -6270,9 +6032,7 @@
     },
     "/api/v1/mcp/project/{project_id}/installed": {
       "get": {
-        "tags": [
-          "mcp_projects"
-        ],
+        "tags": ["mcp_projects"],
         "summary": "Check Installed Mcp Servers",
         "description": "Check if MCP server configuration is installed for this project in Cursor, Windsurf, or Claude.",
         "operationId": "check_installed_mcp_servers_api_v1_mcp_project__project_id__installed_get",
@@ -6323,9 +6083,7 @@
     },
     "/api/v1/responses": {
       "post": {
-        "tags": [
-          "OpenAI Responses API"
-        ],
+        "tags": ["OpenAI Responses API"],
         "summary": "Create Response",
         "description": "Create a response using OpenAI Responses API format.<br><br>This endpoint accepts a flow_id in the model parameter and processes<br>the input through the specified Primeagent flow.<br><br>Args:<br>    request: OpenAI Responses API request with model (flow_id) and input<br>    background_tasks: FastAPI background task manager<br>    api_key_user: Authenticated user from API key<br>    http_request: The incoming HTTP request<br>    telemetry_service: Telemetry service for logging<br><br>Returns:<br>    OpenAI-compatible response or streaming response<br><br>Raises:<br>    HTTPException: For validation errors or flow execution issues",
         "operationId": "create_response_api_v1_responses_post",
@@ -6371,9 +6129,7 @@
     },
     "/api/v2/files/": {
       "post": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Upload User File",
         "description": "Upload a file for the current user and track it in the database.",
         "operationId": "upload_user_file_api_v2_files__post",
@@ -6434,9 +6190,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "List Files",
         "description": "List the files available to the current user.",
         "operationId": "list_files_api_v2_files__get",
@@ -6469,9 +6223,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Delete All Files",
         "description": "Delete all files for the current user.",
         "operationId": "delete_all_files_api_v2_files__delete",
@@ -6500,9 +6252,7 @@
     },
     "/api/v2/files": {
       "post": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Upload User File",
         "description": "Upload a file for the current user and track it in the database.",
         "operationId": "upload_user_file_api_v2_files_post",
@@ -6563,9 +6313,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "List Files",
         "description": "List the files available to the current user.",
         "operationId": "list_files_api_v2_files_get",
@@ -6598,9 +6346,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Delete All Files",
         "description": "Delete all files for the current user.",
         "operationId": "delete_all_files_api_v2_files_delete",
@@ -6629,9 +6375,7 @@
     },
     "/api/v2/files/batch/": {
       "post": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Download Files Batch",
         "description": "Download multiple files as a zip file by their IDs.",
         "operationId": "download_files_batch_api_v2_files_batch__post",
@@ -6683,9 +6427,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Delete Files Batch",
         "description": "Delete multiple files by their IDs.",
         "operationId": "delete_files_batch_api_v2_files_batch__delete",
@@ -6739,9 +6481,7 @@
     },
     "/api/v2/files/{file_id}": {
       "get": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Download File",
         "description": "Download a file by its ID or return its content as a string/bytes.<br><br>Args:<br>    file_id: UUID of the file.<br>    current_user: Authenticated user.<br>    session: Database session.<br>    storage_service: File storage service.<br>    return_content: If True, return raw content (str) instead of StreamingResponse.<br><br>Returns:<br>    StreamingResponse for client downloads or str for internal use.",
         "operationId": "download_file_api_v2_files__file_id__get",
@@ -6800,9 +6540,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Edit File Name",
         "description": "Edit the name of a file by its ID.",
         "operationId": "edit_file_name_api_v2_files__file_id__put",
@@ -6862,9 +6600,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "summary": "Delete File",
         "description": "Delete a file by its ID.",
         "operationId": "delete_file_api_v2_files__file_id__delete",
@@ -6915,9 +6651,7 @@
     },
     "/api/v2/mcp/servers": {
       "get": {
-        "tags": [
-          "MCP"
-        ],
+        "tags": ["MCP"],
         "summary": "Get Servers",
         "description": "Get the list of available servers.",
         "operationId": "get_servers_api_v2_mcp_servers_get",
@@ -6974,9 +6708,7 @@
     },
     "/api/v2/mcp/servers/{server_name}": {
       "get": {
-        "tags": [
-          "MCP"
-        ],
+        "tags": ["MCP"],
         "summary": "Get Server Endpoint",
         "description": "Get a specific server.",
         "operationId": "get_server_endpoint_api_v2_mcp_servers__server_name__get",
@@ -7024,9 +6756,7 @@
         }
       },
       "post": {
-        "tags": [
-          "MCP"
-        ],
+        "tags": ["MCP"],
         "summary": "Add Server",
         "operationId": "add_server_api_v2_mcp_servers__server_name__post",
         "security": [
@@ -7085,9 +6815,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "MCP"
-        ],
+        "tags": ["MCP"],
         "summary": "Update Server Endpoint",
         "operationId": "update_server_endpoint_api_v2_mcp_servers__server_name__patch",
         "security": [
@@ -7146,9 +6874,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "MCP"
-        ],
+        "tags": ["MCP"],
         "summary": "Delete Server",
         "operationId": "delete_server_api_v2_mcp_servers__server_name__delete",
         "security": [
@@ -7197,9 +6923,7 @@
     },
     "/api/v2/registration/": {
       "get": {
-        "tags": [
-          "Registration API"
-        ],
+        "tags": ["Registration API"],
         "summary": "Get Registration",
         "description": "Get the registered user (if any).",
         "operationId": "get_registration_api_v2_registration__get",
@@ -7226,9 +6950,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Registration API"
-        ],
+        "tags": ["Registration API"],
         "summary": "Register User",
         "description": "Register the single user with email.<br><br>Note: Only one registration is allowed.",
         "operationId": "register_user_api_v2_registration__post",
@@ -7268,9 +6990,7 @@
     },
     "/api/mcp/sse": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Sse",
         "operationId": "handle_sse_api_mcp_sse_get",
         "responses": {
@@ -7293,9 +7013,7 @@
     },
     "/api/mcp/": {
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Messages",
         "operationId": "handle_messages_api_mcp__post",
         "responses": {
@@ -7312,9 +7030,7 @@
     },
     "/api/mcp/streamable/": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable__post",
@@ -7336,9 +7052,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable__post",
@@ -7360,9 +7074,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable__post",
@@ -7386,9 +7098,7 @@
     },
     "/api/mcp/streamable": {
       "get": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable_post",
@@ -7410,9 +7120,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable_post",
@@ -7434,9 +7142,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "mcp"
-        ],
+        "tags": ["mcp"],
         "summary": "Handle Streamable Http",
         "description": "Streamable HTTP endpoint for MCP clients that support the new transport.",
         "operationId": "handle_streamable_http_api_mcp_streamable_post",
@@ -7460,9 +7166,7 @@
     },
     "/health": {
       "get": {
-        "tags": [
-          "Health Check"
-        ],
+        "tags": ["Health Check"],
         "summary": "Health",
         "operationId": "health_health_get",
         "responses": {
@@ -7479,9 +7183,7 @@
     },
     "/health_check": {
       "get": {
-        "tags": [
-          "Health Check"
-        ],
+        "tags": ["Health Check"],
         "summary": "Health Check",
         "operationId": "health_check_health_check_get",
         "responses": {
@@ -7500,9 +7202,7 @@
     },
     "/logs-stream": {
       "get": {
-        "tags": [
-          "Log"
-        ],
+        "tags": ["Log"],
         "summary": "Stream Logs",
         "description": "HTTP/2 Server-Sent-Event (SSE) endpoint for streaming logs.<br><br>Requires authentication to prevent exposure of sensitive log data.<br>It establishes a long-lived connection to the server and receives log messages in real-time.<br>The client should use the header \"Accept: text/event-stream\".",
         "operationId": "stream_logs_logs_stream_get",
@@ -7531,9 +7231,7 @@
     },
     "/logs": {
       "get": {
-        "tags": [
-          "Log"
-        ],
+        "tags": ["Log"],
         "summary": "Logs",
         "description": "Retrieve application logs with authentication required.<br><br>SECURITY: Logs may contain sensitive information and require authentication.",
         "operationId": "logs_logs_get",
@@ -7613,10 +7311,7 @@
     "schemas": {
       "AccessTypeEnum": {
         "type": "string",
-        "enum": [
-          "PRIVATE",
-          "PUBLIC"
-        ],
+        "enum": ["PRIVATE", "PUBLIC"],
         "title": "AccessTypeEnum"
       },
       "ApiKeyCreate": {
@@ -7701,9 +7396,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "title": "ApiKeyCreateRequest"
       },
       "ApiKeyRead": {
@@ -7762,12 +7455,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "api_key",
-          "user_id",
-          "created_at"
-        ],
+        "required": ["id", "api_key", "user_id", "created_at"],
         "title": "ApiKeyRead"
       },
       "ApiKeysResponse": {
@@ -7790,22 +7478,14 @@
           }
         },
         "type": "object",
-        "required": [
-          "total_count",
-          "user_id",
-          "api_keys"
-        ],
+        "required": ["total_count", "user_id", "api_keys"],
         "title": "ApiKeysResponse"
       },
       "AuthSettings": {
         "properties": {
           "auth_type": {
             "type": "string",
-            "enum": [
-              "none",
-              "apikey",
-              "oauth"
-            ],
+            "enum": ["none", "apikey", "oauth"],
             "title": "Auth Type",
             "default": "none"
           },
@@ -8050,9 +7730,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_create_upload_file_api_v1_upload__flow_id__post"
       },
       "Body_experimental_run_flow_api_v1_run_advanced__flow_id_or_name__post": {
@@ -8168,10 +7846,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "username",
-          "password"
-        ],
+        "required": ["username", "password"],
         "title": "Body_login_to_get_access_token_api_v1_login_post"
       },
       "Body_simplified_run_flow_api_v1_run__flow_id_or_name__post": {
@@ -8239,9 +7914,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_upload_file_api_v1_files_upload__flow_id__post"
       },
       "Body_upload_file_api_v1_flows_upload__post": {
@@ -8253,9 +7926,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_upload_file_api_v1_flows_upload__post"
       },
       "Body_upload_file_api_v1_projects_upload__post": {
@@ -8267,9 +7938,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_upload_file_api_v1_projects_upload__post"
       },
       "Body_upload_user_file_api_v2_files__post": {
@@ -8281,9 +7950,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_upload_user_file_api_v2_files__post"
       },
       "Body_upload_user_file_api_v2_files_post": {
@@ -8295,9 +7962,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "file"
-        ],
+        "required": ["file"],
         "title": "Body_upload_user_file_api_v2_files_post"
       },
       "BulkDeleteRequest": {
@@ -8311,9 +7976,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "kb_names"
-        ],
+        "required": ["kb_names"],
         "title": "BulkDeleteRequest"
       },
       "CancelFlowResponse": {
@@ -8328,10 +7991,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "success",
-          "message"
-        ],
+        "required": ["success", "message"],
         "title": "CancelFlowResponse",
         "description": "Response model for flow build cancellation."
       },
@@ -8430,10 +8090,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "message",
-          "type"
-        ],
+        "required": ["message", "type"],
         "title": "ChatOutputResponse",
         "description": "Chat output response schema."
       },
@@ -8445,9 +8102,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "code"
-        ],
+        "required": ["code"],
         "title": "Code"
       },
       "CodeValidationResponse": {
@@ -8464,10 +8119,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "imports",
-          "function"
-        ],
+        "required": ["imports", "function"],
         "title": "CodeValidationResponse"
       },
       "ComposerUrlResponse": {
@@ -8515,10 +8167,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "project_id",
-          "uses_composer"
-        ],
+        "required": ["project_id", "uses_composer"],
         "title": "ComposerUrlResponse",
         "description": "Response model for MCP Composer connection details."
       },
@@ -8569,11 +8218,7 @@
           },
           "event_delivery": {
             "type": "string",
-            "enum": [
-              "polling",
-              "streaming",
-              "direct"
-            ],
+            "enum": ["polling", "streaming", "direct"],
             "title": "Event Delivery"
           },
           "webhook_auth_enable": {
@@ -8623,9 +8268,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "title": "CreateComponentResponse"
       },
       "CustomComponentRequest": {
@@ -8648,9 +8291,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "code"
-        ],
+        "required": ["code"],
         "title": "CustomComponentRequest"
       },
       "CustomComponentResponse": {
@@ -8666,10 +8307,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "data",
-          "type"
-        ],
+        "required": ["data", "type"],
         "title": "CustomComponentResponse"
       },
       "DownloadComponentResponse": {
@@ -8739,13 +8377,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "name",
-          "description",
-          "data",
-          "is_component"
-        ],
+        "required": ["id", "name", "description", "data", "is_component"],
         "title": "DownloadComponentResponse"
       },
       "ErrorLog": {
@@ -8760,19 +8392,12 @@
           }
         },
         "type": "object",
-        "required": [
-          "errorMessage",
-          "stackTrace"
-        ],
+        "required": ["errorMessage", "stackTrace"],
         "title": "ErrorLog"
       },
       "EventDeliveryType": {
         "type": "string",
-        "enum": [
-          "streaming",
-          "direct",
-          "polling"
-        ],
+        "enum": ["streaming", "direct", "polling"],
         "title": "EventDeliveryType"
       },
       "FeatureFlags": {
@@ -8834,12 +8459,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "user_id",
-          "name",
-          "path",
-          "size"
-        ],
+        "required": ["user_id", "name", "path", "size"],
         "title": "File"
       },
       "Flow": {
@@ -9062,10 +8682,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "user_id"
-        ],
+        "required": ["name", "user_id"],
         "title": "Flow"
       },
       "FlowCreate": {
@@ -9282,9 +8899,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "title": "FlowCreate"
       },
       "FlowDataRequest": {
@@ -9319,10 +8934,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "nodes",
-          "edges"
-        ],
+        "required": ["nodes", "edges"],
         "title": "FlowDataRequest"
       },
       "FlowHeader": {
@@ -9464,10 +9076,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "title": "FlowHeader",
         "description": "Model representing a header for a flow - Without the data."
       },
@@ -9482,9 +9091,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "flows"
-        ],
+        "required": ["flows"],
         "title": "FlowListCreate"
       },
       "FlowRead": {
@@ -9696,12 +9303,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "id",
-          "user_id",
-          "folder_id"
-        ],
+        "required": ["name", "id", "user_id", "folder_id"],
         "title": "FlowRead"
       },
       "FlowUpdate": {
@@ -9894,9 +9496,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "title": "FolderCreate"
       },
       "FolderRead": {
@@ -9948,11 +9548,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "id",
-          "parent_id"
-        ],
+        "required": ["name", "id", "parent_id"],
         "title": "FolderRead"
       },
       "FolderReadWithFlows": {
@@ -10012,11 +9608,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "id",
-          "parent_id"
-        ],
+        "required": ["name", "id", "parent_id"],
         "title": "FolderReadWithFlows"
       },
       "FolderUpdate": {
@@ -10097,10 +9689,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "folder",
-          "flows"
-        ],
+        "required": ["folder", "flows"],
         "title": "FolderWithPaginatedFlows"
       },
       "FrontendNodeRequest-Input": {
@@ -10328,10 +9917,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "template",
-          "base_classes"
-        ],
+        "required": ["template", "base_classes"],
         "title": "FrontendNodeRequest"
       },
       "FrontendNodeRequest-Output": {
@@ -10551,10 +10137,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "template",
-          "base_classes"
-        ],
+        "required": ["template", "base_classes"],
         "title": "FrontendNodeRequest"
       },
       "GraphData": {
@@ -10587,10 +10170,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "nodes",
-          "edges"
-        ],
+        "required": ["nodes", "edges"],
         "title": "GraphData"
       },
       "GraphDumpResponse": {
@@ -10644,9 +10224,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "data"
-        ],
+        "required": ["data"],
         "title": "GraphDumpResponse"
       },
       "HTTPValidationError": {
@@ -10726,11 +10304,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "chat",
-                  "text",
-                  "any"
-                ]
+                "enum": ["chat", "text", "any"]
               },
               {
                 "type": "null"
@@ -10758,26 +10332,19 @@
         "title": "InputValueRequest",
         "examples": [
           {
-            "components": [
-              "components_id",
-              "Component Name"
-            ],
+            "components": ["components_id", "Component Name"],
             "input_value": "input_value",
             "session": "session_id"
           },
           {
-            "components": [
-              "Component Name"
-            ],
+            "components": ["Component Name"],
             "input_value": "input_value"
           },
           {
             "input_value": "input_value"
           },
           {
-            "components": [
-              "Component Name"
-            ],
+            "components": ["Component Name"],
             "input_value": "input_value",
             "session": "session_id"
           },
@@ -10856,10 +10423,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "title": "KnowledgeBaseInfo"
       },
       "ListComponentResponse": {
@@ -11042,10 +10606,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "authorized",
-          "results"
-        ],
+        "required": ["authorized", "results"],
         "title": "ListComponentResponseModel"
       },
       "Log": {
@@ -11094,11 +10655,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "message",
-          "type"
-        ],
+        "required": ["name", "message", "type"],
         "title": "Log"
       },
       "MCPInstallRequest": {
@@ -11111,10 +10668,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "sse",
-                  "streamablehttp"
-                ]
+                "enum": ["sse", "streamablehttp"]
               },
               {
                 "type": "null"
@@ -11124,9 +10678,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "client"
-        ],
+        "required": ["client"],
         "title": "MCPInstallRequest"
       },
       "MCPProjectUpdateRequest": {
@@ -11150,9 +10702,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "settings"
-        ],
+        "required": ["settings"],
         "title": "MCPProjectUpdateRequest",
         "description": "Request model for updating MCP project settings including auth."
       },
@@ -11220,9 +10770,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "title": "MCPSettings",
         "description": "Model representing MCP settings for a flow."
       },
@@ -11442,13 +10990,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "sender",
-          "sender_name",
-          "session_id",
-          "text",
-          "edit"
-        ],
+        "required": ["sender", "sender_name", "session_id", "text", "edit"],
         "title": "MessageResponse"
       },
       "MessageUpdate": {
@@ -11624,10 +11166,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "model",
-          "input"
-        ],
+        "required": ["model", "input"],
         "title": "OpenAIResponsesRequest",
         "description": "OpenAI-compatible responses request with flow_id as model parameter."
       },
@@ -11760,9 +11299,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "title": "Output"
       },
       "OutputOptions": {
@@ -11812,10 +11349,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "message",
-          "type"
-        ],
+        "required": ["message", "type"],
         "title": "OutputValue"
       },
       "Page_FlowRead_": {
@@ -11849,13 +11383,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
+        "required": ["items", "total", "page", "size", "pages"],
         "title": "Page[FlowRead]"
       },
       "Page_Flow_": {
@@ -11889,13 +11417,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
+        "required": ["items", "total", "page", "size", "pages"],
         "title": "Page[Flow]"
       },
       "Page_TransactionTable_": {
@@ -11929,13 +11451,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
+        "required": ["items", "total", "page", "size", "pages"],
         "title": "Page[TransactionTable]"
       },
       "PlaygroundEvent": {
@@ -11977,12 +11493,7 @@
           },
           "format_type": {
             "type": "string",
-            "enum": [
-              "default",
-              "error",
-              "warning",
-              "info"
-            ],
+            "enum": ["default", "error", "warning", "info"],
             "title": "Format Type",
             "default": "default"
           },
@@ -12054,9 +11565,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "input_variables"
-        ],
+        "required": ["input_variables"],
         "title": "PromptValidationResponse"
       },
       "RegisterRequest": {
@@ -12068,9 +11577,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "title": "RegisterRequest"
       },
       "RegisterResponse": {
@@ -12081,9 +11588,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "title": "RegisterResponse"
       },
       "ResultData": {
@@ -12284,11 +11789,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "chat",
-                  "text",
-                  "any"
-                ]
+                "enum": ["chat", "text", "any"]
               },
               {
                 "type": "null"
@@ -12302,12 +11803,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "chat",
-                  "text",
-                  "any",
-                  "debug"
-                ]
+                "enum": ["chat", "text", "any", "debug"]
               },
               {
                 "type": "null"
@@ -12441,13 +11937,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "description",
-          "data",
-          "tags",
-          "is_component"
-        ],
+        "required": ["name", "description", "data", "tags", "is_component"],
         "title": "StoreComponentCreate"
       },
       "StreamURL": {
@@ -12458,9 +11948,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "location"
-        ],
+        "required": ["location"],
         "title": "StreamURL"
       },
       "TagResponse": {
@@ -12483,10 +11971,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "title": "TagResponse"
       },
       "TaskStatusResponse": {
@@ -12506,9 +11991,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "status"
-        ],
+        "required": ["status"],
         "title": "TaskStatusResponse",
         "description": "Task status response schema."
       },
@@ -12528,11 +12011,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "access_token",
-          "refresh_token",
-          "token_type"
-        ],
+        "required": ["access_token", "refresh_token", "token_type"],
         "title": "Token"
       },
       "TransactionTable": {
@@ -12601,11 +12080,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "vertex_id",
-          "status",
-          "flow_id"
-        ],
+        "required": ["vertex_id", "status", "flow_id"],
         "title": "TransactionTable"
       },
       "Tweaks": {
@@ -12686,11 +12161,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "api_key",
-          "user_id"
-        ],
+        "required": ["id", "api_key", "user_id"],
         "title": "UnmaskedApiKeyRead"
       },
       "UpdateCustomComponentRequest": {
@@ -12755,11 +12226,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "code",
-          "field",
-          "template"
-        ],
+        "required": ["code", "field", "template"],
         "title": "UpdateCustomComponentRequest"
       },
       "UserCreate": {
@@ -12791,10 +12258,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "username",
-          "password"
-        ],
+        "required": ["username", "password"],
         "title": "UserCreate"
       },
       "UserRead": {
@@ -12997,10 +12461,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "likes_count",
-          "liked_by_user"
-        ],
+        "required": ["likes_count", "liked_by_user"],
         "title": "UsersLikesResponse"
       },
       "UsersResponse": {
@@ -13018,10 +12479,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "total_count",
-          "users"
-        ],
+        "required": ["total_count", "users"],
         "title": "UsersResponse"
       },
       "ValidatePromptRequest": {
@@ -13058,10 +12516,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "template"
-        ],
+        "required": ["name", "template"],
         "title": "ValidatePromptRequest"
       },
       "ValidationError": {
@@ -13090,11 +12545,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
+        "required": ["loc", "msg", "type"],
         "title": "ValidationError"
       },
       "VariableCreate": {
@@ -13163,11 +12614,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "name",
-          "value",
-          "default_fields"
-        ],
+        "required": ["name", "value", "default_fields"],
         "title": "VariableCreate"
       },
       "VariableRead": {
@@ -13230,9 +12677,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "title": "VariableRead"
       },
       "VariableUpdate": {
@@ -13283,9 +12728,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "title": "VariableUpdate"
       },
       "VertexBuildMapModel": {
@@ -13302,9 +12745,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "vertex_builds"
-        ],
+        "required": ["vertex_builds"],
         "title": "VertexBuildMapModel"
       },
       "VertexBuildResponse": {
@@ -13393,10 +12834,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "valid",
-          "data"
-        ],
+        "required": ["valid", "data"],
         "title": "VertexBuildResponse"
       },
       "VertexBuildTable": {
@@ -13447,11 +12885,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "valid",
-          "flow_id"
-        ],
+        "required": ["id", "valid", "flow_id"],
         "title": "VertexBuildTable"
       },
       "VerticesOrderResponse": {
@@ -13477,11 +12911,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "ids",
-          "run_id",
-          "vertices_to_run"
-        ],
+        "required": ["ids", "run_id", "vertices_to_run"],
         "title": "VerticesOrderResponse"
       },
       "ViewPort": {
@@ -13500,11 +12930,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "x",
-          "y",
-          "zoom"
-        ],
+        "required": ["x", "y", "zoom"],
         "title": "ViewPort"
       },
       "primeagent__api__schemas__UploadFileResponse": {
@@ -13540,12 +12966,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "id",
-          "name",
-          "path",
-          "size"
-        ],
+        "required": ["id", "name", "path", "size"],
         "title": "UploadFileResponse",
         "description": "File upload response schema."
       },
@@ -13562,10 +12983,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "flowId",
-          "file_path"
-        ],
+        "required": ["flowId", "file_path"],
         "title": "UploadFileResponse",
         "description": "Upload file response schema."
       },
@@ -13604,10 +13022,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "title",
-          "contents"
-        ],
+        "required": ["title", "contents"],
         "title": "ContentBlock",
         "description": "A block of content that can contain different types of content."
       },
@@ -13738,10 +13153,7 @@
           },
           "state": {
             "type": "string",
-            "enum": [
-              "partial",
-              "complete"
-            ],
+            "enum": ["partial", "complete"],
             "title": "State",
             "default": "complete"
           },
@@ -13771,11 +13183,7 @@
           }
         },
         "type": "object",
-        "required": [
-          "path",
-          "name",
-          "type"
-        ],
+        "required": ["path", "name", "type"],
         "title": "File",
         "description": "File schema."
       }

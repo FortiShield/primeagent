@@ -1,10 +1,12 @@
 // Custom Docusaurus plugin to inject Segment analytics
 function pluginSegment(context, options = {}) {
-  const isProd = process.env.NODE_ENV === "production" || options.allowedInDev;
+  const isProd = process.env.NODE_ENV === 'production' || options.allowedInDev;
   const segmentPublicWriteKey = options.segmentPublicWriteKey;
 
   if (!segmentPublicWriteKey) {
-    console.warn('Segment plugin: No write key provided. Analytics will not be initialized.');
+    console.warn(
+      'Segment plugin: No write key provided. Analytics will not be initialized.',
+    );
     return { name: 'docusaurus-plugin-segment' };
   }
 
@@ -12,7 +14,12 @@ function pluginSegment(context, options = {}) {
     name: 'docusaurus-plugin-segment',
 
     getClientModules() {
-      return isProd ? [require.resolve('./analytics-page'), require.resolve('./data-attribute-tracking')] : [];
+      return isProd
+        ? [
+            require.resolve('./analytics-page'),
+            require.resolve('./data-attribute-tracking'),
+          ]
+        : [];
     },
 
     injectHtmlTags() {

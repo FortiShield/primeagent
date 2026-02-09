@@ -9,16 +9,12 @@
             "dataType": "ChatInput",
             "id": "ChatInput-my2y0",
             "name": "message",
-            "output_types": [
-              "Message"
-            ]
+            "output_types": ["Message"]
           },
           "targetHandle": {
             "fieldName": "input_value",
             "id": "ToolCallingAgent-VyZhN",
-            "inputTypes": [
-              "Message"
-            ],
+            "inputTypes": ["Message"],
             "type": "str"
           }
         },
@@ -37,16 +33,12 @@
             "dataType": "NotionPageUpdate",
             "id": "NotionPageUpdate-DWOeO",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -65,16 +57,12 @@
             "dataType": "NotionPageCreator",
             "id": "NotionPageCreator-Gdgtd",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -93,16 +81,12 @@
             "dataType": "AddContentToPage",
             "id": "AddContentToPage-3iQ3m",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -121,16 +105,12 @@
             "dataType": "NotionDatabaseProperties",
             "id": "NotionDatabaseProperties-F3Vjj",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -149,16 +129,12 @@
             "dataType": "NotionListPages",
             "id": "NotionListPages-9cC7f",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -177,16 +153,12 @@
             "dataType": "NotionPageContent",
             "id": "NotionPageContent-didQ9",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -205,16 +177,12 @@
             "dataType": "NotionUserList",
             "id": "NotionUserList-4C1Rj",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -233,16 +201,12 @@
             "dataType": "NotionSearch",
             "id": "NotionSearch-Qrabo",
             "name": "example_tool_output",
-            "output_types": [
-              "Tool"
-            ]
+            "output_types": ["Tool"]
           },
           "targetHandle": {
             "fieldName": "tools",
             "id": "ToolkitComponent-mfg6v",
-            "inputTypes": [
-              "Tool"
-            ],
+            "inputTypes": ["Tool"],
             "type": "other"
           }
         },
@@ -261,16 +225,12 @@
             "dataType": "OpenAIModel",
             "id": "OpenAIModel-gIFGV",
             "name": "model_output",
-            "output_types": [
-              "LanguageModel"
-            ]
+            "output_types": ["LanguageModel"]
           },
           "targetHandle": {
             "fieldName": "llm",
             "id": "ToolCallingAgent-VyZhN",
-            "inputTypes": [
-              "LanguageModel"
-            ],
+            "inputTypes": ["LanguageModel"],
             "type": "other"
           }
         },
@@ -289,16 +249,12 @@
             "dataType": "Prompt",
             "id": "Prompt-S7cEu",
             "name": "prompt",
-            "output_types": [
-              "Message"
-            ]
+            "output_types": ["Message"]
           },
           "targetHandle": {
             "fieldName": "system_prompt",
             "id": "ToolCallingAgent-VyZhN",
-            "inputTypes": [
-              "Message"
-            ],
+            "inputTypes": ["Message"],
             "type": "str"
           }
         },
@@ -315,18 +271,12 @@
             "dataType": "Memory",
             "id": "Memory-4Jm4h",
             "name": "dataframe",
-            "output_types": [
-              "DataFrame"
-            ]
+            "output_types": ["DataFrame"]
           },
           "targetHandle": {
             "fieldName": "input_data",
             "id": "TypeConverterComponent-I2ppC",
-            "inputTypes": [
-              "Message",
-              "Data",
-              "DataFrame"
-            ],
+            "inputTypes": ["Message", "Data", "DataFrame"],
             "type": "other"
           }
         },
@@ -342,16 +292,12 @@
             "dataType": "TypeConverterComponent",
             "id": "TypeConverterComponent-I2ppC",
             "name": "message_output",
-            "output_types": [
-              "Message"
-            ]
+            "output_types": ["Message"]
           },
           "targetHandle": {
             "fieldName": "input_value",
             "id": "OpenAIModel-gIFGV",
-            "inputTypes": [
-              "Message"
-            ],
+            "inputTypes": ["Message"],
             "type": "str"
           }
         },
@@ -369,10 +315,7 @@
           "display_name": "Add Content to Page ",
           "id": "AddContentToPage-3iQ3m",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -380,11 +323,7 @@
             "display_name": "Add Content to Page ",
             "documentation": "https://developers.notion.com/reference/patch-block-children",
             "edited": true,
-            "field_order": [
-              "markdown_text",
-              "block_id",
-              "notion_secret"
-            ],
+            "field_order": ["markdown_text", "block_id", "notion_secret"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -397,9 +336,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -408,9 +345,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -458,9 +393,7 @@
                 "display_name": "Markdown Text",
                 "dynamic": false,
                 "info": "The markdown text to convert to Notion blocks.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "load_from_db": false,
                 "multiline": true,
@@ -480,9 +413,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -522,10 +453,7 @@
           "display_name": "Create Page ",
           "id": "NotionPageCreator-Gdgtd",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -533,11 +461,7 @@
             "display_name": "Create Page ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/page-create",
             "edited": true,
-            "field_order": [
-              "database_id",
-              "notion_secret",
-              "properties_json"
-            ],
+            "field_order": ["database_id", "notion_secret", "properties_json"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -550,9 +474,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -561,9 +483,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -611,9 +531,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -630,9 +548,7 @@
                 "display_name": "Properties (JSON)",
                 "dynamic": false,
                 "info": "The properties of the new page as a JSON string.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "load_from_db": false,
                 "multiline": true,
@@ -675,10 +591,7 @@
           "display_name": "List Database Properties ",
           "id": "NotionDatabaseProperties-F3Vjj",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -686,10 +599,7 @@
             "display_name": "List Database Properties ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/list-database-properties",
             "edited": true,
-            "field_order": [
-              "database_id",
-              "notion_secret"
-            ],
+            "field_order": ["database_id", "notion_secret"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -702,9 +612,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -713,9 +621,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -763,9 +669,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -805,10 +709,7 @@
           "display_name": "List Pages ",
           "id": "NotionListPages-9cC7f",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -816,11 +717,7 @@
             "display_name": "List Pages ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/list-pages",
             "edited": true,
-            "field_order": [
-              "notion_secret",
-              "database_id",
-              "query_json"
-            ],
+            "field_order": ["notion_secret", "database_id", "query_json"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -833,9 +730,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -844,9 +739,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -894,9 +787,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -913,9 +804,7 @@
                 "display_name": "Database query (JSON)",
                 "dynamic": false,
                 "info": "A JSON string containing the filters and sorts that will be used for querying the database. Leave empty for no filters or sorts.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "load_from_db": false,
                 "multiline": true,
@@ -958,10 +847,7 @@
           "display_name": "List Users ",
           "id": "NotionUserList-4C1Rj",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -969,9 +855,7 @@
             "display_name": "List Users ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/list-users",
             "edited": true,
-            "field_order": [
-              "notion_secret"
-            ],
+            "field_order": ["notion_secret"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -984,9 +868,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -995,9 +877,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1028,9 +908,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -1070,10 +948,7 @@
           "display_name": "Page Content Viewer ",
           "id": "NotionPageContent-didQ9",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -1081,10 +956,7 @@
             "display_name": "Page Content Viewer ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/page-content-viewer",
             "edited": true,
-            "field_order": [
-              "page_id",
-              "notion_secret"
-            ],
+            "field_order": ["page_id", "notion_secret"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -1097,9 +969,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -1108,9 +978,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1141,9 +1009,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -1200,10 +1066,7 @@
           "display_name": "Search ",
           "id": "NotionSearch-Qrabo",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -1229,9 +1092,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -1240,9 +1101,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1275,10 +1134,7 @@
                 "dynamic": false,
                 "info": "Limits the results to either only pages or only databases.",
                 "name": "filter_value",
-                "options": [
-                  "page",
-                  "database"
-                ],
+                "options": ["page", "database"],
                 "placeholder": "",
                 "required": false,
                 "show": true,
@@ -1293,9 +1149,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -1331,10 +1185,7 @@
                 "dynamic": false,
                 "info": "The direction to sort the results.",
                 "name": "sort_direction",
-                "options": [
-                  "ascending",
-                  "descending"
-                ],
+                "options": ["ascending", "descending"],
                 "placeholder": "",
                 "required": false,
                 "show": true,
@@ -1372,10 +1223,7 @@
           "display_name": "Update Page Property ",
           "id": "NotionPageUpdate-DWOeO",
           "node": {
-            "base_classes": [
-              "Data",
-              "Tool"
-            ],
+            "base_classes": ["Data", "Tool"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -1383,11 +1231,7 @@
             "display_name": "Update Page Property ",
             "documentation": "https://docs.agent.khulnasoft.com/integrations/notion/page-update",
             "edited": true,
-            "field_order": [
-              "page_id",
-              "properties",
-              "notion_secret"
-            ],
+            "field_order": ["page_id", "properties", "notion_secret"],
             "frozen": false,
             "icon": "NotionDirectoryLoader",
             "lf_version": "1.0.17",
@@ -1400,9 +1244,7 @@
                 "method": "run_model",
                 "name": "example_output",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -1411,9 +1253,7 @@
                 "method": "build_tool",
                 "name": "example_tool_output",
                 "selected": "Tool",
-                "types": [
-                  "Tool"
-                ],
+                "types": ["Tool"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1444,9 +1284,7 @@
                 "display_name": "Notion Secret",
                 "dynamic": false,
                 "info": "The Notion integration token.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "load_from_db": false,
                 "name": "notion_secret",
                 "password": true,
@@ -1480,9 +1318,7 @@
                 "display_name": "Properties",
                 "dynamic": false,
                 "info": "The properties to update on the page (as a JSON string or a dictionary).",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "load_from_db": false,
                 "multiline": true,
@@ -1523,10 +1359,7 @@
         "data": {
           "id": "ToolCallingAgent-VyZhN",
           "node": {
-            "base_classes": [
-              "AgentExecutor",
-              "Message"
-            ],
+            "base_classes": ["AgentExecutor", "Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -1564,9 +1397,7 @@
                 "required_inputs": [],
                 "selected": "AgentExecutor",
                 "tool_mode": false,
-                "types": [
-                  "AgentExecutor"
-                ],
+                "types": ["AgentExecutor"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -1580,9 +1411,7 @@
                 "required_inputs": [],
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1596,9 +1425,7 @@
                 "display_name": "Agent Description [Deprecated]",
                 "dynamic": false,
                 "info": "The description of the agent. This is only used when in Tool Mode. Defaults to 'A helpful assistant with access to the following tools:' and tools are added dynamically. This feature is deprecated and will be removed in future versions.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1620,9 +1447,7 @@
                 "display_name": "Chat Memory",
                 "dynamic": false,
                 "info": "This input stores the chat history, allowing the agent to remember previous conversations.",
-                "input_types": [
-                  "Data"
-                ],
+                "input_types": ["Data"],
                 "list": true,
                 "list_add_label": "Add More",
                 "name": "chat_history",
@@ -1678,9 +1503,7 @@
                 "display_name": "Input",
                 "dynamic": false,
                 "info": "The input provided by the user for the agent to process.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1701,9 +1524,7 @@
                 "display_name": "Language Model",
                 "dynamic": false,
                 "info": "Language model that the agent utilizes to perform tasks effectively.",
-                "input_types": [
-                  "LanguageModel"
-                ],
+                "input_types": ["LanguageModel"],
                 "list": false,
                 "list_add_label": "Add More",
                 "name": "llm",
@@ -1739,9 +1560,7 @@
                 "display_name": "System Prompt",
                 "dynamic": false,
                 "info": "System prompt to guide the agent's behavior.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1762,9 +1581,7 @@
                 "display_name": "Tools",
                 "dynamic": false,
                 "info": "These are the tools that the agent can use to help with tasks.",
-                "input_types": [
-                  "Tool"
-                ],
+                "input_types": ["Tool"],
                 "list": true,
                 "list_add_label": "Add More",
                 "name": "tools",
@@ -1822,9 +1639,7 @@
         "data": {
           "id": "ChatOutput-jessc",
           "node": {
-            "base_classes": [
-              "Message"
-            ],
+            "base_classes": ["Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -1862,9 +1677,7 @@
                 "required_inputs": null,
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -1877,9 +1690,7 @@
                 "display_name": "Background Color",
                 "dynamic": false,
                 "info": "The background color of the icon.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1900,9 +1711,7 @@
                 "display_name": "Icon",
                 "dynamic": false,
                 "info": "The icon of the message.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1959,9 +1768,7 @@
                 "display_name": "Data Template",
                 "dynamic": false,
                 "info": "Template to convert Data to Text. If left empty, it will be dynamically set to the Data's text key.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -1982,11 +1789,7 @@
                 "display_name": "Inputs",
                 "dynamic": false,
                 "info": "Message to be passed as output.",
-                "input_types": [
-                  "Data",
-                  "DataFrame",
-                  "Message"
-                ],
+                "input_types": ["Data", "DataFrame", "Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "name": "input_value",
@@ -2007,10 +1810,7 @@
                 "dynamic": false,
                 "info": "Type of sender.",
                 "name": "sender",
-                "options": [
-                  "Machine",
-                  "User"
-                ],
+                "options": ["Machine", "User"],
                 "options_metadata": [],
                 "placeholder": "",
                 "required": false,
@@ -2028,9 +1828,7 @@
                 "display_name": "Sender Name",
                 "dynamic": false,
                 "info": "Name of the sender.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2051,9 +1849,7 @@
                 "display_name": "Session ID",
                 "dynamic": false,
                 "info": "The session ID of the chat. If empty, the current session ID parameter will be used.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2092,9 +1888,7 @@
                 "display_name": "Text Color",
                 "dynamic": false,
                 "info": "The text color of the name",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2137,9 +1931,7 @@
         "data": {
           "id": "ChatInput-my2y0",
           "node": {
-            "base_classes": [
-              "Message"
-            ],
+            "base_classes": ["Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -2176,9 +1968,7 @@
                 "required_inputs": null,
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -2191,9 +1981,7 @@
                 "display_name": "Background Color",
                 "dynamic": false,
                 "info": "The background color of the icon.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2214,9 +2002,7 @@
                 "display_name": "Icon",
                 "dynamic": false,
                 "info": "The icon of the message.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2325,10 +2111,7 @@
                 "dynamic": false,
                 "info": "Type of sender.",
                 "name": "sender",
-                "options": [
-                  "Machine",
-                  "User"
-                ],
+                "options": ["Machine", "User"],
                 "options_metadata": [],
                 "placeholder": "",
                 "required": false,
@@ -2346,9 +2129,7 @@
                 "display_name": "Sender Name",
                 "dynamic": false,
                 "info": "Name of the sender.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2369,9 +2150,7 @@
                 "display_name": "Session ID",
                 "dynamic": false,
                 "info": "The session ID of the chat. If empty, the current session ID parameter will be used.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2410,9 +2189,7 @@
                 "display_name": "Text Color",
                 "dynamic": false,
                 "info": "The text color of the name",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2455,10 +2232,7 @@
         "data": {
           "id": "ToolkitComponent-mfg6v",
           "node": {
-            "base_classes": [
-              "BaseTool",
-              "Data"
-            ],
+            "base_classes": ["BaseTool", "Data"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -2466,9 +2240,7 @@
             "display_name": "Toolkit",
             "documentation": "",
             "edited": true,
-            "field_order": [
-              "tools"
-            ],
+            "field_order": ["tools"],
             "frozen": false,
             "icon": "pocket-knife",
             "lf_version": "1.0.17",
@@ -2480,9 +2252,7 @@
                 "method": "generate_toolkit",
                 "name": "generated_tools",
                 "selected": "BaseTool",
-                "types": [
-                  "BaseTool"
-                ],
+                "types": ["BaseTool"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -2492,9 +2262,7 @@
                 "method": "generate_tool_data",
                 "name": "tool_data",
                 "selected": "Data",
-                "types": [
-                  "Data"
-                ],
+                "types": ["Data"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -2525,9 +2293,7 @@
                 "display_name": "Tools",
                 "dynamic": false,
                 "info": "List of tools to combine.",
-                "input_types": [
-                  "Tool"
-                ],
+                "input_types": ["Tool"],
                 "list": true,
                 "name": "tools",
                 "placeholder": "",
@@ -2565,10 +2331,7 @@
         "data": {
           "id": "OpenAIModel-gIFGV",
           "node": {
-            "base_classes": [
-              "LanguageModel",
-              "Message"
-            ],
+            "base_classes": ["LanguageModel", "Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -2616,9 +2379,7 @@
                 "required_inputs": [],
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               },
               {
@@ -2629,14 +2390,10 @@
                 "method": "build_model",
                 "name": "model_output",
                 "options": null,
-                "required_inputs": [
-                  "api_key"
-                ],
+                "required_inputs": ["api_key"],
                 "selected": "LanguageModel",
                 "tool_mode": true,
-                "types": [
-                  "LanguageModel"
-                ],
+                "types": ["LanguageModel"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -2684,9 +2441,7 @@
                 "display_name": "Input",
                 "dynamic": false,
                 "info": "",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2875,9 +2630,7 @@
                 "display_name": "System Message",
                 "dynamic": false,
                 "info": "System message to pass to the model.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -2967,9 +2720,7 @@
         "data": {
           "id": "Memory-4Jm4h",
           "node": {
-            "base_classes": [
-              "DataFrame"
-            ],
+            "base_classes": ["DataFrame"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -3007,9 +2758,7 @@
                 "required_inputs": null,
                 "selected": "DataFrame",
                 "tool_mode": true,
-                "types": [
-                  "DataFrame"
-                ],
+                "types": ["DataFrame"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -3040,9 +2789,7 @@
                 "display_name": "External Memory",
                 "dynamic": false,
                 "info": "Retrieve messages from an external memory. If empty, it will use the Primeagent tables.",
-                "input_types": [
-                  "Memory"
-                ],
+                "input_types": ["Memory"],
                 "list": false,
                 "list_add_label": "Add More",
                 "name": "memory",
@@ -3060,9 +2807,7 @@
                 "display_name": "Message",
                 "dynamic": true,
                 "info": "The chat message to be stored.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -3084,10 +2829,7 @@
                 "dynamic": false,
                 "info": "Operation mode: Store messages or Retrieve messages.",
                 "name": "mode",
-                "options": [
-                  "Retrieve",
-                  "Store"
-                ],
+                "options": ["Retrieve", "Store"],
                 "placeholder": "",
                 "real_time_refresh": true,
                 "required": false,
@@ -3125,10 +2867,7 @@
                 "dynamic": false,
                 "info": "Order of the messages.",
                 "name": "order",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
+                "options": ["Ascending", "Descending"],
                 "options_metadata": [],
                 "placeholder": "",
                 "required": true,
@@ -3149,11 +2888,7 @@
                 "dynamic": false,
                 "info": "Filter by sender type.",
                 "name": "sender",
-                "options": [
-                  "Machine",
-                  "User",
-                  "Machine and User"
-                ],
+                "options": ["Machine", "User", "Machine and User"],
                 "options_metadata": [],
                 "placeholder": "",
                 "required": false,
@@ -3171,9 +2906,7 @@
                 "display_name": "Sender Name",
                 "dynamic": false,
                 "info": "Filter by sender name.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -3194,9 +2927,7 @@
                 "display_name": "Session ID",
                 "dynamic": false,
                 "info": "The session ID of the chat. If empty, the current session ID parameter will be used.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -3218,9 +2949,7 @@
                 "display_name": "Template",
                 "dynamic": false,
                 "info": "The template to use for formatting the data. It can contain the keys {text}, {sender} or any other key in the message data.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -3264,24 +2993,17 @@
         "data": {
           "id": "Prompt-S7cEu",
           "node": {
-            "base_classes": [
-              "Message"
-            ],
+            "base_classes": ["Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {
-              "template": [
-                "CURRENT_DATE"
-              ]
+              "template": ["CURRENT_DATE"]
             },
             "description": "Create a prompt template with dynamic variables.",
             "display_name": "Prompt",
             "documentation": "",
             "edited": false,
-            "field_order": [
-              "template",
-              "tool_placeholder"
-            ],
+            "field_order": ["template", "tool_placeholder"],
             "frozen": false,
             "icon": "braces",
             "legacy": false,
@@ -3301,9 +3023,7 @@
                 "required_inputs": null,
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -3317,9 +3037,7 @@
                 "fileTypes": [],
                 "file_path": "",
                 "info": "",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "load_from_db": false,
                 "multiline": true,
@@ -3375,9 +3093,7 @@
                 "display_name": "Tool Placeholder",
                 "dynamic": false,
                 "info": "A placeholder input for tool mode.",
-                "input_types": [
-                  "Message"
-                ],
+                "input_types": ["Message"],
                 "list": false,
                 "list_add_label": "Add More",
                 "load_from_db": false,
@@ -3420,9 +3136,7 @@
         "data": {
           "id": "CurrentDateComponent-mEpAU",
           "node": {
-            "base_classes": [
-              "Message"
-            ],
+            "base_classes": ["Message"],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
@@ -3430,9 +3144,7 @@
             "display_name": "Current Date",
             "documentation": "",
             "edited": true,
-            "field_order": [
-              "timezone"
-            ],
+            "field_order": ["timezone"],
             "frozen": false,
             "icon": "clock",
             "lf_version": "1.0.17",
@@ -3445,9 +3157,7 @@
                 "method": "get_current_date",
                 "name": "current_date",
                 "selected": "Message",
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -3529,9 +3239,7 @@
         "data": {
           "id": "TypeConverterComponent-I2ppC",
           "node": {
-            "base_classes": [
-              "Message"
-            ],
+            "base_classes": ["Message"],
             "beta": false,
             "category": "processing",
             "conditional_paths": [],
@@ -3540,10 +3248,7 @@
             "display_name": "Type Convert",
             "documentation": "",
             "edited": false,
-            "field_order": [
-              "input_data",
-              "output_type"
-            ],
+            "field_order": ["input_data", "output_type"],
             "frozen": false,
             "icon": "repeat",
             "key": "TypeConverterComponent",
@@ -3561,9 +3266,7 @@
                 "name": "message_output",
                 "selected": "Message",
                 "tool_mode": true,
-                "types": [
-                  "Message"
-                ],
+                "types": ["Message"],
                 "value": "__UNDEFINED__"
               }
             ],
@@ -3595,11 +3298,7 @@
                 "display_name": "Input",
                 "dynamic": false,
                 "info": "Accept Message, Data or DataFrame as input",
-                "input_types": [
-                  "Message",
-                  "Data",
-                  "DataFrame"
-                ],
+                "input_types": ["Message", "Data", "DataFrame"],
                 "list": false,
                 "list_add_label": "Add More",
                 "name": "input_data",
@@ -3618,11 +3317,7 @@
                 "dynamic": false,
                 "info": "Select the desired output data type",
                 "name": "output_type",
-                "options": [
-                  "Message",
-                  "Data",
-                  "DataFrame"
-                ],
+                "options": ["Message", "Data", "DataFrame"],
                 "placeholder": "",
                 "real_time_refresh": true,
                 "required": false,

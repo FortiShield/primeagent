@@ -67,9 +67,15 @@ export const useGetAddSessions: UseGetAddSessionsReturnType = ({
   useEffect(() => {
     if (!flowId || !isPlaygroundPage) return;
     try {
+      // Only persist locally generated "New Session X" entries to avoid storing
+      // any potentially sensitive identifiers in sessionStorage.
+      const newSessionPattern = new RegExp(`^${NEW_SESSION_NAME} (\\d+)$`);
+      const safeLocalSessions = Array.from(localSessions).filter((session) =>
+        newSessionPattern.test(session),
+      );
       window.sessionStorage.setItem(
         LOCAL_SESSIONS_STORAGE_KEY(flowId),
-        JSON.stringify(Array.from(localSessions)),
+        JSON.stringify(safeLocalSessions),
       );
     } catch (error) {
       console.error("Error saving local sessions to sessionStorage:", error);

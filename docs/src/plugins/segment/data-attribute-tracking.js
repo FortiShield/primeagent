@@ -36,7 +36,8 @@ let isDataAttributeTrackingInitialized = false;
  */
 function initializeDataAttributeTracking() {
   // Only run on client side and prevent duplicate initialization
-  if (!ExecutionEnvironment.canUseDOM || isDataAttributeTrackingInitialized) return;
+  if (!ExecutionEnvironment.canUseDOM || isDataAttributeTrackingInitialized)
+    return;
 
   const handleClick = (event) => {
     const target = event.target;
@@ -50,7 +51,7 @@ function initializeDataAttributeTracking() {
     // Extract all data-* attributes (except data-event itself)
     const properties = {};
 
-    Object.keys(trackingElement.dataset).forEach(key => {
+    Object.keys(trackingElement.dataset).forEach((key) => {
       if (key !== 'event') {
         // Map to IBM Segment property names (preserve exact casing per schema)
         let propertyKey = key;
@@ -86,7 +87,10 @@ function initializeDataAttributeTracking() {
 // Initialize on DOM ready
 if (ExecutionEnvironment.canUseDOM) {
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeDataAttributeTracking);
+    document.addEventListener(
+      'DOMContentLoaded',
+      initializeDataAttributeTracking,
+    );
   } else {
     initializeDataAttributeTracking();
   }

@@ -21,53 +21,53 @@ This endpoint builds and executes a flow, returning a job ID that can be used to
 
 1. Send a POST request to the `/build/$FLOW_ID/flow` endpoint:
 
-    ```shell
-    curl -X POST \
-      "$PRIMEAGENT_URL/api/v1/build/$FLOW_ID/flow" \
-      -H "accept: application/json" \
-      -H "Content-Type: application/json" \
-      -H "x-api-key: $PRIMEAGENT_API_KEY" \
-      -d '{
-        "inputs": {
-          "input_value": "Tell me a story"
-        }
-      }'
-    ```
+   ```shell
+   curl -X POST \
+     "$PRIMEAGENT_URL/api/v1/build/$FLOW_ID/flow" \
+     -H "accept: application/json" \
+     -H "Content-Type: application/json" \
+     -H "x-api-key: $PRIMEAGENT_API_KEY" \
+     -d '{
+       "inputs": {
+         "input_value": "Tell me a story"
+       }
+     }'
+   ```
 
-    <details>
-    <summary>Result</summary>
+   <details>
+<summary>Result</summary>
 
-    ```json
-    {
-      "job_id": "123e4567-e89b-12d3-a456-426614174000"
-    }
-    ```
+   ```json
+   {
+     "job_id": "123e4567-e89b-12d3-a456-426614174000"
+   }
+   ```
 
-    </details>
+   </details>
 
 2. After receiving a job ID from the build endpoint, use the `/build/$JOB_ID/events` endpoint to stream the execution results:
 
-    ```shell
-    curl -X GET \
-      "$PRIMEAGENT_URL/api/v1/build/123e4567-e89b-12d3-a456-426614174000/events" \
-      -H "accept: application/json" \
-      -H "x-api-key: $PRIMEAGENT_API_KEY"
-    ```
+   ```shell
+   curl -X GET \
+     "$PRIMEAGENT_URL/api/v1/build/123e4567-e89b-12d3-a456-426614174000/events" \
+     -H "accept: application/json" \
+     -H "x-api-key: $PRIMEAGENT_API_KEY"
+   ```
 
-    <details>
-    <summary>Result</summary>
+   <details>
+<summary>Result</summary>
 
-    ```json
-    {"event": "vertices_sorted", "data": {"ids": ["ChatInput-XtBLx"], "to_run": ["Prompt-x74Ze", "ChatOutput-ylMzN", "ChatInput-XtBLx", "OpenAIModel-d1wOZ"]}}
+   ```json
+   {"event": "vertices_sorted", "data": {"ids": ["ChatInput-XtBLx"], "to_run": ["Prompt-x74Ze", "ChatOutput-ylMzN", "ChatInput-XtBLx", "OpenAIModel-d1wOZ"]}}
 
-    {"event": "add_message", "data": {"timestamp": "2025-03-03T17:42:23", "sender": "User", "sender_name": "User", "session_id": "d2bbd92b-187e-4c84-b2d4-5df365704201", "text": "Tell me a story", "files": [], "error": false, "edit": false, "properties": {"text_color": "", "background_color": "", "edited": false, "source": {"id": null, "display_name": null, "source": null}, "icon": "", "allow_markdown": false, "positive_feedback": null, "state": "complete", "targets": []}, "category": "message", "content_blocks": [], "id": "28879bd8-6a68-4dd5-b658-74d643a4dd92", "flow_id": "d2bbd92b-187e-4c84-b2d4-5df365704201"}}
+   {"event": "add_message", "data": {"timestamp": "2025-03-03T17:42:23", "sender": "User", "sender_name": "User", "session_id": "d2bbd92b-187e-4c84-b2d4-5df365704201", "text": "Tell me a story", "files": [], "error": false, "edit": false, "properties": {"text_color": "", "background_color": "", "edited": false, "source": {"id": null, "display_name": null, "source": null}, "icon": "", "allow_markdown": false, "positive_feedback": null, "state": "complete", "targets": []}, "category": "message", "content_blocks": [], "id": "28879bd8-6a68-4dd5-b658-74d643a4dd92", "flow_id": "d2bbd92b-187e-4c84-b2d4-5df365704201"}}
 
-    // ... Additional events as the flow executes ...
+   // ... Additional events as the flow executes ...
 
-    {"event": "end", "data": {}}
-    ```
+   {"event": "end", "data": {}}
+   ```
 
-    </details>
+   </details>
 
 The `/build/$FLOW_ID/events` endpoint has a `stream` query parameter that defaults to `true`.
 To disable streaming and get all events at once, set `?stream=false`.
@@ -81,22 +81,22 @@ curl -X GET \
 
 ## Build headers
 
-| Header | Info | Example |
-|--------|------|---------|
-| Content-Type | Required. Specifies the JSON format. | "application/json" |
-| accept | Optional. Specifies the response format. | "application/json" |
-| x-api-key | Optional. Required only if authentication is enabled. | "sk-..." |
+| Header       | Info                                                  | Example            |
+| ------------ | ----------------------------------------------------- | ------------------ |
+| Content-Type | Required. Specifies the JSON format.                  | "application/json" |
+| accept       | Optional. Specifies the response format.              | "application/json" |
+| x-api-key    | Optional. Required only if authentication is enabled. | "sk-..."           |
 
 ## Build parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| inputs | object | Optional. Input values for flow components. |
-| data | object | Optional. Flow data to override stored configuration. |
-| files | array[string] | Optional. List of file paths to use. |
-| start_component_id | string | Optional. ID of the component where the execution should start. Component `id` values can be found in [Primeagent JSON files](/concepts-flows-import#primeagent-json-file-contents) |
-| stop_component_id | string | Optional. ID of the component where the execution should stop. Component `id` values can be found in [Primeagent JSON files](/concepts-flows-import#primeagent-json-file-contents).|
-| log_builds | Boolean | Whether to record build logs. Default: Enabled (`true`). |
+| Parameter          | Type          | Description                                                                                                                                                                         |
+| ------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| inputs             | object        | Optional. Input values for flow components.                                                                                                                                         |
+| data               | object        | Optional. Flow data to override stored configuration.                                                                                                                               |
+| files              | array[string] | Optional. List of file paths to use.                                                                                                                                                |
+| start_component_id | string        | Optional. ID of the component where the execution should start. Component `id` values can be found in [Primeagent JSON files](/concepts-flows-import#primeagent-json-file-contents) |
+| stop_component_id  | string        | Optional. ID of the component where the execution should stop. Component `id` values can be found in [Primeagent JSON files](/concepts-flows-import#primeagent-json-file-contents). |
+| log_builds         | Boolean       | Whether to record build logs. Default: Enabled (`true`).                                                                                                                            |
 
 ### Set start and stop points
 

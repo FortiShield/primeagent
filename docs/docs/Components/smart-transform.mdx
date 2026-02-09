@@ -3,7 +3,7 @@ title: Smart Transform
 slug: /smart-transform
 ---
 
-import Icon from "@site/src/components/icon";
+import Icon from '@site/src/components/icon';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import PartialParams from '@site/docs/_partial-hidden-params.mdx';
@@ -33,11 +33,10 @@ From there, the LLM generates a filter function that extracts email addresses fr
 
 <PartialParams />
 
-| Name | Display Name | Info |
-|------|--------------|------|
-| data | Data | Input parameter. The structured data to filter or transform using a Lambda function. |
-| llm | Language Model | Input parameter. Connect [`LanguageModel`](/data-types#languagemodel) output from a **Language Model** component. |
-| filter_instruction | Instructions | Input parameter. The natural language instructions for how to filter or transform the data. The LLM uses these instructions to create a Lambda function. |
-| sample_size | Sample Size | Input parameter. For large datasets, the number of characters to sample from the dataset head and tail. Only applied if the dataset meets or exceeds `max_size`. Default: `1000`. |
-| max_size | Max Size | Input parameter. The number of characters for the dataset to be considered large, which triggers sampling by the `sample_size` value. Default: `30000`. |
-
+| Name               | Display Name   | Info                                                                                                                                                                              |
+| ------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| data               | Data           | Input parameter. The structured data to filter or transform using a Lambda function.                                                                                              |
+| llm                | Language Model | Input parameter. Connect [`LanguageModel`](/data-types#languagemodel) output from a **Language Model** component.                                                                 |
+| filter_instruction | Instructions   | Input parameter. The natural language instructions for how to filter or transform the data. The LLM uses these instructions to create a Lambda function.                          |
+| sample_size        | Sample Size    | Input parameter. For large datasets, the number of characters to sample from the dataset head and tail. Only applied if the dataset meets or exceeds `max_size`. Default: `1000`. |
+| max_size           | Max Size       | Input parameter. The number of characters for the dataset to be considered large, which triggers sampling by the `sample_size` value. Default: `30000`.                           |
