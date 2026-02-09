@@ -50,6 +50,9 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: read
+
 env:
   PYTHON_VERSION: "3.13"
 
