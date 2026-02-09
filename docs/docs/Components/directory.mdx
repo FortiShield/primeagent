@@ -3,7 +3,7 @@ title: Directory
 slug: /directory
 ---
 
-import Icon from "@site/src/components/icon";
+import Icon from '@site/src/components/icon';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import PartialParams from '@site/docs/_partial-hidden-params.mdx';
@@ -19,14 +19,13 @@ Outputs either a [`Data`](/data-types#data) or [`DataFrame`](/data-types#datafra
 
 <PartialParams />
 
-| Name               | Type             | Description                                        |
-| ------------------ | ---------------- | -------------------------------------------------- |
-| path               | MessageTextInput | Input parameter. The path to the directory to load files from. Default: Current directory (`.`) |
+| Name               | Type             | Description                                                                                               |
+| ------------------ | ---------------- | --------------------------------------------------------------------------------------------------------- |
+| path               | MessageTextInput | Input parameter. The path to the directory to load files from. Default: Current directory (`.`)           |
 | types              | MessageTextInput | Input parameter. The file types to load. Select one or more, or leave empty to attempt to load all files. |
-| depth              | IntInput         | Input parameter. The depth to search for files. |
-| max_concurrency    | IntInput         | Input parameter. The maximum concurrency for loading multiple files. |
-| load_hidden        | BoolInput        | Input parameter. If `true`, hidden files are loaded.                  |
-| recursive          | BoolInput        | Input parameter. If `true`, the search is recursive.                  |
-| silent_errors      | BoolInput        | Input parameter. If `true`, errors don't raise an exception.         |
-| use_multithreading | BoolInput        | Input parameter. If `true`, multithreading is used.                   |
-
+| depth              | IntInput         | Input parameter. The depth to search for files.                                                           |
+| max_concurrency    | IntInput         | Input parameter. The maximum concurrency for loading multiple files.                                      |
+| load_hidden        | BoolInput        | Input parameter. If `true`, hidden files are loaded.                                                      |
+| recursive          | BoolInput        | Input parameter. If `true`, the search is recursive.                                                      |
+| silent_errors      | BoolInput        | Input parameter. If `true`, errors don't raise an exception.                                              |
+| use_multithreading | BoolInput        | Input parameter. If `true`, multithreading is used.                                                       |

@@ -1,5 +1,4 @@
 from langchain_core.vectorstores import VectorStore
-
 from wfx.io import Output
 
 

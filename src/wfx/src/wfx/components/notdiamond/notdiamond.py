@@ -3,7 +3,6 @@ import warnings
 import requests
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.chat_result import get_chat_result
 from wfx.base.models.model_utils import get_model_name
 from wfx.custom.custom_component.component import Component

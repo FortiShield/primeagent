@@ -12,7 +12,6 @@ from uuid import UUID
 from langchain_core.documents import Document
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import BaseModel, ConfigDict, model_serializer, model_validator
-
 from wfx.log.logger import logger
 from wfx.schema.cross_module import CrossModuleModel
 from wfx.utils.constants import MESSAGE_SENDER_AI, MESSAGE_SENDER_USER

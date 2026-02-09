@@ -3,22 +3,13 @@ import shutil
 from http import HTTPStatus
 from pathlib import Path
 
-import json
-import shutil
-from http import HTTPStatus
-from pathlib import Path
-from typing import TYPE_CHECKING
-
+import pandas as pd
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from wfx.log import logger
-
+from langchain_chroma import Chroma
 from primeagent.api.utils import CurrentActiveUser
 from primeagent.services.deps import get_settings_service
-
-if TYPE_CHECKING:
-    import pandas as pd
-    from langchain_chroma import Chroma
+from pydantic import BaseModel
+from wfx.log import logger
 
 router = APIRouter(tags=["Knowledge Bases"], prefix="/knowledge_bases")
 
@@ -179,7 +170,7 @@ def detect_embedding_model(kb_path: Path) -> str:
     return "Unknown"
 
 
-def get_text_columns(df: "pd.DataFrame", schema_data: list | None = None) -> list[str]:
+def get_text_columns(df: pd.DataFrame, schema_data: list | None = None) -> list[str]:
     """Get the text columns to analyze for word/character counts."""
     # First try schema-defined text columns
     if schema_data:
@@ -201,7 +192,7 @@ def get_text_columns(df: "pd.DataFrame", schema_data: list | None = None) -> lis
     return [col for col in df.columns if df[col].dtype == "object"]
 
 
-def calculate_text_metrics(df: "pd.DataFrame", text_columns: list[str]) -> tuple[int, int]:
+def calculate_text_metrics(df: pd.DataFrame, text_columns: list[str]) -> tuple[int, int]:
     """Calculate total words and characters from text columns."""
     total_words = 0
     total_characters = 0
@@ -211,15 +202,13 @@ def calculate_text_metrics(df: "pd.DataFrame", text_columns: list[str]) -> tuple
             continue
 
         text_series = df[col].astype(str).fillna("")
-        total_characters += int(text_series.str.len().sum().item())
-        total_words += int(text_series.str.split().str.len().sum().item())
+        total_characters += int(text_series.str.len().sum())
+        total_words += int(text_series.str.split().str.len().sum())
 
     return total_words, total_characters
 
 
 def get_kb_metadata(kb_path: Path) -> dict:
-    import pandas as pd
-    from langchain_chroma import Chroma
     """Extract metadata from a knowledge base directory."""
     metadata: dict[str, float | int | str] = {
         "chunks": 0,

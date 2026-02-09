@@ -1,5 +1,4 @@
 from langchain_text_splitters import CharacterTextSplitter
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import DropdownInput, HandleInput, IntInput, MessageTextInput, Output
 from wfx.schema.data import Data
@@ -11,7 +10,7 @@ from wfx.utils.util import unescape_string
 class SplitTextComponent(Component):
     display_name: str = "Split Text"
     description: str = "Split text into chunks based on specified criteria."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/split-text"
+    documentation: str = "https://docs.agent.khulnasoft.com/split-text"
     icon = "scissors-line-dashed"
     name = "SplitText"
 

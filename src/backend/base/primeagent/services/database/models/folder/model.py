@@ -1,11 +1,10 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from sqlalchemy import Text, UniqueConstraint
-from sqlmodel import JSON, Column, Field, Relationship, SQLModel
-
 from primeagent.services.database.models.flow.model import Flow, FlowRead
 from primeagent.services.database.models.user.model import User
+from sqlalchemy import Text, UniqueConstraint
+from sqlmodel import JSON, Column, Field, Relationship, SQLModel
 
 
 class FolderBase(SQLModel):

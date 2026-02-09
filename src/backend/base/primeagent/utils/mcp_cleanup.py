@@ -25,10 +25,9 @@ async def cleanup_mcp_sessions() -> None:
     to ensure MCP subprocesses are killed even if shutdown is interrupted.
     """
     with contextlib.suppress(Exception):
+        from primeagent.services.deps import get_shared_component_cache_service
         from wfx.base.mcp.util import MCPSessionManager
         from wfx.services.cache.utils import CACHE_MISS
-
-        from primeagent.services.deps import get_shared_component_cache_service
 
         cache_service = get_shared_component_cache_service()
         session_manager = cache_service.get("mcp_session_manager")

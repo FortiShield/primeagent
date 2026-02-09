@@ -1,9 +1,8 @@
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
-from sqlmodel import Field, SQLModel, UniqueConstraint
-
 from primeagent.schema.serialize import UUIDstr
+from sqlmodel import Field, SQLModel, UniqueConstraint
 
 
 class File(SQLModel, table=True):  # type: ignore[call-arg]

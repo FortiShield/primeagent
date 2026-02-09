@@ -1,5 +1,4 @@
 from langchain_google_community import GoogleSearchAPIWrapper
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import IntInput, MultilineInput, Output, SecretStrInput
 from wfx.schema.dataframe import DataFrame

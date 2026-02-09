@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING
 
 from langchain.chains import create_sql_query_chain
 from langchain_core.prompts import PromptTemplate
-
 from wfx.base.chains.model import LCChainComponent
 from wfx.inputs.inputs import HandleInput, IntInput, MultilineInput
 from wfx.schema import Message

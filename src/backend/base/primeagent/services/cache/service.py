@@ -6,10 +6,6 @@ from collections import OrderedDict
 from typing import Generic, Union
 
 import dill
-from typing_extensions import override
-from wfx.log.logger import logger
-from wfx.services.cache.utils import CACHE_MISS
-
 from primeagent.services.cache.base import (
     AsyncBaseCacheService,
     AsyncLockType,
@@ -17,6 +13,9 @@ from primeagent.services.cache.base import (
     ExternalAsyncBaseCacheService,
     LockType,
 )
+from typing_extensions import override
+from wfx.log.logger import logger
+from wfx.services.cache.utils import CACHE_MISS
 
 
 class ThreadingInMemoryCache(CacheService, Generic[LockType]):

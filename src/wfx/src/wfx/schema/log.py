@@ -5,7 +5,6 @@ from typing import Any, Literal, TypeAlias
 from pydantic import BaseModel, field_serializer
 from pydantic_core import PydanticSerializationError
 from typing_extensions import Protocol
-
 from wfx.schema.message import ContentBlock, Message
 from wfx.serialization.serialization import serialize
 

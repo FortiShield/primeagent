@@ -91,9 +91,7 @@ class TestRunStarterProjectsBackwardCompatibility:
                     if "primeagent" in line and ("No module named" in line or "Module" in line):
                         error_line = line.strip()
                         break
-                pytest.fail(
-                    f"Primeagent import error found in 1.6.0 template {template_file.name}.\nError: {error_line}"
-                )
+                pytest.fail(f"Primeagent import error found in 1.6.0 template {template_file.name}.\nError: {error_line}")
 
             # Check for wfx import errors (these indicate structural issues)
             if "No module named 'wfx." in all_output or "Module wfx." in all_output:
@@ -221,9 +219,7 @@ class TestRunStarterProjectsBackwardCompatibility:
             )
 
     @pytest.mark.xfail(
-        reason=(
-            "1.6.0 basic templates have primeagent import issues - components expect primeagent package to be available"
-        )
+        reason="1.6.0 basic templates have primeagent import issues - components expect primeagent package to be available"
     )
     def test_run_basic_1_6_0_starter_projects_detailed(self):
         """Test basic 1.6.0 starter projects that should have minimal dependencies."""

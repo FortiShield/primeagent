@@ -1,6 +1,5 @@
 from langchain.agents import create_openai_tools_agent
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, PromptTemplate
-
 from wfx.base.agents.agent import LCToolsAgentComponent
 from wfx.inputs.inputs import (
     DataInput,

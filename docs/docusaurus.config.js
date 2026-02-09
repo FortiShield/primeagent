@@ -1,44 +1,48 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-const { remarkCodeHike } = require("@code-hike/mdx");
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { remarkCodeHike } = require('@code-hike/mdx');
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Primeagent Documentation",
+  title: 'Primeagent Documentation',
   tagline:
-    "Primeagent is a low-code app builder for RAG and multi-agent AI applications.",
-  favicon: "img/favicon.ico",
-  url: "https://docs-primeagent.khulnasoft.com",
-  baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
-  onBrokenAnchors: "warn",
-  organizationName: "khulnasoft-bot",
-  projectName: "primeagent",
+    'Primeagent is a low-code app builder for RAG and multi-agent AI applications.',
+  favicon: 'img/favicon.ico',
+  url: 'https://docs.agent.khulnasoft.com',
+  baseUrl: process.env.BASE_URL ? process.env.BASE_URL : '/',
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'warn',
+  organizationName: 'khulnasoft-bot',
+  projectName: 'primeagent',
   trailingSlash: false,
-  staticDirectories: ["static"],
+  staticDirectories: ['static'],
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: 'en',
+    locales: ['en'],
   },
   headTags: [
     {
-      tagName: "link",
+      tagName: 'link',
       attributes: {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Sora:wght@550;600&display=swap",
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Sora:wght@550;600&display=swap',
       },
     },
     ...(isProduction
       ? [
           // Google Consent Mode - Set defaults before Google tags load
           {
-            tagName: "script",
+            tagName: 'script',
             attributes: {},
             innerHTML: `
               window.dataLayer = window.dataLayer || [];
@@ -55,7 +59,7 @@ const config = {
           },
           // TrustArc Consent Update Listener
           {
-            tagName: "script",
+            tagName: 'script',
             attributes: {},
             innerHTML: `
               (function() {
@@ -98,18 +102,18 @@ const config = {
 
   presets: [
     [
-      "@docusaurus/preset-classic",
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/", // Serve the docs at the site's root
-          sidebarPath: require.resolve("./sidebars.js"), // Use sidebars.js file
+          routeBasePath: '/', // Serve the docs at the site's root
+          sidebarPath: require.resolve('./sidebars.js'), // Use sidebars.js file
           sidebarCollapsed: true,
           beforeDefaultRemarkPlugins: [
             [
               remarkCodeHike,
               {
-                theme: "github-dark",
+                theme: 'github-dark',
                 showCopyButton: true,
                 lineNumbers: true,
               },
@@ -119,259 +123,260 @@ const config = {
         sitemap: {
           // https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-sitemap
           // https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
-          lastmod: "datetime",
+          lastmod: 'datetime',
           changefreq: null,
           priority: null,
           ignorePatterns: [],
         },
         gtag: {
-          trackingID: "G-SLQFLQ3KPT",
+          trackingID: 'G-SLQFLQ3KPT',
         },
         blog: false,
         theme: {
           customCss: [
-            require.resolve("@code-hike/mdx/styles.css"),
-            require.resolve("./css/custom.css"),
-            require.resolve("./css/docu-notion-styles.css"),
-            require.resolve(
-              "./css/gifplayer.css"
-              //"./node_modules/react-gif-player/dist/gifplayer.css" // this gave a big red compile warning which is seaming unrelated "  Replace Autoprefixer browsers option to Browserslist config..."
-            ),
+            require.resolve('@code-hike/mdx/styles.css'),
+            require.resolve('./css/custom.css'),
           ],
         },
       }),
     ],
     [
-      "redocusaurus",
+      'redocusaurus',
       {
+        openapi: {
+          path: 'openapi',
+          routeBasePath: '/api',
+        },
         specs: [
           {
-            id: "api",
-            spec: "openapi/openapi.json",
-            route: "/api",
+            id: 'api',
+            spec: 'openapi/openapi.json',
+            route: '/api',
           },
         ],
         theme: {
-          primaryColor: "#7528FC",
-          // primaryColorDark: "#7528FC", // Force dark mode for Redoc
+          primaryColor: '#7528FC',
         },
       },
     ],
   ],
   plugins: [
-    ["docusaurus-node-polyfills", { excludeAliases: ["console"] }],
-    "docusaurus-plugin-image-zoom",
-    ["./src/plugins/segment", { segmentPublicWriteKey: process.env.SEGMENT_PUBLIC_WRITE_KEY, allowedInDev: true }],
+    ['docusaurus-node-polyfills', { excludeAliases: ['console'] }],
+    'docusaurus-plugin-image-zoom',
     [
-      "@docusaurus/plugin-client-redirects",
+      './src/plugins/segment',
+      {
+        segmentPublicWriteKey: process.env.SEGMENT_PUBLIC_WRITE_KEY,
+        allowedInDev: true,
+      },
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
       {
         redirects: [
           {
-            to: "/",
+            to: '/',
             from: [
-              "/whats-new-a-new-chapter-primeagent",
-              "/👋 Welcome-to-Primeagent",
-              "/getting-started-welcome-to-primeagent",
-              "/guides-new-to-llms",
-              "/about-primeagent",
+              '/whats-new-a-new-chapter-primeagent',
+              '/👋 Welcome-to-Primeagent',
+              '/getting-started-welcome-to-primeagent',
+              '/guides-new-to-llms',
+              '/about-primeagent',
             ],
           },
           {
-            to: "/get-started-installation",
+            to: '/get-started-installation',
             from: [
-              "/getting-started-installation",
-              "/getting-started-common-installation-issues",
+              '/getting-started-installation',
+              '/getting-started-common-installation-issues',
             ],
           },
           {
-            to: "/get-started-quickstart",
-            from: "/getting-started-quickstart",
+            to: '/get-started-quickstart',
+            from: '/getting-started-quickstart',
           },
           {
-            to: "/concepts-overview",
+            to: '/concepts-overview',
             from: [
-              "/workspace-overview",
-              "/365085a8-a90a-43f9-a779-f8769ec7eca1",
-              "/My-Collection",
-              "/workspace",
-              "/settings-project-general-settings",
+              '/workspace-overview',
+              '/365085a8-a90a-43f9-a779-f8769ec7eca1',
+              '/My-Collection',
+              '/workspace',
+              '/settings-project-general-settings',
             ],
           },
           {
-            to: "/concepts-components",
+            to: '/concepts-components',
             from: [
-              "/components",
-              "/components-overview",
-              "/components-processing",
-              "/components-data",
-              "/components-files",
-              "/components-logic",
-              "/components-tools",
-              "/components-io",
-              "/components-helpers",
-              "/components-memories",
+              '/components',
+              '/components-overview',
+              '/components-processing',
+              '/components-data',
+              '/components-files',
+              '/components-logic',
+              '/components-tools',
+              '/components-io',
+              '/components-helpers',
+              '/components-memories',
             ],
           },
           {
-            to: "/configuration-global-variables",
-            from: "/settings-global-variables",
+            to: '/configuration-global-variables',
+            from: '/settings-global-variables',
           },
           {
-            to: "/concepts-playground",
+            to: '/concepts-playground',
             from: [
-              "/workspace-playground",
-              "/workspace-logs",
-              "/guides-chat-memory",
+              '/workspace-playground',
+              '/workspace-logs',
+              '/guides-chat-memory',
             ],
           },
           {
-            to: "/data-types",
-            from: ["/guides-data-message", "/configuration-objects"],
+            to: '/data-types',
+            from: ['/guides-data-message', '/configuration-objects'],
           },
           {
-            to: "/concepts-flows",
+            to: '/concepts-flows',
             from: [
-              "/travel-planning-agent",
-              "/starter-projects-travel-planning-agent",
-              "/tutorials-travel-planning-agent",
-              "/starter-projects-dynamic-agent/",
-              "/simple-agent",
-              "/math-agent",
-              "/starter-projects-simple-agent",
-              "/starter-projects-math-agent",
-              "/tutorials-math-agent",
-              "/sequential-agent",
-              "/starter-projects-sequential-agent",
-              "/tutorials-sequential-agent",
-              "/memory-chatbot",
-              "/starter-projects-memory-chatbot",
-              "/tutorials-memory-chatbot",
-              "/financial-report-parser",
-              "/document-qa",
-              "/starter-projects-document-qa",
-              "/tutorials-document-qa",
-              "/blog-writer",
-              "/starter-projects-blog-writer",
-              "/tutorials-blog-writer",
-              "/basic-prompting",
-              "/starter-projects-basic-prompting",
-              "/vector-store-rag",
-              "/starter-projects-vector-store-rag",
+              '/travel-planning-agent',
+              '/starter-projects-travel-planning-agent',
+              '/tutorials-travel-planning-agent',
+              '/starter-projects-dynamic-agent/',
+              '/simple-agent',
+              '/math-agent',
+              '/starter-projects-simple-agent',
+              '/starter-projects-math-agent',
+              '/tutorials-math-agent',
+              '/sequential-agent',
+              '/starter-projects-sequential-agent',
+              '/tutorials-sequential-agent',
+              '/memory-chatbot',
+              '/starter-projects-memory-chatbot',
+              '/tutorials-memory-chatbot',
+              '/financial-report-parser',
+              '/document-qa',
+              '/starter-projects-document-qa',
+              '/tutorials-document-qa',
+              '/blog-writer',
+              '/starter-projects-blog-writer',
+              '/tutorials-blog-writer',
+              '/basic-prompting',
+              '/starter-projects-basic-prompting',
+              '/vector-store-rag',
+              '/starter-projects-vector-store-rag',
             ],
           },
           {
-            to: "/components-bundle-components",
+            to: '/components-bundle-components',
             from: [
-              "/components-rag",
-              "/components-vector-stores",
-              "/components-loaders",
+              '/components-rag',
+              '/components-vector-stores',
+              '/components-loaders',
             ],
           },
           {
-            to: "/api-keys-and-authentication",
+            to: '/api-keys-and-authentication',
             from: [
-              "/configuration-api-keys",
-              "/configuration-authentication",
-              "/configuration-security-best-practices",
-              "/Configuration/configuration-security-best-practices",
+              '/configuration-api-keys',
+              '/configuration-authentication',
+              '/configuration-security-best-practices',
+              '/Configuration/configuration-security-best-practices',
             ],
           },
           {
-            to: "/environment-variables",
+            to: '/environment-variables',
             from: [
-              "/configuration-auto-saving",
-              "/Configuration/configuration-auto-saving",
-              "/configuration-backend-only",
-              "/Configuration/configuration-backend-only",
+              '/configuration-auto-saving',
+              '/Configuration/configuration-auto-saving',
+              '/configuration-backend-only',
+              '/Configuration/configuration-backend-only',
             ],
           },
           {
-            to: "/concepts-publish",
+            to: '/concepts-publish',
+            from: ['/concepts-api', '/workspace-api'],
+          },
+          {
+            to: '/components-custom-components',
+            from: '/components/custom',
+          },
+          {
+            to: '/mcp-server',
+            from: '/integrations-mcp',
+          },
+          {
+            to: '/deployment-kubernetes-dev',
+            from: '/deployment-kubernetes',
+          },
+          {
+            to: '/contributing-github-issues',
+            from: '/contributing-github-discussions',
+          },
+          {
+            to: '/agents',
+            from: '/agents-tool-calling-agent-component',
+          },
+          {
+            to: '/concepts-publish',
+            from: '/embedded-chat-widget',
+          },
+          {
+            to: '/bundles-google',
             from: [
-              "/concepts-api",
-              "/workspace-api",
+              '/integrations-setup-google-oauth-primeagent',
+              '/integrations-google-big-query',
             ],
           },
           {
-            to: "/components-custom-components",
-            from: "/components/custom",
+            to: '/bundles-vertexai',
+            from: '/integrations-setup-google-cloud-vertex-ai-primeagent',
           },
           {
-            to: "/mcp-server",
-            from: "/integrations-mcp",
+            to: '/develop-application',
+            from: '/develop-overview',
           },
           {
-            to: "/deployment-kubernetes-dev",
-            from: "/deployment-kubernetes",
+            to: '/data-types',
+            from: '/concepts-objects',
           },
           {
-            to: "/contributing-github-issues",
-            from: "/contributing-github-discussions",
+            to: '/bundles-apify',
+            from: '/integrations-apify',
           },
           {
-            to: "/agents",
-            from: "/agents-tool-calling-agent-component",
+            to: '/bundles-assemblyai',
+            from: '/integrations-assemblyai',
           },
           {
-            to: "/concepts-publish",
-            from: "/embedded-chat-widget",
+            to: '/bundles-cleanlab',
+            from: '/integrations-cleanlab',
           },
           {
-            to: "/bundles-google",
+            to: '/bundles-composio',
+            from: '/integrations-composio',
+          },
+          {
+            to: '/bundles-docling',
+            from: '/integrations-docling',
+          },
+          {
+            to: '/bundles-notion',
             from: [
-              "/integrations-setup-google-oauth-primeagent",
-              "/integrations-google-big-query",
+              '/integrations/notion/setup',
+              '/integrations/notion/notion-agent-meeting-notes',
+              '/integrations/notion/notion-agent-conversational',
             ],
           },
           {
-            to: "/bundles-vertexai",
-            from: "/integrations-setup-google-cloud-vertex-ai-primeagent",
-          },
-          {
-            to: "/develop-application",
-            from: "/develop-overview",
-          },
-          {
-            to: "/data-types",
-            from: "/concepts-objects",
-          },
-          {
-            to: "/bundles-apify",
-            from: "/integrations-apify",
-          },
-          {
-            to: "/bundles-assemblyai",
-            from: "/integrations-assemblyai",
-          },
-          {
-            to: "/bundles-cleanlab",
-            from: "/integrations-cleanlab",
-          },
-          {
-            to: "/bundles-composio",
-            from: "/integrations-composio",
-          },
-          {
-            to: "/bundles-docling",
-            from: "/integrations-docling",
-          },
-          {
-            to: "/bundles-notion",
+            to: '/bundles-nvidia',
             from: [
-              "/integrations/notion/setup",
-              "/integrations/notion/notion-agent-meeting-notes",
-              "/integrations/notion/notion-agent-conversational",
+              '/integrations-nvidia-ingest-wsl2',
+              '/integrations-nvidia-ingest',
+              '/integrations-nvidia-g-assist',
+              '/integrations-nvidia-system-assist',
             ],
           },
-          {
-            to: "/bundles-nvidia",
-            from: [
-              "/integrations-nvidia-ingest-wsl2",
-              "/integrations-nvidia-ingest",
-              "/integrations-nvidia-g-assist",
-              "/integrations-nvidia-system-assist",
-            ]
-          }
           // add more redirects like this
           // {
           //   to: '/docs/anotherpage',
@@ -383,11 +388,11 @@ const config = {
     // ....
     async function myPlugin(context, options) {
       return {
-        name: "docusaurus-tailwindcss",
+        name: 'docusaurus-tailwindcss',
         configurePostCss(postcssOptions) {
           // Appends TailwindCSS and AutoPrefixer.
-          postcssOptions.plugins.push(require("tailwindcss"));
-          postcssOptions.plugins.push(require("autoprefixer"));
+          postcssOptions.plugins.push(require('tailwindcss'));
+          postcssOptions.plugins.push(require('autoprefixer'));
           return postcssOptions;
         },
       };
@@ -399,55 +404,55 @@ const config = {
       navbar: {
         hideOnScroll: true,
         logo: {
-          alt: "Primeagent",
-          src: "img/lf-docs-light.svg",
-          srcDark: "img/lf-docs-dark.svg",
+          alt: 'Primeagent',
+          src: 'img/lf-docs-light.svg',
+          srcDark: 'img/lf-docs-dark.svg',
         },
         items: [
           // right
           {
-            position: "right",
-            href: "https://github.com/khulnasoft-bot/primeagent",
-            className: "header-github-link",
-            target: "_blank",
+            position: 'right',
+            href: 'https://github.com/khulnasoft-bot/primeagent',
+            className: 'header-github-link',
+            target: '_blank',
             rel: null,
             'data-event': 'UI Interaction',
             'data-action': 'clicked',
             'data-channel': 'docs',
             'data-element-id': 'social-github',
             'data-namespace': 'header',
-            'data-platform-title': 'Primeagent'
+            'data-platform-title': 'Primeagent',
           },
           {
-            position: "right",
-            href: "https://twitter.com/primeagent_ai",
-            className: "header-twitter-link",
-            target: "_blank",
+            position: 'right',
+            href: 'https://twitter.com/primeagent_ai',
+            className: 'header-twitter-link',
+            target: '_blank',
             rel: null,
             'data-event': 'UI Interaction',
             'data-action': 'clicked',
             'data-channel': 'docs',
             'data-element-id': 'social-twitter',
             'data-namespace': 'header',
-            'data-platform-title': 'Primeagent'
+            'data-platform-title': 'Primeagent',
           },
           {
-            position: "right",
-            href: "https://discord.gg/EqksyE2EX9",
-            className: "header-discord-link",
-            target: "_blank",
+            position: 'right',
+            href: 'https://discord.gg/EqksyE2EX9',
+            className: 'header-discord-link',
+            target: '_blank',
             rel: null,
             'data-event': 'UI Interaction',
             'data-action': 'clicked',
             'data-channel': 'docs',
             'data-element-id': 'social-discord',
             'data-namespace': 'header',
-            'data-platform-title': 'Primeagent'
+            'data-platform-title': 'Primeagent',
           },
         ],
       },
       colorMode: {
-        defaultMode: "light",
+        defaultMode: 'light',
         /* Allow users to chose light or dark mode. */
         disableSwitch: false,
         /* Respect user preferences, such as low light mode in the evening */
@@ -458,9 +463,9 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ".markdown :not(a) > img:not(.no-zoom)",
+        selector: '.markdown :not(a) > img:not(.no-zoom)',
         background: {
-          light: "rgba(240, 240, 240, 0.9)",
+          light: 'rgba(240, 240, 240, 0.9)',
         },
         config: {},
       },
@@ -486,13 +491,13 @@ const config = {
         ],
       },
       algolia: {
-        appId: "UZK6BDPCVY",
+        appId: 'UZK6BDPCVY',
         // public key, safe to commit
-        apiKey: "adbd7686dceb1cd510d5ce20d04bf74c",
-        indexName: "primeagent",
+        apiKey: 'adbd7686dceb1cd510d5ce20d04bf74c',
+        indexName: 'primeagent',
         contextualSearch: true,
         searchParameters: {},
-        searchPagePath: "search",
+        searchPagePath: 'search',
       },
     }),
 };

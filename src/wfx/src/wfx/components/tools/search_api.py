@@ -3,7 +3,6 @@ from typing import Any
 from langchain.tools import StructuredTool
 from langchain_community.utilities.searchapi import SearchApiAPIWrapper
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import DictInput, IntInput, MessageTextInput, MultilineInput, SecretStrInput

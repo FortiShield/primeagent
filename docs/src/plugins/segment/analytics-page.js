@@ -15,11 +15,11 @@ function getFriendlyPageName(pathname) {
 
   // Split by slash and capitalize each segment
   const segments = cleanPath.split('/');
-  const formattedSegments = segments.map(segment => {
+  const formattedSegments = segments.map((segment) => {
     // Replace hyphens with spaces and capitalize
     return segment
       .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   });
 
@@ -27,7 +27,7 @@ function getFriendlyPageName(pathname) {
 }
 
 // Client module for tracking page views on route changes
-export function onRouteDidUpdate({location, previousLocation}) {
+export function onRouteDidUpdate({ location, previousLocation }) {
   // Only track page views in the browser and when the path actually changes
   if (
     ExecutionEnvironment.canUseDOM &&

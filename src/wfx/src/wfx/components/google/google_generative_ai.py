@@ -2,7 +2,6 @@ from typing import Any
 
 import requests
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.google_generative_ai_constants import GOOGLE_GENERATIVE_AI_MODELS
 from wfx.base.models.google_generative_ai_model import ChatGoogleGenerativeAIFixed
 from wfx.base.models.model import LCModelComponent

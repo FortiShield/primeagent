@@ -1,5 +1,4 @@
 from langchain_openai import OpenAIEmbeddings
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.io import BoolInput, DictInput, FloatInput, IntInput, MessageTextInput, SecretStrInput

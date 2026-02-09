@@ -2,8 +2,6 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from wfx.log.logger import logger
-
 from primeagent.api.utils import CurrentActiveUser, check_primeagent_version
 from primeagent.services.auth import utils as auth_utils
 from primeagent.services.deps import get_settings_service, get_store_service
@@ -16,6 +14,7 @@ from primeagent.services.store.schema import (
     TagResponse,
     UsersLikesResponse,
 )
+from wfx.log.logger import logger
 
 router = APIRouter(prefix="/store", tags=["Components Store"])
 
@@ -24,7 +23,7 @@ def get_user_store_api_key(user: CurrentActiveUser):
     if not user.store_api_key:
         raise HTTPException(status_code=400, detail="You must have a store API key set.")
     try:
-        return auth_utils.decrypt_api_key(user.store_api_key, get_settings_service())
+        return auth_utils.decrypt_api_key(user.store_api_key)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to decrypt API key. Please set a new one.") from e
 
@@ -33,7 +32,7 @@ def get_optional_user_store_api_key(user: CurrentActiveUser):
     if not user.store_api_key:
         return None
     try:
-        return auth_utils.decrypt_api_key(user.store_api_key, get_settings_service())
+        return auth_utils.decrypt_api_key(user.store_api_key)
     except Exception:  # noqa: BLE001
         logger.exception("Failed to decrypt API key")
         return user.store_api_key

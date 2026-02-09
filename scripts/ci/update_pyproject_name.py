@@ -21,6 +21,14 @@ def update_pyproject_name(pyproject_path: str, new_project_name: str) -> None:
         raise ValueError(msg)
     content = pattern.sub(new_project_name, content)
 
+    # Update extra references in [complete] and [all] extras for nightly builds
+    if new_project_name == "primeagent-base-nightly":
+        # Replace primeagent-base[extra] with primeagent-base-nightly[extra] in optional dependencies
+        content = re.sub(r'"primeagent-base\[([^\]]+)\]"', r'"primeagent-base-nightly[\1]"', content)
+    elif new_project_name == "primeagent-nightly":
+        # Replace primeagent[extra] with primeagent-nightly[extra] in optional dependencies
+        content = re.sub(r'"primeagent\[([^\]]+)\]"', r'"primeagent-nightly[\1]"', content)
+
     filepath.write_text(content, encoding="utf-8")
 
 

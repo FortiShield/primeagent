@@ -2,7 +2,6 @@ from functools import lru_cache
 from typing import Any
 
 import httpx
-
 from wfx.log.logger import logger
 
 

@@ -1,5 +1,4 @@
 from pytube import Playlist  # Ensure you have pytube installed
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import MessageTextInput
 from wfx.schema.data import Data

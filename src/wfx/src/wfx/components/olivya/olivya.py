@@ -1,7 +1,6 @@
 import json
 
 import httpx
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import MessageTextInput, Output
 from wfx.log.logger import logger

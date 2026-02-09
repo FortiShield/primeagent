@@ -1,13 +1,13 @@
 import os
 
-from mem0 import Memory, MemoryClient
-
 from wfx.base.memory.model import LCChatMemoryComponent
 from wfx.inputs.inputs import DictInput, HandleInput, MessageTextInput, NestedDictInput, SecretStrInput
 from wfx.io import Output
 from wfx.log.logger import logger
 from wfx.schema.data import Data
 from wfx.utils.validate_cloud import raise_error_if_astra_cloud_disable_component
+
+from mem0 import Memory, MemoryClient
 
 disable_component_in_astra_cloud_msg = (
     "Mem0 chat memory is not supported in Astra cloud environment. Please use local storage mode or mem0 cloud."

@@ -8,12 +8,6 @@ from typing import TYPE_CHECKING, Annotated
 
 from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
-from wfx.graph.graph.base import Graph
-from wfx.graph.utils import log_vertex_build
-from wfx.log.logger import logger
-from wfx.schema.schema import InputValueRequest, OutputValue
-from wfx.services.cache.utils import CacheMiss
-
 from primeagent.api.build import cancel_flow_build, get_flow_events_response, start_flow_build
 from primeagent.api.limited_background_tasks import LimitVertexBuildBackgroundTasks
 from primeagent.api.utils import (
@@ -48,6 +42,11 @@ from primeagent.services.deps import (
 )
 from primeagent.services.job_queue.service import JobQueueNotFoundError, JobQueueService
 from primeagent.services.telemetry.schema import ComponentPayload, PlaygroundPayload
+from wfx.graph.graph.base import Graph
+from wfx.graph.utils import log_vertex_build
+from wfx.log.logger import logger
+from wfx.schema.schema import InputValueRequest, OutputValue
+from wfx.services.cache.utils import CacheMiss
 
 if TYPE_CHECKING:
     from wfx.graph.vertex.vertex_types import InterfaceVertex
@@ -367,13 +366,6 @@ async def build_vertex(
             )
 
         timedelta = time.perf_counter() - start_time
-
-        # Use client_request_time if available for accurate end-to-end duration
-        if inputs and inputs.client_request_time:
-            # Convert client timestamp (ms) to seconds and calculate elapsed time
-            client_start_seconds = inputs.client_request_time / 1000
-            current_time_seconds = time.time()
-            timedelta = current_time_seconds - client_start_seconds
 
         duration = format_elapsed_time(timedelta)
         result_data_response.duration = duration

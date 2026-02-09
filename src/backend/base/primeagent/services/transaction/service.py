@@ -5,13 +5,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
-from wfx.log.logger import logger
-from wfx.services.deps import session_scope
-from wfx.services.interfaces import TransactionServiceProtocol
-
 from primeagent.services.base import Service
 from primeagent.services.database.models.transactions.crud import log_transaction as crud_log_transaction
 from primeagent.services.database.models.transactions.model import TransactionBase
+from wfx.log.logger import logger
+from wfx.services.deps import session_scope
+from wfx.services.interfaces import TransactionServiceProtocol
 
 if TYPE_CHECKING:
     from primeagent.services.settings.service import SettingsService

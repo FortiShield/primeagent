@@ -4,7 +4,6 @@ from typing import Any
 from astrapy import Collection, DataAPIClient, Database
 from langchain_core.tools import StructuredTool, Tool
 from pydantic import BaseModel, Field, create_model
-
 from wfx.base.datastax.astradb_base import AstraDBBaseComponent
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.io import BoolInput, DictInput, IntInput, StrInput, TableInput
@@ -16,7 +15,7 @@ from wfx.schema.table import EditMode
 class AstraDBToolComponent(AstraDBBaseComponent, LCToolComponent):
     display_name: str = "Astra DB Tool"
     description: str = "Tool to run hybrid vector and metadata search on DataStax Astra DB Collection"
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-datastax"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-datastax"
     icon: str = "AstraDB"
     legacy: bool = True
     name = "AstraDBTool"

@@ -13,7 +13,6 @@ from pydantic import Field, field_validator
 from pydantic.fields import FieldInfo
 from pydantic_settings import BaseSettings, EnvSettingsSource, PydanticBaseSettingsSource, SettingsConfigDict
 from typing_extensions import override
-
 from wfx.constants import BASE_COMPONENTS_PATH
 from wfx.log.logger import logger
 from wfx.serialization.constants import MAX_ITEMS_LENGTH, MAX_TEXT_LENGTH
@@ -276,10 +275,10 @@ class Settings(BaseSettings):
     """The maximum number of transactions to keep in the database."""
     max_vertex_builds_to_keep: int = 3000
     """The maximum number of vertex builds to keep in the database."""
-    max_vertex_builds_per_vertex: int = 2
+    max_vertex_builds_per_vertex: int = 50
     """The maximum number of builds to keep per vertex. Older builds will be deleted."""
-    webhook_polling_interval: int = 5000
-    """The polling interval for the webhook in ms."""
+    webhook_polling_interval: int = 0
+    """The polling interval for the webhook in ms. Set to 0 to disable (SSE provides real-time updates)."""
     fs_flows_polling_interval: int = 10000
     """The polling interval in milliseconds for synchronizing flows from the file system."""
     ssl_cert_file: str | None = None

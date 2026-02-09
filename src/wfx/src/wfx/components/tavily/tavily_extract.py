@@ -1,5 +1,4 @@
 import httpx
-
 from wfx.custom import Component
 from wfx.io import BoolInput, DropdownInput, MessageTextInput, Output, SecretStrInput
 from wfx.log.logger import logger

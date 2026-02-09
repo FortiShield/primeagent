@@ -1,9 +1,8 @@
 from uuid import UUID
 
-from wfx.utils.async_helpers import run_until_complete
-
 from primeagent.services.database.models.message.model import MessageTable, MessageUpdate
 from primeagent.services.deps import session_scope
+from wfx.utils.async_helpers import run_until_complete
 
 
 async def _update_message(message_id: UUID | str, message: MessageUpdate | dict):

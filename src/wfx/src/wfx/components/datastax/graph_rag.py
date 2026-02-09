@@ -3,7 +3,6 @@ from abc import ABC
 
 import graph_retriever.strategies as strategies_module
 from langchain_graph_retriever import GraphRetriever
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent
 from wfx.helpers.data import docs_to_data
 from wfx.inputs.inputs import DropdownInput, HandleInput, MultilineInput, NestedDictInput, StrInput

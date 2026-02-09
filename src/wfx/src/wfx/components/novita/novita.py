@@ -2,7 +2,6 @@ import requests
 from langchain_openai import ChatOpenAI
 from pydantic.v1 import SecretStr
 from typing_extensions import override
-
 from wfx.base.models.model import LCModelComponent
 from wfx.base.models.novita_constants import MODEL_NAMES
 from wfx.field_typing import LanguageModel

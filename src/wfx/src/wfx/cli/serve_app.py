@@ -26,7 +26,6 @@ from fastapi import APIRouter, Depends, FastAPI, HTTPException, Security
 from fastapi.responses import StreamingResponse
 from fastapi.security import APIKeyHeader, APIKeyQuery
 from pydantic import BaseModel, Field
-
 from wfx.cli.common import execute_graph_with_capture, extract_result_data, get_api_key
 from wfx.log.logger import logger
 

@@ -6,7 +6,6 @@ from pathlib import Path
 
 import typer
 from asyncer import syncify
-
 from wfx.run.base import RunError, run_flow
 
 # Verbosity level constants

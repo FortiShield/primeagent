@@ -5,12 +5,12 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import aiofiles
-import git
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import MessageTextInput, Output
 from wfx.schema.data import Data
 from wfx.schema.message import Message
+
+import git
 
 
 class GitExtractorComponent(Component):

@@ -1,6 +1,5 @@
 from langchain_core.tools import tool
 from metaphor_python import Metaphor
-
 from wfx.custom.custom_component.component import Component
 from wfx.field_typing import Tool
 from wfx.io import BoolInput, IntInput, Output, SecretStrInput

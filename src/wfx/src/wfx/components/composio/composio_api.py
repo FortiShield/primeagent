@@ -2,7 +2,6 @@
 from collections.abc import Sequence
 from typing import Any
 
-from composio import Composio
 from composio_langchain import LangchainProvider
 
 # Third-party imports
@@ -18,6 +17,8 @@ from wfx.inputs.inputs import (
 )
 from wfx.io import Output
 from wfx.utils.validate_cloud import raise_error_if_astra_cloud_disable_component
+
+from composio import Composio
 
 # TODO: We get the list from the API but we need to filter it
 enabled_tools = ["confluence", "discord", "dropbox", "github", "gmail", "linkedin", "notion", "slack", "youtube"]

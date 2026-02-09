@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 
 from json_repair import repair_json
-
 from wfx.base.data.storage_utils import read_file_text
 from wfx.custom.custom_component.component import Component
 from wfx.io import FileInput, MessageTextInput, MultilineInput, Output

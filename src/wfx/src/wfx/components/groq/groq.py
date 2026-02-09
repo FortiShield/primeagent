@@ -1,5 +1,4 @@
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.groq_constants import GROQ_MODELS
 from wfx.base.models.groq_model_discovery import get_groq_models
 from wfx.base.models.model import LCModelComponent

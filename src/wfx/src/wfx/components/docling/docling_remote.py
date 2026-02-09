@@ -7,7 +7,6 @@ from typing import Any
 import httpx
 from docling_core.types.doc import DoclingDocument
 from pydantic import ValidationError
-
 from wfx.base.data import BaseFileComponent
 from wfx.inputs import IntInput, NestedDictInput, StrInput
 from wfx.inputs.inputs import FloatInput

@@ -35,8 +35,8 @@ import getFieldTitle from "../CustomNodes/utils/get-field-title";
 import {
   INPUT_TYPES,
   IS_MAC,
-  OUTPUT_TYPES,
   PRIMEAGENT_SUPPORTED_TYPES,
+  OUTPUT_TYPES,
   SUCCESS_BUILD,
   specialCharsRegex,
 } from "../constants/constants";
@@ -140,7 +140,19 @@ export function cleanEdges(nodes: AllNodeType[], edges: EdgeType[]) {
       let id: targetHandleType | sourceHandleType;
 
       const templateFieldType = targetNode.data.node!.template[field]?.type;
-      const inputTypes = targetNode.data.node!.template[field]?.input_types;
+      const rawInputTypes = targetNode.data.node!.template[field]?.input_types;
+      const modelType = targetNode.data.node!.template[field]?.model_type;
+      // For ModelInput types, default based on model_type:
+      // - "embedding" -> ["Embeddings"]
+      // - "language" (default) -> ["LanguageModel"]
+      const isModelType = templateFieldType === "model";
+      const defaultModelInputType =
+        modelType === "embedding" ? "Embeddings" : "LanguageModel";
+      const inputTypes = rawInputTypes?.length
+        ? rawInputTypes
+        : isModelType
+          ? [defaultModelInputType]
+          : rawInputTypes;
       const hasProxy = targetNode.data.node!.template[field]?.proxy;
       const isToolMode = targetNode.data.node!.template[field]?.tool_mode;
 

@@ -3,10 +3,9 @@ from datetime import datetime, timezone
 from typing import Any
 from uuid import UUID, uuid4
 
+from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
 from pydantic import field_serializer, field_validator
 from sqlmodel import JSON, Column, Field, SQLModel
-
-from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
 
 # Keys that should have their values masked for security
 # Pattern uses fullmatch-style matching to avoid false positives like "max_tokens"

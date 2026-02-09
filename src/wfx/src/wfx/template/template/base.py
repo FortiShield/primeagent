@@ -2,7 +2,6 @@ from collections.abc import Callable
 from typing import cast
 
 from pydantic import BaseModel, Field, model_serializer
-
 from wfx.inputs.inputs import InputTypes
 from wfx.template.field.base import Input
 from wfx.utils.constants import DIRECT_TYPES

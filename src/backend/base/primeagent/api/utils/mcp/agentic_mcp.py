@@ -4,17 +4,16 @@ import sys
 from uuid import UUID
 
 from fastapi import HTTPException
-from sqlalchemy import exc as sqlalchemy_exc
-from sqlmodel import select
-from sqlmodel.ext.asyncio.session import AsyncSession
-from wfx.log.logger import logger
-from wfx.services.deps import get_settings_service
-
 from primeagent.api.v2.mcp import get_server_list, update_server
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import get_service, get_variable_service
 from primeagent.services.schema import ServiceType
 from primeagent.services.variable.constants import CREDENTIAL_TYPE, GENERIC_TYPE
+from sqlalchemy import exc as sqlalchemy_exc
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
+from wfx.log.logger import logger
+from wfx.services.deps import get_settings_service
 
 
 async def auto_configure_agentic_mcp_server(session: AsyncSession) -> None:

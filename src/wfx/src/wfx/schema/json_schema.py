@@ -3,7 +3,6 @@
 from typing import Any
 
 from pydantic import AliasChoices, BaseModel, Field, create_model
-
 from wfx.log.logger import logger
 
 NULLABLE_TYPE_LENGTH = 2  # Number of types in a nullable union (the type itself + null)

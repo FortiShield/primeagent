@@ -4,7 +4,6 @@ from urllib.parse import urljoin
 
 import httpx
 from langchain_ollama import OllamaEmbeddings
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import Embeddings
 from wfx.io import DropdownInput, MessageTextInput, Output, SecretStrInput

@@ -4,7 +4,6 @@ from typing import Any
 import requests
 from langchain.tools import StructuredTool
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import MultilineInput, SecretStrInput, StrInput
@@ -21,7 +20,7 @@ class NotionListPages(LCToolComponent):
         '{"filter": {"property": "Status", "select": {"equals": "Done"}}, '
         '"sorts": [{"timestamp": "created_time", "direction": "descending"}]}'
     )
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-notion"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
     icon = "NotionDirectoryLoader"
 
     inputs = [

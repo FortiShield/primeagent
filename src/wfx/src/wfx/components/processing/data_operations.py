@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any
 
 import jq
 from json_repair import repair_json
-
 from wfx.custom import Component
 from wfx.inputs import DictInput, DropdownInput, MessageTextInput, SortableListInput
 from wfx.io import DataInput, MultilineInput, Output

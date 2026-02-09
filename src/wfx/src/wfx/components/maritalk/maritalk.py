@@ -1,5 +1,4 @@
 from langchain_community.chat_models import ChatMaritalk
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import LanguageModel
 from wfx.field_typing.range_spec import RangeSpec

@@ -3,7 +3,6 @@ import os
 from typing import Any
 
 import httpx
-
 from wfx.base.langwatch.utils import get_cached_evaluators
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import MultilineInput

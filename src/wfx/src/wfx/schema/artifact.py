@@ -3,7 +3,6 @@ from enum import Enum
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-
 from wfx.log.logger import logger
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame

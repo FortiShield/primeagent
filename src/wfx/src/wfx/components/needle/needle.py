@@ -1,5 +1,4 @@
 from langchain_community.retrievers.needle import NeedleRetriever
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import IntInput, MessageTextInput, Output, SecretStrInput
 from wfx.schema.message import Message

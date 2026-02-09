@@ -1,5 +1,4 @@
 from langchain_community.embeddings import FakeEmbeddings
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.io import IntInput

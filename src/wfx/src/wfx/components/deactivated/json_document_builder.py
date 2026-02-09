@@ -14,7 +14,6 @@
 
 import orjson
 from langchain_core.documents import Document
-
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.io import HandleInput, StrInput
 
@@ -23,7 +22,7 @@ class JSONDocumentBuilder(CustomComponent):
     display_name: str = "JSON Document Builder"
     description: str = "Build a Document containing a JSON object using a key and another Document page content."
     name = "JSONDocumentBuilder"
-    documentation: str = "https://docs-primeagent.khulnasoft.com/legacy-core-components"
+    documentation: str = "https://docs.agent.khulnasoft.com/legacy-core-components"
     legacy = True
 
     inputs = [

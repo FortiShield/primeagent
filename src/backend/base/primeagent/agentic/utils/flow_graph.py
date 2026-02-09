@@ -3,11 +3,10 @@
 from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
+from primeagent.helpers.flow import get_flow_by_id_or_endpoint_name
 from wfx.graph.graph.ascii import draw_graph
 from wfx.graph.graph.base import Graph
 from wfx.log.logger import logger
-
-from primeagent.helpers.flow import get_flow_by_id_or_endpoint_name
 
 if TYPE_CHECKING:
     from primeagent.services.database.models.flow.model import FlowRead

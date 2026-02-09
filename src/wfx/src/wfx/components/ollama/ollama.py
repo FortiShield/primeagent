@@ -6,7 +6,6 @@ from urllib.parse import urljoin
 
 import httpx
 from langchain_ollama import ChatOllama
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import LanguageModel
 from wfx.field_typing.range_spec import RangeSpec

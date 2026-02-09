@@ -16,7 +16,6 @@ from pydantic import (
     model_serializer,
     model_validator,
 )
-
 from wfx.field_typing import Text
 from wfx.field_typing.range_spec import RangeSpec
 from wfx.helpers.custom import format_type

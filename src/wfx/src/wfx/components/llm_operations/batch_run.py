@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, cast
 
 import toml  # type: ignore[import-untyped]
-
 from wfx.base.models.unified_models import (
     get_language_model_options,
     get_model_classes,
@@ -21,7 +20,7 @@ if TYPE_CHECKING:
 class BatchRunComponent(Component):
     display_name = "Batch Run"
     description = "Runs an LLM on each row of a DataFrame column. If no column is specified, all columns are used."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/batch-run"
+    documentation: str = "https://docs.agent.khulnasoft.com/batch-run"
     icon = "List"
 
     inputs = [

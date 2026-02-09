@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field, create_model
 from trustcall import create_extractor
-
 from wfx.base.models.chat_result import get_chat_result
 from wfx.base.models.unified_models import (
     get_language_model_options,
@@ -26,7 +25,7 @@ from wfx.schema.table import EditMode
 class StructuredOutputComponent(Component):
     display_name = "Structured Output"
     description = "Uses an LLM to generate structured data. Ideal for extraction and consistency."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/structured-output"
+    documentation: str = "https://docs.agent.khulnasoft.com/structured-output"
     name = "StructuredOutput"
     icon = "braces"
 

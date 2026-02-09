@@ -1,6 +1,5 @@
 from langchain_core.messages import BaseMessage
 from langchain_core.prompts import PromptTemplate
-
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.field_typing import LanguageModel, Text
 

@@ -1,5 +1,4 @@
 import orjson
-
 from wfx.base.datastax.astradb_base import AstraDBBaseComponent
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
@@ -17,7 +16,7 @@ class AstraDBGraphVectorStoreComponent(AstraDBBaseComponent, LCVectorStoreCompon
     display_name: str = "Astra DB Graph"
     description: str = "Implementation of Graph Vector Store using Astra DB"
     name = "AstraDBGraph"
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-datastax"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-datastax"
     icon: str = "AstraDB"
     legacy: bool = True
     replacement = ["datastax.GraphRAG"]

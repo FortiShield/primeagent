@@ -2,7 +2,6 @@ from typing import Any, cast
 
 import requests
 from pydantic import ValidationError
-
 from wfx.base.models.anthropic_constants import (
     ANTHROPIC_MODELS,
     DEFAULT_ANTHROPIC_API_URL,

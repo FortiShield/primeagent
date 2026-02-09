@@ -2,7 +2,6 @@ import asyncio
 from urllib.parse import urljoin
 
 import httpx
-
 from wfx.log.logger import logger
 from wfx.utils.util import transform_localhost_url
 

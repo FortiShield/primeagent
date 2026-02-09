@@ -5,7 +5,6 @@ import aiofiles
 from PIL import Image as PILImage
 from platformdirs import user_cache_dir
 from pydantic import BaseModel
-
 from wfx.services.deps import get_storage_service
 from wfx.utils.image import create_image_content_dict
 

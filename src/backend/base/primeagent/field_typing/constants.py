@@ -3,6 +3,8 @@
 from collections.abc import Callable
 from typing import Text
 
+# Import Message from primeagent.schema for backward compatibility
+from primeagent.schema.message import Message
 from wfx.field_typing.constants import (
     CUSTOM_COMPONENT_SUPPORTED_TYPES,
     DEFAULT_IMPORT_STRING,
@@ -44,9 +46,6 @@ from wfx.field_typing.constants import (
 # Import wfx schema types
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame
-
-# Import Message from primeagent.schema for backward compatibility
-from primeagent.schema.message import Message
 
 # Add Message and DataFrame to CUSTOM_COMPONENT_SUPPORTED_TYPES
 CUSTOM_COMPONENT_SUPPORTED_TYPES = {

@@ -1,11 +1,10 @@
 from uuid import UUID
 
 from fastapi import HTTPException
-from sqlmodel import select
-from wfx.services.deps import session_scope_readonly
-
 from primeagent.services.database.models.flow.model import Flow
 from primeagent.services.database.models.user.model import User, UserRead
+from sqlmodel import select
+from wfx.services.deps import session_scope_readonly
 
 
 async def get_user_by_flow_id_or_endpoint_name(flow_id_or_name: str) -> UserRead | None:

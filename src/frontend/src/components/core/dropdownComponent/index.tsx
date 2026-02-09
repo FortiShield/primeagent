@@ -59,6 +59,7 @@ export default function Dropdown({
   externalOptions,
   handleOnNewValue,
   toggle,
+  inspectionPanel,
   ...baseInputProps
 }: BaseInputProps & DropDownComponent): JSX.Element {
   const validOptions = useMemo(
@@ -69,9 +70,9 @@ export default function Dropdown({
   // Initialize state and refs
   const [open, setOpen] = useState(children ? true : false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [_waitingForResponse, setWaitingForResponse] = useState(false);
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
   const [customValue, setCustomValue] = useState("");
-  const _nodes = useFlowStore((state) => state.nodes);
+  const nodes = useFlowStore((state) => state.nodes);
 
   const [filteredOptions, setFilteredOptions] = useState(() => {
     // Include the current value in filteredOptions if it's a custom value not in validOptions
@@ -100,7 +101,9 @@ export default function Dropdown({
   const { firstWord } = formatName(name);
   const fuse = new Fuse(validOptions, { keys: ["name", "value"] });
   const PopoverContentDropdown =
-    children || editNode ? PopoverContent : PopoverContentWithoutPortal;
+    children || editNode || inspectionPanel
+      ? PopoverContent
+      : PopoverContentWithoutPortal;
   const { helperText, hasRefreshButton } = baseInputProps;
 
   // API and store hooks
@@ -202,69 +205,7 @@ export default function Dropdown({
       name,
     );
 
-    // TODO: this is a hack to make the connect other models option work
-    // we should find a better way to do this
-    try {
-      if (value === "connect_other_models") {
-        const store = useFlowStore.getState();
-        const node = store.getNode(nodeId!);
-        const templateField = node?.data?.node?.template?.[name!];
-        if (!templateField) return;
-
-        const inputTypes: string[] =
-          (Array.isArray(templateField.input_types)
-            ? templateField.input_types
-            : []) || [];
-        const effectiveInputTypes =
-          inputTypes.length > 0 ? inputTypes : ["LanguageModel"];
-        const tooltipTitle: string =
-          (inputTypes && inputTypes.length > 0
-            ? inputTypes.join("\n")
-            : templateField.type) || "";
-
-        const _myId = scapedJSONStringfy({
-          inputTypes: effectiveInputTypes,
-          type: templateField.type,
-          id: nodeId,
-          fieldName: name,
-          proxy: templateField.proxy,
-        });
-
-        const typesData = useTypesStore.getState().data;
-        const grouped = groupByFamily(
-          typesData,
-          (effectiveInputTypes && effectiveInputTypes.length > 0
-            ? effectiveInputTypes.join("\n")
-            : tooltipTitle) || "",
-          true,
-          store.nodes,
-        );
-
-        // Build a pseudo source so compatible target handles (left side) glow
-        const pseudoSourceHandle = scapedJSONStringfy({
-          fieldName: name,
-          id: nodeId,
-          inputTypes: effectiveInputTypes,
-          type: "str",
-        });
-
-        const filterObj = {
-          source: undefined,
-          sourceHandle: undefined,
-          target: nodeId,
-          targetHandle: pseudoSourceHandle,
-          type: "LanguageModel",
-          // Use a generic color; exact tone is resolved when user hovers/clicks handles
-          color: "datatype-fuchsia",
-        } as any;
-
-        // Show compatible handles glow
-        store.setFilterEdge(grouped);
-        store.setFilterType(filterObj);
-      }
-    } finally {
-      setWaitingForResponse(false);
-    }
+    setWaitingForResponse(false);
   };
 
   const handleRefreshButtonPress = async () => {
@@ -679,7 +620,7 @@ export default function Dropdown({
   const renderPopoverContent = () => (
     <PopoverContentDropdown
       side="bottom"
-      avoidCollisions={!!children}
+      avoidCollisions={!!children || inspectionPanel}
       className="noflow nowheel nopan nodelete nodrag p-0"
       style={
         children ? {} : { minWidth: refButton?.current?.clientWidth ?? "200px" }

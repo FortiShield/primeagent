@@ -17,7 +17,6 @@ from langchain.agents.format_scratchpad.tools import format_to_tool_messages
 from langchain.agents.output_parsers.tools import ToolsAgentOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableLambda
-
 from wfx.log.logger import logger
 
 # Pattern to detect placeholder usage in tool arguments

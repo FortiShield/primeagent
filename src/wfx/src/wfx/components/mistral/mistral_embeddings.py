@@ -1,6 +1,5 @@
 from langchain_mistralai import MistralAIEmbeddings
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import Embeddings
 from wfx.io import DropdownInput, IntInput, MessageTextInput, Output, SecretStrInput

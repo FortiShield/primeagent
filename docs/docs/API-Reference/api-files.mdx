@@ -66,49 +66,49 @@ To change this limit, set the `PRIMEAGENT_MAX_FILE_SIZE_UPLOAD` [environment var
 
 1. Attach the image to a `POST /v1/files/upload/$FLOW_ID` request with `--form` (`-F`) and the file path:
 
-    ```bash
-    curl -X POST "$PRIMEAGENT_URL/api/v1/files/upload/$FLOW_ID" \
-      -H "Content-Type: multipart/form-data" \
-      -H "x-api-key: $PRIMEAGENT_API_KEY" \
-      -F "file=@PATH/TO/FILE.png"
-    ```
+   ```bash
+   curl -X POST "$PRIMEAGENT_URL/api/v1/files/upload/$FLOW_ID" \
+     -H "Content-Type: multipart/form-data" \
+     -H "x-api-key: $PRIMEAGENT_API_KEY" \
+     -F "file=@PATH/TO/FILE.png"
+   ```
 
-    A successful request returns the `file_path` for the image in the Primeagent file management system in the format `FLOW_ID/TIMESTAMP_FILENAME.TYPE`.
-    For example:
+   A successful request returns the `file_path` for the image in the Primeagent file management system in the format `FLOW_ID/TIMESTAMP_FILENAME.TYPE`.
+   For example:
 
-    ```json
-    {
-      "flowId": "a430cc57-06bb-4c11-be39-d3d4de68d2c4",
-      "file_path": "a430cc57-06bb-4c11-be39-d3d4de68d2c4/2024-11-27_14-47-50_image-file.png"
-    }
-    ```
+   ```json
+   {
+     "flowId": "a430cc57-06bb-4c11-be39-d3d4de68d2c4",
+     "file_path": "a430cc57-06bb-4c11-be39-d3d4de68d2c4/2024-11-27_14-47-50_image-file.png"
+   }
+   ```
 
 2. Use the returned `file_path` to send the image file to other components that can accept file input. Where you specify the file path depends on the component type.
 
-    The following example runs the **Basic Prompting** template flow, passing the image file and the query `describe this image` as input for the **Chat Input** component.
-    In this case, the file path is specified in `tweaks`.
+   The following example runs the **Basic Prompting** template flow, passing the image file and the query `describe this image` as input for the **Chat Input** component.
+   In this case, the file path is specified in `tweaks`.
 
-    ```bash
-    curl -X POST \
-        "$PRIMEAGENT_URL/api/v1/run/a430cc57-06bb-4c11-be39-d3d4de68d2c4?stream=false" \
-        -H "Content-Type: application/json" \
-        -H "x-api-key: $PRIMEAGENT_API_KEY" \
-        -d '{
-        "output_type": "chat",
-        "input_type": "chat",
-        "tweaks": {
-          "ChatInput-b67sL": {
-            "files": "a430cc57-06bb-4c11-be39-d3d4de68d2c4/2024-11-27_14-47-50_image-file.png",
-            "input_value": "describe this image"
-          }
-        }
-      }'
-    ```
+   ```bash
+   curl -X POST \
+       "$PRIMEAGENT_URL/api/v1/run/a430cc57-06bb-4c11-be39-d3d4de68d2c4?stream=false" \
+       -H "Content-Type: application/json" \
+       -H "x-api-key: $PRIMEAGENT_API_KEY" \
+       -d '{
+       "output_type": "chat",
+       "input_type": "chat",
+       "tweaks": {
+         "ChatInput-b67sL": {
+           "files": "a430cc57-06bb-4c11-be39-d3d4de68d2c4/2024-11-27_14-47-50_image-file.png",
+           "input_value": "describe this image"
+         }
+       }
+     }'
+   ```
 
-    :::tip
-    For help with tweaks, use the **Input Schema** in a flow's [**API access** pane](/concepts-publish#api-access).
-    Setting tweaks with **Input Schema** also automatically populates the required component IDs.
-    :::
+   :::tip
+   For help with tweaks, use the **Input Schema** in a flow's [**API access** pane](/concepts-publish#api-access).
+   Setting tweaks with **Input Schema** also automatically populates the required component IDs.
+   :::
 
 ### List files (v1)
 
@@ -188,7 +188,7 @@ Upload a file to your user account. The file can be used across multiple flows.
 
 The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, such as `07e5b864-e367-4f52-b647-a48035ae7e5e/d44dc2e1-9ae9-4cf6-9114-8d34a6126c94.pdf`.
 
-1. To retrieve your current `user_id`, call the `/whoami` endpoint:
+1.  To retrieve your current `user_id`, call the `/whoami` endpoint:
 
     ```bash
     curl -X GET \
@@ -198,7 +198,7 @@ The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, such as `07
     ```
 
     <details>
-    <summary>Result</summary>
+<summary>Result</summary>
 
     ```
     {"id":"07e5b864-e367-4f52-b647-a48035ae7e5e","username":"primeagent","profile_image":null,"store_api_key":null,"is_active":true,"is_superuser":true,"create_at":"2025-05-08T17:59:07.855965","updated_at":"2025-05-28T19:00:42.556460","last_login_at":"2025-05-28T19:00:42.554338","optins":{"github_starred":false,"dialog_dismissed":true,"discord_clicked":false,"mcp_dialog_dismissed":true}}
@@ -206,29 +206,29 @@ The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, such as `07
 
     </details>
 
-2. In the POST request to `v2/files`, replace **@FILE_NAME.EXTENSION** with the uploaded file name and its extension.
-You must include the ampersand (`@`) in the request to instruct curl to upload the contents of the file, not the string `FILE_NAME.EXTENSION`.
+2.  In the POST request to `v2/files`, replace **@FILE_NAME.EXTENSION** with the uploaded file name and its extension.
+    You must include the ampersand (`@`) in the request to instruct curl to upload the contents of the file, not the string `FILE_NAME.EXTENSION`.
 
-    ```bash
-    curl -X POST \
-      "$PRIMEAGENT_URL/api/v2/files" \
-      -H "accept: application/json" \
-      -H "Content-Type: multipart/form-data" \
-      -H "x-api-key: $PRIMEAGENT_API_KEY" \
-      -F "file=@FILE_NAME.EXTENSION"
-    ```
+        ```bash
+        curl -X POST \
+          "$PRIMEAGENT_URL/api/v2/files" \
+          -H "accept: application/json" \
+          -H "Content-Type: multipart/form-data" \
+          -H "x-api-key: $PRIMEAGENT_API_KEY" \
+          -F "file=@FILE_NAME.EXTENSION"
+        ```
 
-    The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, and the API returns metadata about the uploaded file:
+        The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, and the API returns metadata about the uploaded file:
 
-    ```json
-    {
-      "id":"d44dc2e1-9ae9-4cf6-9114-8d34a6126c94",
-      "name":"engine_manual",
-      "path":"07e5b864-e367-4f52-b647-a48035ae7e5e/d44dc2e1-9ae9-4cf6-9114-8d34a6126c94.pdf",
-      "size":851160,
-      "provider":null
-    }
-    ```
+        ```json
+        {
+          "id":"d44dc2e1-9ae9-4cf6-9114-8d34a6126c94",
+          "name":"engine_manual",
+          "path":"07e5b864-e367-4f52-b647-a48035ae7e5e/d44dc2e1-9ae9-4cf6-9114-8d34a6126c94.pdf",
+          "size":851160,
+          "provider":null
+        }
+        ```
 
 ### Send files to your flows (v2)
 
@@ -244,57 +244,57 @@ The default file limit is 1024 MB. To configure this value, change the `PRIMEAGE
 
 1. To send a file to your flow with the API, POST the file to the `/api/v2/files` endpoint.
 
-    Replace **FILE_NAME.EXTENSION** with the name and extension of the file you want to upload.
-    This is the same step described in [Upload file (v2)](#upload-file-v2), but since you need the filename to upload to your flow, it is included here.
+   Replace **FILE_NAME.EXTENSION** with the name and extension of the file you want to upload.
+   This is the same step described in [Upload file (v2)](#upload-file-v2), but since you need the filename to upload to your flow, it is included here.
 
-    ```bash
-    curl -X POST \
-      "$PRIMEAGENT_URL/api/v2/files" \
-      -H "accept: application/json" \
-      -H "Content-Type: multipart/form-data" \
-      -H "x-api-key: $PRIMEAGENT_API_KEY" \
-      -F "file=@FILE_NAME.EXTENSION"
-    ```
+   ```bash
+   curl -X POST \
+     "$PRIMEAGENT_URL/api/v2/files" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -H "x-api-key: $PRIMEAGENT_API_KEY" \
+     -F "file=@FILE_NAME.EXTENSION"
+   ```
 
-    The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, and the API returns metadata about the uploaded file:
+   The file is uploaded in the format `USER_ID/FILE_ID.FILE_EXTENSION`, and the API returns metadata about the uploaded file:
 
-    ```json
-    {
-      "id":"d44dc2e1-9ae9-4cf6-9114-8d34a6126c94",
-      "name":"engine_manual",
-      "path":"07e5b864-e367-4f52-b647-a48035ae7e5e/d44dc2e1-9ae9-4cf6-9114-8d34a6126c94.pdf",
-      "size":851160,
-      "provider": null
-    }
-    ```
+   ```json
+   {
+     "id": "d44dc2e1-9ae9-4cf6-9114-8d34a6126c94",
+     "name": "engine_manual",
+     "path": "07e5b864-e367-4f52-b647-a48035ae7e5e/d44dc2e1-9ae9-4cf6-9114-8d34a6126c94.pdf",
+     "size": 851160,
+     "provider": null
+   }
+   ```
 
 2. To use this file in your flow, add a **Read File** component to your flow.
-This component loads files into flows from your local machine or Primeagent file management.
+   This component loads files into flows from your local machine or Primeagent file management.
 
 3. Run the flow, passing the `path` to the `Read-File` component in the `tweaks` object:
 
-    ```text
-    curl --request POST \
-      --url "$PRIMEAGENT_URL/api/v1/run/$FLOW_ID" \
-      --header "Content-Type: application/json" \
-      --header "x-api-key: $PRIMEAGENT_API_KEY" \
-      --data '{
-      "input_value": "what do you see?",
-      "output_type": "chat",
-      "input_type": "text",
-      "tweaks": {
-        "Read-File-1olS3": {
-          "path": [
-            "07e5b864-e367-4f52-b647-a48035ae7e5e/3a290013-fe1e-4d3d-a454-cacae81288f3.pdf"
-          ]
-        }
-      }
-    }'
-    ```
+   ```text
+   curl --request POST \
+     --url "$PRIMEAGENT_URL/api/v1/run/$FLOW_ID" \
+     --header "Content-Type: application/json" \
+     --header "x-api-key: $PRIMEAGENT_API_KEY" \
+     --data '{
+     "input_value": "what do you see?",
+     "output_type": "chat",
+     "input_type": "text",
+     "tweaks": {
+       "Read-File-1olS3": {
+         "path": [
+           "07e5b864-e367-4f52-b647-a48035ae7e5e/3a290013-fe1e-4d3d-a454-cacae81288f3.pdf"
+         ]
+       }
+     }
+   }'
+   ```
 
-    To get the `Read-File` component's ID, call the [Read flow](/api-flows#read-flow) endpoint or inspect the component in the visual editor.
+   To get the `Read-File` component's ID, call the [Read flow](/api-flows#read-flow) endpoint or inspect the component in the visual editor.
 
-    If the file path is valid, the flow runs successfully.
+   If the file path is valid, the flow runs successfully.
 
 ### List files (v2)
 
@@ -423,4 +423,4 @@ This endpoint is deprecated. Use the `/files` endpoints instead.
 
 ## See also
 
-* [Manage files](/concepts-file-management)
+- [Manage files](/concepts-file-management)

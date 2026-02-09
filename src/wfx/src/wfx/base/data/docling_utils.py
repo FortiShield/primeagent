@@ -7,7 +7,6 @@ from functools import lru_cache
 
 from docling_core.types.doc import DoclingDocument
 from pydantic import BaseModel, SecretStr, TypeAdapter
-
 from wfx.log.logger import logger
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame

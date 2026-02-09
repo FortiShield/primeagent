@@ -15,7 +15,6 @@ import orjson
 import structlog
 from platformdirs import user_cache_dir
 from typing_extensions import NotRequired
-
 from wfx.settings import DEV
 
 VALID_LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]

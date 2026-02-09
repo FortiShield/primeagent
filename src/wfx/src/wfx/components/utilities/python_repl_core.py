@@ -1,7 +1,6 @@
 import importlib
 
 from langchain_experimental.utilities import PythonREPL
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import MultilineInput, Output, StrInput
 from wfx.schema.data import Data
@@ -10,7 +9,7 @@ from wfx.schema.data import Data
 class PythonREPLComponent(Component):
     display_name = "Python Interpreter"
     description = "Run Python code with optional imports. Use print() to see the output."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/python-interpreter"
+    documentation: str = "https://docs.agent.khulnasoft.com/python-interpreter"
     icon = "square-terminal"
 
     inputs = [

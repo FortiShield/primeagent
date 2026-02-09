@@ -11,15 +11,14 @@ from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
-from sqlmodel import col, select
-from wfx.log.logger import logger
-
 from primeagent.api.schemas import UploadFileResponse
 from primeagent.api.utils import CurrentActiveUser, DbSession
 from primeagent.services.database.models.file.model import File as UserFile
 from primeagent.services.deps import get_settings_service, get_storage_service
 from primeagent.services.settings.service import SettingsService
 from primeagent.services.storage.service import StorageService
+from sqlmodel import col, select
+from wfx.log.logger import logger
 
 router = APIRouter(tags=["Files"], prefix="/files")
 

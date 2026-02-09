@@ -10,7 +10,6 @@ import aiofiles
 import aiofiles.os as aiofiles_os
 import httpx
 import validators
-
 from wfx.base.curl.parse import parse_context
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import TabInput
@@ -45,7 +44,7 @@ DEFAULT_FIELDS = ["mode"]
 class APIRequestComponent(Component):
     display_name = "API Request"
     description = "Make HTTP requests using URL or cURL commands."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/api-request"
+    documentation: str = "https://docs.agent.khulnasoft.com/api-request"
     icon = "Globe"
     name = "APIRequest"
 

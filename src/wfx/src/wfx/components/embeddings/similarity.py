@@ -1,7 +1,6 @@
 from typing import Any
 
 import numpy as np
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import DataInput, DropdownInput, Output
 from wfx.schema.data import Data

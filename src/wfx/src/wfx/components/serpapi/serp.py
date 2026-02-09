@@ -3,7 +3,6 @@ from typing import Any
 from langchain_community.utilities.serpapi import SerpAPIWrapper
 from langchain_core.tools import ToolException
 from pydantic import BaseModel, Field
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DictInput, IntInput, MultilineInput, SecretStrInput
 from wfx.io import Output

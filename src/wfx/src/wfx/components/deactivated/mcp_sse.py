@@ -2,7 +2,6 @@
 
 from langchain_core.tools import StructuredTool
 from mcp import types
-
 from wfx.base.mcp.util import (
     MCPSseClient,
     create_input_schema_from_json_schema,
@@ -19,10 +18,8 @@ class MCPSse(Component):
     tools = types.ListToolsResult
     tool_names = [str]
     display_name = "MCP Tools (SSE) [DEPRECATED]"
-    description = (
-        "Connects to an MCP server over SSE and exposes it's tools as primeagent tools to be used by an Agent."
-    )
-    documentation: str = "https://docs-primeagent.khulnasoft.com/components-custom-components"
+    description = "Connects to an MCP server over SSE and exposes it's tools as primeagent tools to be used by an Agent."
+    documentation: str = "https://docs.agent.khulnasoft.com/components-custom-components"
     icon = "code"
     name = "MCPSse"
     legacy = True

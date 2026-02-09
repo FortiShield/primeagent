@@ -2,7 +2,6 @@ from typing import Any
 
 from langchain_openai import ChatOpenAI
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import LanguageModel
 from wfx.field_typing.range_spec import RangeSpec

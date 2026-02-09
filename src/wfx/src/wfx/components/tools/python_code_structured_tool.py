@@ -7,7 +7,6 @@ from langchain_core.tools import StructuredTool
 from pydantic.v1 import Field, create_model
 from pydantic.v1.fields import Undefined
 from typing_extensions import override
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.inputs.inputs import BoolInput, DropdownInput, FieldTypes, HandleInput, MessageTextInput, MultilineInput
 from wfx.io import Output

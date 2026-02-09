@@ -3,7 +3,6 @@ import json
 import tiktoken
 from docling_core.transforms.chunker import BaseChunker, DocMeta
 from docling_core.transforms.chunker.hierarchical_chunker import HierarchicalChunker
-
 from wfx.base.data.docling_utils import extract_docling_documents
 from wfx.custom import Component
 from wfx.io import DropdownInput, HandleInput, IntInput, MessageTextInput, Output, StrInput

@@ -1,5 +1,4 @@
 from langchain_unstructured import UnstructuredLoader
-
 from wfx.base.data.base_file import BaseFileComponent
 from wfx.inputs.inputs import DropdownInput, MessageTextInput, NestedDictInput, SecretStrInput
 from wfx.schema.data import Data

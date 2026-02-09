@@ -7,8 +7,8 @@ Primeagent provides optional dependency groups and support for custom dependenci
 
 The Primeagent codebase uses two `pyproject.toml` files to manage dependencies, with one for `base` and one for `main`:
 
-* The `main` package is managed by the root level `pyproject.toml`, and it includes end-user features and main application code, such as Langchain and OpenAI.
-* The `base` package is managed at `src/backend/base/pyproject.toml`, and it includes core infrastructure, such as the FastAPI web framework.
+- The `main` package is managed by the root level `pyproject.toml`, and it includes end-user features and main application code, such as Langchain and OpenAI.
+- The `base` package is managed at `src/backend/base/pyproject.toml`, and it includes core infrastructure, such as the FastAPI web framework.
 
 ## Install custom dependencies in Primeagent Desktop {#primeagent-desktop}
 
@@ -90,11 +90,13 @@ uv add matplotlib
 Dependencies can be added to the `main` package as regular dependencies at `[project.dependencies]` or optional dependencies at `[project.optional-dependencies]`.
 
 To add a dependency to the `base` package, navigate to `src/backend/base` and run:
+
 ```bash
 cd src/backend/base && uv add DEPENDENCY
 ```
 
 To add a development dependency for testing, linting, or debugging, navigate to `src/backend/base` and run:
+
 ```bash
 cd src/backend/base && uv add --group dev DEPENDENCY
 ```
@@ -143,5 +145,5 @@ dev = [
 
 ## See also
 
-* [Containerize a Primeagent application](/develop-application)
-* [Create custom Python components](/components-custom-components)
+- [Containerize a Primeagent application](/develop-application)
+- [Create custom Python components](/components-custom-components)

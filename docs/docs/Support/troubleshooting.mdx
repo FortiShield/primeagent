@@ -5,7 +5,7 @@ slug: /troubleshoot
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import Icon from "@site/src/components/icon";
+import Icon from '@site/src/components/icon';
 
 This page provides troubleshooting advice for issues you might encounter when using Primeagent or contributing to Primeagent.
 
@@ -13,13 +13,13 @@ This page provides troubleshooting advice for issues you might encounter when us
 
 As Primeagent development continues, components are often recategorized or deprecated for better alignment or to prepare for new components.
 
-If a component appears to be missing from the <Icon name="Component" aria-hidden="true" /> **Core components** and  menus, try the following:
+If a component appears to be missing from the <Icon name="Component" aria-hidden="true" /> **Core components** and menus, try the following:
 
-* <Icon name="Search" aria-hidden="true" /> **Search** for the component.
-* Check other component categories and <Icon name="Blocks" aria-hidden="true" /> [**Bundles**](/components-bundle-components).
-* Check [legacy components](/concepts-components#legacy-components), which are hidden by default.
-* Check the [Changelog](https://github.com/khulnasoft-bot/primeagent/releases/latest) for component changes in recent releases.
-* Make sure the component isn't already present in your flow if it is a single-use component.
+- <Icon name="Search" aria-hidden="true" /> **Search** for the component.
+- Check other component categories and <Icon name="Blocks" aria-hidden="true" /> [**Bundles**](/components-bundle-components).
+- Check [legacy components](/concepts-components#legacy-components), which are hidden by default.
+- Check the [Changelog](https://github.com/khulnasoft-bot/primeagent/releases/latest) for component changes in recent releases.
+- Make sure the component isn't already present in your flow if it is a single-use component.
 
 If you still cannot locate the component, see [Primeagent GitHub Issues and Discussions](/contributing-github-issues).
 
@@ -35,9 +35,9 @@ For more information, see [Test flows in the Playground](/concepts-playground).
 
 If you get an API key error when running a flow, try the following:
 
-* For all components that require credentials, make sure those components have a valid credential in the component's settings, such as the **API Key** field.
-* If you store your credentials in [Primeagent global variables](/configuration-global-variables), make sure you selected the correct global variable and that the variable contains a valid credential.
-* Make sure the provided credentials are active, have the required permissions, and, if applicable, have sufficient funds in the account to execute the required action. For example, model providers require credits to use their LLMs.
+- For all components that require credentials, make sure those components have a valid credential in the component's settings, such as the **API Key** field.
+- If you store your credentials in [Primeagent global variables](/configuration-global-variables), make sure you selected the correct global variable and that the variable contains a valid credential.
+- Make sure the provided credentials are active, have the required permissions, and, if applicable, have sufficient funds in the account to execute the required action. For example, model providers require credits to use their LLMs.
 
 ## Primeagent installation issues
 
@@ -123,13 +123,13 @@ When you try to run Primeagent using the command `primeagent run`, you encounter
 
 There are two possible reasons for this error:
 
-* **Multiple Primeagent installations**: You installed Primeagent using `pip install primeagent` but you already had a previous version of Primeagent installed in your system. In this case, you might be running the wrong executable.
+- **Multiple Primeagent installations**: You installed Primeagent using `pip install primeagent` but you already had a previous version of Primeagent installed in your system. In this case, you might be running the wrong executable.
 
-    To solve this issue, run the correct executable by running `python -m primeagent run` instead of `primeagent run`.
+  To solve this issue, run the correct executable by running `python -m primeagent run` instead of `primeagent run`.
 
-    If that doesn't work, try uninstalling and reinstalling Primeagent with `uv pip install primeagent --pre -U`.
+  If that doesn't work, try uninstalling and reinstalling Primeagent with `uv pip install primeagent --pre -U`.
 
-* **Version conflict during installation**: Some version conflicts might have occurred during the installation process. To resolve this issue, reinstall Primeagent and its dependencies by running `python -m pip install primeagent --pre -U --force-reinstall`.
+- **Version conflict during installation**: Some version conflicts might have occurred during the installation process. To resolve this issue, reinstall Primeagent and its dependencies by running `python -m pip install primeagent --pre -U --force-reinstall`.
 
 ### Environment variables not available from terminal
 
@@ -156,6 +156,31 @@ To resolve this error, use separate browser instances or browser profiles to acc
 In Primeagent OSS, you can follow the error message's instructions to install the missing dependency.
 
 To manage dependencies in Primeagent Desktop, see [Install custom dependencies in Primeagent Desktop](/install-custom-dependencies#primeagent-desktop).
+
+### PostgreSQL asyncpg driver compatibility issue
+
+The following error can occur when initializing Primeagent with a PostgreSQL database:
+
+```text
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2025, 10, 31, 14, 8, 5... (can't subtract offset-naive and offset-aware datetimes)
+```
+
+This error occurs because `asyncpg` has stricter timezone handling than `psycopg2`, and is not fully compatible with Primeagent's current database schema.
+
+To resolve this issue, remove `asyncpg` from your installation and use `psycopg2` instead.
+
+### An API key must be passed as query or header
+
+The following error can occur when attempting to sign up on the Primeagent sign in page: `An API key must be passed as query or header`.
+
+This means that `PRIMEAGENT_AUTO_LOGIN` is set to `false`, and only superusers can create and activate non-superuser accounts.
+Therefore, you are locked out of this Primeagent instance.
+
+If you aren't an administrator, then a superuser must create and activate a non-superuser account before you can sign in.
+
+If you are the administrator, sign in with a superuser account, or restart Primeagent with `PRIMEAGENT_AUTO_LOGIN=true`.
+
+For more information, see [Start Primeagent Server with authentication enabled](/api-keys-and-authentication#start-a-primeagent-server-with-authentication-enabled).
 
 ## Primeagent upgrade issues
 
@@ -187,7 +212,7 @@ If you are running Primeagent Desktop version 1.4.2 or earlier, the UI might inc
 This happens because the automatic update feature in the UI was introduced in version 1.4.2.
 Earlier versions can't automatically detect or apply updates.
 
-To resolve this issue, uninstall Primeagent Desktop, and then [download and install the latest version of Primeagent Desktop](https://primeagent.khulnasoft.com/desktop).
+To resolve this issue, uninstall Primeagent Desktop, and then [download and install the latest version of Primeagent Desktop](https://agent.khulnasoft.com/desktop).
 
 ### 422 error when freezing components after upgrading Pydantic/FastAPI dependencies
 
@@ -227,48 +252,48 @@ If Claude for Desktop doesn't use your server's tools correctly, try explicitly 
 
 1. To find your `uvx` path, run `which uvx`.
 
-    To find your `npx` path, run `which npx`.
+   To find your `npx` path, run `which npx`.
 
 2. In your `claude_desktop_config.json` file, add the path to your Primeagent MCP server configuration, as shown in the following examples.
 
-    <Tabs>
-    <TabItem value="uvx" label="uvx" default>
+   <Tabs>
+<TabItem value="uvx" label="uvx" default>
 
-    ```json
-    {
-      "mcpServers": {
-        "PROJECT_NAME": {
-          "command": "PATH_TO_UVX",
-          "args": [
-            "mcp-proxy",
-            "http://PRIMEAGENT_SERVER_ADDRESS/api/v1/mcp/project/PROJECT_ID/streamable"
-          ]
-        }
-      }
-    }
-    ```
+   ```json
+   {
+     "mcpServers": {
+       "PROJECT_NAME": {
+         "command": "PATH_TO_UVX",
+         "args": [
+           "mcp-proxy",
+           "http://PRIMEAGENT_SERVER_ADDRESS/api/v1/mcp/project/PROJECT_ID/streamable"
+         ]
+       }
+     }
+   }
+   ```
 
-    </TabItem>
-    <TabItem value="npx" label="npx">
+   </TabItem>
+<TabItem value="npx" label="npx">
 
-    ```json
-    {
-      "mcpServers": {
-        "PROJECT_NAME": {
-          "command": "PATH_TO_NPX",
-          "args": [
-            "-y",
-            "supergateway",
-            "--sse",
-            "http://PRIMEAGENT_SERVER_ADDRESS/api/v1/mcp/project/PROJECT_ID/streamable"
-          ]
-        }
-      }
-    }
-    ```
+   ```json
+   {
+     "mcpServers": {
+       "PROJECT_NAME": {
+         "command": "PATH_TO_NPX",
+         "args": [
+           "-y",
+           "supergateway",
+           "--sse",
+           "http://PRIMEAGENT_SERVER_ADDRESS/api/v1/mcp/project/PROJECT_ID/streamable"
+         ]
+       }
+     }
+   }
+   ```
 
-    </TabItem>
-    </Tabs>
+   </TabItem>
+</Tabs>
 
 ### MCP browser-based flows don't open a browser on Windows
 
@@ -290,6 +315,25 @@ WSL cannot directly access Windows localhost services, and Primeagent running on
 To work around this issue, run the server and host in the same operating environment.
 
 Alternatively, configure Primeagent Desktop to accept connections from WSL at the default Windows IP address of `10.255.255.254:7860` instead of `localhost`.
+
+### MCP Tools component loses Tool Mode option after upgrading flows {#mcp-tools-component-loses-tool-mode-option-after-upgrading-flows}
+
+If you upgrade an existing flow that uses the [**MCP Tools** component](/mcp-tools) in **Tool Mode**, the component might lose its **Tool Mode** setting after upgrading the flow.
+This can break flows that rely on the component's **Tool Mode** to expose MCP tools to agents.
+
+If you experience this when upgrading a flow that you created in Primeagent version 1.7.1 or earlier, do the following:
+
+1. Select the **MCP Tools** component in your flow.
+2. Click <Icon name="Code" aria-hidden="true"/> **Code** to open the component's code editor.
+3. In the component's template structure, locate the `tool_mode` field under `inputs`.
+   The field can be either missing or set to `false`.
+4. Add the `tool_mode` field if it's missing, and set it to `true`:
+
+   ```python
+   tool_mode = True
+   ```
+
+5. Click **Check & Save** to apply the code changes.
 
 ## Token length limit errors in Embedding Model components
 
@@ -320,7 +364,8 @@ If you are building a custom component, see [Error handling and logging for cust
 
 If your custom components are not appearing in the Primeagent visual editor, try the following troubleshooting steps:
 
-1. Ensure your components follow the [required directory structure](https://docs-primeagent.khulnasoft.com/components-custom-components#directory-structure-requirements).
+1.  Ensure your components follow the [required directory structure](https://docs.agent.khulnasoft.com/components-custom-components#directory-structure-requirements).
+
     ```
     /your/custom/components/path/       # Base directory set by PRIMEAGENT_COMPONENTS_PATH
         └── category_name/              # Required category subfolder that determines menu name
@@ -328,15 +373,15 @@ If your custom components are not appearing in the Primeagent visual editor, try
             └── custom_component.py     # Component file
     ```
 
-2. Verify each category directory includes an `__init__.py` file.
-This is required for Python to recognize the directory as a module.
+2.  Verify each category directory includes an `__init__.py` file.
+    This is required for Python to recognize the directory as a module.
 
-3. Use the command line argument instead of the environment variable for `PRIMEAGENT_COMPONENTS_PATH`.
-If you're using the `PRIMEAGENT_COMPONENTS_PATH` environment variable and components aren't loading, try the `--components-path` command line argument instead:
+3.  Use the command line argument instead of the environment variable for `PRIMEAGENT_COMPONENTS_PATH`.
+    If you're using the `PRIMEAGENT_COMPONENTS_PATH` environment variable and components aren't loading, try the `--components-path` command line argument instead:
 
-    ```bash
-    uv run primeagent run --components-path /path/to/your/custom/components
-    ```
+        ```bash
+        uv run primeagent run --components-path /path/to/your/custom/components
+        ```
 
 If you continue to experience issues, please [report them on GitHub](https://github.com/khulnasoft-bot/primeagent/issues) with details about your directory structure and component setup.
 

@@ -1,7 +1,6 @@
 from typing import Any
 
 from langchain_text_splitters import CharacterTextSplitter, TextSplitter
-
 from wfx.base.textsplitters.model import LCTextSplitterComponent
 from wfx.inputs.inputs import DataInput, IntInput, MessageTextInput
 from wfx.utils.util import unescape_string
@@ -10,7 +9,7 @@ from wfx.utils.util import unescape_string
 class CharacterTextSplitterComponent(LCTextSplitterComponent):
     display_name = "Character Text Splitter"
     description = "Split text by number of characters."
-    documentation = "https://docs-primeagent.khulnasoft.com/bundles-langchain"
+    documentation = "https://docs.agent.khulnasoft.com/bundles-langchain"
     name = "CharacterTextSplitter"
     icon = "LangChain"
 

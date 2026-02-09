@@ -6,7 +6,6 @@ from pathlib import Path
 
 import anyio
 from langchain_community.document_loaders.git import GitLoader
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import DropdownInput, MessageTextInput, Output
 from wfx.schema.data import Data

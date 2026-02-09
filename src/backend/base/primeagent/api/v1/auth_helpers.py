@@ -1,9 +1,8 @@
 from typing import Any
 
-from pydantic import SecretStr
-
 from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
 from primeagent.services.database.models.folder.model import Folder
+from pydantic import SecretStr
 
 
 def handle_auth_settings_update(

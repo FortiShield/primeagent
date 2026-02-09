@@ -2,14 +2,13 @@ from collections.abc import Generator
 from enum import Enum
 
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel
-from wfx.log.logger import logger
-
 from primeagent.schema.data import Data
 from primeagent.schema.dataframe import DataFrame
 from primeagent.schema.encoders import CUSTOM_ENCODERS
 from primeagent.schema.message import Message
 from primeagent.serialization.serialization import serialize
+from pydantic import BaseModel
+from wfx.log.logger import logger
 
 
 class ArtifactType(str, Enum):

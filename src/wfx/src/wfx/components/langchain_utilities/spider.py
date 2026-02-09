@@ -1,5 +1,4 @@
 from spider.spider import Spider
-
 from wfx.base.langchain_utilities.spider_constants import MODES
 from wfx.custom.custom_component.component import Component
 from wfx.io import (

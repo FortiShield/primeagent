@@ -1,7 +1,6 @@
 from collections import defaultdict
 
 from pydantic import BaseModel, field_serializer, model_serializer
-
 from wfx.template.field.base import Output
 from wfx.template.template.base import Template
 

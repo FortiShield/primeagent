@@ -1,6 +1,5 @@
 from langchain_sambanova import ChatSambaNovaCloud
 from pydantic.v1 import SecretStr
-
 from wfx.base.models.model import LCModelComponent
 from wfx.base.models.sambanova_constants import SAMBANOVA_MODEL_NAMES
 from wfx.field_typing import LanguageModel

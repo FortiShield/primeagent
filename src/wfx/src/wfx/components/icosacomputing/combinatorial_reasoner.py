@@ -1,6 +1,5 @@
 import requests
 from requests.auth import HTTPBasicAuth
-
 from wfx.base.models.openai_constants import OPENAI_CHAT_MODEL_NAMES
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DropdownInput, SecretStrInput, StrInput

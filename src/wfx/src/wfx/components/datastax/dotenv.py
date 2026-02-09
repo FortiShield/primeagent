@@ -1,7 +1,6 @@
 import io
 
 from dotenv import load_dotenv
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import MultilineSecretInput
 from wfx.schema.message import Message

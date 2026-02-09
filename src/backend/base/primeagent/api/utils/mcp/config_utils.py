@@ -5,12 +5,6 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 from fastapi import HTTPException
-from sqlmodel import select
-from wfx.base.mcp.constants import MAX_MCP_SERVER_NAME_LENGTH
-from wfx.base.mcp.util import sanitize_mcp_name
-from wfx.log import logger
-from wfx.services.deps import get_settings_service
-
 from primeagent.api.v2.mcp import get_server_list, update_server
 from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
 from primeagent.services.database.models import Flow, Folder
@@ -19,6 +13,11 @@ from primeagent.services.database.models.api_key.model import ApiKeyCreate
 from primeagent.services.database.models.folder.constants import DEFAULT_FOLDER_NAME
 from primeagent.services.database.models.user.model import User
 from primeagent.services.deps import get_storage_service
+from sqlmodel import select
+from wfx.base.mcp.constants import MAX_MCP_SERVER_NAME_LENGTH
+from wfx.base.mcp.util import sanitize_mcp_name
+from wfx.log import logger
+from wfx.services.deps import get_settings_service
 
 ALL_INTERFACES_HOST = "0.0.0.0"  # noqa: S104
 

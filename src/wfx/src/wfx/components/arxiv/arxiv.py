@@ -3,7 +3,6 @@ from urllib.parse import urlparse
 from xml.etree.ElementTree import Element
 
 from defusedxml.ElementTree import fromstring
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import DropdownInput, IntInput, MessageTextInput, Output
 from wfx.schema.data import Data

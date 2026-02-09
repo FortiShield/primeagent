@@ -7,20 +7,18 @@ from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from typing import TYPE_CHECKING, Any
 
-from wfx.log.logger import logger
-
 from primeagent.services.base import Service
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from uuid import UUID
 
     from langchain.callbacks.base import BaseCallbackHandler
+    from primeagent.services.tracing.base import BaseTracer
+    from primeagent.services.tracing.schema import Log
     from wfx.custom.custom_component.component import Component
     from wfx.graph.vertex.base import Vertex
     from wfx.services.settings.service import SettingsService
-
-    from primeagent.services.tracing.base import BaseTracer
-    from primeagent.services.tracing.schema import Log
 
 
 def _get_langsmith_tracer():

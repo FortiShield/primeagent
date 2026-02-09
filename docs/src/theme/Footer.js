@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Footer from "@theme-original/Footer";
+import React, { useState } from 'react';
+import Footer from '@theme-original/Footer';
 import { useDocSearchKeyboardEvents } from '@docsearch/react';
 
 export default function FooterWrapper(props) {
@@ -36,12 +36,12 @@ export default function FooterWrapper(props) {
       {isHovered && (
         <div
           style={{
-            backgroundColor: "#f6f6f6",
+            backgroundColor: '#f6f6f6',
             padding: '8px 16px',
             borderRadius: '20px',
             color: '#000',
             fontSize: '14px',
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
           Hi, how can I help you?
@@ -49,19 +49,19 @@ export default function FooterWrapper(props) {
       )}
       <div
         style={{
-          backgroundColor: "#f6f6f6",
-          borderRadius: "50%",
-          width: "48px",
-          height: "48px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          backgroundColor: '#f6f6f6',
+          borderRadius: '50%',
+          width: '48px',
+          height: '48px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         }}
       >
         <img
           src="/img/primeagent-icon-black-transparent.svg"
-          style={{ width: "40px" }}
+          style={{ width: '40px' }}
           alt="Search"
         />
       </div>

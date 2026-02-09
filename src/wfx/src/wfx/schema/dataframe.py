@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, cast
 import pandas as pd
 from langchain_core.documents import Document
 from pandas import DataFrame as pandas_DataFrame
-
 from wfx.schema.data import Data
 
 if TYPE_CHECKING:

@@ -5,10 +5,9 @@ from typing import Any
 import orjson
 from fastapi.encoders import jsonable_encoder
 from langchain_core.documents import Document
+from primeagent.schema.message import Message
 from wfx.schema.data import Data
 from wfx.schema.dataframe import DataFrame
-
-from primeagent.schema.message import Message
 
 
 def docs_to_data(documents: list[Document]) -> list[Data]:

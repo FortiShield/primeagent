@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
+from primeagent.api.v1.base import Code, CodeValidationResponse, PromptValidationResponse, ValidatePromptRequest
+from primeagent.services.auth.utils import get_current_active_user
 from wfx.base.prompts.api_utils import process_prompt_template
 from wfx.custom.validate import validate_code
 from wfx.log.logger import logger
-
-from primeagent.api.v1.base import Code, CodeValidationResponse, PromptValidationResponse, ValidatePromptRequest
-from primeagent.services.auth.utils import get_current_active_user
 
 # build router
 router = APIRouter(prefix="/validate", tags=["Validate"])

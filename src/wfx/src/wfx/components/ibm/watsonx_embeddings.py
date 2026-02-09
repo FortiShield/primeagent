@@ -5,7 +5,6 @@ from ibm_watsonx_ai import APIClient, Credentials
 from ibm_watsonx_ai.metanames import EmbedTextParamsMetaNames
 from langchain_ibm import WatsonxEmbeddings
 from pydantic.v1 import SecretStr
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.io import BoolInput, DropdownInput, IntInput, SecretStrInput, StrInput

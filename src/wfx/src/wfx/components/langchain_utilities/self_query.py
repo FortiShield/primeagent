@@ -1,6 +1,5 @@
 from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers.self_query.base import SelfQueryRetriever
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import HandleInput, MessageTextInput
 from wfx.io import Output

@@ -1,5 +1,4 @@
 import httpx
-
 from wfx.custom.custom_component.component import Component
 from wfx.field_typing.range_spec import RangeSpec
 from wfx.io import BoolInput, DropdownInput, IntInput, MessageTextInput, MultilineInput, Output, SecretStrInput

@@ -1,7 +1,6 @@
 from urllib.parse import urlparse
 
 from pypdf import PdfReader
-
 from wfx.base.data.base_file import BaseFileComponent
 from wfx.inputs.inputs import BoolInput, DropdownInput, FloatInput, IntInput, MessageTextInput, SecretStrInput
 from wfx.schema.data import Data

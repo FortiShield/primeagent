@@ -2,7 +2,6 @@ from abc import abstractmethod
 from typing import Any
 
 from langchain_core.documents import BaseDocumentTransformer
-
 from wfx.custom.custom_component.component import Component
 from wfx.io import Output
 from wfx.schema.data import Data

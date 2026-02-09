@@ -1,5 +1,5 @@
-import React from "react";
-import * as LucideIcons from "lucide-react";
+import React from 'react';
+import * as LucideIcons from 'lucide-react';
 
 /*
 How to use this component:

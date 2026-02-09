@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import Any
 
 import requests
-
 from wfx.log.logger import logger
 
 

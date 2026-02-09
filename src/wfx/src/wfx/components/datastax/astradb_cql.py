@@ -7,7 +7,6 @@ from typing import Any
 import requests
 from langchain_core.tools import StructuredTool, Tool
 from pydantic import BaseModel, Field, create_model
-
 from wfx.base.datastax.astradb_base import AstraDBBaseComponent
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.io import DictInput, IntInput, StrInput, TableInput
@@ -19,7 +18,7 @@ from wfx.schema.table import EditMode
 class AstraDBCQLToolComponent(AstraDBBaseComponent, LCToolComponent):
     display_name: str = "Astra DB CQL"
     description: str = "Create a tool to get transactional data from DataStax Astra DB CQL Table"
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-datastax"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-datastax"
     icon: str = "AstraDB"
 
     inputs = [

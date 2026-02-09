@@ -44,7 +44,7 @@ We appreciate your efforts in helping us maintain a secure platform and look for
 
 ### Server-Side Request Forgery (SSRF) in API Request Component (Fixed in 1.7.1)
 
-Primeagent's [API Request component](https://docs-primeagent.khulnasoft.com/api-request) allows arbitrary HTTP requests within a flow. In versions < 1.7.1, this component did not block private IP ranges (`127.0.0.1`, `10/172/192` ranges) or cloud metadata endpoints (`169.254.169.254`), enabling Server-Side Request Forgery (SSRF) attacks.
+Primeagent's [API Request component](https://docs.agent.khulnasoft.com/api-request) allows arbitrary HTTP requests within a flow. In versions < 1.7.1, this component did not block private IP ranges (`127.0.0.1`, `10/172/192` ranges) or cloud metadata endpoints (`169.254.169.254`), enabling Server-Side Request Forgery (SSRF) attacks.
 
 **Potential security impact:**
 - Attackers with API key access can access internal administrative endpoints, metadata services, and internal databases/services
@@ -57,7 +57,7 @@ Primeagent's [API Request component](https://docs-primeagent.khulnasoft.com/api-
 
 ### External Control of File Name or Path (Fixed in 1.7.1)
 
-When creating a flow through the [`/api/v1/flows/`](https://docs-primeagent.khulnasoft.com/api-flows) endpoint, if an arbitrary path is specified in the request body's `fs_path`, the server serializes the flow object into JSON and creates/overwrites a file at that path. In versions < 1.7.1, there is no path restriction, normalization, or allowed directory enforcement, so absolute paths (e.g., `/etc/poc.txt`) are interpreted as-is.
+When creating a flow through the [`/api/v1/flows/`](https://docs.agent.khulnasoft.com/api-flows) endpoint, if an arbitrary path is specified in the request body's `fs_path`, the server serializes the flow object into JSON and creates/overwrites a file at that path. In versions < 1.7.1, there is no path restriction, normalization, or allowed directory enforcement, so absolute paths (e.g., `/etc/poc.txt`) are interpreted as-is.
 
 **Potential security impact:**
 - Authenticated arbitrary file write (within server permission scope): Risk of corrupting configuration/log/task files, disrupting application behavior, and tampering with files read by other components
@@ -107,7 +107,7 @@ Setting `PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN=true` and `PRIMEAGENT_AUTO_LOGIN=true` 
 
 `PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN=true` is the default behavior, so users do not need to change existing workflows in 1.5. To update your workflows to require authentication, set `PRIMEAGENT_SKIP_AUTH_AUTO_LOGIN=false`.
 
-For more information, see [API keys and authentication](https://docs-primeagent.khulnasoft.com/api-keys-and-authentication).
+For more information, see [API keys and authentication](https://docs.agent.khulnasoft.com/api-keys-and-authentication).
 
 ## Security Configuration Guidelines
 

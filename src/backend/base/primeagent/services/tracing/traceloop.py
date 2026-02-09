@@ -11,12 +11,11 @@ from urllib.parse import urlparse
 from opentelemetry import trace
 from opentelemetry.trace import Span, use_span
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
+from primeagent.services.tracing.base import BaseTracer
 from traceloop.sdk import Traceloop
 from traceloop.sdk.instruments import Instruments
 from typing_extensions import override
 from wfx.log.logger import logger
-
-from primeagent.services.tracing.base import BaseTracer
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -25,7 +24,6 @@ if TYPE_CHECKING:
     from langchain.callbacks.base import BaseCallbackHandler
     from opentelemetry.propagators.textmap import CarrierT
     from opentelemetry.trace import Span
-
     from primeagent.graph.vertex.base import Vertex
     from primeagent.services.tracing.schema import Log
 
@@ -100,7 +98,6 @@ class TraceloopTracer(BaseTracer):
     def _convert_to_traceloop_type(self, value):
         """Recursively converts a value to a Traceloop compatible type."""
         from langchain.schema import BaseMessage, Document, HumanMessage, SystemMessage
-
         from primeagent.schema.message import Message
 
         try:

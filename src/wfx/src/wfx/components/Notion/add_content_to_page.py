@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 from langchain.tools import StructuredTool
 from markdown import markdown
 from pydantic import BaseModel, Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import MultilineInput, SecretStrInput, StrInput

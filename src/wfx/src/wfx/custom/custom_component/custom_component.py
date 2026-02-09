@@ -9,7 +9,6 @@ import yaml
 from cachetools import TTLCache
 from langchain_core.documents import Document
 from pydantic import BaseModel
-
 from wfx.custom import validate
 from wfx.custom.custom_component.base_component import BaseComponent
 from wfx.helpers import (
@@ -30,7 +29,6 @@ from wfx.utils.async_helpers import run_until_complete
 
 if TYPE_CHECKING:
     from langchain.callbacks.base import BaseCallbackHandler
-
     from wfx.graph.graph.base import Graph
     from wfx.graph.vertex.base import Vertex
     from wfx.schema.dotdict import dotdict

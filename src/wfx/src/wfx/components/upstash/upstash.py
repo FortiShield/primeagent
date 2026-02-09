@@ -1,5 +1,4 @@
 from langchain_community.vectorstores import UpstashVectorStore
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
 from wfx.io import (

@@ -1,5 +1,4 @@
 import httpx
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import BoolInput, DropdownInput, IntInput, MessageTextInput, SecretStrInput
 from wfx.log.logger import logger

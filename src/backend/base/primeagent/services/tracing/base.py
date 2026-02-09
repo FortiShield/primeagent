@@ -8,9 +8,8 @@ if TYPE_CHECKING:
     from uuid import UUID
 
     from langchain.callbacks.base import BaseCallbackHandler
-    from wfx.graph.vertex.base import Vertex
-
     from primeagent.services.tracing.schema import Log
+    from wfx.graph.vertex.base import Vertex
 
 
 class BaseTracer(ABC):

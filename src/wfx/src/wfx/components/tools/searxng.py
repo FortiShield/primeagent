@@ -6,7 +6,6 @@ import requests
 from langchain.agents import Tool
 from langchain_core.tools import StructuredTool
 from pydantic.v1 import Field, create_model
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.inputs.inputs import DropdownInput, IntInput, MessageTextInput, MultiselectInput
 from wfx.io import Output

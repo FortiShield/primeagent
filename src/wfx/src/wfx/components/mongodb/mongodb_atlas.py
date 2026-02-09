@@ -5,7 +5,6 @@ import certifi
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 from pymongo.collection import Collection
 from pymongo.operations import SearchIndexModel
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
 from wfx.io import BoolInput, DropdownInput, HandleInput, IntInput, SecretStrInput, StrInput

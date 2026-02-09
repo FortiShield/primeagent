@@ -1,7 +1,6 @@
 import re
 
 from langchain_core.prompts import HumanMessagePromptTemplate
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs.inputs import DefaultPromptField, SecretStrInput, StrInput
 from wfx.io import Output

@@ -1,5 +1,4 @@
 from langchain_community.chat_models.baidu_qianfan_endpoint import QianfanChatEndpoint
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing.constants import LanguageModel
 from wfx.io import DropdownInput, FloatInput, MessageTextInput, SecretStrInput

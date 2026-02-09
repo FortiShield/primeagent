@@ -1,5 +1,4 @@
 from langchain_core.output_parsers import CommaSeparatedListOutputParser
-
 from wfx.custom.custom_component.component import Component
 from wfx.field_typing.constants import OutputParser
 from wfx.io import DropdownInput, Output

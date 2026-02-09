@@ -6,7 +6,6 @@ import httpx
 from langchain_core.tools import StructuredTool, ToolException
 from pydantic import BaseModel
 from pydantic.v1 import Field
-
 from wfx.base.langchain_utilities.model import LCToolComponent
 from wfx.field_typing import Tool
 from wfx.inputs.inputs import IntInput, MultilineInput, NestedDictInput, SecretStrInput, StrInput
@@ -101,7 +100,7 @@ class GleanAPIWrapper(BaseModel):
 class GleanSearchAPIComponent(LCToolComponent):
     display_name: str = "Glean Search API"
     description: str = "Search using Glean's API."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/bundles-glean"
+    documentation: str = "https://docs.agent.khulnasoft.com/bundles-glean"
     icon: str = "Glean"
 
     outputs = [

@@ -1,5 +1,4 @@
 import pandas as pd
-
 from wfx.custom.custom_component.component import Component
 from wfx.inputs import SortableListInput
 from wfx.io import BoolInput, DataFrameInput, DropdownInput, IntInput, MessageTextInput, Output, StrInput
@@ -10,7 +9,7 @@ from wfx.schema.dataframe import DataFrame
 class DataFrameOperationsComponent(Component):
     display_name = "DataFrame Operations"
     description = "Perform various operations on a DataFrame."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/dataframe-operations"
+    documentation: str = "https://docs.agent.khulnasoft.com/dataframe-operations"
     icon = "table"
     name = "DataFrameOperations"
 

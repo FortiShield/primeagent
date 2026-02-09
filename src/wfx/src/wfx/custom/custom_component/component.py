@@ -14,7 +14,6 @@ import pandas as pd
 import yaml
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, ValidationError
-
 from wfx.base.tools.constants import (
     TOOL_OUTPUT_DISPLAY_NAME,
     TOOL_OUTPUT_NAME,
@@ -23,7 +22,7 @@ from wfx.base.tools.constants import (
 )
 from wfx.custom.tree_visitor import RequiredInputsVisitor
 from wfx.exceptions.component import StreamingError
-from wfx.field_typing import Tool  # noqa: TC001
+from wfx.field_typing import Tool
 
 # Lazy import to avoid circular dependency
 # from wfx.graph.state.model import create_state_model
@@ -1575,6 +1574,7 @@ class Component(CustomComponent):
         Messages are skipped when:
         - The component is not an input or output vertex
         - The component is not connected to a Chat Output
+        - The component does not have _stream_to_playground=True (set by parent for inner graphs)
         - The message is not an ErrorMessage
 
         This prevents intermediate components from cluttering the database with messages
@@ -1583,6 +1583,10 @@ class Component(CustomComponent):
         Returns:
             bool: True if the message should be skipped, False otherwise
         """
+        # If parent explicitly enabled streaming for this inner graph component
+        if getattr(self, "_stream_to_playground", False):
+            return False
+
         return (
             self._vertex is not None
             and not (self._vertex.is_output or self._vertex.is_input)

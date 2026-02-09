@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from langchain_community.vectorstores import CouchbaseVectorStore
-
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
 from wfx.io import HandleInput, IntInput, SecretStrInput, StrInput
@@ -42,9 +41,7 @@ class CouchbaseVectorStoreComponent(LCVectorStoreComponent):
             from couchbase.cluster import Cluster
             from couchbase.options import ClusterOptions
         except ImportError as e:
-            msg = (
-                "Failed to import Couchbase dependencies. Install it using `uv pip install primeagent[couchbase] --pre`"
-            )
+            msg = "Failed to import Couchbase dependencies. Install it using `uv pip install primeagent[couchbase] --pre`"
             raise ImportError(msg) from e
 
         try:

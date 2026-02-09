@@ -7,7 +7,6 @@ from langchain_chroma import Chroma
 from primeagent.services.auth.utils import decrypt_api_key
 from primeagent.services.database.models.user.crud import get_user_by_id
 from pydantic import SecretStr
-
 from wfx.base.knowledge_bases.knowledge_base_utils import get_knowledge_bases
 from wfx.custom import Component
 from wfx.io import BoolInput, DropdownInput, IntInput, MessageTextInput, Output, SecretStrInput

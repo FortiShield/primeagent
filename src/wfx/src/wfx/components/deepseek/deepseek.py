@@ -1,7 +1,6 @@
 import requests
 from pydantic.v1 import SecretStr
 from typing_extensions import override
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import LanguageModel
 from wfx.field_typing.range_spec import RangeSpec

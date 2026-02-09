@@ -9,8 +9,6 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 import httpx
-from wfx.log.logger import logger
-
 from primeagent.services.base import Service
 from primeagent.services.telemetry.opentelemetry import OpenTelemetry
 from primeagent.services.telemetry.schema import (
@@ -26,6 +24,7 @@ from primeagent.services.telemetry.schema import (
     VersionPayload,
 )
 from primeagent.utils.version import get_version_info
+from wfx.log.logger import logger
 
 if TYPE_CHECKING:
     from pydantic import BaseModel

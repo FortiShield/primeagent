@@ -1,6 +1,5 @@
 from langchain.agents import create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
-
 from wfx.base.agents.agent import LCToolsAgentComponent
 
 # IBM Granite-specific logic is in a separate file

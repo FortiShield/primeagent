@@ -1,11 +1,11 @@
 from typing import Any
 
-import cohere
 from langchain_cohere import CohereEmbeddings
-
 from wfx.base.models.model import LCModelComponent
 from wfx.field_typing import Embeddings
 from wfx.io import DropdownInput, FloatInput, IntInput, MessageTextInput, Output, SecretStrInput
+
+import cohere
 
 HTTP_STATUS_OK = 200
 

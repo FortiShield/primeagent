@@ -9,7 +9,7 @@ from wfx.template.field.base import Output
 class DirectoryComponent(Component):
     display_name = "Directory"
     description = "Recursively load files from a directory."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/directory"
+    documentation: str = "https://docs.agent.khulnasoft.com/directory"
     icon = "folder"
     name = "Directory"
 

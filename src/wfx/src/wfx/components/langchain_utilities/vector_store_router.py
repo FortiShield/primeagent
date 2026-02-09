@@ -1,6 +1,5 @@
 from langchain.agents import AgentExecutor, create_vectorstore_router_agent
 from langchain.agents.agent_toolkits.vectorstore.toolkit import VectorStoreRouterToolkit
-
 from wfx.base.agents.agent import LCAgentComponent
 from wfx.inputs.inputs import HandleInput
 

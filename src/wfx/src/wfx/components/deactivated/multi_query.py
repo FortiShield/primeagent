@@ -1,6 +1,5 @@
 from langchain.prompts import PromptTemplate
 from langchain.retrievers import MultiQueryRetriever
-
 from wfx.custom.custom_component.custom_component import CustomComponent
 from wfx.field_typing import BaseRetriever, LanguageModel, Text
 from wfx.inputs.inputs import HandleInput, StrInput

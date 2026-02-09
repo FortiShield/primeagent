@@ -2,7 +2,6 @@ from typing import Any
 from urllib.parse import urljoin
 
 import httpx
-
 from wfx.base.embeddings.model import LCEmbeddingsModel
 from wfx.field_typing import Embeddings
 from wfx.inputs.inputs import DropdownInput, SecretStrInput

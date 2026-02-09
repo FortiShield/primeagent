@@ -2,7 +2,6 @@ from typing import Any
 
 from pydantic import ConfigDict, Field, field_validator
 from typing_extensions import TypedDict
-
 from wfx.helpers.base_model import BaseModel
 
 

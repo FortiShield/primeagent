@@ -1,5 +1,4 @@
 from langchain_openai import AzureOpenAIEmbeddings
-
 from wfx.base.models.model import LCModelComponent
 from wfx.base.models.openai_constants import OPENAI_EMBEDDING_MODEL_NAMES
 from wfx.field_typing import Embeddings

@@ -1,10 +1,9 @@
-from typing_extensions import override
-from wfx.log.logger import logger
-from wfx.services.settings.service import SettingsService
-
 from primeagent.services.factory import ServiceFactory
 from primeagent.services.session.service import SessionService
 from primeagent.services.storage.service import StorageService
+from typing_extensions import override
+from wfx.log.logger import logger
+from wfx.services.settings.service import SettingsService
 
 
 class StorageServiceFactory(ServiceFactory):

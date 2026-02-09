@@ -11,7 +11,6 @@ import orjson
 import yaml
 from defusedxml import ElementTree
 from pypdf import PdfReader
-
 from wfx.base.data.storage_utils import read_file_bytes
 from wfx.schema.data import Data
 from wfx.services.deps import get_settings_service

@@ -6,7 +6,6 @@ from abc import abstractmethod
 from typing import TYPE_CHECKING
 
 import anyio
-
 from primeagent.services.base import Service
 
 if TYPE_CHECKING:

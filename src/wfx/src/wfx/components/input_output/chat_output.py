@@ -3,7 +3,6 @@ from typing import Any
 
 import orjson
 from fastapi.encoders import jsonable_encoder
-
 from wfx.base.io.chat import ChatComponent
 from wfx.helpers.data import safe_convert
 from wfx.inputs.inputs import BoolInput, DropdownInput, HandleInput, MessageTextInput
@@ -22,7 +21,7 @@ from wfx.utils.constants import (
 class ChatOutput(ChatComponent):
     display_name = "Chat Output"
     description = "Display a chat message in the Playground."
-    documentation: str = "https://docs-primeagent.khulnasoft.com/chat-input-and-output"
+    documentation: str = "https://docs.agent.khulnasoft.com/chat-input-and-output"
     icon = "MessagesSquare"
     name = "ChatOutput"
     minimized = True
