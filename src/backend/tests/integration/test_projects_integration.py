@@ -26,7 +26,12 @@ async def test_project_authentication_settings(client: AsyncClient, logged_in_he
 
             response = await client.post(
                 "api/v1/projects/",
-                json={"name": "Auth Test 1", "description": "", "flows_list": [], "components_list": []},
+                json={
+                    "name": "Auth Test 1",
+                    "description": "",
+                    "flows_list": [],
+                    "components_list": [],
+                },
                 headers=logged_in_headers,
             )
 
@@ -47,7 +52,12 @@ async def test_project_authentication_settings(client: AsyncClient, logged_in_he
 
         response = await client.post(
             "api/v1/projects/",
-            json={"name": "Auth Test 2", "description": "", "flows_list": [], "components_list": []},
+            json={
+                "name": "Auth Test 2",
+                "description": "",
+                "flows_list": [],
+                "components_list": [],
+            },
             headers=logged_in_headers,
         )
 

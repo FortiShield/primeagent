@@ -52,8 +52,10 @@ async def list_flows_by_flow_folder(
     *,
     user_id: str | None = None,
     flow_id: str | None = None,
-    order_params: dict | None = {"column": "updated_at", "direction": "desc"},  # noqa: B006
+    order_params: dict | None = None,
 ) -> list[Data]:
+    if order_params is None:
+        order_params = {"column": "updated_at", "direction": "desc"}
     if not user_id:
         msg = "Session is invalid"
         raise ValueError(msg)
@@ -89,7 +91,10 @@ async def list_flows_by_flow_folder(
 
 
 async def list_flows_by_folder_id(
-    *, user_id: str | None = None, folder_id: str | None = None, order_params: dict | None = None
+    *,
+    user_id: str | None = None,
+    folder_id: str | None = None,
+    order_params: dict | None = None,
 ) -> list[Data]:
     if not user_id:
         msg = "Session is invalid"
@@ -163,7 +168,10 @@ async def get_flow_by_id_or_name(
 
 
 async def load_flow(
-    user_id: str, flow_id: str | None = None, flow_name: str | None = None, tweaks: dict | None = None
+    user_id: str,
+    flow_id: str | None = None,
+    flow_name: str | None = None,
+    tweaks: dict | None = None,
 ) -> Graph:
     from primeagent.processing.process import process_tweaks
     from wfx.graph.graph.base import Graph
@@ -234,9 +242,7 @@ async def run_flow(
         vertex.id
         for vertex in graph.vertices
         if output_type == "debug"
-        or (
-            vertex.is_output and (output_type == "any" or output_type in vertex.id.lower())  # type: ignore[operator]
-        )
+        or (vertex.is_output and (output_type == "any" or output_type in vertex.id.lower()))  # type: ignore[operator]
     ]
 
     fallback_to_env_vars = get_settings_service().settings.fallback_to_env_var
@@ -389,7 +395,10 @@ def get_arg_names(inputs: list[Vertex]) -> list[dict[str, str]]:
             argument name.
     """
     return [
-        {"component_name": input_.display_name, "arg_name": input_.display_name.lower().replace(" ", "_")}
+        {
+            "component_name": input_.display_name,
+            "arg_name": input_.display_name.lower().replace(" ", "_"),
+        }
         for input_ in inputs
     ]
 

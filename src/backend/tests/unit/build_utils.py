@@ -15,7 +15,10 @@ async def create_flow(client: AsyncClient, flow_data: str, headers: dict[str, st
 
 
 async def build_flow(
-    client: AsyncClient, flow_id: UUID, headers: dict[str, str], json: dict[str, Any] | None = None
+    client: AsyncClient,
+    flow_id: UUID,
+    headers: dict[str, str],
+    json: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Start a flow build and return the job_id."""
     if json is None:
@@ -68,9 +71,9 @@ async def consume_and_assert_stream(response, job_id, timeout=30.0):
 
                 # First event should be vertices_sorted
                 if not first_event_seen:
-                    assert parsed["event"] == "vertices_sorted", (
-                        "Invalid first event. Expected 'vertices_sorted'. Full event stream:\n" + "\n".join(lines)
-                    )
+                    assert (
+                        parsed["event"] == "vertices_sorted"
+                    ), "Invalid first event. Expected 'vertices_sorted'. Full event stream:\n" + "\n".join(lines)
                     ids = parsed["data"]["ids"]
 
                     assert ids == ["ChatInput-vsgM1"], "Invalid ids in first event. Full event stream:\n" + "\n".join(
@@ -85,18 +88,18 @@ async def consume_and_assert_stream(response, job_id, timeout=30.0):
                         "Memory-8X8Cq",
                         "ChatOutput-NAw0P",
                     ]
-                    assert set(to_run) == set(expected_to_run), (
-                        "Invalid to_run list in the first event. Full event stream:\n" + "\n".join(lines)
-                    )
+                    assert set(to_run) == set(
+                        expected_to_run
+                    ), "Invalid to_run list in the first event. Full event stream:\n" + "\n".join(lines)
                     first_event_seen = True
                 # Last event should be end
                 elif parsed["event"] == "end":
                     end_event_seen = True
                 # Middle events should be end_vertex
                 elif parsed["event"] == "end_vertex":
-                    assert parsed["data"]["build_data"] is not None, (
-                        f"Missing build_data at position {count}. Full event stream:\n" + "\n".join(lines)
-                    )
+                    assert (
+                        parsed["data"]["build_data"] is not None
+                    ), f"Missing build_data at position {count}. Full event stream:\n" + "\n".join(lines)
                 # Other event types (like token or add_message) are allowed and ignored
                 else:
                     # Allow other event types to pass through without failing

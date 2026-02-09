@@ -46,7 +46,9 @@ class FlowBase(SQLModel):
     locked: bool | None = Field(default=False, nullable=True)
     mcp_enabled: bool | None = Field(default=False, nullable=True, description="Can be exposed in the MCP server")
     action_name: str | None = Field(
-        default=None, nullable=True, description="The name of the action associated with the flow"
+        default=None,
+        nullable=True,
+        description="The name of the action associated with the flow",
     )
     action_description: str | None = Field(
         default=None,
@@ -240,7 +242,10 @@ class FlowHeader(BaseModel):
     data: dict | None = Field(None, description="The data of the component, if is_component is True")
     access_type: AccessTypeEnum | None = Field(None, description="The access type of the flow")
     tags: list[str] | None = Field(None, description="The tags of the flow")
-    mcp_enabled: bool | None = Field(None, description="Flag indicating whether the flow is exposed in the MCP server")
+    mcp_enabled: bool | None = Field(
+        None,
+        description="Flag indicating whether the flow is exposed in the MCP server",
+    )
     action_name: str | None = Field(None, description="The name of the action associated with the flow")
     action_description: str | None = Field(None, description="The description of the action associated with the flow")
 

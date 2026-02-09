@@ -43,7 +43,10 @@ def downgrade():
 
 def modify_nullable(conn, inspector, table_name, upgrade=True):
     columns = inspector.get_columns(table_name)
-    nullable_changes = {"apikey": {"created_at": False}, "variable": {"created_at": True, "updated_at": True}}
+    nullable_changes = {
+        "apikey": {"created_at": False},
+        "variable": {"created_at": True, "updated_at": True},
+    }
 
     if table_name in columns:
         with op.batch_alter_table(table_name, schema=None) as batch_op:
@@ -55,7 +58,9 @@ def modify_nullable(conn, inspector, table_name, upgrade=True):
 
                     if current_nullable != target_nullable:
                         batch_op.alter_column(
-                            column_name, existing_type=sa.DateTime(timezone=True), nullable=target_nullable
+                            column_name,
+                            existing_type=sa.DateTime(timezone=True),
+                            nullable=target_nullable,
                         )
                     else:
                         logger.info(

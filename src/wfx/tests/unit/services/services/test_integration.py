@@ -82,13 +82,11 @@ class TestWFXWithPrimeagentConfig:
 
         # Create wfx.toml with primeagent services
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
 cache_service = "wfx.services.cache.service:ThreadingInMemoryCache"
-"""
-        )
+""")
 
         return config_dir
 
@@ -146,12 +144,10 @@ class TestServiceOverrideScenarios:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         # Load from config
         clean_manager.discover_plugins(config_dir)
@@ -215,12 +211,10 @@ class TestErrorConditions:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "nonexistent.module:NonexistentClass"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         clean_manager.discover_plugins(config_dir)
@@ -233,12 +227,10 @@ storage_service = "nonexistent.module:NonexistentClass"
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 invalid_service_type = "some.module:SomeClass"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         clean_manager.discover_plugins(config_dir)
@@ -252,12 +244,10 @@ invalid_service_type = "some.module:SomeClass"
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         clean_manager.discover_plugins(config_dir)
@@ -417,12 +407,10 @@ class TestConfigFileDiscovery:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "pyproject.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [tool.wfx.services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         clean_manager.discover_plugins(config_dir)
 
@@ -434,19 +422,15 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
         config_dir.mkdir()
 
         # Create both files with different services
-        (config_dir / "wfx.toml").write_text(
-            """
+        (config_dir / "wfx.toml").write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
-        (config_dir / "pyproject.toml").write_text(
-            """
+        (config_dir / "pyproject.toml").write_text("""
 [tool.wfx.services]
 cache_service = "wfx.services.cache.service:ThreadingInMemoryCache"
-"""
-        )
+""")
 
         clean_manager.discover_plugins(config_dir)
 

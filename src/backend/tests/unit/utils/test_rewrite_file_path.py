@@ -16,7 +16,10 @@ from wfx.base.data.utils import format_directory_path
         # Test case 5: Empty path
         ("", ""),
         # Test case 6: Path with mixed newlines and other special characters
-        ("/home/user/my-\ndocs/special_file!.pdf", "/home/user/my-\\ndocs/special_file!.pdf"),
+        (
+            "/home/user/my-\ndocs/special_file!.pdf",
+            "/home/user/my-\\ndocs/special_file!.pdf",
+        ),
         # Test case 7: Windows-style path with newline
         ("C:\\Users\\\nDocuments\\file.txt", "C:\\Users\\\\nDocuments\\file.txt"),
         # Test case 8: Path with trailing newline

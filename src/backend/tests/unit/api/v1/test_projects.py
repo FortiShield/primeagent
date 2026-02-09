@@ -122,7 +122,10 @@ async def test_delete_project_then_404(client: AsyncClient, logged_in_headers, b
 async def test_read_project_invalid_id_format(client: AsyncClient, logged_in_headers):
     bad_id = "not-a-uuid"
     response = await client.get(f"api/v1/projects/{bad_id}", headers=logged_in_headers)
-    assert response.status_code in (status.HTTP_422_UNPROCESSABLE_ENTITY, status.HTTP_400_BAD_REQUEST)
+    assert response.status_code in (
+        status.HTTP_422_UNPROCESSABLE_ENTITY,
+        status.HTTP_400_BAD_REQUEST,
+    )
 
 
 async def test_read_projects_pagination(client: AsyncClient, logged_in_headers):
@@ -232,7 +235,10 @@ async def test_update_project_preserves_flows(client: AsyncClient, logged_in_hea
     assert str(flow2_id) in flow_ids_before
 
     # Update project name (the bug scenario)
-    update_payload = {"name": "Renamed Project with Flows", "description": "Testing flow preservation after rename"}
+    update_payload = {
+        "name": "Renamed Project with Flows",
+        "description": "Testing flow preservation after rename",
+    }
     update_resp = await client.patch(f"api/v1/projects/{project_id}", json=update_payload, headers=logged_in_headers)
     assert update_resp.status_code == status.HTTP_200_OK
 
@@ -334,9 +340,9 @@ async def test_update_project_preserves_components(client: AsyncClient, logged_i
     flows_after = project_after.get("flows", [])
     components_after = [f for f in flows_after if f.get("is_component", False)]
 
-    assert len(components_after) == 2, (
-        f"Expected 2 components after rename, got {len(components_after)}. Components lost!"
-    )
+    assert (
+        len(components_after) == 2
+    ), f"Expected 2 components after rename, got {len(components_after)}. Components lost!"
 
     component_ids_after = [c["id"] for c in components_after]
     assert str(comp1_id) in component_ids_after, "Component 1 was lost after project rename!"
@@ -746,7 +752,10 @@ class TestProjectMCPIntegration:
             project_id = create_response.json()["id"]
 
         # Now update the project name
-        update_case = {"name": "Updated Project Name", "description": "Updated description"}
+        update_case = {
+            "name": "Updated Project Name",
+            "description": "Updated description",
+        }
 
         with (
             patch("primeagent.api.v1.projects.get_settings_service") as mock_get_settings,
@@ -766,7 +775,10 @@ class TestProjectMCPIntegration:
             mock_old_validation.server_exists = True
             mock_old_validation.project_id_matches = True
             mock_old_validation.server_name = "lf-new-project"
-            mock_old_validation.existing_config = {"command": "uvx", "args": ["mcp-proxy", "old-url"]}
+            mock_old_validation.existing_config = {
+                "command": "uvx",
+                "args": ["mcp-proxy", "old-url"],
+            }
 
             # Mock new server validation
             mock_new_validation = MagicMock()
@@ -775,7 +787,11 @@ class TestProjectMCPIntegration:
 
             mock_validate.side_effect = [mock_old_validation, mock_new_validation]
 
-            response = await client.patch(f"api/v1/projects/{project_id}", json=update_case, headers=logged_in_headers)
+            response = await client.patch(
+                f"api/v1/projects/{project_id}",
+                json=update_case,
+                headers=logged_in_headers,
+            )
 
             assert response.status_code == status.HTTP_200_OK
             result = response.json()
@@ -823,7 +839,10 @@ class TestProjectMCPIntegration:
             project_id = create_response.json()["id"]
 
         # Now update the project name
-        update_case = {"name": "Updated Project Name", "description": "Updated description"}
+        update_case = {
+            "name": "Updated Project Name",
+            "description": "Updated description",
+        }
 
         with (
             patch("primeagent.api.v1.projects.get_settings_service") as mock_get_settings,
@@ -843,7 +862,10 @@ class TestProjectMCPIntegration:
             mock_old_validation.server_exists = True
             mock_old_validation.project_id_matches = True
             mock_old_validation.server_name = "lf-new-project"
-            mock_old_validation.existing_config = {"command": "uvx", "args": ["mcp-proxy", "old-url"]}
+            mock_old_validation.existing_config = {
+                "command": "uvx",
+                "args": ["mcp-proxy", "old-url"],
+            }
 
             # Mock new server validation
             mock_new_validation = MagicMock()
@@ -852,7 +874,11 @@ class TestProjectMCPIntegration:
 
             mock_validate.side_effect = [mock_old_validation, mock_new_validation]
 
-            response = await client.patch(f"api/v1/projects/{project_id}", json=update_case, headers=logged_in_headers)
+            response = await client.patch(
+                f"api/v1/projects/{project_id}",
+                json=update_case,
+                headers=logged_in_headers,
+            )
 
             assert response.status_code == status.HTTP_200_OK
             result = response.json()
@@ -924,7 +950,11 @@ class TestProjectMCPIntegration:
 
             mock_validate.side_effect = [mock_old_validation, mock_new_validation]
 
-            response = await client.patch(f"api/v1/projects/{project_id}", json=update_case, headers=logged_in_headers)
+            response = await client.patch(
+                f"api/v1/projects/{project_id}",
+                json=update_case,
+                headers=logged_in_headers,
+            )
 
             assert response.status_code == status.HTTP_409_CONFLICT
             assert "conflict" in response.json()["detail"].lower()
@@ -994,7 +1024,11 @@ class TestProjectMCPIntegration:
 
             mock_validate.side_effect = [mock_old_validation, mock_new_validation]
 
-            response = await client.patch(f"api/v1/projects/{project_id}", json=update_case, headers=logged_in_headers)
+            response = await client.patch(
+                f"api/v1/projects/{project_id}",
+                json=update_case,
+                headers=logged_in_headers,
+            )
 
             assert response.status_code == status.HTTP_409_CONFLICT
             assert "conflict" in response.json()["detail"].lower()
@@ -1463,7 +1497,8 @@ class TestReadProjectBugFix:
 
         # Test with filtering params AND pagination (should use paginated path)
         response = await client.get(
-            f"api/v1/projects/{project_id}?is_flow=true&page=1&size=10", headers=logged_in_headers
+            f"api/v1/projects/{project_id}?is_flow=true&page=1&size=10",
+            headers=logged_in_headers,
         )
         assert response.status_code == status.HTTP_200_OK
         result = response.json()
@@ -1502,7 +1537,10 @@ class TestReadProjectBugFix:
         ]
 
         for test_case in test_cases:
-            response = await client.get(f"api/v1/projects/{project_id}{test_case['params']}", headers=logged_in_headers)
+            response = await client.get(
+                f"api/v1/projects/{project_id}{test_case['params']}",
+                headers=logged_in_headers,
+            )
             assert response.status_code == status.HTTP_200_OK, f"Failed for params: {test_case['params']}"
 
             result = response.json()
@@ -1519,9 +1557,9 @@ class TestReadProjectBugFix:
                 assert "name" in result, f"Non-paginated response missing 'name' for params: {test_case['params']}"
                 assert "flows" in result, f"Non-paginated response missing 'flows' for params: {test_case['params']}"
                 # Should NOT have pagination structure
-                assert "folder" not in result, (
-                    f"Non-paginated response should not have 'folder' for params: {test_case['params']}"
-                )
+                assert (
+                    "folder" not in result
+                ), f"Non-paginated response should not have 'folder' for params: {test_case['params']}"
 
     async def test_read_project_error_handling_consistency(self, client: AsyncClient, logged_in_headers):
         """Test that error handling is consistent across both response paths."""
@@ -1541,9 +1579,9 @@ class TestReadProjectBugFix:
 
             result = response.json()
             assert "detail" in result, f"Error response should have 'detail' for params: {params}"
-            assert "not found" in result["detail"].lower(), (
-                f"Error message should mention 'not found' for params: {params}"
-            )
+            assert (
+                "not found" in result["detail"].lower()
+            ), f"Error message should mention 'not found' for params: {params}"
 
 
 async def test_download_file_starter_project(client: AsyncClient, logged_in_headers, active_user, json_flow):
@@ -1600,7 +1638,10 @@ async def test_download_file_starter_project(client: AsyncClient, logged_in_head
                                 "value": "secret-key-123",
                                 "password": True,
                             },
-                            "regular_field": {"name": "regular_field", "value": "keep-this"},
+                            "regular_field": {
+                                "name": "regular_field",
+                                "value": "keep-this",
+                            },
                         }
                     }
                 },

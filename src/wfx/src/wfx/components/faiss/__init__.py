@@ -17,7 +17,7 @@ __all__ = [
 
 
 def __getattr__(attr_name: str) -> Any:
-    """Lazily import FAISS components on attribute access."""
+    """Lazily import faiss components on attribute access."""
     if attr_name not in _dynamic_imports:
         msg = f"module '{__name__}' has no attribute '{attr_name}'"
         raise AttributeError(msg)

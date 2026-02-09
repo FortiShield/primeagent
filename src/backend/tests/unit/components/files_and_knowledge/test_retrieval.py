@@ -20,7 +20,10 @@ class TestKnowledgeRetrievalComponent(ComponentTestBaseWithClient):
     @pytest.fixture(autouse=True)
     def mock_knowledge_base_path(self, tmp_path):
         """Mock the knowledge base root path directly."""
-        with patch("primeagent.components.knowledge_bases.retrieval._KNOWLEDGE_BASES_ROOT_PATH", tmp_path):
+        with patch(
+            "primeagent.components.knowledge_bases.retrieval._KNOWLEDGE_BASES_ROOT_PATH",
+            tmp_path,
+        ):
             yield
 
     @pytest.fixture
@@ -274,7 +277,10 @@ class TestKnowledgeRetrievalComponent(ComponentTestBaseWithClient):
             "api_key": "test-key",  # pragma:allowlist secret
         }  # pragma:allowlist secret
 
-        with pytest.raises(NotImplementedError, match="Embedding provider 'UnsupportedProvider' is not supported"):
+        with pytest.raises(
+            NotImplementedError,
+            match="Embedding provider 'UnsupportedProvider' is not supported",
+        ):
             component._build_embeddings(metadata)
 
     def test_build_embeddings_with_user_api_key(self, component_class, default_kwargs):
@@ -350,7 +356,10 @@ class TestKnowledgeRetrievalComponent(ComponentTestBaseWithClient):
             patch.object(component, "_build_embeddings") as mock_build_embeddings,
             patch("langchain_chroma.Chroma"),
         ):
-            mock_get_metadata.return_value = {"embedding_provider": "HuggingFace", "embedding_model": "test-model"}
+            mock_get_metadata.return_value = {
+                "embedding_provider": "HuggingFace",
+                "embedding_model": "test-model",
+            }
             mock_build_embeddings.return_value = MagicMock()
 
             # This is a unit test focused on the component's internal logic

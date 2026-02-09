@@ -10,22 +10,22 @@ from wfx.inputs.inputs import MultilineInput, SecretStrInput, StrInput
 from wfx.schema.data import Data
 
 
-class NotionPageCreator(LCToolComponent):
+class notionPageCreator(LCToolComponent):
     display_name: str = "Create Page "
-    description: str = "A component for creating Notion pages."
+    description: str = "A component for creating notion pages."
     documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         StrInput(
             name="database_id",
             display_name="Database ID",
-            info="The ID of the Notion database.",
+            info="The ID of the notion database.",
         ),
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
         MultilineInput(
@@ -35,8 +35,8 @@ class NotionPageCreator(LCToolComponent):
         ),
     ]
 
-    class NotionPageCreatorSchema(BaseModel):
-        database_id: str = Field(..., description="The ID of the Notion database.")
+    class notionPageCreatorSchema(BaseModel):
+        database_id: str = Field(..., description="The ID of the notion database.")
         properties_json: str = Field(..., description="The properties of the new page as a JSON string.")
 
     def run_model(self) -> Data:
@@ -53,10 +53,10 @@ class NotionPageCreator(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="create_notion_page",
-            description="Create a new page in a Notion database. "
+            description="Create a new page in a notion database. "
             "IMPORTANT: Use the tool to check the Database properties for more details before using this tool.",
             func=self._create_notion_page,
-            args_schema=self.NotionPageCreatorSchema,
+            args_schema=self.notionPageCreatorSchema,
         )
 
     def _create_notion_page(self, database_id: str, properties_json: str) -> dict[str, Any] | str:
@@ -71,7 +71,7 @@ class NotionPageCreator(LCToolComponent):
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
             "Content-Type": "application/json",
-            "Notion-Version": "2022-06-28",
+            "notion-Version": "2022-06-28",
         }
 
         data = {
@@ -84,7 +84,7 @@ class NotionPageCreator(LCToolComponent):
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            error_message = f"Failed to create Notion page. Error: {e}"
+            error_message = f"Failed to create notion page. Error: {e}"
             if hasattr(e, "response") and e.response is not None:
                 error_message += f" Status code: {e.response.status_code}, Response: {e.response.text}"
             return error_message

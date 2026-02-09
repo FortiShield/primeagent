@@ -8,8 +8,12 @@ Available flows:
 - translation_flow: Intent classification and translation flow
 """
 
-from primeagent.agentic.flows.primeagent_assistant import get_graph as get_primeagent_assistant_graph
-from primeagent.agentic.flows.translation_flow import get_graph as get_translation_flow_graph
+from primeagent.agentic.flows.primeagent_assistant import (
+    get_graph as get_primeagent_assistant_graph,
+)
+from primeagent.agentic.flows.translation_flow import (
+    get_graph as get_translation_flow_graph,
+)
 
 __all__ = [
     "get_primeagent_assistant_graph",

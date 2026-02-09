@@ -12,9 +12,24 @@ class TestBuildModelFromSchema:
     # Successfully creates a Pydantic model from a valid schema
     def test_create_model_from_valid_schema(self):
         schema = [
-            {"name": "field1", "type": "str", "default": "default_value", "description": "A string field"},
-            {"name": "field2", "type": "int", "default": 0, "description": "An integer field"},
-            {"name": "field3", "type": "bool", "default": False, "description": "A boolean field"},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": "default_value",
+                "description": "A string field",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "default": 0,
+                "description": "An integer field",
+            },
+            {
+                "name": "field3",
+                "type": "bool",
+                "default": False,
+                "description": "A boolean field",
+            },
         ]
         model = build_model_from_schema(schema)
         instance = model(field1="test", field2=123, field3=True)
@@ -50,10 +65,30 @@ class TestBuildModelFromSchema:
     # Correctly accesses descriptions using the recommended fix
     def test_correctly_accesses_descriptions_recommended_fix(self):
         schema = [
-            {"name": "field1", "type": "str", "default": "default_value1", "description": "Description for field1"},
-            {"name": "field2", "type": "int", "default": 42, "description": "Description for field2"},
-            {"name": "field3", "type": "list", "default": [1, 2, 3], "description": "Description for field3"},
-            {"name": "field4", "type": "dict", "default": {"key": "value"}, "description": "Description for field4"},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": "default_value1",
+                "description": "Description for field1",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "default": 42,
+                "description": "Description for field2",
+            },
+            {
+                "name": "field3",
+                "type": "list",
+                "default": [1, 2, 3],
+                "description": "Description for field3",
+            },
+            {
+                "name": "field4",
+                "type": "dict",
+                "default": {"key": "value"},
+                "description": "Description for field4",
+            },
         ]
 
         model = build_model_from_schema(schema)
@@ -66,9 +101,25 @@ class TestBuildModelFromSchema:
     # Supports both single and multiple type annotations
     def test_supports_single_and_multiple_type_annotations(self):
         schema = [
-            {"name": "field1", "type": "str", "default": "default_value1", "description": "Description 1"},
-            {"name": "field2", "type": "list", "default": [1, 2, 3], "description": "Description 2", "multiple": True},
-            {"name": "field3", "type": "int", "default": 100, "description": "Description 3"},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": "default_value1",
+                "description": "Description 1",
+            },
+            {
+                "name": "field2",
+                "type": "list",
+                "default": [1, 2, 3],
+                "description": "Description 2",
+                "multiple": True,
+            },
+            {
+                "name": "field3",
+                "type": "int",
+                "default": 100,
+                "description": "Description 3",
+            },
         ]
         model_type = build_model_from_schema(schema)
         assert issubclass(model_type, BaseModel)
@@ -83,7 +134,9 @@ class TestBuildModelFromSchema:
             build_model_from_schema(schema)
 
     # Confirms that the function raises a specific exception for invalid input
-    def test_raises_error_for_invalid_input_different_exception_with_specific_exception(self):
+    def test_raises_error_for_invalid_input_different_exception_with_specific_exception(
+        self,
+    ):
         schema = [{"name": "field1", "type": "invalid_type", "default": "default_value"}]
         with pytest.raises(ValueError, match="Invalid type: invalid_type"):
             build_model_from_schema(schema)
@@ -92,9 +145,20 @@ class TestBuildModelFromSchema:
     def test_process_schema_missing_optional_keys_updated(self):
         schema = [
             {"name": "field1", "type": "str", "default": "default_value1"},
-            {"name": "field2", "type": "int", "default": 0, "description": "Field 2 description"},
+            {
+                "name": "field2",
+                "type": "int",
+                "default": 0,
+                "description": "Field 2 description",
+            },
             {"name": "field3", "type": "list", "default": [], "multiple": True},
-            {"name": "field4", "type": "dict", "default": {}, "description": "Field 4 description", "multiple": True},
+            {
+                "name": "field4",
+                "type": "dict",
+                "default": {},
+                "description": "Field 4 description",
+                "multiple": True,
+            },
         ]
         result_model = build_model_from_schema(schema)
         assert result_model.__annotations__["field1"] == str  # noqa: E721
@@ -109,9 +173,25 @@ class TestBuildModelFromSchema:
     # Deals with schemas containing fields with None as default values
     def test_schema_fields_with_none_default(self):
         schema = [
-            {"name": "field1", "type": "str", "default": None, "description": "Field 1 description"},
-            {"name": "field2", "type": "int", "default": None, "description": "Field 2 description"},
-            {"name": "field3", "type": "list", "default": None, "description": "Field 3 description", "multiple": True},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": None,
+                "description": "Field 1 description",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "default": None,
+                "description": "Field 2 description",
+            },
+            {
+                "name": "field3",
+                "type": "list",
+                "default": None,
+                "description": "Field 3 description",
+                "multiple": True,
+            },
         ]
         model = build_model_from_schema(schema)
         assert model.model_fields["field1"].default == PydanticUndefined
@@ -121,8 +201,19 @@ class TestBuildModelFromSchema:
     # Checks for proper handling of nested list and dict types
     def test_nested_list_and_dict_types_handling(self):
         schema = [
-            {"name": "field1", "type": "list", "default": [], "description": "list field", "multiple": True},
-            {"name": "field2", "type": "dict", "default": {}, "description": "Dict field"},
+            {
+                "name": "field1",
+                "type": "list",
+                "default": [],
+                "description": "list field",
+                "multiple": True,
+            },
+            {
+                "name": "field2",
+                "type": "dict",
+                "default": {},
+                "description": "Dict field",
+            },
         ]
         model_type = build_model_from_schema(schema)
         assert issubclass(model_type, BaseModel)
@@ -130,10 +221,31 @@ class TestBuildModelFromSchema:
     # Verifies that the function can handle large schemas efficiently
     def test_handle_large_schemas_efficiently(self):
         schema = [
-            {"name": "field1", "type": "str", "default": "default_value1", "description": "Description 1"},
-            {"name": "field2", "type": "int", "default": 100, "description": "Description 2"},
-            {"name": "field3", "type": "list", "default": [1, 2, 3], "description": "Description 3", "multiple": True},
-            {"name": "field4", "type": "dict", "default": {"key": "value"}, "description": "Description 4"},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": "default_value1",
+                "description": "Description 1",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "default": 100,
+                "description": "Description 2",
+            },
+            {
+                "name": "field3",
+                "type": "list",
+                "default": [1, 2, 3],
+                "description": "Description 3",
+                "multiple": True,
+            },
+            {
+                "name": "field4",
+                "type": "dict",
+                "default": {"key": "value"},
+                "description": "Description 4",
+            },
         ]
         model_type = build_model_from_schema(schema)
         assert issubclass(model_type, BaseModel)
@@ -141,8 +253,19 @@ class TestBuildModelFromSchema:
     # Ensures that the function returns a valid Pydantic model class
     def test_returns_valid_model_class(self):
         schema = [
-            {"name": "field1", "type": "str", "default": "default_value1", "description": "Description for field1"},
-            {"name": "field2", "type": "int", "default": 42, "description": "Description for field2", "multiple": True},
+            {
+                "name": "field1",
+                "type": "str",
+                "default": "default_value1",
+                "description": "Description for field1",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "default": 42,
+                "description": "Description for field2",
+                "multiple": True,
+            },
         ]
         model_class = build_model_from_schema(schema)
         assert issubclass(model_class, BaseModel)

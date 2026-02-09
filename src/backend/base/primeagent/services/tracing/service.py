@@ -297,7 +297,7 @@ class TracingService(Service):
         def _mask(obj: Any):
             if isinstance(obj, dict):
                 return {
-                    k: "*****" if any(word in k.lower() for word in sensitive_keywords) else _mask(v)
+                    k: ("*****" if any(word in k.lower() for word in sensitive_keywords) else _mask(v))
                     for k, v in obj.items()
                 }
             if isinstance(obj, list):
@@ -386,12 +386,18 @@ class TracingService(Service):
             yield self
         except Exception as e:
             await trace_context.traces_queue.put(
-                (self._end_component_traces, (component_trace_context, trace_context, e))
+                (
+                    self._end_component_traces,
+                    (component_trace_context, trace_context, e),
+                )
             )
             raise
         else:
             await trace_context.traces_queue.put(
-                (self._end_component_traces, (component_trace_context, trace_context, None))
+                (
+                    self._end_component_traces,
+                    (component_trace_context, trace_context, None),
+                )
             )
 
     @property

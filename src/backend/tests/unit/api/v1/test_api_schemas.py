@@ -62,7 +62,11 @@ def test_result_data_response_special_types(uuid, dt, decimal, name, value):
 
 
 @given(
-    st.lists(st.text(min_size=TEST_TEXT_LENGTH + 1, max_size=TEST_TEXT_LENGTH * 2), min_size=1, max_size=2),
+    st.lists(
+        st.text(min_size=TEST_TEXT_LENGTH + 1, max_size=TEST_TEXT_LENGTH * 2),
+        min_size=1,
+        max_size=2,
+    ),
     st.dictionaries(
         keys=st.text(min_size=1, max_size=10),
         values=st.text(min_size=TEST_TEXT_LENGTH + 1, max_size=TEST_TEXT_LENGTH * 2),
@@ -70,7 +74,10 @@ def test_result_data_response_special_types(uuid, dt, decimal, name, value):
         max_size=2,
     ),
 )
-@settings(max_examples=5, suppress_health_check=[HealthCheck.too_slow, HealthCheck.large_base_example])
+@settings(
+    max_examples=5,
+    suppress_health_check=[HealthCheck.too_slow, HealthCheck.large_base_example],
+)
 def test_result_data_response_nested_structures(long_list, long_dict):
     """Test that ResultDataResponse handles nested structures correctly."""
     nested_data = {

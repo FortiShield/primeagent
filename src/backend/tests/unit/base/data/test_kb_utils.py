@@ -1,5 +1,8 @@
 import pytest
-from primeagent.base.knowledge_bases.knowledge_base_utils import compute_bm25, compute_tfidf
+from primeagent.base.knowledge_bases.knowledge_base_utils import (
+    compute_bm25,
+    compute_tfidf,
+)
 
 
 class TestKBUtils:
@@ -9,7 +12,12 @@ class TestKBUtils:
     @pytest.fixture
     def sample_documents(self):
         """Sample documents for testing."""
-        return ["the cat sat on the mat", "the dog ran in the park", "cats and dogs are pets", "birds fly in the sky"]
+        return [
+            "the cat sat on the mat",
+            "the dog ran in the park",
+            "cats and dogs are pets",
+            "birds fly in the sky",
+        ]
 
     @pytest.fixture
     def query_terms(self):

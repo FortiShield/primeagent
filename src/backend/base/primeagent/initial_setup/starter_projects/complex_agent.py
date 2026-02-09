@@ -16,14 +16,12 @@ def complex_agent_graph():
     dynamic_agent = CrewAIAgentComponent()
     chat_input = ChatInput()
     role_prompt = PromptComponent(_display_name="Role Prompt")
-    role_prompt.set(
-        template="""Define a Role that could execute or answer well the user's query.
+    role_prompt.set(template="""Define a Role that could execute or answer well the user's query.
 
 User's query: {query}
 
 Role should be two words max. Something like "Researcher" or "Software Developer".
-"""
-    )
+""")
 
     goal_prompt = PromptComponent(_display_name="Goal Prompt")
     goal_prompt.set(
@@ -83,7 +81,9 @@ If it is just a general query (e.g a greeting) you can respond them directly."""
     )
     crew_component = HierarchicalCrewComponent()
     crew_component.set(
-        tasks=task.build_task, agents=[dynamic_agent.build_output], manager_agent=manager_agent.build_output
+        tasks=task.build_task,
+        agents=[dynamic_agent.build_output],
+        manager_agent=manager_agent.build_output,
     )
     chat_output = ChatOutput()
     chat_output.set(input_value=crew_component.build_output)

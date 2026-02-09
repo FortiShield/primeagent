@@ -1,7 +1,11 @@
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
-from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
+from primeagent.serialization.serialization import (
+    get_max_items_length,
+    get_max_text_length,
+    serialize,
+)
 from pydantic import BaseModel, field_serializer, field_validator
 from sqlalchemy import Text
 from sqlmodel import JSON, Column, Field, SQLModel

@@ -94,7 +94,10 @@ class TestDatabasePathResolution:
 
         with patch.dict(
             os.environ,
-            {"PRIMEAGENT_DATABASE_URL": custom_url, "PRIMEAGENT_CONFIG_DIR": str(tmp_path)},
+            {
+                "PRIMEAGENT_DATABASE_URL": custom_url,
+                "PRIMEAGENT_CONFIG_DIR": str(tmp_path),
+            },
             clear=False,
         ):
             settings = Settings(config_dir=str(tmp_path))

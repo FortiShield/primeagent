@@ -27,7 +27,12 @@ def upgrade() -> None:
     with op.batch_alter_table("flow", schema=None) as batch_op:
         if not migration.column_exists(table_name="flow", column_name="access_type", conn=conn):
             batch_op.add_column(
-                sa.Column("access_type", access_type_enum, server_default=sa.text("'PRIVATE'"), nullable=False)
+                sa.Column(
+                    "access_type",
+                    access_type_enum,
+                    server_default=sa.text("'PRIVATE'"),
+                    nullable=False,
+                )
             )
 
 

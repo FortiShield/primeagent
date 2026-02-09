@@ -307,7 +307,12 @@ async def create_flow(
     storage_service: Annotated[StorageService, Depends(get_storage_service)],
 ):
     try:
-        return await _new_flow(session=session, flow=flow, user_id=current_user.id, storage_service=storage_service)
+        return await _new_flow(
+            session=session,
+            flow=flow,
+            user_id=current_user.id,
+            storage_service=storage_service,
+        )
     except Exception as e:
         if "UNIQUE constraint failed" in str(e):
             # Get the name of the column that failed
@@ -318,14 +323,19 @@ async def create_flow(
             column = columns.split(",")[1] if "id" in columns.split(",")[0] else columns.split(",")[0]
 
             raise HTTPException(
-                status_code=400, detail=f"{column.capitalize().replace('_', ' ')} must be unique"
+                status_code=400,
+                detail=f"{column.capitalize().replace('_', ' ')} must be unique",
             ) from e
         if isinstance(e, HTTPException):
             raise
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
-@router.get("/", response_model=list[FlowRead] | Page[FlowRead] | list[FlowHeader], status_code=200)
+@router.get(
+    "/",
+    response_model=list[FlowRead] | Page[FlowRead] | list[FlowHeader],
+    status_code=200,
+)
 async def read_flows(
     *,
     current_user: CurrentActiveUser,
@@ -376,9 +386,7 @@ async def read_flows(
             folder_id = default_folder_id
 
         if auth_settings.AUTO_LOGIN:
-            stmt = select(Flow).where(
-                (Flow.user_id == None) | (Flow.user_id == current_user.id)  # noqa: E711
-            )
+            stmt = select(Flow).where((Flow.user_id == None) | (Flow.user_id == current_user.id))  # noqa: E711
         else:
             stmt = select(Flow).where(Flow.user_id == current_user.id)
 
@@ -410,7 +418,9 @@ async def read_flows(
 
         with warnings.catch_warnings():
             warnings.filterwarnings(
-                "ignore", category=DeprecationWarning, module=r"fastapi_pagination\.ext\.sqlalchemy"
+                "ignore",
+                category=DeprecationWarning,
+                module=r"fastapi_pagination\.ext\.sqlalchemy",
             )
             return await apaginate(session, stmt, params=params)
 
@@ -503,7 +513,10 @@ async def update_flow(
         if db_flow.folder_id is not None:
             folder_exists = (
                 await session.exec(
-                    select(Folder).where(Folder.id == db_flow.folder_id, Folder.user_id == current_user.id)
+                    select(Folder).where(
+                        Folder.id == db_flow.folder_id,
+                        Folder.user_id == current_user.id,
+                    )
                 )
             ).first()
             if not folder_exists:
@@ -531,7 +544,8 @@ async def update_flow(
             # if the column has id in it, we want the other column
             column = columns.split(",")[1] if "id" in columns.split(",")[0] else columns.split(",")[0]
             raise HTTPException(
-                status_code=400, detail=f"{column.capitalize().replace('_', ' ')} must be unique"
+                status_code=400,
+                detail=f"{column.capitalize().replace('_', ' ')} must be unique",
             ) from e
 
         if hasattr(e, "status_code"):
@@ -600,7 +614,8 @@ async def upsert_flow(
             columns = str(e).split("UNIQUE constraint failed: ")[1].split(".")[1].split("\n")[0]
             column = columns.split(",")[1] if "id" in columns.split(",")[0] else columns.split(",")[0]
             raise HTTPException(
-                status_code=409, detail=f"{column.capitalize().replace('_', ' ')} must be unique"
+                status_code=409,
+                detail=f"{column.capitalize().replace('_', ' ')} must be unique",
             ) from e
         raise HTTPException(status_code=500, detail=str(e)) from e
 
@@ -757,7 +772,10 @@ async def upload_file(
             if folder_id:
                 flow.folder_id = folder_id
             flow_read = await _new_flow(
-                session=session, flow=flow, user_id=current_user.id, storage_service=storage_service
+                session=session,
+                flow=flow,
+                user_id=current_user.id,
+                storage_service=storage_service,
             )
             flow_reads.append(flow_read)
     except Exception as e:
@@ -770,7 +788,8 @@ async def upload_file(
             column = columns.split(",")[1] if "id" in columns.split(",")[0] else columns.split(",")[0]
 
             raise HTTPException(
-                status_code=400, detail=f"{column.capitalize().replace('_', ' ')} must be unique"
+                status_code=400,
+                detail=f"{column.capitalize().replace('_', ' ')} must be unique",
             ) from e
         if isinstance(e, HTTPException):
             raise

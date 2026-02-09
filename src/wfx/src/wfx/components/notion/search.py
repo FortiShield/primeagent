@@ -9,17 +9,17 @@ from wfx.inputs.inputs import DropdownInput, SecretStrInput, StrInput
 from wfx.schema.data import Data
 
 
-class NotionSearch(LCToolComponent):
+class notionSearch(LCToolComponent):
     display_name: str = "Search "
     description: str = "Searches all pages and databases that have been shared with an integration."
     documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
         StrInput(
@@ -43,7 +43,7 @@ class NotionSearch(LCToolComponent):
         ),
     ]
 
-    class NotionSearchSchema(BaseModel):
+    class notionSearchSchema(BaseModel):
         query: str = Field(..., description="The search query text.")
         filter_value: str = Field(default="page", description="Filter type: 'page' or 'database'.")
         sort_direction: str = Field(default="descending", description="Sort direction: 'ascending' or 'descending'.")
@@ -81,10 +81,10 @@ class NotionSearch(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="notion_search",
-            description="Search Notion pages and databases. "
+            description="Search notion pages and databases. "
             "Input should include the search query and optionally filter type and sort direction.",
             func=self._search_notion,
-            args_schema=self.NotionSearchSchema,
+            args_schema=self.notionSearchSchema,
         )
 
     def _search_notion(
@@ -94,7 +94,7 @@ class NotionSearch(LCToolComponent):
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
             "Content-Type": "application/json",
-            "Notion-Version": "2022-06-28",
+            "notion-Version": "2022-06-28",
         }
 
         data = {

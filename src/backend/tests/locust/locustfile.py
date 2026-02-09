@@ -105,7 +105,11 @@ class FlowRunUser(FastHttpUser):
         start_time = time.time()
         try:
             with self.client.post(
-                endpoint, json=payload, headers=headers, catch_response=True, timeout=self.connection_timeout
+                endpoint,
+                json=payload,
+                headers=headers,
+                catch_response=True,
+                timeout=self.connection_timeout,
             ) as response:
                 response_time = (time.time() - start_time) * 1000
                 if response.status_code == HTTPStatus.OK:

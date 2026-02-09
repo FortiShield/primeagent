@@ -62,7 +62,9 @@ class OpenRouterComponent(LCModelComponent):
             self.log(f"Error fetching models: {e}")
             return []
 
-    def update_build_config(self, build_config: dict, field_value: str, field_name: str | None = None) -> dict:  # noqa: ARG002
+    def update_build_config(
+        self, build_config: dict, field_value: str, field_name: str | None = None
+    ) -> dict:  # noqa: ARG002
         """Update model options."""
         models = self.fetch_models()
         if models:

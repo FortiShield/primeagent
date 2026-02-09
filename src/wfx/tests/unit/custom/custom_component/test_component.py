@@ -142,7 +142,7 @@ async def test_send_message_without_database():
 
 @pytest.mark.usefixtures("use_noop_session")
 @pytest.mark.asyncio
-async def test_agent_component_send_message_events(monkeypatch):  # noqa: ARG001
+async def test_agent_component_send_message_events(monkeypatch):
     try:
         import langchain  # noqa: F401
     except ImportError:

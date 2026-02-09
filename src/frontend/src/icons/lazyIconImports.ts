@@ -345,8 +345,8 @@ export const lazyIconsMapping = {
     import("@/icons/NotDiamond").then((mod) => ({
       default: mod.NotDiamondIcon,
     })),
-  Notion: () =>
-    import("@/icons/Notion").then((mod) => ({ default: mod.NotionIcon })),
+  notion: () =>
+    import("@/icons/notion").then((mod) => ({ default: mod.notionIcon })),
   Novita: () =>
     import("@/icons/Novita").then((mod) => ({ default: mod.NovitaIcon })),
   NVIDIA: () =>

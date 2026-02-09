@@ -26,7 +26,7 @@ def setup_structlog():
 
 
 # Set up test data paths
-def pytest_configure(config):  # noqa: ARG001
+def pytest_configure(config):
     """Configure pytest with data paths and check prerequisites."""
     # Check if primeagent is installed first - fail fast
     import os
@@ -74,7 +74,7 @@ def pytest_configure(config):  # noqa: ARG001
     pytest.LOOP_TEST = data_path / "LoopTest.json"
 
 
-def pytest_collection_modifyitems(config, items):  # noqa: ARG001
+def pytest_collection_modifyitems(config, items):
     """Automatically add markers based on test file location."""
     for item in items:
         if "tests/unit/" in str(item.fspath):

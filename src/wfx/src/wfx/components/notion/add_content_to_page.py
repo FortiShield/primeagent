@@ -17,15 +17,15 @@ MIN_ROWS_IN_TABLE = 3
 
 class AddContentToPage(LCToolComponent):
     display_name: str = "Add Content to Page "
-    description: str = "Convert markdown text to Notion blocks and append them to a Notion page."
+    description: str = "Convert markdown text to notion blocks and append them to a notion page."
     documentation: str = "https://developers.notion.com/reference/patch-block-children"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         MultilineInput(
             name="markdown_text",
             display_name="Markdown Text",
-            info="The markdown text to convert to Notion blocks.",
+            info="The markdown text to convert to notion blocks.",
         ),
         StrInput(
             name="block_id",
@@ -34,14 +34,14 @@ class AddContentToPage(LCToolComponent):
         ),
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
     ]
 
     class AddContentToPageSchema(BaseModel):
-        markdown_text: str = Field(..., description="The markdown text to convert to Notion blocks.")
+        markdown_text: str = Field(..., description="The markdown text to convert to notion blocks.")
         block_id: str = Field(..., description="The ID of the page/block to add the content.")
 
     def run_model(self) -> Data:
@@ -51,7 +51,7 @@ class AddContentToPage(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="add_content_to_notion_page",
-            description="Convert markdown text to Notion blocks and append them to a Notion page.",
+            description="Convert markdown text to notion blocks and append them to a notion page.",
             func=self._add_content_to_page,
             args_schema=self.AddContentToPageSchema,
         )
@@ -66,7 +66,7 @@ class AddContentToPage(LCToolComponent):
             headers = {
                 "Authorization": f"Bearer {self.notion_secret}",
                 "Content-Type": "application/json",
-                "Notion-Version": "2022-06-28",
+                "notion-Version": "2022-06-28",
             }
 
             data = {
@@ -78,13 +78,13 @@ class AddContentToPage(LCToolComponent):
 
             return response.json()
         except requests.exceptions.RequestException as e:
-            error_message = f"Error: Failed to add content to Notion page. {e}"
+            error_message = f"Error: Failed to add content to notion page. {e}"
             if hasattr(e, "response") and e.response is not None:
                 error_message += f" Status code: {e.response.status_code}, Response: {e.response.text}"
             return error_message
         except Exception as e:  # noqa: BLE001
-            logger.debug("Error adding content to Notion page", exc_info=True)
-            return f"Error: An unexpected error occurred while adding content to Notion page. {e}"
+            logger.debug("Error adding content to notion page", exc_info=True)
+            return f"Error: An unexpected error occurred while adding content to notion page. {e}"
 
     def process_node(self, node):
         blocks = []

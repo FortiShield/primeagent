@@ -208,7 +208,7 @@ class TestGraphExecution:
         # Mock graph and async iterator
         mock_result = MagicMock(results={"text": "Test result"})
 
-        async def mock_async_start(inputs):  # noqa: ARG001
+        async def mock_async_start(inputs):
             yield mock_result
 
         mock_graph = MagicMock()
@@ -229,7 +229,7 @@ class TestGraphExecution:
         # Ensure results attribute doesn't exist
         delattr(mock_result, "results")
 
-        async def mock_async_start(inputs):  # noqa: ARG001
+        async def mock_async_start(inputs):
             yield mock_result
 
         mock_graph = MagicMock()
@@ -244,7 +244,7 @@ class TestGraphExecution:
     async def test_execute_graph_with_capture_error(self):
         """Test graph execution with error."""
 
-        async def mock_async_start_error(inputs):  # noqa: ARG001
+        async def mock_async_start_error(inputs):
             msg = "Execution failed"
             raise RuntimeError(msg)
             yield  # This line never executes but makes it an async generator

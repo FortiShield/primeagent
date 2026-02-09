@@ -55,8 +55,14 @@ class TestComponentLoadingFix:
         """Create mock custom components response."""
         return {
             "custom_category": {
-                "CustomComponent1": {"display_name": "CustomComponent1", "type": "custom_category"},
-                "CustomComponent2": {"display_name": "CustomComponent2", "type": "custom_category"},
+                "CustomComponent1": {
+                    "display_name": "CustomComponent1",
+                    "type": "custom_category",
+                },
+                "CustomComponent2": {
+                    "display_name": "CustomComponent2",
+                    "type": "custom_category",
+                },
             }
         }
 
@@ -73,11 +79,18 @@ class TestComponentLoadingFix:
     ):
         """Test that BASE_COMPONENTS_PATH is properly filtered out from custom components paths."""
         # Setup: Include BASE_COMPONENTS_PATH in the components_path list
-        mock_settings_service.settings.components_path = [BASE_COMPONENTS_PATH, "/custom/path1", "/custom/path2"]
+        mock_settings_service.settings.components_path = [
+            BASE_COMPONENTS_PATH,
+            "/custom/path1",
+            "/custom/path2",
+        ]
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict") as mock_aget_all_types_dict,
         ):
             # Mock aget_all_types_dict to return custom components
@@ -104,7 +117,10 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict") as mock_aget_all_types_dict,
         ):
             # Execute the function
@@ -127,7 +143,10 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict") as mock_aget_all_types_dict,
         ):
             # Execute the function
@@ -149,7 +168,10 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict") as mock_aget_all_types_dict,
         ):
             # Execute the function
@@ -167,17 +189,29 @@ class TestComponentLoadingFix:
         """Test that lazy loading mode uses aget_component_metadata with filtered paths."""
         # Setup: Enable lazy loading and include BASE_COMPONENTS_PATH
         mock_settings_service.settings.lazy_load_components = True
-        mock_settings_service.settings.components_path = [BASE_COMPONENTS_PATH, "/custom/path1"]
+        mock_settings_service.settings.components_path = [
+            BASE_COMPONENTS_PATH,
+            "/custom/path1",
+        ]
 
         mock_metadata = {
             "custom_category": {
-                "CustomComponent1": {"display_name": "CustomComponent1", "type": "custom_category"},
+                "CustomComponent1": {
+                    "display_name": "CustomComponent1",
+                    "type": "custom_category",
+                },
             }
         }
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_component_metadata", return_value=mock_metadata) as mock_aget_metadata,
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_component_metadata",
+                return_value=mock_metadata,
+            ) as mock_aget_metadata,
         ):
             # Execute the function
             result = await get_and_cache_all_types_dict(mock_settings_service)
@@ -200,9 +234,13 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
             patch(
-                "wfx.interface.components.aget_all_types_dict", return_value=mock_custom_components
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                return_value=mock_custom_components,
             ) as mock_aget_all_types_dict,
         ):
             # Execute the function
@@ -227,17 +265,32 @@ class TestComponentLoadingFix:
         # Create overlapping component names to test merging behavior
         overlapping_custom_components = {
             "category1": {  # Same category as primeagent
-                "Component1": {"display_name": "CustomComponent1", "type": "category1"},  # Same name as primeagent
-                "Component4": {"display_name": "Component4", "type": "category1"},  # New component
+                "Component1": {
+                    "display_name": "CustomComponent1",
+                    "type": "category1",
+                },  # Same name as primeagent
+                "Component4": {
+                    "display_name": "Component4",
+                    "type": "category1",
+                },  # New component
             },
             "new_category": {
-                "NewComponent": {"display_name": "NewComponent", "type": "new_category"},
+                "NewComponent": {
+                    "display_name": "NewComponent",
+                    "type": "new_category",
+                },
             },
         }
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_all_types_dict", return_value=overlapping_custom_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                return_value=overlapping_custom_components,
+            ),
         ):
             # Execute the function
             result = await get_and_cache_all_types_dict(mock_settings_service)
@@ -268,7 +321,10 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict", return_value={}),
         ):
             # First call - should populate cache
@@ -293,8 +349,14 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_all_types_dict", return_value=mock_custom_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                return_value=mock_custom_components,
+            ),
             patch("wfx.interface.components.logger") as mock_logger,
         ):
             # Configure async mock methods
@@ -319,8 +381,14 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_all_types_dict", side_effect=Exception("Custom loading failed")),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                side_effect=Exception("Custom loading failed"),
+            ),
             pytest.raises(Exception, match="Custom loading failed"),
         ):
             # Execute the function - should raise exception when custom component loading fails
@@ -345,10 +413,17 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         # Test with duplicate BASE_COMPONENTS_PATH
-        mock_settings_service.settings.components_path = [BASE_COMPONENTS_PATH, "/custom/path", BASE_COMPONENTS_PATH]
+        mock_settings_service.settings.components_path = [
+            BASE_COMPONENTS_PATH,
+            "/custom/path",
+            BASE_COMPONENTS_PATH,
+        ]
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
             patch("wfx.interface.components.aget_all_types_dict", return_value={}) as mock_aget_all_types_dict,
         ):
             # Clear cache for fresh test
@@ -379,8 +454,14 @@ class TestComponentLoadingFix:
         }
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_all_types_dict", return_value=mock_custom_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                return_value=mock_custom_components,
+            ),
         ):
             # Execute the function
             result = await get_and_cache_all_types_dict(mock_settings_service)
@@ -404,8 +485,14 @@ class TestComponentLoadingFix:
         mock_settings_service.settings.lazy_load_components = False
 
         with (
-            patch("wfx.interface.components.import_primeagent_components", return_value=mock_primeagent_components),
-            patch("wfx.interface.components.aget_all_types_dict", return_value=mock_custom_components),
+            patch(
+                "wfx.interface.components.import_primeagent_components",
+                return_value=mock_primeagent_components,
+            ),
+            patch(
+                "wfx.interface.components.aget_all_types_dict",
+                return_value=mock_custom_components,
+            ),
         ):
             # Execute multiple concurrent calls
             tasks = [get_and_cache_all_types_dict(mock_settings_service) for _ in range(3)]
@@ -421,7 +508,10 @@ class TestComponentLoadingFix:
     async def test_integration_with_real_base_components_path(self, mock_settings_service):
         """Integration test with real BASE_COMPONENTS_PATH to ensure filtering works."""
         # Setup with real BASE_COMPONENTS_PATH value
-        mock_settings_service.settings.components_path = [BASE_COMPONENTS_PATH, "/custom/test"]
+        mock_settings_service.settings.components_path = [
+            BASE_COMPONENTS_PATH,
+            "/custom/test",
+        ]
         mock_settings_service.settings.lazy_load_components = False
 
         # This test should work with real primeagent components

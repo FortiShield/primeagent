@@ -184,12 +184,10 @@ class TestConfigParsingEdgeCases:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [other_section]
 key = "value"
-"""
-        )
+""")
 
         # Should not raise
         clean_manager.discover_plugins(config_dir)
@@ -201,11 +199,9 @@ key = "value"
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
-"""
-        )
+""")
 
         # Should not raise
         clean_manager.discover_plugins(config_dir)
@@ -217,12 +213,10 @@ key = "value"
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "invalid_path_without_colon"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         clean_manager.discover_plugins(config_dir)
@@ -234,12 +228,10 @@ storage_service = "invalid_path_without_colon"
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "module:submodule:class:extra"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         clean_manager.discover_plugins(config_dir)
@@ -499,12 +491,10 @@ class TestSettingsServiceProtection:
         config_dir = tmp_path / "config"
         config_dir.mkdir()
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 settings_service = "some.custom:SettingsService"
-"""
-        )
+""")
 
         # Should not raise, but should ignore the settings_service entry
         clean_manager.discover_plugins(config_dir)

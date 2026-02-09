@@ -32,7 +32,10 @@ class TestSettingsInitializationOrder:
 
     def test_is_settings_service_initialized_returns_true_after_init(self):
         """Test that is_settings_service_initialized returns True after initialization."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -68,7 +71,10 @@ class TestSettingsInitializationOrder:
     def test_dotenv_loading_before_settings_init(self, tmp_path):
         """Test the complete flow: load .env, then initialize settings."""
         from dotenv import load_dotenv
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -134,7 +140,10 @@ class TestSettingsInitializationOrder:
 
     def test_cli_check_pattern_error_case(self, tmp_path):
         """Test the CLI check pattern when settings ARE initialized (error case)."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -165,7 +174,10 @@ class TestSettingsInitializationOrder:
 
     def test_error_message_when_settings_already_initialized(self, tmp_path):
         """Test that we get a clear error when trying to load .env after settings init."""
-        from primeagent.services.deps import get_settings_service, is_settings_service_initialized
+        from primeagent.services.deps import (
+            get_settings_service,
+            is_settings_service_initialized,
+        )
         from wfx.services.manager import get_service_manager
 
         # Clear services
@@ -235,20 +247,17 @@ class TestCLISubprocessIntegration:
         db_path = tmp_path / unique_db_name
 
         env_file = tmp_path / "integration_test.env"
-        env_file.write_text(
-            f"""
+        env_file.write_text(f"""
 PRIMEAGENT_DATABASE_URL=sqlite:///{db_path}
 PRIMEAGENT_AUTO_SAVING=false
 PRIMEAGENT_AUTO_LOGIN=false
 PRIMEAGENT_LOG_LEVEL=ERROR
-        """.strip()
-        )
+        """.strip())
 
         # Create a test script that starts primeagent and checks if the database was created
         # at the location specified in the env file
         test_script = tmp_path / "verify_startup.py"
-        test_script.write_text(
-            f"""
+        test_script.write_text(f"""
 import sys
 import time
 import subprocess
@@ -304,8 +313,7 @@ finally:
             proc.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc.kill()
-        """.strip()
-        )
+        """.strip())
 
         # Run the integration test (increased timeout for CI)
         result = subprocess.run(  # noqa: S603
@@ -321,7 +329,7 @@ finally:
             db_path.unlink()
 
         # Verify the test passed
-        assert result.returncode == 0, (
-            f"Integration test failed - env file values not used\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
-        )
+        assert (
+            result.returncode == 0
+        ), f"Integration test failed - env file values not used\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
         assert "SUCCESS" in result.stdout, f"Database not created at env file location\n{result.stdout}"

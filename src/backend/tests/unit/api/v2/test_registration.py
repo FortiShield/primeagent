@@ -106,7 +106,10 @@ class TestHelperFunctions:
         mock_file.exists.return_value = True
         mock_file.stat.return_value.st_size = 100
 
-        registration_data = {"email": "test@example.com", "registered_at": "2024-01-01T00:00:00Z"}
+        registration_data = {
+            "email": "test@example.com",
+            "registered_at": "2024-01-01T00:00:00Z",
+        }
 
         # Mock the file open operation to return the registration data as JSON
         # This simulates reading a valid JSON file containing registration information
@@ -155,7 +158,10 @@ class TestHelperFunctions:
     @patch("primeagent.api.v2.registration.logger")
     def test_save_registration_replace_existing(self, mock_logger, mock_file, mock_load, mock_ensure):  # noqa: ARG002
         """Test save_registration replacing existing registration."""
-        mock_load.return_value = {"email": "old@example.com", "registered_at": "2024-01-01T00:00:00Z"}
+        mock_load.return_value = {
+            "email": "old@example.com",
+            "registered_at": "2024-01-01T00:00:00Z",
+        }
         mock_file_handle = MagicMock()
         mock_file.open.return_value.__enter__ = MagicMock(return_value=mock_file_handle)
         mock_file.open.return_value.__exit__ = MagicMock()
@@ -247,7 +253,10 @@ class TestAPIEndpoints:
     @patch("primeagent.api.v2.registration.load_registration")
     async def test_get_registration_exists(self, mock_load):
         """Test getting existing registration."""
-        mock_load.return_value = {"email": "test@example.com", "registered_at": "2024-01-01T00:00:00Z"}
+        mock_load.return_value = {
+            "email": "test@example.com",
+            "registered_at": "2024-01-01T00:00:00Z",
+        }
 
         from fastapi import FastAPI
         from fastapi.testclient import TestClient

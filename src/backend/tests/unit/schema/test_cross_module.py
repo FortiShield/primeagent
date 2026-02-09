@@ -186,7 +186,14 @@ class TestDuckTypingInputMixin:
         )
         from wfx.schema.cross_module import CrossModuleModel
 
-        for input_class in [StrInput, IntInput, FloatInput, BoolInput, DataInput, MessageInput]:
+        for input_class in [
+            StrInput,
+            IntInput,
+            FloatInput,
+            BoolInput,
+            DataInput,
+            MessageInput,
+        ]:
             assert issubclass(input_class, CrossModuleModel)
 
     def test_input_instances_work_across_modules(self):

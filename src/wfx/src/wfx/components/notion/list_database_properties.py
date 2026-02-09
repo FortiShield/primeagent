@@ -8,28 +8,28 @@ from wfx.log.logger import logger
 from wfx.schema.data import Data
 
 
-class NotionDatabaseProperties(LCToolComponent):
+class notionDatabaseProperties(LCToolComponent):
     display_name: str = "List Database Properties "
-    description: str = "Retrieve properties of a Notion database."
+    description: str = "Retrieve properties of a notion database."
     documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         StrInput(
             name="database_id",
             display_name="Database ID",
-            info="The ID of the Notion database.",
+            info="The ID of the notion database.",
         ),
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
     ]
 
-    class NotionDatabasePropertiesSchema(BaseModel):
-        database_id: str = Field(..., description="The ID of the Notion database.")
+    class notionDatabasePropertiesSchema(BaseModel):
+        database_id: str = Field(..., description="The ID of the notion database.")
 
     def run_model(self) -> Data:
         result = self._fetch_database_properties(self.database_id)
@@ -42,16 +42,16 @@ class NotionDatabaseProperties(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="notion_database_properties",
-            description="Retrieve properties of a Notion database. Input should include the database ID.",
+            description="Retrieve properties of a notion database. Input should include the database ID.",
             func=self._fetch_database_properties,
-            args_schema=self.NotionDatabasePropertiesSchema,
+            args_schema=self.notionDatabasePropertiesSchema,
         )
 
     def _fetch_database_properties(self, database_id: str) -> dict | str:
         url = f"https://api.notion.com/v1/databases/{database_id}"
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
-            "Notion-Version": "2022-06-28",  # Use the latest supported version
+            "notion-Version": "2022-06-28",  # Use the latest supported version
         }
         try:
             response = requests.get(url, headers=headers, timeout=10)
@@ -59,9 +59,9 @@ class NotionDatabaseProperties(LCToolComponent):
             data = response.json()
             return data.get("properties", {})
         except requests.exceptions.RequestException as e:
-            return f"Error fetching Notion database properties: {e}"
+            return f"Error fetching notion database properties: {e}"
         except ValueError as e:
-            return f"Error parsing Notion API response: {e}"
+            return f"Error parsing notion API response: {e}"
         except Exception as e:  # noqa: BLE001
-            logger.debug("Error fetching Notion database properties", exc_info=True)
+            logger.debug("Error fetching notion database properties", exc_info=True)
             return f"An unexpected error occurred: {e}"

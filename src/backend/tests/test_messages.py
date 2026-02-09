@@ -28,19 +28,39 @@ from primeagent.services.tracing.utils import convert_to_langchain_type
 @pytest.fixture
 async def created_message():
     async with session_scope() as session:
-        message = MessageCreate(text="Test message", sender="User", sender_name="User", session_id="session_id")
+        message = MessageCreate(
+            text="Test message",
+            sender="User",
+            sender_name="User",
+            session_id="session_id",
+        )
         messagetable = MessageTable.model_validate(message, from_attributes=True)
         messagetables = await aadd_messagetables([messagetable], session)
         return MessageRead.model_validate(messagetables[0], from_attributes=True)
 
 
 @pytest.fixture
-async def created_messages(async_session):  # noqa: ARG001
+async def created_messages(async_session):
     async with session_scope() as _session:
         messages = [
-            MessageCreate(text="Test message 1", sender="User", sender_name="User", session_id="session_id2"),
-            MessageCreate(text="Test message 2", sender="User", sender_name="User", session_id="session_id2"),
-            MessageCreate(text="Test message 3", sender="User", sender_name="User", session_id="session_id2"),
+            MessageCreate(
+                text="Test message 1",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            MessageCreate(
+                text="Test message 2",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            MessageCreate(
+                text="Test message 3",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
         ]
         messagetables = [MessageTable.model_validate(message, from_attributes=True) for message in messages]
         messagetables = await aadd_messagetables(messagetables, _session)
@@ -51,8 +71,18 @@ async def created_messages(async_session):  # noqa: ARG001
 def test_get_messages():
     add_messages(
         [
-            Message(text="Test message 1", sender="User", sender_name="User", session_id="session_id2"),
-            Message(text="Test message 2", sender="User", sender_name="User", session_id="session_id2"),
+            Message(
+                text="Test message 1",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            Message(
+                text="Test message 2",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
         ]
     )
     limit = 2
@@ -66,8 +96,18 @@ def test_get_messages():
 async def test_aget_messages():
     await aadd_messages(
         [
-            Message(text="Test message 1", sender="User", sender_name="User", session_id="session_id2"),
-            Message(text="Test message 2", sender="User", sender_name="User", session_id="session_id2"),
+            Message(
+                text="Test message 1",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            Message(
+                text="Test message 2",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
         ]
     )
     limit = 2
@@ -79,7 +119,12 @@ async def test_aget_messages():
 
 @pytest.mark.usefixtures("client")
 def test_add_messages():
-    message = Message(text="New Test message", sender="User", sender_name="User", session_id="new_session_id")
+    message = Message(
+        text="New Test message",
+        sender="User",
+        sender_name="User",
+        session_id="new_session_id",
+    )
     messages = add_messages(message)
     assert len(messages) == 1
     assert messages[0].text == "New Test message"
@@ -87,7 +132,12 @@ def test_add_messages():
 
 @pytest.mark.usefixtures("client")
 async def test_aadd_messages():
-    message = Message(text="New Test message", sender="User", sender_name="User", session_id="new_session_id")
+    message = Message(
+        text="New Test message",
+        sender="User",
+        sender_name="User",
+        session_id="new_session_id",
+    )
     messages = await aadd_messages(message)
     assert len(messages) == 1
     assert messages[0].text == "New Test message"
@@ -95,7 +145,14 @@ async def test_aadd_messages():
 
 @pytest.mark.usefixtures("client")
 async def test_aadd_messagetables(async_session):
-    messages = [MessageTable(text="New Test message", sender="User", sender_name="User", session_id="new_session_id")]
+    messages = [
+        MessageTable(
+            text="New Test message",
+            sender="User",
+            sender_name="User",
+            session_id="new_session_id",
+        )
+    ]
     added_messages = await aadd_messagetables(messages, async_session)
     assert len(added_messages) == 1
     assert added_messages[0].text == "New Test message"
@@ -104,7 +161,12 @@ async def test_aadd_messagetables(async_session):
 @pytest.mark.usefixtures("client")
 def test_delete_messages():
     session_id = "new_session_id"
-    message = Message(text="New Test message", sender="User", sender_name="User", session_id=session_id)
+    message = Message(
+        text="New Test message",
+        sender="User",
+        sender_name="User",
+        session_id=session_id,
+    )
     add_messages([message])
     messages = get_messages(sender="User", session_id=session_id)
     assert len(messages) == 1
@@ -116,7 +178,12 @@ def test_delete_messages():
 @pytest.mark.usefixtures("client")
 async def test_adelete_messages():
     session_id = "new_session_id"
-    message = Message(text="New Test message", sender="User", sender_name="User", session_id=session_id)
+    message = Message(
+        text="New Test message",
+        sender="User",
+        sender_name="User",
+        session_id=session_id,
+    )
     await aadd_messages([message])
     messages = await aget_messages(sender="User", session_id=session_id)
     assert len(messages) == 1
@@ -155,7 +222,14 @@ def test_convert_to_langchain(method_name):
         msg = f"Invalid method: {method_name}"
         raise ValueError(msg)
 
-    lc_message = convert(Message(text="Test message 1", sender="User", sender_name="User", session_id="session_id2"))
+    lc_message = convert(
+        Message(
+            text="Test message 1",
+            sender="User",
+            sender_name="User",
+            session_id="session_id2",
+        )
+    )
     assert lc_message.content == "Test message 1"
     assert lc_message.type == "human"
 
@@ -279,7 +353,10 @@ async def test_aupdate_multiple_messages_with_timestamps(created_messages):
 async def test_aupdate_message_with_content_blocks(created_message):
     # Create a content block using proper models
     text_content = TextContent(
-        type="text", text="Test content", duration=5, header={"title": "Test Header", "icon": "TestIcon"}
+        type="text",
+        text="Test content",
+        duration=5,
+        header={"title": "Test Header", "icon": "TestIcon"},
     )
 
     tool_content = ToolContent(type="tool_use", name="test_tool", tool_input={"param": "value"}, duration=10)
@@ -322,7 +399,10 @@ async def test_aupdate_message_with_content_blocks(created_message):
 async def test_aupdate_message_with_nested_properties(created_message):
     # Create a text content with nested properties
     text_content = TextContent(
-        type="text", text="Test content", header={"title": "Test Header", "icon": "TestIcon"}, duration=15
+        type="text",
+        text="Test content",
+        header={"title": "Test Header", "icon": "TestIcon"},
+        duration=15,
     )
 
     content_block = ContentBlock(

@@ -12,7 +12,11 @@ def test_serialize_inputs_excludes_code_key():
         timestamp=datetime.now(timezone.utc),
         vertex_id="test-vertex",
         target_id="test-target",
-        inputs={"param1": "value1", "param2": "value2", "code": "print('Hello, world!')"},
+        inputs={
+            "param1": "value1",
+            "param2": "value2",
+            "code": "print('Hello, world!')",
+        },
         outputs={"result": "success"},
         status="completed",
         flow_id=uuid.uuid4(),
@@ -93,7 +97,11 @@ def test_serialize_inputs_handles_empty_dict():
 async def test_code_key_not_saved_to_database():
     """Test that the code key is not saved to the database."""
     # Create input data with a code key
-    input_data = {"param1": "value1", "param2": "value2", "code": "print('Hello, world!')"}
+    input_data = {
+        "param1": "value1",
+        "param2": "value2",
+        "code": "print('Hello, world!')",
+    }
 
     # Create a transaction with inputs containing a code key
     transaction = TransactionBase(

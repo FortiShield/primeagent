@@ -42,7 +42,11 @@ class KubernetesSecretManager:
 
         secret_metadata = client.V1ObjectMeta(name=name)
         secret = client.V1Secret(
-            api_version="v1", kind="Secret", metadata=secret_metadata, type=secret_type, data=encoded_data
+            api_version="v1",
+            kind="Secret",
+            metadata=secret_metadata,
+            type=secret_type,
+            data=encoded_data,
         )
 
         return self.core_api.create_namespaced_secret(self.namespace, secret)

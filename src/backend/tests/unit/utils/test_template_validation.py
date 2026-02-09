@@ -315,10 +315,26 @@ class TestValidateFlowCode:
     def test_code_validation_exception(self):
         """Test validation handles exceptions gracefully."""
         template_data = {
-            "nodes": [{"data": {"node": {"template": {"code_field": {"type": "code", "value": "def test(): pass"}}}}}]
+            "nodes": [
+                {
+                    "data": {
+                        "node": {
+                            "template": {
+                                "code_field": {
+                                    "type": "code",
+                                    "value": "def test(): pass",
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
         }
 
-        with patch("primeagent.utils.template_validation.validate_code", side_effect=ValueError("Unexpected error")):
+        with patch(
+            "primeagent.utils.template_validation.validate_code",
+            side_effect=ValueError("Unexpected error"),
+        ):
             errors = validate_flow_code(template_data, "test.json")
             assert len(errors) == 1
             assert "Code validation failed: Unexpected error" in errors[0]
@@ -326,23 +342,45 @@ class TestValidateFlowCode:
     def test_code_validation_other_exceptions(self):
         """Test validation handles different exception types."""
         template_data = {
-            "nodes": [{"data": {"node": {"template": {"code_field": {"type": "code", "value": "def test(): pass"}}}}}]
+            "nodes": [
+                {
+                    "data": {
+                        "node": {
+                            "template": {
+                                "code_field": {
+                                    "type": "code",
+                                    "value": "def test(): pass",
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
         }
 
         # Test TypeError
-        with patch("primeagent.utils.template_validation.validate_code", side_effect=TypeError("Type error")):
+        with patch(
+            "primeagent.utils.template_validation.validate_code",
+            side_effect=TypeError("Type error"),
+        ):
             errors = validate_flow_code(template_data, "test.json")
             assert len(errors) == 1
             assert "Code validation failed: Type error" in errors[0]
 
         # Test KeyError
-        with patch("primeagent.utils.template_validation.validate_code", side_effect=KeyError("key")):
+        with patch(
+            "primeagent.utils.template_validation.validate_code",
+            side_effect=KeyError("key"),
+        ):
             errors = validate_flow_code(template_data, "test.json")
             assert len(errors) == 1
             assert "Code validation failed: 'key'" in errors[0]
 
         # Test AttributeError
-        with patch("primeagent.utils.template_validation.validate_code", side_effect=AttributeError("Attribute error")):
+        with patch(
+            "primeagent.utils.template_validation.validate_code",
+            side_effect=AttributeError("Attribute error"),
+        ):
             errors = validate_flow_code(template_data, "test.json")
             assert len(errors) == 1
             assert "Code validation failed: Attribute error" in errors[0]
@@ -712,7 +750,10 @@ class TestValidateEventStream:
 
         # Mock the json.loads to raise a different exception type
         errors = []
-        with patch("primeagent.utils.template_validation.json.loads", side_effect=TypeError("Type error")):
+        with patch(
+            "primeagent.utils.template_validation.json.loads",
+            side_effect=TypeError("Type error"),
+        ):
             await _validate_event_stream(mock_response, "job123", "test.json", errors)
             assert len(errors) == 1
             assert "Event stream validation failed: Type error" in errors[0]

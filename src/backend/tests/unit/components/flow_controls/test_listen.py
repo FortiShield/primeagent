@@ -74,7 +74,11 @@ class TestListenComponent(ComponentTestBaseWithoutClient):
         component = await self.component_setup(component_class, default_kwargs)
         component.context_key = "nonexistent_key"
 
-        with patch.object(type(component), "ctx", new_callable=lambda: {"other_key": Data(text="Other data")}):
+        with patch.object(
+            type(component),
+            "ctx",
+            new_callable=lambda: {"other_key": Data(text="Other data")},
+        ):
             result = component.listen_for_data()
 
             assert isinstance(result, Data)
@@ -132,7 +136,11 @@ class TestListenComponent(ComponentTestBaseWithoutClient):
         component.context_key = "key_with_underscores"
         test_data = Data(text="Underscore data")
 
-        with patch.object(type(component), "ctx", new_callable=lambda: {"key_with_underscores": test_data}):
+        with patch.object(
+            type(component),
+            "ctx",
+            new_callable=lambda: {"key_with_underscores": test_data},
+        ):
             result = component.listen_for_data()
 
             assert result == test_data
@@ -216,7 +224,11 @@ class TestListenComponent(ComponentTestBaseWithoutClient):
         component.context_key = ""
 
         # Mock the ctx property
-        with patch.object(type(component), "ctx", new_callable=lambda: {"": Data(text="Empty key data")}):
+        with patch.object(
+            type(component),
+            "ctx",
+            new_callable=lambda: {"": Data(text="Empty key data")},
+        ):
             result = component.listen_for_data()
             assert result.text == "Empty key data"
 
@@ -226,7 +238,11 @@ class TestListenComponent(ComponentTestBaseWithoutClient):
         component.context_key = "   "
 
         # Mock the ctx property
-        with patch.object(type(component), "ctx", new_callable=lambda: {"   ": Data(text="Whitespace key data")}):
+        with patch.object(
+            type(component),
+            "ctx",
+            new_callable=lambda: {"   ": Data(text="Whitespace key data")},
+        ):
             result = component.listen_for_data()
             assert result.text == "Whitespace key data"
 

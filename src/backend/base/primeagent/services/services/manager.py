@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 # Re-export everything from wfx
-from wfx.services.manager import NoFactoryRegisteredError, ServiceManager, get_service_manager
+from wfx.services.manager import (
+    NoFactoryRegisteredError,
+    ServiceManager,
+    get_service_manager,
+)
 
 __all__ = ["NoFactoryRegisteredError", "ServiceManager", "get_service_manager"]
 

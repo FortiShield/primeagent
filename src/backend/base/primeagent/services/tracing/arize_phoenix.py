@@ -69,7 +69,12 @@ class ArizePhoenixTracer(BaseTracer):
     chat_output_value: str
 
     def __init__(
-        self, trace_name: str, trace_type: str, project_name: str, trace_id: UUID, session_id: str | None = None
+        self,
+        trace_name: str,
+        trace_type: str,
+        project_name: str,
+        trace_id: UUID,
+        session_id: str | None = None,
     ):
         """Initializes the ArizePhoenixTracer instance and sets up a root span."""
         self.trace_name = trace_name

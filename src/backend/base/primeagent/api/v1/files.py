@@ -86,7 +86,8 @@ async def upload_file(
 
     if file.size > max_file_size_upload * 1024 * 1024:
         raise HTTPException(
-            status_code=413, detail=f"File size is larger than the maximum file size {max_file_size_upload}MB."
+            status_code=413,
+            detail=f"File size is larger than the maximum file size {max_file_size_upload}MB.",
         )
 
     # Authorization handled by get_flow dependency
@@ -179,17 +180,24 @@ async def download_profile_picture(
         # Reject any path components that contain directory traversal sequences
         if ".." in folder_name or ".." in file_name:
             raise HTTPException(
-                status_code=400, detail="Path traversal patterns ('..') are not allowed in folder or file names"
+                status_code=400,
+                detail="Path traversal patterns ('..') are not allowed in folder or file names",
             )
 
         # Only allow specific folder names (dynamic from config + package)
         allowed_folders = _get_allowed_profile_picture_folders(settings_service)
         if folder_name not in allowed_folders:
-            raise HTTPException(status_code=400, detail=f"Folder must be one of: {', '.join(sorted(allowed_folders))}")
+            raise HTTPException(
+                status_code=400,
+                detail=f"Folder must be one of: {', '.join(sorted(allowed_folders))}",
+            )
 
         # Validate file name contains no path separators
         if "/" in file_name or "\\" in file_name:
-            raise HTTPException(status_code=400, detail="File name cannot contain path separators ('/' or '\\')")
+            raise HTTPException(
+                status_code=400,
+                detail="File name cannot contain path separators ('/' or '\\')",
+            )
 
         extension = file_name.split(".")[-1]
         config_dir = settings_service.settings.config_dir
@@ -221,7 +229,10 @@ async def download_profile_picture(
             if package_path.exists():
                 file_path = package_path
             else:
-                raise HTTPException(status_code=404, detail=f"Profile picture {folder_name}/{file_name} not found")
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Profile picture {folder_name}/{file_name} not found",
+                )
 
         content_type = build_content_type_from_extension(extension)
         # Read file directly from local filesystem using async file operations

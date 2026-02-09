@@ -186,9 +186,15 @@ class TraceloopTracer(BaseTracer):
         child_span = self.child_spans.pop(trace_id)
 
         if outputs:
-            child_span.set_attribute("outputs", json.dumps(self._convert_to_traceloop_dict(outputs), default=str))
+            child_span.set_attribute(
+                "outputs",
+                json.dumps(self._convert_to_traceloop_dict(outputs), default=str),
+            )
         if logs:
-            child_span.set_attribute("logs", json.dumps(self._convert_to_traceloop_dict(list(logs)), default=str))
+            child_span.set_attribute(
+                "logs",
+                json.dumps(self._convert_to_traceloop_dict(list(logs)), default=str),
+            )
         if error:
             child_span.record_exception(error)
 

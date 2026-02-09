@@ -132,7 +132,10 @@ class AuthService(BaseAuthService):
 
     async def _authenticate_with_token(self, token: str, db: AsyncSession) -> User:
         """Internal method to authenticate with token (raises generic exceptions)."""
-        from primeagent.services.auth.utils import ACCESS_TOKEN_TYPE, get_jwt_verification_key
+        from primeagent.services.auth.utils import (
+            ACCESS_TOKEN_TYPE,
+            get_jwt_verification_key,
+        )
 
         settings_service = self.settings
         algorithm = settings_service.auth_settings.ALGORITHM
@@ -210,7 +213,10 @@ class AuthService(BaseAuthService):
         return None
 
     async def api_key_security(
-        self, query_param: str | None, header_param: str | None, db: AsyncSession | None = None
+        self,
+        query_param: str | None,
+        header_param: str | None,
+        db: AsyncSession | None = None,
     ) -> UserRead | None:
         settings_service = self.settings
 
@@ -248,7 +254,10 @@ class AuthService(BaseAuthService):
             # At this point, at least one of query_param or header_param is truthy
             api_key = query_param or header_param
             if api_key is None:  # pragma: no cover - guaranteed by the if-condition above
-                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or missing API key")
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid or missing API key",
+                )
             result = await check_key(db, api_key)
 
         elif not query_param and not header_param:
@@ -261,7 +270,10 @@ class AuthService(BaseAuthService):
             # At least one of query_param or header_param is truthy
             api_key = query_param or header_param
             if api_key is None:  # pragma: no cover - guaranteed by the elif-condition above
-                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or missing API key")
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid or missing API key",
+                )
             result = await check_key(db, api_key)
 
         if not result:
@@ -411,7 +423,10 @@ class AuthService(BaseAuthService):
         api_key_query_val = request.query_params.get("x-api-key")
 
         if not api_key_header_val and not api_key_query_val:
-            raise HTTPException(status_code=403, detail="API key required when webhook authentication is enabled")
+            raise HTTPException(
+                status_code=403,
+                detail="API key required when webhook authentication is enabled",
+            )
 
         api_key = api_key_header_val or api_key_query_val
 
@@ -504,7 +519,8 @@ class AuthService(BaseAuthService):
         settings_service = self.settings
         if not settings_service.auth_settings.AUTO_LOGIN:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail="Auto login required to create a long-term token"
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Auto login required to create a long-term token",
             )
 
         username = settings_service.auth_settings.SUPERUSER
@@ -516,7 +532,10 @@ class AuthService(BaseAuthService):
             super_user = superusers[0] if superusers else None
 
         if not super_user:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Super user hasn't been created")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Super user hasn't been created",
+            )
         access_token_expires_longterm = timedelta(days=365)
         access_token = self.create_token(
             data={"sub": str(super_user.id), "type": "access"},
@@ -610,15 +629,24 @@ class AuthService(BaseAuthService):
             token_type: str = payload.get("type")  # type: ignore[assignment]
 
             if user_id is None or token_type != "refresh":  # noqa: S105
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid refresh token",
+                )
 
             user_exists = await get_user_by_id(db, user_id)
 
             if user_exists is None:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid refresh token",
+                )
 
             if not user_exists.is_active:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User account is inactive")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="User account is inactive",
+                )
 
             return await self.create_user_tokens(user_id, db)
 
@@ -637,7 +665,10 @@ class AuthService(BaseAuthService):
 
         if not user.is_active:
             if not user.last_login_at:
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Waiting for approval")
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Waiting for approval",
+                )
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Inactive user")
 
         return user if self.verify_password(password, user.password) else None
@@ -736,7 +767,10 @@ class AuthService(BaseAuthService):
                 # At least one of query_param or header_param is truthy
                 api_key = query_param or header_param
                 if api_key is None:  # pragma: no cover - guaranteed by the if-condition above
-                    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or missing API key")
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Invalid or missing API key",
+                    )
                 result = await check_key(db, api_key)
 
         elif not query_param and not header_param:
@@ -751,7 +785,10 @@ class AuthService(BaseAuthService):
         else:
             # header_param must be truthy here (query_param is falsy, and we passed the not-both-None check)
             if header_param is None:  # pragma: no cover - guaranteed by the elif chain above
-                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or missing API key")
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid or missing API key",
+                )
             result = await check_key(db, header_param)
 
         if not result:

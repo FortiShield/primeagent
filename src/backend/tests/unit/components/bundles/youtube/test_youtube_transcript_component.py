@@ -104,7 +104,12 @@ class TestYouTubeTranscriptsComponent(ComponentTestBaseWithoutClient):
 
     @patch("wfx.components.youtube.youtube_transcripts.YouTubeTranscriptApi")
     def test_get_dataframe_output_success(
-        self, mock_api_class, component_class, default_kwargs, mock_transcript_data, mock_transcript_list
+        self,
+        mock_api_class,
+        component_class,
+        default_kwargs,
+        mock_transcript_data,
+        mock_transcript_list,
     ):
         """Test successful DataFrame output generation."""
         mock_api = Mock()
@@ -127,7 +132,12 @@ class TestYouTubeTranscriptsComponent(ComponentTestBaseWithoutClient):
 
     @patch("wfx.components.youtube.youtube_transcripts.YouTubeTranscriptApi")
     def test_get_message_output_success(
-        self, mock_api_class, component_class, default_kwargs, mock_transcript_data, mock_transcript_list
+        self,
+        mock_api_class,
+        component_class,
+        default_kwargs,
+        mock_transcript_data,
+        mock_transcript_list,
     ):
         """Test successful Message output generation."""
         mock_api = Mock()
@@ -146,7 +156,12 @@ class TestYouTubeTranscriptsComponent(ComponentTestBaseWithoutClient):
 
     @patch("wfx.components.youtube.youtube_transcripts.YouTubeTranscriptApi")
     def test_get_data_output_success(
-        self, mock_api_class, component_class, default_kwargs, mock_transcript_data, mock_transcript_list
+        self,
+        mock_api_class,
+        component_class,
+        default_kwargs,
+        mock_transcript_data,
+        mock_transcript_list,
     ):
         """Test successful Data output generation."""
         mock_api = Mock()
@@ -274,7 +289,12 @@ class TestYouTubeTranscriptsComponent(ComponentTestBaseWithoutClient):
 
     @patch("wfx.components.youtube.youtube_transcripts.YouTubeTranscriptApi")
     def test_translation_parameter(
-        self, mock_api_class, component_class, default_kwargs, mock_transcript_list, mock_transcript_data
+        self,
+        mock_api_class,
+        component_class,
+        default_kwargs,
+        mock_transcript_list,
+        mock_transcript_data,
     ):
         """Test transcript translation functionality."""
         mock_translated = Mock()

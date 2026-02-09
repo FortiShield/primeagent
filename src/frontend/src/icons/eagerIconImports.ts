@@ -68,7 +68,7 @@ import { MongoDBIcon } from "@/icons/MongoDB";
 import { MistralIcon } from "@/icons/mistral";
 import { NeedleIcon } from "@/icons/Needle";
 import { NotDiamondIcon } from "@/icons/NotDiamond";
-import { NotionIcon } from "@/icons/Notion";
+import { notionIcon } from "@/icons/notion";
 import { NovitaIcon } from "@/icons/Novita";
 import { NvidiaIcon } from "@/icons/Nvidia";
 import { OlivyaIcon } from "@/icons/Olivya";
@@ -189,7 +189,7 @@ export const eagerIconsMapping = {
   MongoDB: MongoDBIcon,
   Needle: NeedleIcon,
   NotDiamond: NotDiamondIcon,
-  Notion: NotionIcon,
+  notion: notionIcon,
   Novita: NovitaIcon,
   NVIDIA: NvidiaIcon,
   Olivya: OlivyaIcon,

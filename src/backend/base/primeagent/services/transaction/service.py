@@ -6,7 +6,9 @@ from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
 from primeagent.services.base import Service
-from primeagent.services.database.models.transactions.crud import log_transaction as crud_log_transaction
+from primeagent.services.database.models.transactions.crud import (
+    log_transaction as crud_log_transaction,
+)
 from primeagent.services.database.models.transactions.model import TransactionBase
 from wfx.log.logger import logger
 from wfx.services.deps import session_scope

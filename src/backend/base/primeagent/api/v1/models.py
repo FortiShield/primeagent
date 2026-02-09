@@ -279,12 +279,19 @@ async def _get_disabled_models(session: DbSession, current_user: CurrentActiveUs
                 parsed_value = json.loads(var.value)
                 # Validate it's a list of strings
                 if not isinstance(parsed_value, list):
-                    logger.warning("Invalid disabled models format for user %s: not a list", current_user.id)
+                    logger.warning(
+                        "Invalid disabled models format for user %s: not a list",
+                        current_user.id,
+                    )
                     return set()
                 # Ensure all items are strings
                 return {str(item) for item in parsed_value if isinstance(item, str)}
             except (json.JSONDecodeError, TypeError):
-                logger.warning("Failed to parse disabled models for user %s", current_user.id, exc_info=True)
+                logger.warning(
+                    "Failed to parse disabled models for user %s",
+                    current_user.id,
+                    exc_info=True,
+                )
                 return set()
     except ValueError:
         # Variable not found, return empty set
@@ -311,13 +318,20 @@ async def _get_enabled_models(session: DbSession, current_user: CurrentActiveUse
                 parsed_value = json.loads(value_stripped)
                 # Validate it's a list of strings
                 if not isinstance(parsed_value, list):
-                    logger.warning("Invalid enabled models format for user %s: not a list", current_user.id)
+                    logger.warning(
+                        "Invalid enabled models format for user %s: not a list",
+                        current_user.id,
+                    )
                     return set()
                 # Ensure all items are strings
                 return {str(item) for item in parsed_value if isinstance(item, str)}
             except (json.JSONDecodeError, TypeError):
                 # Log at debug level to avoid flooding logs with expected edge cases
-                logger.debug("Failed to parse enabled models for user %s: %s", current_user.id, var.value)
+                logger.debug(
+                    "Failed to parse enabled models for user %s: %s",
+                    current_user.id,
+                    var.value,
+                )
                 return set()
     except ValueError:
         # Variable not found, return empty set
@@ -413,7 +427,12 @@ async def _save_model_list_variable(
             await variable_service.update_variable_fields(
                 user_id=current_user.id,
                 variable_id=existing_var.id,
-                variable=VariableUpdate(id=existing_var.id, name=var_name, value=models_json, type=GENERIC_TYPE),
+                variable=VariableUpdate(
+                    id=existing_var.id,
+                    name=var_name,
+                    value=models_json,
+                    type=GENERIC_TYPE,
+                ),
                 session=session,
             )
         else:
@@ -567,7 +586,11 @@ async def update_enabled_models(
     # Save updated model lists
     await _save_model_list_variable(variable_service, session, current_user, DISABLED_MODELS_VAR, disabled_models)
     await _save_model_list_variable(
-        variable_service, session, current_user, ENABLED_MODELS_VAR, explicitly_enabled_models
+        variable_service,
+        session,
+        current_user,
+        ENABLED_MODELS_VAR,
+        explicitly_enabled_models,
     )
 
     # Return the updated model status
@@ -626,7 +649,11 @@ async def get_default_model(
             try:
                 parsed_value = json.loads(var.value)
             except (json.JSONDecodeError, TypeError):
-                logger.warning("Failed to parse default model for user %s", current_user.id, exc_info=True)
+                logger.warning(
+                    "Failed to parse default model for user %s",
+                    current_user.id,
+                    exc_info=True,
+                )
                 return {"default_model": None}
             else:
                 # Validate structure

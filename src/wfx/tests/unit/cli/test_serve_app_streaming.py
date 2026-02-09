@@ -94,7 +94,7 @@ def multi_serve_app(mock_graphs, mock_metas, monkeypatch):
             )
 
             # Override the dependency after app creation
-            def mock_verify_api_key(query_param: str | None = None, header_param: str | None = None) -> str:  # noqa: ARG001
+            def mock_verify_api_key(query_param: str | None = None, header_param: str | None = None) -> str:
                 return "test-api-key"
 
             # Import the original dependency
@@ -141,7 +141,7 @@ class TestMultiServeStreaming:
         """Test basic streaming functionality."""
         with patch("wfx.cli.serve_app.run_flow_generator_for_serve") as mock_generator:
             # Mock the streaming generator
-            async def mock_stream_generator(*args, **kwargs):  # noqa: ARG001
+            async def mock_stream_generator(*args, **kwargs):
                 event_manager = kwargs.get("event_manager")
                 client_consumed_queue = kwargs.get("client_consumed_queue")
                 if event_manager:
@@ -241,7 +241,7 @@ class TestMultiServeStreaming:
         """Test error handling in streaming endpoint."""
         with patch("wfx.cli.serve_app.run_flow_generator_for_serve") as mock_generator:
             # Mock an error in the generator that properly terminates the stream
-            async def mock_error_generator(graph, input_request, flow_id, event_manager, client_consumed_queue):  # noqa: ARG001
+            async def mock_error_generator(graph, input_request, flow_id, event_manager, client_consumed_queue):
                 try:
                     msg = "Test error during streaming"
                     raise RuntimeError(msg)

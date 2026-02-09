@@ -237,7 +237,11 @@ class TestUpdateInputTypes:
         mock_obj.input_types = None
 
         build_config = dotdict(
-            {"dict_field": {"input_types": None, "other": "value"}, "obj_field": mock_obj, "string_field": "value"}
+            {
+                "dict_field": {"input_types": None, "other": "value"},
+                "obj_field": mock_obj,
+                "string_field": "value",
+            }
         )
 
         result = update_input_types(build_config)
@@ -300,7 +304,13 @@ class TestSetMultipleFieldDisplay:
 
     def test_set_multiple_field_display_with_fields_dict(self):
         """Test setting display for multiple fields using fields dict."""
-        build_config = dotdict({"field1": {"show": True}, "field2": {"show": True}, "field3": {"show": True}})
+        build_config = dotdict(
+            {
+                "field1": {"show": True},
+                "field2": {"show": True},
+                "field3": {"show": True},
+            }
+        )
         fields = {"field1": False, "field2": True}
 
         result = set_multiple_field_display(build_config, fields=fields)
@@ -311,7 +321,13 @@ class TestSetMultipleFieldDisplay:
 
     def test_set_multiple_field_display_with_field_list(self):
         """Test setting display for multiple fields using field list."""
-        build_config = dotdict({"field1": {"show": True}, "field2": {"show": True}, "field3": {"show": True}})
+        build_config = dotdict(
+            {
+                "field1": {"show": True},
+                "field2": {"show": True},
+                "field3": {"show": True},
+            }
+        )
         field_list = ["field1", "field2"]
 
         result = set_multiple_field_display(build_config, field_list=field_list, value=False)
@@ -464,7 +480,13 @@ class TestSetCurrentFields:
 
     def test_set_current_fields_no_selected_action(self):
         """Test setting current fields with no selected action."""
-        build_config = dotdict({"field1": {"show": True}, "field2": {"show": True}, "code": {"show": False}})
+        build_config = dotdict(
+            {
+                "field1": {"show": True},
+                "field2": {"show": True},
+                "code": {"show": False},
+            }
+        )
         action_fields = {"action1": ["field1"], "action2": ["field2"]}
 
         result = set_current_fields(build_config, action_fields, None)
@@ -478,7 +500,11 @@ class TestSetCurrentFields:
     def test_set_current_fields_custom_function(self):
         """Test setting current fields with custom function."""
         build_config = dotdict(
-            {"field1": {"advanced": False}, "field2": {"advanced": False}, "code": {"advanced": False}}
+            {
+                "field1": {"advanced": False},
+                "field2": {"advanced": False},
+                "code": {"advanced": False},
+            }
         )
         action_fields = {"action1": ["field1"], "action2": ["field2"]}
 
@@ -491,7 +517,13 @@ class TestSetCurrentFields:
 
     def test_set_current_fields_custom_default_value(self):
         """Test setting current fields with custom default value."""
-        build_config = dotdict({"field1": {"show": False}, "field2": {"show": False}, "code": {"show": False}})
+        build_config = dotdict(
+            {
+                "field1": {"show": False},
+                "field2": {"show": False},
+                "code": {"show": False},
+            }
+        )
         action_fields = {"action1": ["field1"], "action2": ["field2"]}
 
         result = set_current_fields(

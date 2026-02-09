@@ -114,7 +114,11 @@ async def test_enabled_providers_after_credential_creation(client: AsyncClient, 
 
 @pytest.mark.usefixtures("active_user")
 async def test_enabled_providers_multiple_credentials(
-    client: AsyncClient, openai_credential, anthropic_credential, google_credential, logged_in_headers
+    client: AsyncClient,
+    openai_credential,
+    anthropic_credential,
+    google_credential,
+    logged_in_headers,
 ):
     """Test provider status with multiple credentials."""
     # Clean up any existing variables
@@ -224,7 +228,8 @@ async def test_enabled_providers_filter_by_specific_providers(
     with mock.patch("wfx.base.models.unified_models.validate_model_provider_key") as mock_validate:
         mock_validate.return_value = None
         response = await client.get(
-            "api/v1/models/enabled_providers?providers=OpenAI&providers=Anthropic", headers=logged_in_headers
+            "api/v1/models/enabled_providers?providers=OpenAI&providers=Anthropic",
+            headers=logged_in_headers,
         )
     result = response.json()
 
@@ -238,7 +243,8 @@ async def test_enabled_providers_filter_by_specific_providers(
 
     # Test filtering with non-existent provider (should not error, just return empty)
     response2 = await client.get(
-        "api/v1/models/enabled_providers?providers=NonExistentProvider", headers=logged_in_headers
+        "api/v1/models/enabled_providers?providers=NonExistentProvider",
+        headers=logged_in_headers,
     )
     result2 = response2.json()
     assert response2.status_code == status.HTTP_200_OK

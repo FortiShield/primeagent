@@ -11,7 +11,7 @@ from primeagent.services.storage.local import LocalStorageService
 def mock_settings_service():
     """Create a mock settings service."""
     settings_service = Mock()
-    settings_service.settings.config_dir = "/tmp/primeagent_test"  # noqa: S108
+    settings_service.settings.config_dir = "/tmp/primeagent_test"
     return settings_service
 
 

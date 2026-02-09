@@ -11,29 +11,29 @@ from wfx.log.logger import logger
 from wfx.schema.data import Data
 
 
-class NotionListPages(LCToolComponent):
+class notionListPages(LCToolComponent):
     display_name: str = "List Pages "
     description: str = (
-        "Query a Notion database with filtering and sorting. "
+        "Query a notion database with filtering and sorting. "
         "The input should be a JSON string containing the 'filter' and 'sorts' objects. "
         "Example input:\n"
         '{"filter": {"property": "Status", "select": {"equals": "Done"}}, '
         '"sorts": [{"timestamp": "created_time", "direction": "descending"}]}'
     )
     documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
         StrInput(
             name="database_id",
             display_name="Database ID",
-            info="The ID of the Notion database to query.",
+            info="The ID of the notion database to query.",
         ),
         MultilineInput(
             name="query_json",
@@ -43,8 +43,8 @@ class NotionListPages(LCToolComponent):
         ),
     ]
 
-    class NotionListPagesSchema(BaseModel):
-        database_id: str = Field(..., description="The ID of the Notion database to query.")
+    class notionListPagesSchema(BaseModel):
+        database_id: str = Field(..., description="The ID of the notion database to query.")
         query_json: str | None = Field(
             default="",
             description="A JSON string containing the filters and sorts for querying the database. "
@@ -89,7 +89,7 @@ class NotionListPages(LCToolComponent):
             name="notion_list_pages",
             description=self.description,
             func=self._query_notion_database,
-            args_schema=self.NotionListPagesSchema,
+            args_schema=self.notionListPagesSchema,
         )
 
     def _query_notion_database(self, database_id: str, query_json: str | None = None) -> list[dict[str, Any]] | str:
@@ -97,7 +97,7 @@ class NotionListPages(LCToolComponent):
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
             "Content-Type": "application/json",
-            "Notion-Version": "2022-06-28",
+            "notion-Version": "2022-06-28",
         }
 
         query_payload = {}
@@ -113,9 +113,9 @@ class NotionListPages(LCToolComponent):
             results = response.json()
             return results["results"]
         except requests.exceptions.RequestException as e:
-            return f"Error querying Notion database: {e}"
+            return f"Error querying notion database: {e}"
         except KeyError:
-            return "Unexpected response format from Notion API"
+            return "Unexpected response format from notion API"
         except Exception as e:  # noqa: BLE001
-            logger.debug("Error querying Notion database", exc_info=True)
+            logger.debug("Error querying notion database", exc_info=True)
             return f"An unexpected error occurred: {e}"

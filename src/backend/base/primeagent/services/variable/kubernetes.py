@@ -6,10 +6,18 @@ from typing import TYPE_CHECKING
 
 from primeagent.services.auth import utils as auth_utils
 from primeagent.services.base import Service
-from primeagent.services.database.models.variable.model import Variable, VariableCreate, VariableRead, VariableUpdate
+from primeagent.services.database.models.variable.model import (
+    Variable,
+    VariableCreate,
+    VariableRead,
+    VariableUpdate,
+)
 from primeagent.services.variable.base import VariableService
 from primeagent.services.variable.constants import CREDENTIAL_TYPE, GENERIC_TYPE
-from primeagent.services.variable.kubernetes_secrets import KubernetesSecretManager, encode_user_id
+from primeagent.services.variable.kubernetes_secrets import (
+    KubernetesSecretManager,
+    encode_user_id,
+)
 from typing_extensions import override
 from wfx.log.logger import logger
 
@@ -158,7 +166,9 @@ class KubernetesSecretService(VariableService, Service):
             type_ = GENERIC_TYPE
 
         await asyncio.to_thread(
-            self.kubernetes_secrets.upsert_secret, secret_name=secret_name, data={secret_key: value}
+            self.kubernetes_secrets.upsert_secret,
+            secret_name=secret_name,
+            data={secret_key: value},
         )
 
         variable_base = VariableCreate(
@@ -246,7 +256,11 @@ class KubernetesSecretService(VariableService, Service):
 
     @override
     async def update_variable_fields(
-        self, user_id: UUID | str, variable_id: UUID | str, variable: VariableUpdate, session: AsyncSession
+        self,
+        user_id: UUID | str,
+        variable_id: UUID | str,
+        variable: VariableUpdate,
+        session: AsyncSession,
     ) -> Variable:
         """Update specific fields of a variable.
 

@@ -77,7 +77,14 @@ class TestMCPSessionManager:
 
         # Set up the new session structure
         session_manager.sessions_by_server[server_key] = {
-            "sessions": {session_id: {"session": AsyncMock(), "task": mock_task, "type": "stdio", "last_used": 0}},
+            "sessions": {
+                session_id: {
+                    "session": AsyncMock(),
+                    "task": mock_task,
+                    "type": "stdio",
+                    "last_used": 0,
+                }
+            },
             "last_cleanup": 0,
         }
 
@@ -110,7 +117,10 @@ class TestMCPSessionManager:
             mock_session2 = AsyncMock()
             mock_task1 = AsyncMock()
             mock_task2 = AsyncMock()
-            mock_create.side_effect = [(mock_session1, mock_task1), (mock_session2, mock_task2)]
+            mock_create.side_effect = [
+                (mock_session1, mock_task1),
+                (mock_session2, mock_task2),
+            ]
 
             # First connection
             session1 = await session_manager.get_session(context_id, server1_params, "stdio")
@@ -127,12 +137,20 @@ class TestHeaderValidation:
 
     def test_validate_headers_valid_input(self):
         """Test header validation with valid headers."""
-        headers = {"Authorization": "Bearer token123", "Content-Type": "application/json", "X-API-Key": "secret-key"}
+        headers = {
+            "Authorization": "Bearer token123",
+            "Content-Type": "application/json",
+            "X-API-Key": "secret-key",
+        }
 
         result = validate_headers(headers)
 
         # Headers should be normalized to lowercase
-        expected = {"authorization": "Bearer token123", "content-type": "application/json", "x-api-key": "secret-key"}
+        expected = {
+            "authorization": "Bearer token123",
+            "content-type": "application/json",
+            "x-api-key": "secret-key",
+        }
         assert result == expected
 
     def test_validate_headers_empty_input(self):
@@ -172,7 +190,12 @@ class TestHeaderValidation:
 
     def test_validate_headers_non_string_values(self):
         """Test header validation with non-string values."""
-        headers = {"String-Header": "valid", "Number-Header": 123, "None-Header": None, "List-Header": ["value"]}
+        headers = {
+            "String-Header": "valid",
+            "Number-Header": 123,
+            "None-Header": None,
+            "List-Header": ["value"],
+        }
 
         result = validate_headers(headers)
 
@@ -201,7 +224,10 @@ class TestGlobalVariableResolution:
         from wfx.base.mcp.util import _resolve_global_variables_in_headers
 
         headers = {"x-api-key": "MY_API_KEY", "authorization": "MY_TOKEN"}
-        request_variables = {"MY_API_KEY": "secret-key-123", "MY_TOKEN": "token-456"}  # pragma: allowlist secret
+        request_variables = {
+            "MY_API_KEY": "secret-key-123",
+            "MY_TOKEN": "token-456",
+        }  # pragma: allowlist secret
 
         result = _resolve_global_variables_in_headers(headers, request_variables)
 
@@ -230,7 +256,10 @@ class TestGlobalVariableResolution:
             "authorization": "static-token",  # no match
             "x-custom": "MY_CUSTOM",  # matches
         }
-        request_variables = {"MY_API_KEY": "resolved-key", "MY_CUSTOM": "custom-value"}  # pragma: allowlist secret
+        request_variables = {
+            "MY_API_KEY": "resolved-key",
+            "MY_CUSTOM": "custom-value",
+        }  # pragma: allowlist secret
 
         result = _resolve_global_variables_in_headers(headers, request_variables)
 
@@ -281,7 +310,10 @@ class TestGlobalVariableResolution:
         result = _process_headers(headers)
 
         # Should just normalize without resolution
-        assert result == {"x-api-key": "static-value", "content-type": "application/json"}
+        assert result == {
+            "x-api-key": "static-value",
+            "content-type": "application/json",
+        }
 
     def test_resolve_global_variables_case_sensitive_matching(self):
         """Test that variable name matching is case-sensitive."""
@@ -450,7 +482,10 @@ class TestFieldNameConversion:
         test_schema = create_model(
             "TestSchema",
             weather_main=(str, Field(..., description="Main weather condition")),
-            topN=(int, Field(..., description="Number of results")),  # Already camelCase in schema
+            topN=(
+                int,
+                Field(..., description="Number of results"),
+            ),  # Already camelCase in schema
             user_count=(int, Field(..., description="User count")),
         )
 
@@ -548,7 +583,10 @@ class TestFieldNameConversion:
         test_schema = {
             "type": "object",
             "properties": {
-                "weather_main": {"type": "string", "description": "Main weather condition"},
+                "weather_main": {
+                    "type": "string",
+                    "description": "Main weather condition",
+                },
                 "top_n": {"type": "integer", "description": "Number of results"},
                 "user_id": {"type": "string", "description": "User identifier"},
             },
@@ -589,7 +627,10 @@ class TestFieldNameConversion:
         test_schema = {
             "type": "object",
             "properties": {
-                "weather_main": {"type": "string", "description": "Main weather condition"},
+                "weather_main": {
+                    "type": "string",
+                    "description": "Main weather condition",
+                },
                 "top_n": {"type": "integer", "description": "Number of results"},
             },
             "required": ["weather_main", "top_n"],
@@ -759,7 +800,8 @@ class TestToolExecutionWithFieldConversion:
         assert result == "success"
         # Verify field names were properly converted
         mock_client.run_tool.assert_called_once_with(
-            "test_tool", arguments={"weather_main": "Snow", "top_n": 6, "user_id": "user123"}
+            "test_tool",
+            arguments={"weather_main": "Snow", "top_n": 6, "user_id": "user123"},
         )
 
     @pytest.mark.asyncio
@@ -885,7 +927,14 @@ class TestMCPUtilityFunctions:
         """Test flow lookup by snake case name with mocked session."""
 
         class DummyFlow:
-            def __init__(self, name: str, user_id: str, *, is_component: bool = False, action_name: str | None = None):
+            def __init__(
+                self,
+                name: str,
+                user_id: str,
+                *,
+                is_component: bool = False,
+                action_name: str | None = None,
+            ):
                 self.name = name
                 self.user_id = user_id
                 self.is_component = is_component
@@ -1073,7 +1122,11 @@ class TestMCPStreamableHttpClientWithDeepWikiServer:
             assert len(tools) > 0
 
             # Check for expected DeepWiki tools
-            expected_tools = ["read_wiki_structure", "read_wiki_contents", "ask_question"]
+            expected_tools = [
+                "read_wiki_structure",
+                "read_wiki_contents",
+                "ask_question",
+            ]
 
             # Verify we have the expected tools
             for expected_tool in expected_tools:
@@ -1137,7 +1190,8 @@ class TestMCPStreamableHttpClientWithDeepWikiServer:
 
             # Run the tool with a test question (use repoName as expected by the API)
             result = await streamable_http_client.run_tool(
-                "ask_question", {"repoName": "microsoft/vscode", "question": "What is VS Code?"}
+                "ask_question",
+                {"repoName": "microsoft/vscode", "question": "What is VS Code?"},
             )
 
             # Verify the result
@@ -1248,7 +1302,10 @@ class TestMCPSseClientUnit:
         """Test connecting to server via SSE with custom headers."""
         test_url = "http://test.url"
         test_headers = {"Authorization": "Bearer token123", "Custom-Header": "value"}
-        expected_headers = {"authorization": "Bearer token123", "custom-header": "value"}  # normalized
+        expected_headers = {
+            "authorization": "Bearer token123",
+            "custom-header": "value",
+        }  # normalized
 
         with (
             patch.object(sse_client, "validate_url", return_value=(True, "")),
@@ -1277,7 +1334,10 @@ class TestMCPSseClientUnit:
     async def test_headers_passed_to_session_manager(self, sse_client):
         """Test that headers are properly passed to the session manager."""
         test_url = "http://test.url"
-        expected_headers = {"authorization": "Bearer token123", "x-api-key": "secret"}  # normalized
+        expected_headers = {
+            "authorization": "Bearer token123",
+            "x-api-key": "secret",
+        }  # normalized
 
         sse_client._session_context = "test_context"
         sse_client._connection_params = {
@@ -1326,7 +1386,11 @@ class TestMCPSseClientUnit:
             return session
 
         with (
-            patch.object(sse_client, "_get_or_create_session", side_effect=mock_get_session_side_effect),
+            patch.object(
+                sse_client,
+                "_get_or_create_session",
+                side_effect=mock_get_session_side_effect,
+            ),
             patch.object(sse_client, "_get_session_manager") as mock_get_manager,
         ):
             mock_manager = AsyncMock()
@@ -1474,12 +1538,20 @@ class TestMCPStructuredTool:
 
     def test_convert_parameters_unknown_fields(self, mcp_tool):
         """Test _convert_parameters with fields not in schema."""
-        input_dict = {"weatherMain": "Sunny", "unknownField": "value", "anotherUnknown": 42}
+        input_dict = {
+            "weatherMain": "Sunny",
+            "unknownField": "value",
+            "anotherUnknown": 42,
+        }
 
         result = mcp_tool._convert_parameters(input_dict)
 
         # Known fields should be converted, unknown fields kept as-is
-        assert result == {"weather_main": "Sunny", "unknownField": "value", "anotherUnknown": 42}
+        assert result == {
+            "weather_main": "Sunny",
+            "unknownField": "value",
+            "anotherUnknown": 42,
+        }
 
     def test_convert_parameters_empty_input(self, mcp_tool):
         """Test _convert_parameters with empty/None input."""

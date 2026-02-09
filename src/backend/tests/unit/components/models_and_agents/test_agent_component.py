@@ -108,7 +108,11 @@ class TestAgentComponent(ComponentTestBaseWithoutClient):
 
         component.get_agent_requirements = AsyncMock(return_value=(MockLanguageModel(), [], []))
         component.create_agent_runnable = AsyncMock(return_value=None)
-        mock_result = type("MockResult", (), {"content": 'Here is the result: {"status": "success"} - done!'})()
+        mock_result = type(
+            "MockResult",
+            (),
+            {"content": 'Here is the result: {"status": "success"} - done!'},
+        )()
         component.run_agent = AsyncMock(return_value=mock_result)
 
         result = await component.json_response()
@@ -162,8 +166,18 @@ class TestAgentComponent(ComponentTestBaseWithoutClient):
         """Test that json_response validates against provided schema."""
         # Set up component with output schema
         default_kwargs["output_schema"] = [
-            {"name": "name", "type": "str", "description": "Name field", "multiple": False},
-            {"name": "age", "type": "int", "description": "Age field", "multiple": False},
+            {
+                "name": "name",
+                "type": "str",
+                "description": "Name field",
+                "multiple": False,
+            },
+            {
+                "name": "age",
+                "type": "int",
+                "description": "Age field",
+                "multiple": False,
+            },
         ]
         component = await self.component_setup(component_class, default_kwargs)
         # Mock the get_agent_requirements method
@@ -215,8 +229,18 @@ class TestAgentComponent(ComponentTestBaseWithoutClient):
 
         # Test schema preprocessing
         raw_schema = [
-            {"name": "field1", "type": "str", "description": "Test field", "multiple": "true"},
-            {"name": "field2", "type": "int", "description": "Another field", "multiple": False},
+            {
+                "name": "field1",
+                "type": "str",
+                "description": "Test field",
+                "multiple": "true",
+            },
+            {
+                "name": "field2",
+                "type": "int",
+                "description": "Another field",
+                "multiple": False,
+            },
         ]
 
         processed = component._preprocess_schema(raw_schema)
@@ -229,8 +253,18 @@ class TestAgentComponent(ComponentTestBaseWithoutClient):
     async def test_build_structured_output_base_with_validation(self, component_class, default_kwargs):
         """Test build_structured_output_base with schema validation."""
         default_kwargs["output_schema"] = [
-            {"name": "name", "type": "str", "description": "Name field", "multiple": False},
-            {"name": "count", "type": "int", "description": "Count field", "multiple": False},
+            {
+                "name": "name",
+                "type": "str",
+                "description": "Name field",
+                "multiple": False,
+            },
+            {
+                "name": "count",
+                "type": "int",
+                "description": "Count field",
+                "multiple": False,
+            },
         ]
         component = await self.component_setup(component_class, default_kwargs)
 
@@ -426,10 +460,12 @@ class TestAgentComponent(ComponentTestBaseWithoutClient):
 
         # Find the WatsonX input fields
         watsonx_url_input = next(
-            (inp for inp in component.inputs if hasattr(inp, "name") and inp.name == "base_url_ibm_watsonx"), None
+            (inp for inp in component.inputs if hasattr(inp, "name") and inp.name == "base_url_ibm_watsonx"),
+            None,
         )
         project_id_input = next(
-            (inp for inp in component.inputs if hasattr(inp, "name") and inp.name == "project_id"), None
+            (inp for inp in component.inputs if hasattr(inp, "name") and inp.name == "project_id"),
+            None,
         )
 
         assert watsonx_url_input is not None
@@ -958,9 +994,9 @@ class TestAgentComponentWithClient(ComponentTestBaseWithClient):
             # If an error occurs, make sure it's NOT the empty content error
             error_message = str(e)
             assert "messages.2" not in error_message, f"Empty content error still occurs: {error_message}"
-            assert "must have non-empty content" not in error_message, (
-                f"Empty content error still occurs: {error_message}"
-            )
+            assert (
+                "must have non-empty content" not in error_message
+            ), f"Empty content error still occurs: {error_message}"
             # Re-raise if it's a different error
             raise
 
@@ -1001,8 +1037,8 @@ class TestAgentComponentWithClient(ComponentTestBaseWithClient):
             # If an error occurs, make sure it's NOT the empty content error
             error_message = str(e)
             assert "messages.2" not in error_message, f"Empty content error still occurs: {error_message}"
-            assert "must have non-empty content" not in error_message, (
-                f"Empty content error still occurs: {error_message}"
-            )
+            assert (
+                "must have non-empty content" not in error_message
+            ), f"Empty content error still occurs: {error_message}"
             # Re-raise if it's a different error
             raise

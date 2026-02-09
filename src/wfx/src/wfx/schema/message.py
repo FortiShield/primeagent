@@ -511,7 +511,9 @@ class ErrorMessage(Message):
         if hasattr(exception, "body") and isinstance(exception.body, dict) and "message" in exception.body:
             reason = f"{exception.body.get('message')}\n"
         elif hasattr(exception, "_message"):
-            reason = f"{exception._message()}\n" if callable(exception._message) else f"{exception._message}\n"  # noqa: SLF001
+            reason = (
+                f"{exception._message()}\n" if callable(exception._message) else f"{exception._message}\n"
+            )  # noqa: SLF001
         elif hasattr(exception, "code"):
             reason = f"Code: {exception.code}\n"
         elif hasattr(exception, "args") and exception.args:

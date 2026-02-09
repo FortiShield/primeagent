@@ -15,7 +15,6 @@ from wfx.log.logger import logger
 
 from primeagent.services.database.service import SQLModel
 
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -116,6 +115,7 @@ def _do_run_migrations(connection):
             connection.execute(text("SET LOCAL lock_timeout = '180s';"))
             connection.execute(text(f"SELECT pg_advisory_xact_lock({lock_key});"))
         context.run_migrations()
+
 
 async def _run_async_migrations() -> None:
     # Disable prepared statements for PostgreSQL (required for PgBouncer compatibility)

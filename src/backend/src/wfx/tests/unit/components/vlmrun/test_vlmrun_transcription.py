@@ -231,7 +231,16 @@ class TestVLMRunTranscription(ComponentTestBaseWithoutClient):
 
         # Check that media_files accepts the expected file types
         media_files_input = inputs_dict["media_files"]
-        expected_audio_types = ["mp3", "wav", "m4a", "flac", "ogg", "opus", "webm", "aac"]
+        expected_audio_types = [
+            "mp3",
+            "wav",
+            "m4a",
+            "flac",
+            "ogg",
+            "opus",
+            "webm",
+            "aac",
+        ]
         expected_video_types = ["mp4", "mov", "avi", "mkv", "flv", "wmv", "m4v"]
         expected_types = expected_audio_types + expected_video_types
 
@@ -277,7 +286,10 @@ class TestVLMRunTranscription(ComponentTestBaseWithoutClient):
         """Test single audio file processing with mocked VLMRun client."""
         # Create mock objects using helper methods
         mock_usage = self._create_mock_usage(total_tokens=150, prompt_tokens=100, completion_tokens=50)
-        segments = [{"audio": {"content": "Hello world"}}, {"audio": {"content": "This is a test"}}]
+        segments = [
+            {"audio": {"content": "Hello world"}},
+            {"audio": {"content": "This is a test"}},
+        ]
         mock_response = self._create_mock_response("test-prediction-123", segments, 10.5, mock_usage)
 
         # Configure mock client
@@ -319,9 +331,7 @@ class TestVLMRunTranscription(ComponentTestBaseWithoutClient):
         mock_client.predictions.wait.assert_called_once_with(mock_response.id, timeout=600)
 
         # Verify API key was passed correctly
-        mock_vlmrun_class.assert_called_once_with(
-            api_key="test-api-key"  # pragma: allowlist secret
-        )
+        mock_vlmrun_class.assert_called_once_with(api_key="test-api-key")  # pragma: allowlist secret
 
     @patch("vlmrun.client.VLMRun")
     def test_video_file_with_audio_content(self, mock_vlmrun_class, component_class, default_kwargs):
@@ -329,8 +339,14 @@ class TestVLMRunTranscription(ComponentTestBaseWithoutClient):
         # Create mock objects using helper methods
         mock_usage = self._create_mock_usage(total_tokens=300, prompt_tokens=200, completion_tokens=100)
         segments = [
-            {"video": {"content": "Scene description 1"}, "audio": {"content": "Dialog line 1"}},
-            {"video": {"content": "Scene description 2"}, "audio": {"content": "Dialog line 2"}},
+            {
+                "video": {"content": "Scene description 1"},
+                "audio": {"content": "Dialog line 1"},
+            },
+            {
+                "video": {"content": "Scene description 2"},
+                "audio": {"content": "Dialog line 2"},
+            },
             {"video": {"content": "Scene description 3"}},
         ]
         mock_response = self._create_mock_response("test-video-456", segments, 120.0, mock_usage)

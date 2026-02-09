@@ -8,7 +8,11 @@ from primeagent.memory import aadd_messagetables
 
 # Assuming you have these imports available
 from primeagent.services.database.models.flow.model import Flow
-from primeagent.services.database.models.message import MessageCreate, MessageRead, MessageUpdate
+from primeagent.services.database.models.message import (
+    MessageCreate,
+    MessageRead,
+    MessageUpdate,
+)
 from primeagent.services.database.models.message.model import MessageTable
 from primeagent.services.deps import session_scope
 
@@ -17,11 +21,20 @@ from primeagent.services.deps import session_scope
 async def created_message(active_user):
     async with session_scope() as session:
         # Create a flow for the user so messages can be filtered by user
-        flow = Flow(name="test_flow_for_message", user_id=active_user.id, data={"nodes": [], "edges": []})
+        flow = Flow(
+            name="test_flow_for_message",
+            user_id=active_user.id,
+            data={"nodes": [], "edges": []},
+        )
         session.add(flow)
         await session.flush()
 
-        message = MessageCreate(text="Test message", sender="User", sender_name="User", session_id="session_id")
+        message = MessageCreate(
+            text="Test message",
+            sender="User",
+            sender_name="User",
+            session_id="session_id",
+        )
         messagetable = MessageTable.model_validate(message, from_attributes=True)
         messagetable.flow_id = flow.id
         messagetables = await aadd_messagetables([messagetable], session)
@@ -29,17 +42,36 @@ async def created_message(active_user):
 
 
 @pytest.fixture
-async def created_messages(session, active_user):  # noqa: ARG001
+async def created_messages(session, active_user):
     async with session_scope() as _session:
         # Create a flow for the user so messages can be filtered by user
-        flow = Flow(name="test_flow_for_messages", user_id=active_user.id, data={"nodes": [], "edges": []})
+        flow = Flow(
+            name="test_flow_for_messages",
+            user_id=active_user.id,
+            data={"nodes": [], "edges": []},
+        )
         _session.add(flow)
         await _session.flush()
 
         messages = [
-            MessageCreate(text="Test message 1", sender="User", sender_name="User", session_id="session_id2"),
-            MessageCreate(text="Test message 2", sender="User", sender_name="User", session_id="session_id2"),
-            MessageCreate(text="Test message 3", sender="AI", sender_name="AI", session_id="session_id2"),
+            MessageCreate(
+                text="Test message 1",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            MessageCreate(
+                text="Test message 2",
+                sender="User",
+                sender_name="User",
+                session_id="session_id2",
+            ),
+            MessageCreate(
+                text="Test message 3",
+                sender="AI",
+                sender_name="AI",
+                session_id="session_id2",
+            ),
         ]
         messagetables = [MessageTable.model_validate(message, from_attributes=True) for message in messages]
         for mt in messagetables:
@@ -48,18 +80,32 @@ async def created_messages(session, active_user):  # noqa: ARG001
 
 
 @pytest.fixture
-async def messages_with_datetime_session_id(session, active_user):  # noqa: ARG001
+async def messages_with_datetime_session_id(session, active_user):
     """Create messages with datetime-like session IDs that contain characters requiring URL encoding."""
     datetime_session_id = "2024-01-15 10:30:45 UTC"  # Contains spaces and colons
     async with session_scope() as _session:
         # Create a flow for the user so messages can be filtered by user
-        flow = Flow(name="test_flow_for_datetime_messages", user_id=active_user.id, data={"nodes": [], "edges": []})
+        flow = Flow(
+            name="test_flow_for_datetime_messages",
+            user_id=active_user.id,
+            data={"nodes": [], "edges": []},
+        )
         _session.add(flow)
         await _session.flush()
 
         messages = [
-            MessageCreate(text="Datetime message 1", sender="User", sender_name="User", session_id=datetime_session_id),
-            MessageCreate(text="Datetime message 2", sender="AI", sender_name="AI", session_id=datetime_session_id),
+            MessageCreate(
+                text="Datetime message 1",
+                sender="User",
+                sender_name="User",
+                session_id=datetime_session_id,
+            ),
+            MessageCreate(
+                text="Datetime message 2",
+                sender="AI",
+                sender_name="AI",
+                session_id=datetime_session_id,
+            ),
         ]
         messagetables = [MessageTable.model_validate(message, from_attributes=True) for message in messages]
         for mt in messagetables:
@@ -71,7 +117,10 @@ async def messages_with_datetime_session_id(session, active_user):  # noqa: ARG0
 @pytest.mark.api_key_required
 async def test_delete_messages(client: AsyncClient, created_messages, logged_in_headers):
     response = await client.request(
-        "DELETE", "api/v1/monitor/messages", json=[str(msg.id) for msg in created_messages], headers=logged_in_headers
+        "DELETE",
+        "api/v1/monitor/messages",
+        json=[str(msg.id) for msg in created_messages],
+        headers=logged_in_headers,
     )
     assert response.status_code == 204, response.text
     assert response.reason_phrase == "No Content"
@@ -82,7 +131,9 @@ async def test_update_message(client: AsyncClient, logged_in_headers, created_me
     message_id = created_message.id
     message_update = MessageUpdate(text="Updated content")
     response = await client.put(
-        f"api/v1/monitor/messages/{message_id}", json=message_update.model_dump(), headers=logged_in_headers
+        f"api/v1/monitor/messages/{message_id}",
+        json=message_update.model_dump(),
+        headers=logged_in_headers,
     )
     assert response.status_code == 200, response.text
     updated_message = MessageRead(**response.json())
@@ -94,7 +145,9 @@ async def test_update_message_not_found(client: AsyncClient, logged_in_headers):
     non_existent_id = UUID("00000000-0000-0000-0000-000000000000")
     message_update = MessageUpdate(text="Updated content")
     response = await client.put(
-        f"api/v1/monitor/messages/{non_existent_id}", json=message_update.model_dump(), headers=logged_in_headers
+        f"api/v1/monitor/messages/{non_existent_id}",
+        json=message_update.model_dump(),
+        headers=logged_in_headers,
     )
     assert response.status_code == 404, response.text
     assert response.json()["detail"] == "Message not found"
@@ -132,7 +185,9 @@ async def test_successfully_update_session_id(client, logged_in_headers, created
         assert message["session_id"] == new_session_id
 
     response = await client.get(
-        "api/v1/monitor/messages", headers=logged_in_headers, params={"session_id": new_session_id}
+        "api/v1/monitor/messages",
+        headers=logged_in_headers,
+        params={"session_id": new_session_id},
     )
     assert response.status_code == 200
     assert len(response.json()) == len(created_messages)
@@ -158,7 +213,9 @@ async def test_no_messages_found_with_given_session_id(client, logged_in_headers
     new_session_id = "new_session_id"
 
     response = await client.patch(
-        f"/messages/session/{old_session_id}", params={"new_session_id": new_session_id}, headers=logged_in_headers
+        f"/messages/session/{old_session_id}",
+        params={"new_session_id": new_session_id},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 404, response.text
@@ -178,7 +235,9 @@ async def test_get_messages_with_url_encoded_datetime_session_id(
 
     # Test with URL-encoded session ID
     response = await client.get(
-        "api/v1/monitor/messages", params={"session_id": encoded_session_id}, headers=logged_in_headers
+        "api/v1/monitor/messages",
+        params={"session_id": encoded_session_id},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -203,7 +262,9 @@ async def test_get_messages_with_non_encoded_datetime_session_id(
 
     # Test with non-encoded session ID (should still work due to unquote being safe for non-encoded strings)
     response = await client.get(
-        "api/v1/monitor/messages", params={"session_id": datetime_session_id}, headers=logged_in_headers
+        "api/v1/monitor/messages",
+        params={"session_id": datetime_session_id},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -223,12 +284,19 @@ async def test_get_messages_with_various_encoded_characters(client: AsyncClient,
 
     async with session_scope() as session:
         # Create a flow for the user so messages can be filtered by user
-        flow = Flow(name="test_flow_for_special_chars", user_id=active_user.id, data={"nodes": [], "edges": []})
+        flow = Flow(
+            name="test_flow_for_special_chars",
+            user_id=active_user.id,
+            data={"nodes": [], "edges": []},
+        )
         session.add(flow)
         await session.flush()
 
         message = MessageCreate(
-            text="Special chars message", sender="User", sender_name="User", session_id=special_session_id
+            text="Special chars message",
+            sender="User",
+            sender_name="User",
+            session_id=special_session_id,
         )
         messagetable = MessageTable.model_validate(message, from_attributes=True)
         messagetable.flow_id = flow.id
@@ -239,7 +307,9 @@ async def test_get_messages_with_various_encoded_characters(client: AsyncClient,
 
     # Test with URL-encoded session ID
     response = await client.get(
-        "api/v1/monitor/messages", params={"session_id": encoded_session_id}, headers=logged_in_headers
+        "api/v1/monitor/messages",
+        params={"session_id": encoded_session_id},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text
@@ -256,7 +326,9 @@ async def test_get_messages_empty_result_with_encoded_nonexistent_session(client
     encoded_session_id = quote(nonexistent_session_id)
 
     response = await client.get(
-        "api/v1/monitor/messages", params={"session_id": encoded_session_id}, headers=logged_in_headers
+        "api/v1/monitor/messages",
+        params={"session_id": encoded_session_id},
+        headers=logged_in_headers,
     )
 
     assert response.status_code == 200, response.text

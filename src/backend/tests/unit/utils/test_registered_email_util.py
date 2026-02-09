@@ -2,7 +2,10 @@ from unittest.mock import patch
 
 import pytest
 from primeagent.services.telemetry.schema import EmailPayload
-from primeagent.utils.registered_email_util import _RegisteredEmailCache, get_email_model
+from primeagent.utils.registered_email_util import (
+    _RegisteredEmailCache,
+    get_email_model,
+)
 
 
 @pytest.fixture(autouse=True)

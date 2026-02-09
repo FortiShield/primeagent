@@ -26,7 +26,13 @@ TEST_MESSAGES = {
     "large": "Here's a complex scenario: " + "data " * 1000,
 }
 
-MESSAGE_WEIGHTS = [("simple", 50), ("medium", 30), ("minimal", 15), ("complex", 4), ("large", 1)]
+MESSAGE_WEIGHTS = [
+    ("simple", 50),
+    ("medium", 30),
+    ("minimal", 15),
+    ("complex", 4),
+    ("large", 1),
+]
 
 
 class StepRamp(LoadTestShape):
@@ -66,7 +72,7 @@ def on_test_start(environment, **_kwargs):
 
 
 @events.request.add_listener
-def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):  # noqa: ARG001
+def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):
     """Track slow requests using Locust's built-in timing."""
     # response_time is in milliseconds from Locust
     bag = _env_bags.get(context.get("environment") if context else None)
@@ -112,7 +118,10 @@ class BasePrimeagentUser(FastHttpUser):
 
     def make_request(self, message_type="simple", tag_suffix=""):
         message = TEST_MESSAGES.get(message_type, TEST_MESSAGES["simple"])
-        payload = {"input_value": message, "session_id": f"{self.session_id}_{self.request_count}"}
+        payload = {
+            "input_value": message,
+            "session_id": f"{self.session_id}_{self.request_count}",
+        }
         headers = {"x-api-key": API_KEY, "Content-Type": "application/json"}
         self.request_count += 1
         name = f"{API_ENDPOINT} [{message_type}{tag_suffix}]"

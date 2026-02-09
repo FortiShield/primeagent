@@ -24,12 +24,27 @@ def mock_s3_environment(settings, storage_service):
         patch("wfx.services.deps.get_settings_service", return_value=settings),
         patch("wfx.base.data.base_file.get_settings_service", return_value=settings),
         patch("wfx.base.data.storage_utils.get_settings_service", return_value=settings),
-        patch("wfx.base.data.storage_utils.get_storage_service", return_value=storage_service),
+        patch(
+            "wfx.base.data.storage_utils.get_storage_service",
+            return_value=storage_service,
+        ),
         patch("wfx.base.data.utils.get_settings_service", return_value=settings),
-        patch("wfx.components.files_and_knowledge.file.get_settings_service", return_value=settings),
-        patch("wfx.components.files_and_knowledge.file.get_storage_service", return_value=storage_service),
-        patch("wfx.components.langchain_utilities.csv_agent.get_settings_service", return_value=settings),
-        patch("wfx.components.langchain_utilities.json_agent.get_settings_service", return_value=settings),
+        patch(
+            "wfx.components.files_and_knowledge.file.get_settings_service",
+            return_value=settings,
+        ),
+        patch(
+            "wfx.components.files_and_knowledge.file.get_storage_service",
+            return_value=storage_service,
+        ),
+        patch(
+            "wfx.components.langchain_utilities.csv_agent.get_settings_service",
+            return_value=settings,
+        ),
+        patch(
+            "wfx.components.langchain_utilities.json_agent.get_settings_service",
+            return_value=settings,
+        ),
     ]
 
     # Start all patches
@@ -91,13 +106,14 @@ class TestS3CompatibleComponents:
 
         # Mock tempfile
         mock_temp_file = MagicMock()
-        mock_temp_file.name = "/tmp/temp_file.pdf"  # noqa: S108
+        mock_temp_file.name = "/tmp/temp_file.pdf"
         mock_temp_file.write = MagicMock()
 
         with (
             mock_s3_environment(s3_settings, mock_storage_service),
             patch(
-                "wfx.components.files_and_knowledge.file.parse_storage_path", return_value=("user_123", "document.pdf")
+                "wfx.components.files_and_knowledge.file.parse_storage_path",
+                return_value=("user_123", "document.pdf"),
             ) as mock_parse,
             patch("wfx.components.files_and_knowledge.file.NamedTemporaryFile") as mock_temp,
         ):
@@ -111,7 +127,7 @@ class TestS3CompatibleComponents:
             mock_storage_service.get_file.assert_called_once_with("user_123", "document.pdf")
             # Verify temp file was created
             assert should_delete is True
-            assert local_path == "/tmp/temp_file.pdf"  # noqa: S108
+            assert local_path == "/tmp/temp_file.pdf"
 
     @pytest.mark.asyncio
     async def test_file_component_get_local_file_for_docling_local(self, local_settings):
@@ -143,7 +159,8 @@ class TestS3CompatibleComponents:
             with (
                 patch("wfx.services.deps.session_scope"),
                 patch(
-                    "primeagent.services.database.models.user.crud.get_user_by_id", new_callable=AsyncMock
+                    "primeagent.services.database.models.user.crud.get_user_by_id",
+                    new_callable=AsyncMock,
                 ) as mock_get_user,
                 patch("primeagent.api.v2.files.upload_user_file", new_callable=AsyncMock) as mock_upload,
             ):
@@ -179,7 +196,9 @@ class TestS3CompatibleComponents:
 
             # Mock storage utils
             with patch(
-                "wfx.base.data.storage_utils.read_file_bytes", new_callable=AsyncMock, return_value=b"name,age\nJohn,30"
+                "wfx.base.data.storage_utils.read_file_bytes",
+                new_callable=AsyncMock,
+                return_value=b"name,age\nJohn,30",
             ):
                 local_path = component._get_local_path()
 
@@ -195,7 +214,9 @@ class TestS3CompatibleComponents:
 
             # Mock storage utils
             with patch(
-                "wfx.base.data.storage_utils.read_file_bytes", new_callable=AsyncMock, return_value=b'{"key": "value"}'
+                "wfx.base.data.storage_utils.read_file_bytes",
+                new_callable=AsyncMock,
+                return_value=b'{"key": "value"}',
             ):
                 local_path = component._get_local_path()
 
@@ -217,7 +238,11 @@ class TestS3CompatibleComponents:
         """Test S3 path parsing in components."""
         with patch("wfx.services.deps.get_settings_service", return_value=s3_settings):
             # Test various S3 path formats
-            test_paths = ["user_123/file.txt", "flow_456/document.pdf", "user_789/folder/subfolder/file.json"]
+            test_paths = [
+                "user_123/file.txt",
+                "flow_456/document.pdf",
+                "user_789/folder/subfolder/file.json",
+            ]
 
             for path in test_paths:
                 component = FileComponent()
@@ -289,7 +314,11 @@ class TestS3CompatibleComponents:
         with mock_s3_environment(s3_settings, mock_storage_service):
             # Process multiple files
             results = []
-            for file_path in ["user_123/file1.txt", "user_123/file2.txt", "user_123/file3.txt"]:
+            for file_path in [
+                "user_123/file1.txt",
+                "user_123/file2.txt",
+                "user_123/file3.txt",
+            ]:
                 component = FileComponent()
                 component.path = file_path
                 result = component.load_files()
@@ -361,10 +390,14 @@ class TestS3CompatibleComponents:
 
         with (
             patch("wfx.services.deps.get_settings_service", return_value=local_settings),
-            patch("wfx.base.data.storage_utils.get_settings_service", return_value=local_settings),
+            patch(
+                "wfx.base.data.storage_utils.get_settings_service",
+                return_value=local_settings,
+            ),
             patch("wfx.base.data.storage_utils.read_file_text", new_callable=AsyncMock) as mock_read_file,
             patch(
-                "wfx.components.data_source.csv_to_data.read_file_text", new_callable=AsyncMock
+                "wfx.components.data_source.csv_to_data.read_file_text",
+                new_callable=AsyncMock,
             ) as mock_read_file_component,
         ):
             mock_read_file.return_value = "name,age\nAlice,28"
@@ -444,10 +477,14 @@ class TestS3CompatibleComponents:
 
         with (
             patch("wfx.services.deps.get_settings_service", return_value=local_settings),
-            patch("wfx.base.data.storage_utils.get_settings_service", return_value=local_settings),
+            patch(
+                "wfx.base.data.storage_utils.get_settings_service",
+                return_value=local_settings,
+            ),
             patch("wfx.base.data.storage_utils.read_file_text", new_callable=AsyncMock) as mock_read_file,
             patch(
-                "wfx.components.data_source.json_to_data.read_file_text", new_callable=AsyncMock
+                "wfx.components.data_source.json_to_data.read_file_text",
+                new_callable=AsyncMock,
             ) as mock_read_file_component,
         ):
             mock_read_file.return_value = '{"local": "data"}'

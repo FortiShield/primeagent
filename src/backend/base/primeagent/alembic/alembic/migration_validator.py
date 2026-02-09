@@ -76,7 +76,11 @@ class MigrationValidator:
         phase = self._extract_phase(content)
         if phase == MigrationPhase.UNKNOWN:
             violations.append(
-                Violation("NO_PHASE_MARKER", "Migration must specify phase: EXPAND, MIGRATE, or CONTRACT", 1)
+                Violation(
+                    "NO_PHASE_MARKER",
+                    "Migration must specify phase: EXPAND, MIGRATE, or CONTRACT",
+                    1,
+                )
             )
 
         # Check upgrade function
@@ -128,7 +132,11 @@ class MigrationValidator:
 
                 elif self._is_op_call(child, "rename_table") or self._is_op_call(child, "rename_column"):
                     violations.append(
-                        Violation("DIRECT_RENAME", "Use expand-contract pattern instead of direct rename", child.lineno)
+                        Violation(
+                            "DIRECT_RENAME",
+                            "Use expand-contract pattern instead of direct rename",
+                            child.lineno,
+                        )
                     )
 
         return violations
@@ -141,7 +149,9 @@ class MigrationValidator:
         if not self._has_nullable_true(call) and not self._has_server_default(call):
             violations.append(
                 Violation(
-                    "BREAKING_ADD_COLUMN", "New columns must be nullable=True or have server_default", call.lineno
+                    "BREAKING_ADD_COLUMN",
+                    "New columns must be nullable=True or have server_default",
+                    call.lineno,
                 )
             )
 
@@ -149,13 +159,21 @@ class MigrationValidator:
         if not self._has_existence_check_nearby(func_node, call):
             violations.append(
                 Violation(
-                    "NO_EXISTENCE_CHECK", "add_column should check if column exists first (idempotency)", call.lineno
+                    "NO_EXISTENCE_CHECK",
+                    "add_column should check if column exists first (idempotency)",
+                    call.lineno,
                 )
             )
 
         # Phase-specific checks
         if phase == MigrationPhase.CONTRACT:
-            violations.append(Violation("INVALID_PHASE_OPERATION", "Cannot add columns in CONTRACT phase", call.lineno))
+            violations.append(
+                Violation(
+                    "INVALID_PHASE_OPERATION",
+                    "Cannot add columns in CONTRACT phase",
+                    call.lineno,
+                )
+            )
 
         return violations
 
@@ -166,14 +184,20 @@ class MigrationValidator:
         # Check for type changes
         if self._has_type_change(call) and phase != MigrationPhase.CONTRACT:
             violations.append(
-                Violation("DIRECT_TYPE_CHANGE", "Type changes should use expand-contract pattern", call.lineno)
+                Violation(
+                    "DIRECT_TYPE_CHANGE",
+                    "Type changes should use expand-contract pattern",
+                    call.lineno,
+                )
             )
 
         # Check for nullable changes
         if self._changes_nullable_to_false(call) and phase != MigrationPhase.CONTRACT:
             violations.append(
                 Violation(
-                    "BREAKING_ADD_COLUMN", "Making column non-nullable only allowed in CONTRACT phase", call.lineno
+                    "BREAKING_ADD_COLUMN",
+                    "Making column non-nullable only allowed in CONTRACT phase",
+                    call.lineno,
                 )
             )
 

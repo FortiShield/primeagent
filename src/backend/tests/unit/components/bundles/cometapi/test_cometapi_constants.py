@@ -23,7 +23,12 @@ class TestCometAPIConstants:
 
     def test_specific_models_present(self):
         """Test that specific expected models are present."""
-        expected_models = ["gpt-4o-mini", "claude-3-5-haiku-latest", "gemini-2.5-flash", "deepseek-chat"]
+        expected_models = [
+            "gpt-4o-mini",
+            "claude-3-5-haiku-latest",
+            "gemini-2.5-flash",
+            "deepseek-chat",
+        ]
 
         for expected_model in expected_models:
             assert expected_model in COMETAPI_MODELS
@@ -33,7 +38,14 @@ class TestCometAPIConstants:
         assert len(COMETAPI_MODELS) == len(set(COMETAPI_MODELS))
 
     @pytest.mark.parametrize(
-        "model_name", ["gpt-4o-mini", "claude-3-5-haiku-latest", "gemini-2.5-flash", "deepseek-chat", "grok-3"]
+        "model_name",
+        [
+            "gpt-4o-mini",
+            "claude-3-5-haiku-latest",
+            "gemini-2.5-flash",
+            "deepseek-chat",
+            "grok-3",
+        ],
     )
     def test_specific_model_in_list(self, model_name):
         """Parametrized test for specific models."""

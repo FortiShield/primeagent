@@ -5,7 +5,10 @@ from typing import Any
 from anyio import Path
 from fastapi import status
 from httpx import AsyncClient
-from primeagent.api.v1.schemas import CustomComponentRequest, UpdateCustomComponentRequest
+from primeagent.api.v1.schemas import (
+    CustomComponentRequest,
+    UpdateCustomComponentRequest,
+)
 from wfx.components.models_and_agents.agent import AgentComponent
 from wfx.custom.utils import build_custom_component_template
 
@@ -45,7 +48,11 @@ async def test_update_component_outputs(client: AsyncClient, logged_in_headers: 
         field_value=True,
         template={},
     )
-    response = await client.post("api/v1/custom_component/update", json=request.model_dump(), headers=logged_in_headers)
+    response = await client.post(
+        "api/v1/custom_component/update",
+        json=request.model_dump(),
+        headers=logged_in_headers,
+    )
     result = response.json()
 
     assert response.status_code == status.HTTP_200_OK
@@ -81,22 +88,26 @@ async def test_update_component_model_name_options(client: AsyncClient, logged_i
     )
 
     # Make the request to update the component
-    response = await client.post("api/v1/custom_component/update", json=request.model_dump(), headers=logged_in_headers)
+    response = await client.post(
+        "api/v1/custom_component/update",
+        json=request.model_dump(),
+        headers=logged_in_headers,
+    )
     result = response.json()
 
     # Verify the response
     assert response.status_code == status.HTTP_200_OK, f"Response: {response.json()}"
     assert "template" in result
-    assert "model" in result["template"], (
-        f"model field not in result. Available fields: {list(result['template'].keys())}"
-    )
+    assert (
+        "model" in result["template"]
+    ), f"model field not in result. Available fields: {list(result['template'].keys())}"
     assert isinstance(result["template"]["model"].get("options", []), list)
     # Model options should be present (may be same or different depending on implementation)
     updated_model_options = result["template"]["model"].get("options", [])
     # Just verify that options exist after update
-    assert isinstance(updated_model_options, list), (
-        f"Model options should be a list, got: {type(updated_model_options)}"
-    )
+    assert isinstance(
+        updated_model_options, list
+    ), f"Model options should be a list, got: {type(updated_model_options)}"
 
 
 async def test_custom_component_endpoint_returns_metadata(client: AsyncClient, logged_in_headers: dict):

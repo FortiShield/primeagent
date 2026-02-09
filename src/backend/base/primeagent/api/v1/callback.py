@@ -86,9 +86,7 @@ class AsyncStreamingLLMCallbackHandleSIO(AsyncCallbackHandler):
         """Run when tool errors."""
 
     @override
-    async def on_text(  # type: ignore[misc]
-        self, text: str, **kwargs: Any
-    ) -> Any:
+    async def on_text(self, text: str, **kwargs: Any) -> Any:  # type: ignore[misc]
         """Run on arbitrary text."""
         # This runs when first sending the prompt
         # to the LLM, adding it will send the final prompt
@@ -102,9 +100,7 @@ class AsyncStreamingLLMCallbackHandleSIO(AsyncCallbackHandler):
             await self.socketio_service.emit_message(to=self.sid, data=resp.model_dump())
 
     @override
-    async def on_agent_action(  # type: ignore[misc]
-        self, action: AgentAction, **kwargs: Any
-    ) -> None:
+    async def on_agent_action(self, action: AgentAction, **kwargs: Any) -> None:  # type: ignore[misc]
         log = f"Thought: {action.log}"
         # if there are line breaks, split them and send them
         # as separate messages
@@ -118,9 +114,7 @@ class AsyncStreamingLLMCallbackHandleSIO(AsyncCallbackHandler):
             await self.socketio_service.emit_token(to=self.sid, data=resp.model_dump())
 
     @override
-    async def on_agent_finish(  # type: ignore[misc]
-        self, finish: AgentFinish, **kwargs: Any
-    ) -> Any:
+    async def on_agent_finish(self, finish: AgentFinish, **kwargs: Any) -> Any:  # type: ignore[misc]
         """Run on agent end."""
         resp = ChatResponse(
             message="",

@@ -44,19 +44,24 @@ class TestALTKAgentContextOrdering:
 
         # Validate chronological order: oldest → middle → newest → current
         expected_order = ["353454", "plus", "confusion", "what?"]
-        assert contents == expected_order, (
-            f"Conversation context not in chronological order. Expected: {expected_order}, Got: {contents}"
-        )
+        assert (
+            contents == expected_order
+        ), f"Conversation context not in chronological order. Expected: {expected_order}, Got: {contents}"
 
         # Verify all messages are present
         assert len(context) == 4, f"Expected 4 messages, got {len(context)}"
 
         # Verify message types based on original senders
-        expected_types = [HumanMessage, AIMessage, HumanMessage, HumanMessage]  # User, AI, User, User
+        expected_types = [
+            HumanMessage,
+            AIMessage,
+            HumanMessage,
+            HumanMessage,
+        ]  # User, AI, User, User
         for i, (msg, expected_type) in enumerate(zip(context, expected_types, strict=True)):
-            assert isinstance(msg, expected_type), (
-                f"Message {i} has wrong type. Expected {expected_type.__name__}, got {type(msg).__name__}"
-            )
+            assert isinstance(
+                msg, expected_type
+            ), f"Message {i} has wrong type. Expected {expected_type.__name__}, got {type(msg).__name__}"
 
     def test_conversation_context_empty_history(self):
         """Test conversation context with empty chat history."""

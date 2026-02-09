@@ -29,7 +29,8 @@ class Folder(FolderBase, table=True):  # type: ignore[call-arg]
     user_id: UUID | None = Field(default=None, foreign_key="user.id")
     user: User = Relationship(back_populates="folders")
     flows: list[Flow] = Relationship(
-        back_populates="folder", sa_relationship_kwargs={"cascade": "all, delete, delete-orphan"}
+        back_populates="folder",
+        sa_relationship_kwargs={"cascade": "all, delete, delete-orphan"},
     )
 
     __table_args__ = (UniqueConstraint("user_id", "name", name="unique_folder_name"),)

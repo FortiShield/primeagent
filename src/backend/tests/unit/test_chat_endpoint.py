@@ -9,7 +9,12 @@ from primeagent.services.database.models.flow import FlowUpdate
 from wfx.log.logger import logger
 from wfx.memory import aget_messages
 
-from tests.unit.build_utils import build_flow, consume_and_assert_stream, create_flow, get_build_events
+from tests.unit.build_utils import (
+    build_flow,
+    consume_and_assert_stream,
+    create_flow,
+    get_build_events,
+)
 
 
 @pytest.mark.benchmark
@@ -415,7 +420,11 @@ async def test_cancel_build_with_cancelled_error(client, json_memory_chatbot_no_
         msg = "Task cancellation failed"
         raise asyncio.CancelledError(msg)
 
-    monkeypatch.setattr(primeagent.api.v1.chat, "cancel_flow_build", mock_cancel_flow_build_with_cancelled_error)
+    monkeypatch.setattr(
+        primeagent.api.v1.chat,
+        "cancel_flow_build",
+        mock_cancel_flow_build_with_cancelled_error,
+    )
 
     try:
         # Try to cancel the build - should return failure when CancelledError is raised

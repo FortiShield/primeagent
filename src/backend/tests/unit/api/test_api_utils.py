@@ -37,7 +37,8 @@ def test_get_outdated_components():
     expected_outdated_components = ["component3"]
 
     with patch(
-        "primeagent.services.database.models.flow.utils.get_components_versions", return_value=mock_component_versions
+        "primeagent.services.database.models.flow.utils.get_components_versions",
+        return_value=mock_component_versions,
     ):
         # Call the function with the mock flow
         result = get_outdated_components(flow)

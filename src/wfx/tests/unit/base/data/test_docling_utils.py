@@ -246,7 +246,7 @@ class TestDocumentConverterCaching:
         # Patch at import source since DocumentConverter is imported inside _get_cached_converter
         with patch("docling.document_converter.DocumentConverter") as mock_converter:
             # Simulate slow converter creation
-            def slow_creation(*args, **kwargs):  # noqa: ARG001
+            def slow_creation(*args, **kwargs):
                 time.sleep(0.05)  # 50ms delay
                 return MagicMock()
 
@@ -273,9 +273,9 @@ class TestDocumentConverterCaching:
             second_call_duration = time.time() - start_time
 
             # Cache hit should be significantly faster (at least 10x)
-            assert second_call_duration < first_call_duration / 10, (
-                f"Cache hit should be much faster: first={first_call_duration:.4f}s, second={second_call_duration:.4f}s"
-            )
+            assert (
+                second_call_duration < first_call_duration / 10
+            ), f"Cache hit should be much faster: first={first_call_duration:.4f}s, second={second_call_duration:.4f}s"
 
     def test_cache_clear(self):
         """Test that cache can be cleared."""

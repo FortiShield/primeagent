@@ -31,7 +31,11 @@ from primeagent.services.database.models.folder.constants import (
     DEFAULT_FOLDER_NAME,
     LEGACY_FOLDER_NAMES,
 )
-from primeagent.services.database.models.folder.model import Folder, FolderCreate, FolderRead
+from primeagent.services.database.models.folder.model import (
+    Folder,
+    FolderCreate,
+    FolderRead,
+)
 from primeagent.services.deps import (
     get_auth_service,
     get_settings_service,
@@ -956,7 +960,10 @@ async def detect_github_url(url: str) -> str:
             branch = branch[:-1]
         return f"https://github.com/{owner}/{repo}/archive/refs/heads/{branch}.zip"
 
-    if matched := re.match(r"https?://(?:www\.)?github\.com/([\w.-]+)/([\w.-]+)/releases/tag/([\w\\/.-]+)", url):
+    if matched := re.match(
+        r"https?://(?:www\.)?github\.com/([\w.-]+)/([\w.-]+)/releases/tag/([\w\\/.-]+)",
+        url,
+    ):
         owner, repo, tag = matched.groups()
         if tag[-1] == "/":
             tag = tag[:-1]
@@ -1191,7 +1198,10 @@ async def initialize_auto_login_default_superuser() -> None:
         return
     # In AUTO_LOGIN mode, always use the default credentials for initial bootstrapping
     # without persisting the password in memory after setup.
-    from wfx.services.settings.constants import DEFAULT_SUPERUSER, DEFAULT_SUPERUSER_PASSWORD
+    from wfx.services.settings.constants import (
+        DEFAULT_SUPERUSER,
+        DEFAULT_SUPERUSER_PASSWORD,
+    )
 
     username = DEFAULT_SUPERUSER
     password = DEFAULT_SUPERUSER_PASSWORD.get_secret_value()
@@ -1203,7 +1213,9 @@ async def initialize_auto_login_default_superuser() -> None:
         super_user = await get_auth_service().create_super_user(username, password, db=async_session)
         await get_variable_service().initialize_user_variables(super_user.id, async_session)
         # Initialize agentic variables if agentic experience is enabled
-        from primeagent.api.utils.mcp.agentic_mcp import initialize_agentic_user_variables
+        from primeagent.api.utils.mcp.agentic_mcp import (
+            initialize_agentic_user_variables,
+        )
 
         if get_settings_service().settings.agentic_experience:
             await initialize_agentic_user_variables(super_user.id, async_session)
@@ -1264,7 +1276,11 @@ async def get_or_create_default_folder(session: AsyncSession, user_id: UUID) -> 
 
     # If no existing folder found, create a new one
     try:
-        folder_obj = Folder(user_id=user_id, name=DEFAULT_FOLDER_NAME, description=DEFAULT_FOLDER_DESCRIPTION)
+        folder_obj = Folder(
+            user_id=user_id,
+            name=DEFAULT_FOLDER_NAME,
+            description=DEFAULT_FOLDER_DESCRIPTION,
+        )
         session.add(folder_obj)
         await session.flush()
         await session.refresh(folder_obj)
@@ -1306,7 +1322,12 @@ async def sync_flows_from_fs():
                                 if new_mtime > mtime:
                                     update_data = orjson.loads(await path.read_text(encoding="utf-8"))
                                     try:
-                                        for field_name in ("name", "description", "data", "locked"):
+                                        for field_name in (
+                                            "name",
+                                            "description",
+                                            "data",
+                                            "locked",
+                                        ):
                                             if new_value := update_data.get(field_name):
                                                 setattr(flow, field_name, new_value)
                                         if folder_id := update_data.get("folder_id"):

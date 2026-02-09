@@ -1222,9 +1222,9 @@ def update_model_options_in_build_config(
 
                         try:
                             var = await variable_service.get_variable_object(
-                                user_id=UUID(component.user_id)
-                                if isinstance(component.user_id, str)
-                                else component.user_id,
+                                user_id=(
+                                    UUID(component.user_id) if isinstance(component.user_id, str) else component.user_id
+                                ),
                                 name=var_name,
                                 session=session,
                             )

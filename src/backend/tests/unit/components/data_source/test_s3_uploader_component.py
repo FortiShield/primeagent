@@ -65,7 +65,12 @@ class TestS3UploaderComponent(ComponentTestBaseWithoutClient):
                 temp_files.append(temp_file.name)
 
         data = [
-            Data(data={"file_path": file_path, "text": Path(file_path).read_text(encoding="utf-8")})
+            Data(
+                data={
+                    "file_path": file_path,
+                    "text": Path(file_path).read_text(encoding="utf-8"),
+                }
+            )
             for file_path in temp_files
         ]
 

@@ -37,7 +37,12 @@ class TestStripDynamicFields:
 
     def test_preserves_non_dynamic_fields(self, strip_dynamic_fields_func):
         """Test that non-dynamic fields are preserved."""
-        data = {"name": "component", "version": "1.0.0", "metadata": {"key": "value"}, "options": ["a", "b"]}
+        data = {
+            "name": "component",
+            "version": "1.0.0",
+            "metadata": {"key": "value"},
+            "options": ["a", "b"],
+        }
         result = strip_dynamic_fields_func(data)
         assert result["name"] == "component"
         assert result["version"] == "1.0.0"

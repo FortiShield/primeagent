@@ -37,7 +37,15 @@ from datetime import datetime
 from pathlib import Path
 
 import gevent
-from locust import FastHttpUser, LoadTestShape, between, constant, constant_pacing, events, task
+from locust import (
+    FastHttpUser,
+    LoadTestShape,
+    between,
+    constant,
+    constant_pacing,
+    events,
+    task,
+)
 
 # Test messages with realistic distribution
 TEST_MESSAGES = {
@@ -50,7 +58,14 @@ TEST_MESSAGES = {
 }
 
 # Weighted message distribution for realistic load
-MESSAGE_WEIGHTS = [("simple", 40), ("realistic", 25), ("medium", 20), ("minimal", 10), ("complex", 4), ("large", 1)]
+MESSAGE_WEIGHTS = [
+    ("simple", 40),
+    ("realistic", 25),
+    ("medium", 20),
+    ("minimal", 10),
+    ("complex", 4),
+    ("large", 1),
+]
 
 # Enhanced error logging setup
 ERROR_LOG_FILE = None
@@ -82,7 +97,12 @@ def setup_error_logging():
     error_logger.addHandler(error_handler)
 
     # Try to capture Primeagent logs
-    primeagent_log_paths = ["primeagent.log", "logs/primeagent.log", "../../../primeagent.log", "../../../../primeagent.log"]
+    primeagent_log_paths = [
+        "primeagent.log",
+        "logs/primeagent.log",
+        "../../../primeagent.log",
+        "../../../../primeagent.log",
+    ]
 
     for log_path in primeagent_log_paths:
         if Path(log_path).exists():
@@ -98,7 +118,14 @@ def setup_error_logging():
 
 
 def log_detailed_error(
-    user_class, method, url, status_code, response_text, exception=None, request_data=None, traceback=None
+    user_class,
+    method,
+    url,
+    status_code,
+    response_text,
+    exception=None,
+    request_data=None,
+    traceback=None,
 ):
     """Log detailed error information."""
     global DETAILED_ERRORS
@@ -111,7 +138,7 @@ def log_detailed_error(
         "method": method,
         "url": url,
         "status_code": status_code,
-        "response_text": response_text[:1000] if response_text else None,  # Limit response size
+        "response_text": (response_text[:1000] if response_text else None),  # Limit response size
         "request_data": request_data,
         "exception": str(exception) if exception else None,
         "traceback": traceback if traceback else None,
@@ -271,7 +298,7 @@ def on_test_start(environment, **_kwargs):
 
 
 @events.request.add_listener
-def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):  # noqa: ARG001
+def on_request(request_type, name, response_time, response_length, exception, context, **kwargs):
     """Track slow requests using Locust's built-in timing."""
     # response_time is in milliseconds from Locust
     bag = _env_bags.get(context.get("environment") if context else None)
@@ -513,7 +540,11 @@ class NormalUser(BasePrimeagentUser):
     @task(80)
     def send_message(self):
         """Main task: Send a message with weighted distribution."""
-        message_type = random.choices([w[0] for w in MESSAGE_WEIGHTS], weights=[w[1] for w in MESSAGE_WEIGHTS], k=1)[0]  # noqa: S311
+        message_type = random.choices(
+            [w[0] for w in MESSAGE_WEIGHTS],
+            weights=[w[1] for w in MESSAGE_WEIGHTS],
+            k=1,
+        )[0]
         self.make_request(message_type=message_type)
 
     @task(15)

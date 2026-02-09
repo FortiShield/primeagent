@@ -5,7 +5,10 @@ from uuid import UUID
 
 from primeagent.services.deps import get_variable_service
 from primeagent.services.variable.constants import CREDENTIAL_TYPE
-from primeagent.services.variable.service import DatabaseVariableService, VariableService
+from primeagent.services.variable.service import (
+    DatabaseVariableService,
+    VariableService,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 from wfx.base.models.unified_models import get_model_provider_variable_mapping
 from wfx.log.logger import logger

@@ -58,7 +58,7 @@ class TelemetryService(Service):
         version_info = get_version_info()
         self.common_telemetry_fields = {
             "primeagent_version": version_info["version"],
-            "platform": "desktop" if self._get_primeagent_desktop() else "python_package",
+            "platform": ("desktop" if self._get_primeagent_desktop() else "python_package"),
             "os": platform.system().lower(),
         }
 

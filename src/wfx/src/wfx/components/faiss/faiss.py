@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import faiss
 from wfx.base.vectorstores.model import LCVectorStoreComponent, check_cached_vector_store
 from wfx.helpers.data import docs_to_data
 from wfx.io import BoolInput, HandleInput, IntInput, StrInput
@@ -8,12 +8,12 @@ from wfx.schema.data import Data
 
 
 class FaissVectorStoreComponent(LCVectorStoreComponent):
-    """FAISS Vector Store with search capabilities."""
+    """faiss Vector Store with search capabilities."""
 
-    display_name: str = "FAISS"
-    description: str = "FAISS Vector Store with search capabilities"
-    name = "FAISS"
-    icon = "FAISS"
+    display_name: str = "faiss"
+    description: str = "faiss Vector Store with search capabilities"
+    name = "faiss"
+    icon = "faiss"
 
     inputs = [
         StrInput(
@@ -24,7 +24,7 @@ class FaissVectorStoreComponent(LCVectorStoreComponent):
         StrInput(
             name="persist_directory",
             display_name="Persist Directory",
-            info="Path to save the FAISS index. It will be relative to where Primeagent is running.",
+            info="Path to save the faiss index. It will be relative to where Primeagent is running.",
         ),
         *LCVectorStoreComponent.inputs,
         BoolInput(
@@ -63,8 +63,8 @@ class FaissVectorStoreComponent(LCVectorStoreComponent):
         return Path()
 
     @check_cached_vector_store
-    def build_vector_store(self) -> FAISS:
-        """Builds the FAISS object."""
+    def build_vector_store(self) -> faiss:
+        """Builds the faiss object."""
         path = self.get_persist_directory()
         path.mkdir(parents=True, exist_ok=True)
 
@@ -78,19 +78,19 @@ class FaissVectorStoreComponent(LCVectorStoreComponent):
             else:
                 documents.append(_input)
 
-        faiss = FAISS.from_documents(documents=documents, embedding=self.embedding)
+        faiss = faiss.from_documents(documents=documents, embedding=self.embedding)
         faiss.save_local(str(path), self.index_name)
         return faiss
 
     def search_documents(self) -> list[Data]:
-        """Search for documents in the FAISS vector store."""
+        """Search for documents in the faiss vector store."""
         path = self.get_persist_directory()
         index_path = path / f"{self.index_name}.faiss"
 
         if not index_path.exists():
             vector_store = self.build_vector_store()
         else:
-            vector_store = FAISS.load_local(
+            vector_store = faiss.load_local(
                 folder_path=str(path),
                 embeddings=self.embedding,
                 index_name=self.index_name,
@@ -98,7 +98,7 @@ class FaissVectorStoreComponent(LCVectorStoreComponent):
             )
 
         if not vector_store:
-            msg = "Failed to load the FAISS index."
+            msg = "Failed to load the faiss index."
             raise ValueError(msg)
 
         if self.search_query and isinstance(self.search_query, str) and self.search_query.strip():

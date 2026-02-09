@@ -89,12 +89,10 @@ class TestPluginDiscovery:
     def test_discover_storage_from_config_file(self, service_manager, temp_config_dir):
         """Test discovering LocalStorageService from wfx.toml."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 
@@ -104,15 +102,13 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
     def test_discover_multiple_services_from_config(self, service_manager, temp_config_dir):
         """Test discovering multiple real services from config."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
 telemetry_service = "wfx.services.telemetry.service:TelemetryService"
 tracing_service = "wfx.services.tracing.service:TracingService"
 variable_service = "wfx.services.variable.service:VariableService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 
@@ -124,12 +120,10 @@ variable_service = "wfx.services.variable.service:VariableService"
     def test_discover_from_pyproject_toml(self, service_manager, temp_config_dir):
         """Test discovering services from pyproject.toml."""
         config_file = temp_config_dir / "pyproject.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [tool.wfx.services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 
@@ -138,18 +132,14 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
     def test_wfx_toml_takes_precedence_over_pyproject(self, service_manager, temp_config_dir):
         """Test that wfx.toml is preferred over pyproject.toml."""
         # Create both files
-        (temp_config_dir / "wfx.toml").write_text(
-            """
+        (temp_config_dir / "wfx.toml").write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
-        (temp_config_dir / "pyproject.toml").write_text(
-            """
+""")
+        (temp_config_dir / "pyproject.toml").write_text("""
 [tool.wfx.services]
 telemetry_service = "wfx.services.telemetry.service:TelemetryService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 
@@ -161,12 +151,10 @@ telemetry_service = "wfx.services.telemetry.service:TelemetryService"
     def test_discover_plugins_only_once(self, service_manager, temp_config_dir):
         """Test that plugin discovery only runs once."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
         initial_count = len(service_manager.service_classes)
@@ -180,13 +168,11 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
     def test_invalid_service_key_in_config(self, service_manager, temp_config_dir):
         """Test that invalid service keys are ignored."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 invalid_service_key = "some.module:SomeClass"  # pragma: allowlist secret
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         service_manager.discover_plugins(temp_config_dir)
@@ -197,12 +183,10 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
     def test_invalid_import_path_in_config(self, service_manager, temp_config_dir):
         """Test that invalid import paths are handled gracefully."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "nonexistent.module:NonexistentClass"
-"""
-        )
+""")
 
         # Should not raise, just log warning
         service_manager.discover_plugins(temp_config_dir)
@@ -314,12 +298,10 @@ class TestConflictResolution:
         """Test that direct registration overrides config file."""
         # First load from config
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 telemetry_service = "wfx.services.telemetry.service:TelemetryService"
-"""
-        )
+""")
         service_manager.discover_plugins(temp_config_dir)
 
         # Then register via direct call (override=True)
@@ -373,12 +355,10 @@ class TestConfigDirectorySource:
         config_dir.mkdir(parents=True, exist_ok=True)
 
         config_file = config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         # Discover plugins (should use settings.config_dir)
         service_manager._plugins_discovered = False  # Reset flag
@@ -391,12 +371,10 @@ storage_service = "wfx.services.storage.local:LocalStorageService"
         # Don't create settings service
         # Should fall back to provided config_dir
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 
@@ -455,15 +433,13 @@ class TestRealWorldScenarios:
     def test_config_file_with_all_minimal_services(self, service_manager, temp_config_dir):
         """Test loading all minimal services from config file."""
         config_file = temp_config_dir / "wfx.toml"
-        config_file.write_text(
-            """
+        config_file.write_text("""
 [services]
 storage_service = "wfx.services.storage.local:LocalStorageService"
 telemetry_service = "wfx.services.telemetry.service:TelemetryService"
 tracing_service = "wfx.services.tracing.service:TracingService"
 variable_service = "wfx.services.variable.service:VariableService"
-"""
-        )
+""")
 
         service_manager.discover_plugins(temp_config_dir)
 

@@ -12,7 +12,7 @@ from wfx.services.settings.constants import DEFAULT_SUPERUSER
 
 
 @pytest.fixture
-async def super_user(client):  # noqa: ARG001
+async def super_user(client):
     settings_manager = get_settings_service()
     auth_settings = settings_manager.auth_settings
     async with session_getter(get_db_service()) as db:
@@ -30,13 +30,13 @@ async def super_user(client):  # noqa: ARG001
 @pytest.fixture
 async def super_user_headers(
     client: AsyncClient,
-    super_user,  # noqa: ARG001
+    super_user,
 ):
     settings_service = get_settings_service()
     auth_settings = settings_service.auth_settings
     login_data = {
         # SUPERUSER may be reset to default depending on AUTO_LOGIN; use constant for stability in tests
-        "username": DEFAULT_SUPERUSER if auth_settings.AUTO_LOGIN else auth_settings.SUPERUSER,
+        "username": (DEFAULT_SUPERUSER if auth_settings.AUTO_LOGIN else auth_settings.SUPERUSER),
         "password": (
             auth_settings.SUPERUSER_PASSWORD.get_secret_value()
             if hasattr(auth_settings.SUPERUSER_PASSWORD, "get_secret_value")
@@ -51,7 +51,7 @@ async def super_user_headers(
 
 
 @pytest.fixture
-async def deactivated_user(client):  # noqa: ARG001
+async def deactivated_user(client):
     async with session_getter(get_db_service()) as session:
         user = User(
             username="deactivateduser",
@@ -126,7 +126,11 @@ async def test_data_consistency_after_update(client: AsyncClient, active_user, l
     user_id = active_user.id
     update_data = UserUpdate(is_active=False)
 
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=super_user_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=super_user_headers,
+    )
     assert response.status_code == 200, response.json()
 
     # Fetch the updated user from the database
@@ -192,13 +196,21 @@ async def test_patch_user(client: AsyncClient, active_user, logged_in_headers):
         username="newname",
     )
 
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 200, response.json()
     update_data = UserUpdate(
         profile_image="new_image",
     )
 
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 200, response.json()
 
 
@@ -229,7 +241,11 @@ async def test_patch_user_wrong_id(client: AsyncClient, logged_in_headers):
         username="newname",
     )
 
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 422, response.json()
     json_response = response.json()
     detail = json_response["detail"]
@@ -277,7 +293,11 @@ async def test_user_can_update_profile_picture(client: AsyncClient, active_user,
     profile_image = "Space/046-rocket.svg"
     update_data = UserUpdate(profile_image=profile_image)
 
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 200, f"Failed to update profile picture: {response.json()}"
 
     # Verify the profile image was updated
@@ -295,7 +315,11 @@ async def test_user_profile_picture_persists(client: AsyncClient, active_user, l
     update_data = UserUpdate(profile_image=profile_image)
 
     # Update profile picture
-    response = await client.patch(f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers)
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        json=update_data.model_dump(),
+        headers=logged_in_headers,
+    )
     assert response.status_code == 200
 
     # Check it persists in multiple requests
@@ -318,7 +342,9 @@ async def test_user_can_change_profile_picture_multiple_times(client: AsyncClien
     for profile_image in profile_images:
         update_data = UserUpdate(profile_image=profile_image)
         response = await client.patch(
-            f"/api/v1/users/{user_id}", json=update_data.model_dump(), headers=logged_in_headers
+            f"/api/v1/users/{user_id}",
+            json=update_data.model_dump(),
+            headers=logged_in_headers,
         )
         assert response.status_code == 200
 

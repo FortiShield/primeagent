@@ -46,7 +46,11 @@ from primeagent.services.deps import (
     session_scope,
 )
 from primeagent.services.schema import ServiceType
-from primeagent.services.utils import initialize_services, initialize_settings_service, teardown_services
+from primeagent.services.utils import (
+    initialize_services,
+    initialize_settings_service,
+    teardown_services,
+)
 from primeagent.utils.mcp_cleanup import cleanup_mcp_sessions
 
 if TYPE_CHECKING:
@@ -228,7 +232,9 @@ def get_lifespan(*, fix_migration=False, version=None):
 
             # Initialize agentic global variables early (before MCP server and flows)
             if get_settings_service().settings.agentic_experience:
-                from primeagent.api.utils.mcp.agentic_mcp import initialize_agentic_global_variables
+                from primeagent.api.utils.mcp.agentic_mcp import (
+                    initialize_agentic_global_variables,
+                )
 
                 current_time = asyncio.get_event_loop().time()
                 await logger.ainfo("Initializing agentic global variables...")
@@ -256,7 +262,9 @@ def get_lifespan(*, fix_migration=False, version=None):
 
             # Auto-configure Agentic MCP server if enabled (after variables are initialized)
             if get_settings_service().settings.agentic_experience:
-                from primeagent.api.utils.mcp.agentic_mcp import auto_configure_agentic_mcp_server
+                from primeagent.api.utils.mcp.agentic_mcp import (
+                    auto_configure_agentic_mcp_server,
+                )
 
                 current_time = asyncio.get_event_loop().time()
                 await logger.ainfo("Configuring Agentic MCP server...")
@@ -373,7 +381,10 @@ def get_lifespan(*, fix_migration=False, version=None):
                         # Log any non-cancellation exceptions
                         for result in results:
                             if isinstance(result, Exception) and not isinstance(result, asyncio.CancelledError):
-                                await logger.aerror(f"Error during task cleanup: {result}", exc_info=result)
+                                await logger.aerror(
+                                    f"Error during task cleanup: {result}",
+                                    exc_info=result,
+                                )
 
                 # Step 2: Cleaning Up Services
                 with shutdown_progress.step(2):

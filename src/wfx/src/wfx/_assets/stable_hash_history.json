@@ -1,5 +1,5 @@
 {
-  "FAISS": {
+  "faiss": {
     "versions": {
       "0.3.0": "2bd7a064d724"
     }
@@ -9,37 +9,37 @@
       "0.3.0": "ffcd44201c09"
     }
   },
-  "NotionPageCreator": {
+  "notionPageCreator": {
     "versions": {
       "0.3.0": "640438ed3d7b"
     }
   },
-  "NotionDatabaseProperties": {
+  "notionDatabaseProperties": {
     "versions": {
       "0.3.0": "adce99660f9e"
     }
   },
-  "NotionListPages": {
+  "notionListPages": {
     "versions": {
       "0.3.0": "373f9ad32937"
     }
   },
-  "NotionUserList": {
+  "notionUserList": {
     "versions": {
       "0.3.0": "8966397da1d5"
     }
   },
-  "NotionPageContent": {
+  "notionPageContent": {
     "versions": {
       "0.3.0": "ba15d6a01d04"
     }
   },
-  "NotionSearch": {
+  "notionSearch": {
     "versions": {
       "0.3.0": "793b8818a3b4"
     }
   },
-  "NotionPageUpdate": {
+  "notionPageUpdate": {
     "versions": {
       "0.3.0": "32ccdf34df73"
     }
@@ -439,7 +439,7 @@
       "0.3.0": "6def944a7739"
     }
   },
-  "ComposioNotionAPIComponent": {
+  "ComposionotionAPIComponent": {
     "versions": {
       "0.3.0": "590aa6ff30d1"
     }

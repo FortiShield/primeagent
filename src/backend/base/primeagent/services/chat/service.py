@@ -37,7 +37,10 @@ class ChatService(Service):
             await self.cache_service.upsert(str(key), result_dict, lock=lock or self.async_cache_locks[key])
             return await self.cache_service.contains(key)
         await asyncio.to_thread(
-            self.cache_service.upsert, str(key), result_dict, lock=lock or self._sync_cache_locks[key]
+            self.cache_service.upsert,
+            str(key),
+            result_dict,
+            lock=lock or self._sync_cache_locks[key],
         )
         return key in self.cache_service
 

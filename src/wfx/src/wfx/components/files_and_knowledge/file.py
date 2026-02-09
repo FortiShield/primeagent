@@ -18,7 +18,7 @@ import textwrap
 from copy import deepcopy
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from wfx.base.data.base_file import BaseFileComponent
 from wfx.base.data.storage_utils import parse_storage_path, read_file_bytes, validate_image_content_type
@@ -27,11 +27,13 @@ from wfx.inputs import SortableListInput
 from wfx.inputs.inputs import DropdownInput, MessageTextInput, StrInput
 from wfx.io import BoolInput, FileInput, IntInput, Output, SecretStrInput
 from wfx.schema.data import Data
-from wfx.schema.dataframe import DataFrame
 from wfx.schema.message import Message
 from wfx.services.deps import get_settings_service, get_storage_service
 from wfx.utils.async_helpers import run_until_complete
 from wfx.utils.validate_cloud import is_astra_cloud_environment
+
+if TYPE_CHECKING:
+    from wfx.schema.dataframe import DataFrame
 
 
 def _get_storage_location_options():
@@ -491,7 +493,9 @@ class FileComponent(BaseFileComponent):
 
         return build_config
 
-    def update_outputs(self, frontend_node: dict[str, Any], field_name: str, field_value: Any) -> dict[str, Any]:  # noqa: ARG002
+    def update_outputs(
+        self, frontend_node: dict[str, Any], field_name: str, field_value: Any
+    ) -> dict[str, Any]:  # noqa: ARG002
         """Dynamically show outputs based on file count/type and advanced mode."""
         if field_name not in ["path", "advanced_mode", "pipeline"]:
             return frontend_node
@@ -823,8 +827,7 @@ class FileComponent(BaseFileComponent):
         }
 
         # Child script for isolating the docling processing
-        child_script = textwrap.dedent(
-            r"""
+        child_script = textwrap.dedent(r"""
             import json, sys
 
             def try_imports():
@@ -996,8 +999,7 @@ class FileComponent(BaseFileComponent):
 
             if __name__ == "__main__":
                 main()
-            """
-        )
+            """)
 
         # Validate file_path to avoid command injection or unsafe input
         if not isinstance(args["file_path"], str) or any(c in args["file_path"] for c in [";", "|", "&", "$", "`"]):

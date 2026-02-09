@@ -108,5 +108,8 @@ def test_validate_text_key_invalid(create_data_component):
     create_data_component.text_key = "invalid_key"
 
     # Act & Assert
-    with pytest.raises(ValueError, match="Text Key: 'invalid_key' not found in the Data keys: 'key1, key2'"):
+    with pytest.raises(
+        ValueError,
+        match="Text Key: 'invalid_key' not found in the Data keys: 'key1, key2'",
+    ):
         create_data_component.validate_text_key()

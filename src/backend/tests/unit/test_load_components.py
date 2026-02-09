@@ -69,9 +69,17 @@ class TestComponentLoading:
         # Add warnings for slow performance before failing
 
         if primeagent_duration > 10.0:
-            warnings.warn(f"import_primeagent_components is slow: {primeagent_duration:.2f}s", UserWarning, stacklevel=2)
+            warnings.warn(
+                f"import_primeagent_components is slow: {primeagent_duration:.2f}s",
+                UserWarning,
+                stacklevel=2,
+            )
         if all_types_duration > 20.0:
-            warnings.warn(f"aget_all_types_dict is slow: {all_types_duration:.2f}s", UserWarning, stacklevel=2)
+            warnings.warn(
+                f"aget_all_types_dict is slow: {all_types_duration:.2f}s",
+                UserWarning,
+                stacklevel=2,
+            )
 
         # Store results for further analysis
         return {
@@ -309,12 +317,12 @@ class TestComponentLoading:
         all_types_variance = max(all_types_times) - min(all_types_times)
 
         # Variance shouldn't be too high (more than 10x difference between min and max)
-        assert primeagent_variance < primeagent_avg * 10, (
-            f"import_primeagent_components performance too inconsistent: {primeagent_variance}s variance"
-        )
-        assert all_types_variance < all_types_avg * 10, (
-            f"aget_all_types_dict performance too inconsistent: {all_types_variance}s variance"
-        )
+        assert (
+            primeagent_variance < primeagent_avg * 10
+        ), f"import_primeagent_components performance too inconsistent: {primeagent_variance}s variance"
+        assert (
+            all_types_variance < all_types_avg * 10
+        ), f"aget_all_types_dict performance too inconsistent: {all_types_variance}s variance"
 
     @pytest.mark.no_blockbuster
     @pytest.mark.asyncio
@@ -322,16 +330,14 @@ class TestComponentLoading:
         """Test aget_all_types_dict with different path configurations."""
         test_cases = [
             [],  # Empty list
-            [BASE_COMPONENTS_PATH] if BASE_COMPONENTS_PATH else [],  # Normal case - valid path
+            ([BASE_COMPONENTS_PATH] if BASE_COMPONENTS_PATH else []),  # Normal case - valid path
         ]
 
         # Test invalid paths separately with proper error handling
         invalid_test_cases = [
             [""],  # Empty string path
-            ["/tmp"],  # Non-existent or invalid path #noqa: S108
-            [BASE_COMPONENTS_PATH, "/tmp"]  # noqa: S108
-            if BASE_COMPONENTS_PATH
-            else ["/tmp"],  # Mixed valid/invalid paths #noqa: S108
+            ["/tmp"],  # Non-existent or invalid path
+            ([BASE_COMPONENTS_PATH, "/tmp"] if BASE_COMPONENTS_PATH else ["/tmp"]),  # Mixed valid/invalid paths
         ]
 
         # Test valid cases
@@ -447,7 +453,10 @@ class TestComponentLoading:
         print("\nSTEADY-STATE PERFORMANCE CONCLUSION:")
         print(f"Faster method: {faster_method}")
         print(f"Speedup factor: {speedup:.2f}x")
-        print(f"Timing results: {avg_primeagent:.4f}s (primeagent), ", f"{avg_all_types:.4f}s (all_types)")
+        print(
+            f"Timing results: {avg_primeagent:.4f}s (primeagent), ",
+            f"{avg_all_types:.4f}s (all_types)",
+        )
 
         print("\nNOTE: These results exclude warm-up runs and represent steady-state performance")
         print("that users will experience after the first component load.")
@@ -463,7 +472,9 @@ class TestComponentLoading:
                 print(f"Note: Component counts vary ({min_count}-{max_count}) - may be due to OS file limits")
             else:
                 print(f"Component counts consistent: {min_count}")
-        assert all(isinstance(result, dict) for _, result in primeagent_results), "All primeagent results should be dicts"
+        assert all(
+            isinstance(result, dict) for _, result in primeagent_results
+        ), "All primeagent results should be dicts"
         assert all(isinstance(result, dict) for _, result in all_types_results), "All all_types results should be dicts"
 
         # Log steady-state performance instead of asserting
@@ -591,21 +602,30 @@ class TestComponentLoading:
 
         # Test 1: ImportError during module import
         print("\n1. Testing ImportError handling...")
-        with patch("importlib.import_module", side_effect=ImportError("Missing dependency: some_package")):
+        with patch(
+            "importlib.import_module",
+            side_effect=ImportError("Missing dependency: some_package"),
+        ):
             result = _process_single_module("wfx.components.test_module")
             assert result is None, "Should return None when ImportError occurs"
             print("   ✓ ImportError handled correctly")
 
         # Test 2: AttributeError during module import
         print("\n2. Testing AttributeError handling...")
-        with patch("importlib.import_module", side_effect=AttributeError("Module has no attribute 'something'")):
+        with patch(
+            "importlib.import_module",
+            side_effect=AttributeError("Module has no attribute 'something'"),
+        ):
             result = _process_single_module("wfx.components.test_module")
             assert result is None, "Should return None when AttributeError occurs"
             print("   ✓ AttributeError handled correctly")
 
         # Test 3: ConnectionError (e.g., HTTP 503 from external API)
         print("\n3. Testing ConnectionError handling (simulating HTTP 503)...")
-        with patch("importlib.import_module", side_effect=ConnectionError("503 Service Unavailable")):
+        with patch(
+            "importlib.import_module",
+            side_effect=ConnectionError("503 Service Unavailable"),
+        ):
             result = _process_single_module("wfx.components.nvidia.nvidia")
             assert result is None, "Should return None when ConnectionError occurs"
             print("   ✓ ConnectionError handled correctly")
@@ -614,7 +634,10 @@ class TestComponentLoading:
         print("\n4. Testing HTTPError handling...")
         from urllib3.exceptions import MaxRetryError
 
-        with patch("importlib.import_module", side_effect=MaxRetryError(None, "", reason="Connection timeout")):
+        with patch(
+            "importlib.import_module",
+            side_effect=MaxRetryError(None, "", reason="Connection timeout"),
+        ):
             result = _process_single_module("wfx.components.test_module")
             assert result is None, "Should return None when HTTPError occurs"
             print("   ✓ HTTPError handled correctly")
@@ -628,14 +651,20 @@ class TestComponentLoading:
 
         # Test 6: Generic Exception
         print("\n6. Testing generic Exception handling...")
-        with patch("importlib.import_module", side_effect=Exception("Unexpected error during import")):
+        with patch(
+            "importlib.import_module",
+            side_effect=Exception("Unexpected error during import"),
+        ):
             result = _process_single_module("wfx.components.test_module")
             assert result is None, "Should return None when generic Exception occurs"
             print("   ✓ Generic Exception handled correctly")
 
         # Test 7: RuntimeError (e.g., from component initialization)
         print("\n7. Testing RuntimeError handling...")
-        with patch("importlib.import_module", side_effect=RuntimeError("Component initialization failed")):
+        with patch(
+            "importlib.import_module",
+            side_effect=RuntimeError("Component initialization failed"),
+        ):
             result = _process_single_module("wfx.components.test_module")
             assert result is None, "Should return None when RuntimeError occurs"
             print("   ✓ RuntimeError handled correctly")

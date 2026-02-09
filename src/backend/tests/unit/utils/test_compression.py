@@ -96,7 +96,10 @@ class TestCompressResponse:
     def test_compress_response_nested_data(self):
         """Test compressing nested data structures."""
         data = {
-            "users": [{"id": 1, "name": "Alice", "active": True}, {"id": 2, "name": "Bob", "active": False}],
+            "users": [
+                {"id": 1, "name": "Alice", "active": True},
+                {"id": 2, "name": "Bob", "active": False},
+            ],
             "metadata": {"total": 2, "page": 1, "has_more": False},
             "settings": None,
         }
@@ -113,7 +116,10 @@ class TestCompressResponse:
     def test_compress_response_large_data(self):
         """Test compressing large data to verify compression effectiveness."""
         # Create large data that should compress well (repeated patterns)
-        data = {"items": ["test_item"] * 1000, "metadata": {"repeated_value": "x" * 500}}
+        data = {
+            "items": ["test_item"] * 1000,
+            "metadata": {"repeated_value": "x" * 500},
+        }
 
         response = compress_response(data)
 

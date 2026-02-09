@@ -8,7 +8,11 @@ from typing import Annotated, Any
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from primeagent.api.utils import extract_global_variables_from_headers
-from primeagent.api.v1.endpoints import consume_and_yield, run_flow_generator, simple_run_flow
+from primeagent.api.v1.endpoints import (
+    consume_and_yield,
+    run_flow_generator,
+    simple_run_flow,
+)
 from primeagent.api.v1.schemas import SimplifiedAPIRequest
 from primeagent.events.event_manager import create_stream_tokens_event_manager
 from primeagent.helpers.flow import get_flow_by_id_or_endpoint_name
@@ -154,7 +158,7 @@ async def run_flow_for_openai_responses(
                                 await logger.adebug(
                                     "[OpenAIResponses][stream] event: %s keys=%s",
                                     event_type,
-                                    list(data.keys()) if isinstance(data, dict) else type(data),
+                                    (list(data.keys()) if isinstance(data, dict) else type(data)),
                                 )
 
                                 # Handle add_message events
@@ -479,13 +483,15 @@ async def run_flow_for_openai_responses(
             # Format as detailed tool call with results (like file_search_call in sample)
             tool_call_item = {
                 "id": f"{tool_call['name']}_{tool_call_id_counter}",
-                "queries": list(tool_call["input"].values())
-                if isinstance(tool_call["input"], dict)
-                else [str(tool_call["input"])],
+                "queries": (
+                    list(tool_call["input"].values())
+                    if isinstance(tool_call["input"], dict)
+                    else [str(tool_call["input"])]
+                ),
                 "status": "completed",
                 "tool_name": f"{tool_call['name']}",
                 "type": "tool_call",
-                "results": tool_call["output"] if tool_call["output"] is not None else [],
+                "results": (tool_call["output"] if tool_call["output"] is not None else []),
             }
         else:
             # Format as basic function call
@@ -494,7 +500,7 @@ async def run_flow_for_openai_responses(
                 "type": "function_call",
                 "status": "completed",
                 "name": tool_call["name"],
-                "arguments": json.dumps(tool_call["input"]) if tool_call["input"] is not None else "{}",
+                "arguments": (json.dumps(tool_call["input"]) if tool_call["input"] is not None else "{}"),
             }
 
         output_items.append(tool_call_item)

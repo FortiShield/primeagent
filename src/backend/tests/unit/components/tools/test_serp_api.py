@@ -28,7 +28,13 @@ def test_serpapi_template():
     assert "template" in frontend_node
     input_names = [input_["name"] for input_ in frontend_node["template"].values() if isinstance(input_, dict)]
 
-    expected_inputs = ["serpapi_api_key", "input_value", "search_params", "max_results", "max_snippet_length"]
+    expected_inputs = [
+        "serpapi_api_key",
+        "input_value",
+        "search_params",
+        "max_results",
+        "max_snippet_length",
+    ]
 
     for input_name in expected_inputs:
         assert input_name in input_names
@@ -47,8 +53,16 @@ def test_fetch_content(mock_serpapi_wrapper):
     mock_serpapi_wrapper.return_value = mock_instance
     mock_instance.results.return_value = {
         "organic_results": [
-            {"title": "Test Result 1", "link": "https://test.com", "snippet": "This is a test result 1"},
-            {"title": "Test Result 2", "link": "https://test2.com", "snippet": "This is a test result 2"},
+            {
+                "title": "Test Result 1",
+                "link": "https://test.com",
+                "snippet": "This is a test result 1",
+            },
+            {
+                "title": "Test Result 2",
+                "link": "https://test2.com",
+                "snippet": "This is a test result 2",
+            },
         ]
     }
 

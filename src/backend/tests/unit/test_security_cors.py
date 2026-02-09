@@ -16,7 +16,10 @@ class TestCORSConfiguration:
 
     def test_default_cors_settings_current_behavior(self):
         """Test current CORS settings behavior (warns about security implications)."""
-        with tempfile.TemporaryDirectory() as temp_dir, patch.dict(os.environ, {"PRIMEAGENT_CONFIG_DIR": temp_dir}):
+        with (
+            tempfile.TemporaryDirectory() as temp_dir,
+            patch.dict(os.environ, {"PRIMEAGENT_CONFIG_DIR": temp_dir}),
+        ):
             settings = Settings()
 
             # Current behavior: wildcard origins with credentials ENABLED (insecure)
@@ -61,7 +64,10 @@ class TestCORSConfiguration:
             ),
         ):
             settings = Settings()
-            assert settings.cors_origins == ["https://app1.example.com", "https://app2.example.com"]
+            assert settings.cors_origins == [
+                "https://app1.example.com",
+                "https://app2.example.com",
+            ]
 
     def test_single_origin_converted_to_list(self):
         """Test single origin is converted to list for consistency."""
@@ -185,9 +191,9 @@ class TestCORSConfiguration:
         # The actual warning message is different from what we expected
         warning_calls = [str(call) for call in mock_logger.warning.call_args_list]
         # We expect warnings about the insecure configuration - check for the actual message
-        assert any("CORS" in str(call) and "permissive" in str(call) for call in warning_calls), (
-            f"Expected CORS security warning but got: {warning_calls}"
-        )
+        assert any(
+            "CORS" in str(call) and "permissive" in str(call) for call in warning_calls
+        ), f"Expected CORS security warning but got: {warning_calls}"
 
         # Find CORS middleware and verify credentials are still allowed (current insecure behavior)
         cors_middleware = None
@@ -227,7 +233,10 @@ class TestRefreshTokenSecurity:
 
         with patch("primeagent.services.auth.utils.jwt.decode") as mock_decode:
             # Test with wrong token type - use a valid UUID string
-            mock_decode.return_value = {"sub": "123e4567-e89b-12d3-a456-426614174000", "type": "access"}  # Wrong type
+            mock_decode.return_value = {
+                "sub": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "access",
+            }  # Wrong type
 
             with patch("primeagent.services.auth.utils.get_settings_service") as mock_settings:
                 mock_settings.return_value.auth_settings.SECRET_KEY.get_secret_value.return_value = "secret"
@@ -257,7 +266,10 @@ class TestRefreshTokenSecurity:
         mock_user.is_active = False  # Inactive user
 
         with patch("primeagent.services.auth.utils.jwt.decode") as mock_decode:
-            mock_decode.return_value = {"sub": "user-123", "type": "refresh"}  # Correct type
+            mock_decode.return_value = {
+                "sub": "user-123",
+                "type": "refresh",
+            }  # Correct type
 
             with patch("primeagent.services.auth.utils.get_settings_service") as mock_settings:
                 mock_settings.return_value.auth_settings.SECRET_KEY.get_secret_value.return_value = "secret"
@@ -289,16 +301,23 @@ class TestRefreshTokenSecurity:
         mock_user.id = user_id
 
         with patch("primeagent.services.auth.service.jwt.decode") as mock_decode:
-            mock_decode.return_value = {"sub": str(user_id), "type": "refresh"}  # Correct type
+            mock_decode.return_value = {
+                "sub": str(user_id),
+                "type": "refresh",
+            }  # Correct type
 
             with patch("primeagent.services.auth.utils.get_jwt_verification_key") as mock_verification_key:
                 mock_verification_key.return_value = "secret"
 
-                with patch("primeagent.services.auth.service.get_user_by_id", new_callable=AsyncMock) as mock_get_user:
+                with patch(
+                    "primeagent.services.auth.service.get_user_by_id",
+                    new_callable=AsyncMock,
+                ) as mock_get_user:
                     mock_get_user.return_value = mock_user
 
                     with patch(
-                        "primeagent.services.auth.service.AuthService.create_user_tokens", new_callable=AsyncMock
+                        "primeagent.services.auth.service.AuthService.create_user_tokens",
+                        new_callable=AsyncMock,
                     ) as mock_create_tokens:
                         expected_access = "new-access-token"
                         expected_refresh = "new-refresh-token"
@@ -318,7 +337,10 @@ class TestRefreshTokenSecurity:
         """Test current refresh token SameSite settings (warns about security)."""
         from wfx.services.settings.auth import AuthSettings
 
-        with tempfile.TemporaryDirectory() as temp_dir, patch.dict(os.environ, {"PRIMEAGENT_CONFIG_DIR": temp_dir}):
+        with (
+            tempfile.TemporaryDirectory() as temp_dir,
+            patch.dict(os.environ, {"PRIMEAGENT_CONFIG_DIR": temp_dir}),
+        ):
             auth_settings = AuthSettings(CONFIG_DIR=temp_dir)
             # Current behavior: refresh token uses 'none' (allows cross-site)
             assert auth_settings.REFRESH_SAME_SITE == "none"  # Current: allows cross-site (less secure)

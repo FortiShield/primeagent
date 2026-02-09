@@ -31,7 +31,10 @@ def upgrade() -> None:
             description_column = next((column for column in columns if column["name"] == "description"), None)
             if description_column is not None and isinstance(description_column["type"], sa.VARCHAR):
                 batch_op.alter_column(
-                    "description", existing_type=sa.VARCHAR(), type_=sa.Text(), existing_nullable=True
+                    "description",
+                    existing_type=sa.VARCHAR(),
+                    type_=sa.Text(),
+                    existing_nullable=True,
                 )
 
     with op.batch_alter_table("folder", schema=None) as batch_op:
@@ -40,7 +43,10 @@ def upgrade() -> None:
             description_column = next((column for column in columns if column["name"] == "description"), None)
             if description_column is not None and isinstance(description_column["type"], sa.VARCHAR):
                 batch_op.alter_column(
-                    "description", existing_type=sa.VARCHAR(), type_=sa.Text(), existing_nullable=True
+                    "description",
+                    existing_type=sa.VARCHAR(),
+                    type_=sa.Text(),
+                    existing_nullable=True,
                 )
 
     # ### end Alembic commands ###
@@ -56,7 +62,10 @@ def downgrade() -> None:
             description_column = next((column for column in columns if column["name"] == "description"), None)
             if description_column is not None and isinstance(description_column["type"], sa.VARCHAR):
                 batch_op.alter_column(
-                    "description", existing_type=sa.VARCHAR(), type_=sa.Text(), existing_nullable=True
+                    "description",
+                    existing_type=sa.VARCHAR(),
+                    type_=sa.Text(),
+                    existing_nullable=True,
                 )
 
     with op.batch_alter_table("flow", schema=None) as batch_op:
@@ -65,6 +74,9 @@ def downgrade() -> None:
             description_column = next((column for column in columns if column["name"] == "description"), None)
             if description_column is not None and isinstance(description_column["type"], sa.VARCHAR):
                 batch_op.alter_column(
-                    "description", existing_type=sa.VARCHAR(), type_=sa.Text(), existing_nullable=True
+                    "description",
+                    existing_type=sa.VARCHAR(),
+                    type_=sa.Text(),
+                    existing_nullable=True,
                 )
     # ### end Alembic commands ###

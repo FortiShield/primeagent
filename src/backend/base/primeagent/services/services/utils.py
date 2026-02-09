@@ -13,9 +13,18 @@ from sqlalchemy import delete
 from sqlalchemy import exc as sqlalchemy_exc
 from sqlmodel import col, select
 from wfx.log.logger import logger
-from wfx.services.settings.constants import DEFAULT_SUPERUSER, DEFAULT_SUPERUSER_PASSWORD
+from wfx.services.settings.constants import (
+    DEFAULT_SUPERUSER,
+    DEFAULT_SUPERUSER_PASSWORD,
+)
 
-from .deps import get_auth_service, get_db_service, get_service, get_settings_service, session_scope
+from .deps import (
+    get_auth_service,
+    get_db_service,
+    get_service,
+    get_settings_service,
+    session_scope,
+)
 
 if TYPE_CHECKING:
     from sqlmodel.ext.asyncio.session import AsyncSession
@@ -230,7 +239,9 @@ def register_all_service_factories() -> None:
     from primeagent.services.database import factory as database_factory
     from primeagent.services.job_queue import factory as job_queue_factory
     from primeagent.services.session import factory as session_factory
-    from primeagent.services.shared_component_cache import factory as shared_component_cache_factory
+    from primeagent.services.shared_component_cache import (
+        factory as shared_component_cache_factory,
+    )
     from primeagent.services.state import factory as state_factory
     from primeagent.services.storage import factory as storage_factory
     from primeagent.services.store import factory as store_factory

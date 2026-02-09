@@ -123,7 +123,10 @@ class ComponentTestBase:
 
         try:
             instance, component_code = build_component_instance_for_tests(
-                version, file_name=mapping["file_name"], module=mapping["module"], **default_kwargs
+                version,
+                file_name=mapping["file_name"],
+                module=mapping["module"],
+                **default_kwargs,
             )
         except Exception as e:
             msg = (

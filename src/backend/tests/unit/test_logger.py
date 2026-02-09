@@ -224,7 +224,7 @@ class TestConfigure:
         assert config is not None
         # The wrapper_class should be configured for WARNING level
 
-    @patch.dict(os.environ, {"PRIMEAGENT_LOG_FILE": "/tmp/test.log"})  # noqa: S108
+    @patch.dict(os.environ, {"PRIMEAGENT_LOG_FILE": "/tmp/test.log"})
     def test_configure_env_log_file_override(self):
         """Test configure() respects PRIMEAGENT_LOG_FILE environment variable."""
         configure()
@@ -475,7 +475,11 @@ class TestLogProcessors:
 
     def test_add_serialized_with_buffer_disabled(self):
         """Test add_serialized() when log buffer is disabled."""
-        event_dict = {"timestamp": 1625097600.123, "event": "Test message", "module": "test_module"}
+        event_dict = {
+            "timestamp": 1625097600.123,
+            "event": "Test message",
+            "module": "test_module",
+        }
 
         with patch.object(log_buffer, "enabled", return_value=False):
             result = add_serialized(None, "info", event_dict)
@@ -486,7 +490,11 @@ class TestLogProcessors:
 
     def test_add_serialized_with_buffer_enabled(self):
         """Test add_serialized() when log buffer is enabled."""
-        event_dict = {"timestamp": 1625097600.123, "event": "Test message", "module": "test_module"}
+        event_dict = {
+            "timestamp": 1625097600.123,
+            "event": "Test message",
+            "module": "test_module",
+        }
 
         with patch.object(log_buffer, "enabled", return_value=True):
             result = add_serialized(None, "info", event_dict)
@@ -501,7 +509,11 @@ class TestLogProcessors:
 
     def test_remove_exception_in_production(self):
         """Test remove_exception_in_production() removes exception info in prod."""
-        event_dict = {"event": "Test message", "exception": "Some exception", "exc_info": "Some exc info"}
+        event_dict = {
+            "event": "Test message",
+            "exception": "Some exception",
+            "exc_info": "Some exc info",
+        }
 
         # Import the actual module to access DEV
         import sys
@@ -517,7 +529,11 @@ class TestLogProcessors:
 
     def test_remove_exception_in_development(self):
         """Test remove_exception_in_production() keeps exception info in dev."""
-        event_dict = {"event": "Test message", "exception": "Some exception", "exc_info": "Some exc info"}
+        event_dict = {
+            "event": "Test message",
+            "exception": "Some exception",
+            "exc_info": "Some exc info",
+        }
 
         # Import the actual module to access DEV
         import sys
@@ -614,7 +630,14 @@ class TestEdgeCasesAndErrorConditions:
 
     def test_configure_with_none_parameters(self):
         """Test configure() handles None parameters correctly."""
-        configure(log_level=None, log_file=None, disable=None, log_env=None, log_format=None, log_rotation=None)
+        configure(
+            log_level=None,
+            log_file=None,
+            disable=None,
+            log_env=None,
+            log_format=None,
+            log_rotation=None,
+        )
 
         config = structlog._config
         assert config is not None
@@ -986,7 +1009,11 @@ class TestBufferWriterBytesSerializationFix:
         import orjson
 
         # Simulate what add_serialized does - adds bytes to event_dict
-        serialized_data = {"timestamp": "2025-11-21T12:00:00Z", "message": "Test message", "level": "INFO"}
+        serialized_data = {
+            "timestamp": "2025-11-21T12:00:00Z",
+            "message": "Test message",
+            "level": "INFO",
+        }
         event_dict = {
             "timestamp": "2025-11-21T12:00:00Z",
             "event": "Test message with bytes",

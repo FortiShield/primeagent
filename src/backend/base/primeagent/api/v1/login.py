@@ -9,7 +9,11 @@ from primeagent.api.v1.schemas import Token
 from primeagent.initial_setup.setup import get_or_create_default_folder
 from primeagent.services.database.models.user.crud import get_user_by_id
 from primeagent.services.database.models.user.model import UserRead
-from primeagent.services.deps import get_auth_service, get_settings_service, get_variable_service
+from primeagent.services.deps import (
+    get_auth_service,
+    get_settings_service,
+    get_variable_service,
+)
 from pydantic import BaseModel
 
 router = APIRouter(tags=["Login"])
@@ -76,7 +80,9 @@ async def login_to_get_access_token(
         )
         await get_variable_service().initialize_user_variables(user.id, db)
         # Initialize agentic variables if agentic experience is enabled
-        from primeagent.api.utils.mcp.agentic_mcp import initialize_agentic_user_variables
+        from primeagent.api.utils.mcp.agentic_mcp import (
+            initialize_agentic_user_variables,
+        )
 
         # Create default project for user if it doesn't exist
         _ = await get_or_create_default_folder(db, user.id)
@@ -126,7 +132,9 @@ async def auto_login(response: Response, db: DbSession):
             )
 
             if get_settings_service().settings.agentic_experience:
-                from primeagent.api.utils.mcp.agentic_mcp import initialize_agentic_user_variables
+                from primeagent.api.utils.mcp.agentic_mcp import (
+                    initialize_agentic_user_variables,
+                )
 
                 await initialize_agentic_user_variables(user.id, db)
 

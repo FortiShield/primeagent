@@ -159,7 +159,7 @@ class TestLangWatchComponent(ComponentTestBaseWithoutClient):
         )
 
         # Mock the get_evaluators method (which doesn't exist, so create it)
-        def mock_get_evaluators(endpoint):  # noqa: ARG001
+        def mock_get_evaluators(endpoint):
             return mock_evaluators
 
         with patch.object(component, "get_evaluators", side_effect=mock_get_evaluators, create=True):
@@ -185,7 +185,7 @@ class TestLangWatchComponent(ComponentTestBaseWithoutClient):
         )
 
         # Mock the get_evaluators method (which doesn't exist, so create it)
-        def mock_get_evaluators(endpoint):  # noqa: ARG001
+        def mock_get_evaluators(endpoint):
             return mock_evaluators
 
         with patch.object(component, "get_evaluators", side_effect=mock_get_evaluators, create=True):
@@ -367,7 +367,11 @@ class TestLangWatchComponent(ComponentTestBaseWithoutClient):
         result = await component.evaluate()
 
         # Verify contexts were parsed correctly (contexts are split by comma, including whitespace)
-        assert request_data["data"]["contexts"] == ["context1", " context2", " context3"]
+        assert request_data["data"]["contexts"] == [
+            "context1",
+            " context2",
+            " context3",
+        ]
         assert isinstance(result, Data)
         assert result.data == expected_response
 

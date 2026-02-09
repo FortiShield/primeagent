@@ -12,7 +12,9 @@ from unittest.mock import MagicMock, patch
 from uuid import uuid4
 
 import pytest
-from primeagent.api.v2.workflow_reconstruction import reconstruct_workflow_response_from_job_id
+from primeagent.api.v2.workflow_reconstruction import (
+    reconstruct_workflow_response_from_job_id,
+)
 from primeagent.services.database.models.vertex_builds.model import VertexBuildTable
 
 
@@ -112,7 +114,10 @@ class TestWorkflowReconstruction:
 
         mock_flow = MagicMock()
         mock_flow.id = flow_id
-        mock_flow.data = {"nodes": [{"id": "node1"}, {"id": "node2"}, {"id": "node3"}], "edges": []}
+        mock_flow.data = {
+            "nodes": [{"id": "node1"}, {"id": "node2"}, {"id": "node3"}],
+            "edges": [],
+        }
 
         # Create vertex_builds for all 3 nodes
         mock_vertex_builds = []

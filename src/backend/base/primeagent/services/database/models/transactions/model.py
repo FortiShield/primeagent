@@ -3,7 +3,11 @@ from datetime import datetime, timezone
 from typing import Any
 from uuid import UUID, uuid4
 
-from primeagent.serialization.serialization import get_max_items_length, get_max_text_length, serialize
+from primeagent.serialization.serialization import (
+    get_max_items_length,
+    get_max_text_length,
+    serialize,
+)
 from pydantic import field_serializer, field_validator
 from sqlmodel import JSON, Column, Field, SQLModel
 
@@ -144,13 +148,21 @@ class TransactionBase(SQLModel):
     def serialize_inputs(self, data) -> dict:
         """Serialize inputs, sanitizing sensitive data and enforcing size limits."""
         sanitized = sanitize_data(data)
-        return serialize(sanitized, max_length=get_max_text_length(), max_items=get_max_items_length())
+        return serialize(
+            sanitized,
+            max_length=get_max_text_length(),
+            max_items=get_max_items_length(),
+        )
 
     @field_serializer("outputs")
     def serialize_outputs(self, data) -> dict:
         """Serialize outputs, sanitizing sensitive data and enforcing size limits."""
         sanitized = sanitize_data(data)
-        return serialize(sanitized, max_length=get_max_text_length(), max_items=get_max_items_length())
+        return serialize(
+            sanitized,
+            max_length=get_max_text_length(),
+            max_items=get_max_items_length(),
+        )
 
 
 class TransactionTable(TransactionBase, table=True):  # type: ignore[call-arg]
@@ -180,10 +192,18 @@ class TransactionLogsResponse(SQLModel):
     def serialize_inputs(self, data) -> dict:
         """Serialize inputs, sanitizing sensitive data and enforcing size limits."""
         sanitized = sanitize_data(data)
-        return serialize(sanitized, max_length=get_max_text_length(), max_items=get_max_items_length())
+        return serialize(
+            sanitized,
+            max_length=get_max_text_length(),
+            max_items=get_max_items_length(),
+        )
 
     @field_serializer("outputs")
     def serialize_outputs(self, data) -> dict:
         """Serialize outputs, sanitizing sensitive data and enforcing size limits."""
         sanitized = sanitize_data(data)
-        return serialize(sanitized, max_length=get_max_text_length(), max_items=get_max_items_length())
+        return serialize(
+            sanitized,
+            max_length=get_max_text_length(),
+            max_items=get_max_items_length(),
+        )

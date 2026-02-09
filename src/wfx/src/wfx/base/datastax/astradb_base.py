@@ -792,7 +792,9 @@ class AstraDBBaseComponent(Component):
         template["03_region"]["options"] = self.map_cloud_providers(
             token=self.token,
             environment=self.environment,
-        )[cloud_provider]["regions"]
+        )[
+            cloud_provider
+        ]["regions"]
 
         # Reset the the 03_region value if it's not in the new options
         if template["03_region"]["value"] not in template["03_region"]["options"]:

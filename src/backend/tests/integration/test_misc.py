@@ -30,7 +30,13 @@ async def test_run_flow_with_caching_success(client: AsyncClient, starter_projec
 async def test_run_flow_with_caching_invalid_flow_id(client: AsyncClient, created_api_key):
     invalid_flow_id = uuid4()
     headers = {"x-api-key": created_api_key.api_key}
-    payload = {"input_value": "", "input_type": "text", "output_type": "text", "tweaks": {}, "stream": False}
+    payload = {
+        "input_value": "",
+        "input_type": "text",
+        "output_type": "text",
+        "tweaks": {},
+        "stream": False,
+    }
     response = await client.post(f"/api/v1/run/{invalid_flow_id}", json=payload, headers=headers)
     assert response.status_code == status.HTTP_404_NOT_FOUND
     data = response.json()
@@ -42,7 +48,12 @@ async def test_run_flow_with_caching_invalid_flow_id(client: AsyncClient, create
 async def test_run_flow_with_caching_invalid_input_format(client: AsyncClient, starter_project, created_api_key):
     flow_id = starter_project["id"]
     headers = {"x-api-key": created_api_key.api_key}
-    payload = {"input_value": {"key": "value"}, "input_type": "text", "output_type": "text", "tweaks": {}}
+    payload = {
+        "input_value": {"key": "value"},
+        "input_type": "text",
+        "output_type": "text",
+        "tweaks": {},
+    }
     response = await client.post(f"/api/v1/run/{flow_id}", json=payload, headers=headers)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 

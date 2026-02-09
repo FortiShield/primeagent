@@ -128,9 +128,9 @@ def test_get_terminal_nodes():
     expected_terminal_ids = {"chat_output"}
     actual_terminal_ids = set(terminal_nodes)
 
-    assert actual_terminal_ids == expected_terminal_ids, (
-        f"Expected terminal nodes {expected_terminal_ids}, got {actual_terminal_ids}"
-    )
+    assert (
+        actual_terminal_ids == expected_terminal_ids
+    ), f"Expected terminal nodes {expected_terminal_ids}, got {actual_terminal_ids}"
 
     # Verify non-terminal nodes are not included
     assert "chat_input" not in terminal_nodes, "Input node should not be terminal (has outgoing edges)"
@@ -181,9 +181,9 @@ def test_get_terminal_nodes_with_agent_branches():
     expected_terminal_ids = {"chat_output", "text_output"}
     actual_terminal_ids = set(terminal_nodes)
 
-    assert actual_terminal_ids == expected_terminal_ids, (
-        f"Expected terminal nodes {expected_terminal_ids}, got {actual_terminal_ids}"
-    )
+    assert (
+        actual_terminal_ids == expected_terminal_ids
+    ), f"Expected terminal nodes {expected_terminal_ids}, got {actual_terminal_ids}"
 
     # Verify non-terminal nodes are not included
     assert "chat_input" not in terminal_nodes, "Input node should not be terminal (has outgoing edges)"

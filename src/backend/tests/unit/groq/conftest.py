@@ -12,10 +12,13 @@ import requests
 # Pytest configuration for custom markers and API key handling
 def pytest_configure(config):
     """Register custom markers."""
-    config.addinivalue_line("markers", "requires_api_key: mark test as requiring a real GROQ_API_KEY from environment")
+    config.addinivalue_line(
+        "markers",
+        "requires_api_key: mark test as requiring a real GROQ_API_KEY from environment",
+    )
 
 
-def pytest_collection_modifyitems(config, items):  # noqa: ARG001
+def pytest_collection_modifyitems(config, items):
     """Skip tests marked with requires_api_key if GROQ_API_KEY is not set."""
     skip_no_api_key = pytest.mark.skip(reason="GROQ_API_KEY not found in environment (.env)")
 

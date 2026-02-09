@@ -10,7 +10,9 @@ from typing import TYPE_CHECKING
 
 from primeagent.api.v1.schemas import RunResponse
 from primeagent.api.v2.converters import run_response_to_workflow_response
-from primeagent.services.database.models.vertex_builds.crud import get_vertex_builds_by_job_id
+from primeagent.services.database.models.vertex_builds.crud import (
+    get_vertex_builds_by_job_id,
+)
 from wfx.graph.graph.base import Graph
 from wfx.graph.schema import ResultData, RunOutputs
 from wfx.schema.workflow import WorkflowExecutionRequest

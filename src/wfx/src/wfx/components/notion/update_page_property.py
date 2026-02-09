@@ -11,17 +11,17 @@ from wfx.log.logger import logger
 from wfx.schema.data import Data
 
 
-class NotionPageUpdate(LCToolComponent):
+class notionPageUpdate(LCToolComponent):
     display_name: str = "Update Page Property "
-    description: str = "Update the properties of a Notion page."
+    description: str = "Update the properties of a notion page."
     documentation: str = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         StrInput(
             name="page_id",
             display_name="Page ID",
-            info="The ID of the Notion page to update.",
+            info="The ID of the notion page to update.",
         ),
         MultilineInput(
             name="properties",
@@ -30,14 +30,14 @@ class NotionPageUpdate(LCToolComponent):
         ),
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
     ]
 
-    class NotionPageUpdateSchema(BaseModel):
-        page_id: str = Field(..., description="The ID of the Notion page to update.")
+    class notionPageUpdateSchema(BaseModel):
+        page_id: str = Field(..., description="The ID of the notion page to update.")
         properties: str | dict[str, Any] = Field(
             ..., description="The properties to update on the page (as a JSON string or a dictionary)."
         )
@@ -56,10 +56,10 @@ class NotionPageUpdate(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="update_notion_page",
-            description="Update the properties of a Notion page. "
+            description="Update the properties of a notion page. "
             "IMPORTANT: Use the tool to check the Database properties for more details before using this tool.",
             func=self._update_notion_page,
-            args_schema=self.NotionPageUpdateSchema,
+            args_schema=self.notionPageUpdateSchema,
         )
 
     def _update_notion_page(self, page_id: str, properties: str | dict[str, Any]) -> dict[str, Any] | str:
@@ -67,7 +67,7 @@ class NotionPageUpdate(LCToolComponent):
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
             "Content-Type": "application/json",
-            "Notion-Version": "2022-06-28",  # Use the latest supported version
+            "notion-Version": "2022-06-28",  # Use the latest supported version
         }
 
         # Parse properties if it's a string
@@ -85,12 +85,12 @@ class NotionPageUpdate(LCToolComponent):
         data = {"properties": parsed_properties}
 
         try:
-            logger.info(f"Sending request to Notion API: URL: {url}, Data: {json.dumps(data)}")
+            logger.info(f"Sending request to notion API: URL: {url}, Data: {json.dumps(data)}")
             response = requests.patch(url, headers=headers, json=data, timeout=10)
             response.raise_for_status()
             updated_page = response.json()
 
-            logger.info(f"Successfully updated Notion page. Response: {json.dumps(updated_page)}")
+            logger.info(f"Successfully updated notion page. Response: {json.dumps(updated_page)}")
         except requests.exceptions.HTTPError as e:
             error_message = f"HTTP Error occurred: {e}"
             if e.response is not None:

@@ -87,15 +87,25 @@ class TestMCPComponentOutputProcessing:
 
         # Create mock output with various JSON types
         mock_content_item1 = MagicMock()
-        mock_content_item1.model_dump.return_value = {"type": "text", "text": '{"status": "success"}'}
+        mock_content_item1.model_dump.return_value = {
+            "type": "text",
+            "text": '{"status": "success"}',
+        }
 
         mock_content_item2 = MagicMock()
-        mock_content_item2.model_dump.return_value = {"type": "text", "text": '"just a string"'}
+        mock_content_item2.model_dump.return_value = {
+            "type": "text",
+            "text": '"just a string"',
+        }
 
         mock_content_item3 = MagicMock()
         mock_content_item3.model_dump.return_value = {"type": "text", "text": "42"}
 
-        mock_result.content = [mock_content_item1, mock_content_item2, mock_content_item3]
+        mock_result.content = [
+            mock_content_item1,
+            mock_content_item2,
+            mock_content_item3,
+        ]
         mock_tool.coroutine = AsyncMock(return_value=mock_result)
 
         component._tool_cache = {"test_tool": mock_tool}

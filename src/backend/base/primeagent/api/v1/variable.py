@@ -11,12 +11,19 @@ from primeagent.api.v1.models import (
     get_model_names_for_provider,
     get_provider_from_variable_name,
 )
-from primeagent.services.database.models.variable.model import VariableCreate, VariableRead, VariableUpdate
+from primeagent.services.database.models.variable.model import (
+    VariableCreate,
+    VariableRead,
+    VariableUpdate,
+)
 from primeagent.services.deps import get_variable_service
 from primeagent.services.variable.constants import CREDENTIAL_TYPE, GENERIC_TYPE
 from primeagent.services.variable.service import DatabaseVariableService
 from sqlalchemy.exc import NoResultFound
-from wfx.base.models.unified_models import get_model_provider_variable_mapping, validate_model_provider_key
+from wfx.base.models.unified_models import (
+    get_model_provider_variable_mapping,
+    validate_model_provider_key,
+)
 
 router = APIRouter(prefix="/variables", tags=["Variables"])
 model_provider_variable_mapping = get_model_provider_variable_mapping()

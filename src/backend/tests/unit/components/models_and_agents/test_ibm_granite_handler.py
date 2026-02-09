@@ -703,7 +703,10 @@ class TestCreateGraniteAgentDynamicInvoke:
         # We need to invoke the first part (RunnableLambda)
         # This will raise because ToolsAgentOutputParser expects AIMessage with tool_calls
         with (
-            patch("wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages", return_value=[]),
+            patch(
+                "wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages",
+                return_value=[],
+            ),
             contextlib.suppress(Exception),
         ):
             agent.invoke(inputs)
@@ -717,10 +720,16 @@ class TestCreateGraniteAgentDynamicInvoke:
         agent = create_granite_agent(self.mock_llm, self.mock_tools, self.mock_prompt, forced_iterations=2)
 
         # Invoke with 2 intermediate steps (past forced iterations)
-        inputs = {"input": "test", "intermediate_steps": [("action1", "result1"), ("action2", "result2")]}
+        inputs = {
+            "input": "test",
+            "intermediate_steps": [("action1", "result1"), ("action2", "result2")],
+        }
 
         with (
-            patch("wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages", return_value=[]),
+            patch(
+                "wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages",
+                return_value=[],
+            ),
             contextlib.suppress(Exception),
         ):
             agent.invoke(inputs)
@@ -740,7 +749,10 @@ class TestCreateGraniteAgentDynamicInvoke:
         inputs = {"input": "test", "intermediate_steps": []}
 
         with (
-            patch("wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages", return_value=[]),
+            patch(
+                "wfx.components.langchain_utilities.ibm_granite_handler.format_to_tool_messages",
+                return_value=[],
+            ),
             contextlib.suppress(Exception),
         ):
             agent.invoke(inputs)

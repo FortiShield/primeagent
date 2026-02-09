@@ -7,12 +7,28 @@ from urllib.parse import quote
 from uuid import UUID
 
 import orjson
-from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, Query, Response, UploadFile, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Depends,
+    File,
+    HTTPException,
+    Query,
+    Response,
+    UploadFile,
+    status,
+)
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import StreamingResponse
 from fastapi_pagination import Params
 from fastapi_pagination.ext.sqlmodel import apaginate
-from primeagent.api.utils import CurrentActiveUser, DbSession, cascade_delete_flow, custom_params, remove_api_keys
+from primeagent.api.utils import (
+    CurrentActiveUser,
+    DbSession,
+    cascade_delete_flow,
+    custom_params,
+    remove_api_keys,
+)
 from primeagent.api.utils.mcp.config_utils import validate_mcp_server_for_project
 from primeagent.api.v1.auth_helpers import handle_auth_settings_update
 from primeagent.api.v1.flows import create_flows
@@ -25,7 +41,10 @@ from primeagent.api.v1.schemas import FlowListCreate
 from primeagent.api.v2.mcp import update_server
 from primeagent.helpers.flow import generate_unique_flow_name
 from primeagent.helpers.folders import generate_unique_folder_name
-from primeagent.initial_setup.constants import ASSISTANT_FOLDER_NAME, STARTER_FOLDER_NAME
+from primeagent.initial_setup.constants import (
+    ASSISTANT_FOLDER_NAME,
+    STARTER_FOLDER_NAME,
+)
 from primeagent.services.auth.mcp_encryption import encrypt_auth_settings
 from primeagent.services.database.models.api_key.crud import create_api_key
 from primeagent.services.database.models.api_key.model import ApiKeyCreate
@@ -38,8 +57,14 @@ from primeagent.services.database.models.folder.model import (
     FolderReadWithFlows,
     FolderUpdate,
 )
-from primeagent.services.database.models.folder.pagination_model import FolderWithPaginatedFlows
-from primeagent.services.deps import get_service, get_settings_service, get_storage_service
+from primeagent.services.database.models.folder.pagination_model import (
+    FolderWithPaginatedFlows,
+)
+from primeagent.services.deps import (
+    get_service,
+    get_settings_service,
+    get_storage_service,
+)
 from primeagent.services.schema import ServiceType
 from sqlalchemy import or_, update
 from sqlalchemy.orm import selectinload
@@ -221,9 +246,7 @@ async def read_projects(
     try:
         projects = (
             await session.exec(
-                select(Folder).where(
-                    or_(Folder.user_id == current_user.id, Folder.user_id == None)  # noqa: E711
-                )
+                select(Folder).where(or_(Folder.user_id == current_user.id, Folder.user_id == None))  # noqa: E711
             )
         ).all()
         projects = [project for project in projects if project.name != STARTER_FOLDER_NAME]
@@ -235,7 +258,11 @@ async def read_projects(
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
-@router.get("/{project_id}", response_model=FolderWithPaginatedFlows | FolderReadWithFlows, status_code=200)
+@router.get(
+    "/{project_id}",
+    response_model=FolderWithPaginatedFlows | FolderReadWithFlows,
+    status_code=200,
+)
 async def read_project(
     *,
     session: DbSession,
@@ -282,7 +309,9 @@ async def read_project(
 
             with warnings.catch_warnings():
                 warnings.filterwarnings(
-                    "ignore", category=DeprecationWarning, module=r"fastapi_pagination\.ext\.sqlalchemy"
+                    "ignore",
+                    category=DeprecationWarning,
+                    module=r"fastapi_pagination\.ext\.sqlalchemy",
                 )
                 paginated_flows = await apaginate(session, stmt, params=params)
 

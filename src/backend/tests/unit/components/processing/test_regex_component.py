@@ -28,7 +28,8 @@ class TestRegexExtractorComponent(ComponentTestBaseWithoutClient):
     def test_successful_regex_extraction(self):
         # Test with email pattern
         component = RegexExtractorComponent(
-            input_text="Contact us at test@example.com or support@test.com", pattern=r"\b\w+@\w+\.\w+\b"
+            input_text="Contact us at test@example.com or support@test.com",
+            pattern=r"\b\w+@\w+\.\w+\b",
         )
 
         result = component.extract_matches()

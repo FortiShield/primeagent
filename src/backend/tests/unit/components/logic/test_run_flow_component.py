@@ -123,13 +123,7 @@ class TestRunFlowComponentHelperMethods:
         )
 
         build_config = dotdict(
-            {
-                "flow_name_selected": {
-                    "selected_metadata": {
-                        "updated_at": "2024-01-01T12:00:00Z"  # Older
-                    }
-                }
-            }
+            {"flow_name_selected": {"selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}}}  # Older
         )
 
         result = component.should_update_stale_flow(flow, build_config)
@@ -148,13 +142,7 @@ class TestRunFlowComponentHelperMethods:
         )
 
         build_config = dotdict(
-            {
-                "flow_name_selected": {
-                    "selected_metadata": {
-                        "updated_at": "2024-01-01T12:00:00Z"  # Same
-                    }
-                }
-            }
+            {"flow_name_selected": {"selected_metadata": {"updated_at": "2024-01-01T12:00:00Z"}}}  # Same
         )
 
         result = component.should_update_stale_flow(flow, build_config)
@@ -265,8 +253,20 @@ class TestRunFlowComponentUpdateBuildConfig:
         )
 
         mock_flows = [
-            Data(data={"name": "Flow 1", "id": str(uuid4()), "updated_at": "2024-01-01T12:00:00Z"}),
-            Data(data={"name": "Flow 2", "id": str(uuid4()), "updated_at": "2024-01-01T12:00:00Z"}),
+            Data(
+                data={
+                    "name": "Flow 1",
+                    "id": str(uuid4()),
+                    "updated_at": "2024-01-01T12:00:00Z",
+                }
+            ),
+            Data(
+                data={
+                    "name": "Flow 2",
+                    "id": str(uuid4()),
+                    "updated_at": "2024-01-01T12:00:00Z",
+                }
+            ),
         ]
 
         with patch.object(component, "alist_flows_by_flow_folder", new_callable=AsyncMock) as mock_list:
@@ -302,8 +302,20 @@ class TestRunFlowComponentUpdateBuildConfig:
         )
 
         mock_flows = [
-            Data(data={"name": "Flow 1", "id": str(uuid4()), "updated_at": "2024-01-01T12:00:00Z"}),
-            Data(data={"name": "Flow 2", "id": str(uuid4()), "updated_at": "2024-01-01T12:00:00Z"}),
+            Data(
+                data={
+                    "name": "Flow 1",
+                    "id": str(uuid4()),
+                    "updated_at": "2024-01-01T12:00:00Z",
+                }
+            ),
+            Data(
+                data={
+                    "name": "Flow 2",
+                    "id": str(uuid4()),
+                    "updated_at": "2024-01-01T12:00:00Z",
+                }
+            ),
         ]
 
         with patch.object(component, "alist_flows_by_flow_folder", new_callable=AsyncMock) as mock_list:
@@ -350,7 +362,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
         with patch.object(component, "load_graph_and_update_cfg", new_callable=AsyncMock) as mock_load:
             result = await component.update_build_config(
-                build_config=build_config, field_value=flow_name, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=flow_name,
+                field_name="flow_name_selected",
             )
 
             mock_load.assert_called_once_with(build_config, flow_id, updated_at)
@@ -372,7 +386,10 @@ class TestRunFlowComponentUpdateBuildConfig:
                 "_type": {},
                 "flow_name_selected": {
                     "options": [flow_name],
-                    "selected_metadata": {"id": flow_id, "updated_at": "2024-01-01T12:00:00Z"},
+                    "selected_metadata": {
+                        "id": flow_id,
+                        "updated_at": "2024-01-01T12:00:00Z",
+                    },
                 },
                 "flow_id_selected": {"value": None},
                 "session_id": {},
@@ -385,7 +402,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
             with pytest.raises(RuntimeError, match="Error building graph for flow"):
                 await component.update_build_config(
-                    build_config=build_config, field_value=flow_name, field_name="flow_name_selected"
+                    build_config=build_config,
+                    field_value=flow_name,
+                    field_name="flow_name_selected",
                 )
 
     @pytest.mark.asyncio
@@ -537,7 +556,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
         with patch.object(component, "load_graph_and_update_cfg", new_callable=AsyncMock) as mock_load:
             await component.update_build_config(
-                build_config=build_config, field_value=flow_id, field_name="flow_id_selected"
+                build_config=build_config,
+                field_value=flow_id,
+                field_name="flow_id_selected",
             )
 
             # Should call load_graph_and_update_cfg with the flow_id
@@ -573,7 +594,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
         with patch.object(component, "load_graph_and_update_cfg", new_callable=AsyncMock) as mock_load:
             result = await component.update_build_config(
-                build_config=build_config, field_value=flow_name, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=flow_name,
+                field_name="flow_name_selected",
             )
 
             # Should have derived the flow_id from selected_metadata
@@ -609,7 +632,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
         with patch.object(component, "load_graph_and_update_cfg", new_callable=AsyncMock) as mock_load:
             result = await component.update_build_config(
-                build_config=build_config, field_value=flow_name, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=flow_name,
+                field_name="flow_name_selected",
             )
 
             # Should have kept the existing flow_id
@@ -638,7 +663,13 @@ class TestRunFlowComponentUpdateBuildConfig:
         )
 
         mock_flows = [
-            Data(data={"name": "Flow 1", "id": flow_id, "updated_at": "2024-01-02T12:00:00Z"}),
+            Data(
+                data={
+                    "name": "Flow 1",
+                    "id": flow_id,
+                    "updated_at": "2024-01-02T12:00:00Z",
+                }
+            ),
         ]
 
         with (
@@ -648,7 +679,9 @@ class TestRunFlowComponentUpdateBuildConfig:
             mock_list.return_value = mock_flows
 
             await component.update_build_config(
-                build_config=build_config, field_value=None, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=None,
+                field_name="flow_name_selected",
             )
 
             # Should have checked if flow is stale
@@ -684,7 +717,9 @@ class TestRunFlowComponentUpdateBuildConfig:
 
         with patch.object(component, "load_graph_and_update_cfg", new_callable=AsyncMock) as mock_load:
             result = await component.update_build_config(
-                build_config=build_config, field_value=flow_name, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=flow_name,
+                field_name="flow_name_selected",
             )
 
             # Should have derived flow_id from metadata

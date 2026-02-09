@@ -79,7 +79,11 @@ class TestChatOutput(ComponentTestBaseWithClient):
     async def test_process_list_input(self, component_class, default_kwargs):
         """Test processing a list of inputs."""
         component = component_class(**default_kwargs)
-        input_list = ["First message", Data(text="Second message"), Message(text="Third message")]
+        input_list = [
+            "First message",
+            Data(text="Second message"),
+            Message(text="Third message"),
+        ]
         component.input_value = input_list
         result = await component.message_response()
         assert "First message" in result.text
@@ -94,5 +98,8 @@ class TestChatOutput(ComponentTestBaseWithClient):
             await component.message_response()
 
         component.input_value = 123  # Invalid type
-        with pytest.raises(TypeError, match="Expected Data or DataFrame or Message or str, Generator or None"):
+        with pytest.raises(
+            TypeError,
+            match="Expected Data or DataFrame or Message or str, Generator or None",
+        ):
             await component.message_response()

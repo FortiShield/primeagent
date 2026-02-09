@@ -7,7 +7,11 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 from primeagent.services.base import Service
-from primeagent.services.database.models.jobs.crud import get_job_by_job_id, get_jobs_by_flow_id, update_job_status
+from primeagent.services.database.models.jobs.crud import (
+    get_job_by_job_id,
+    get_jobs_by_flow_id,
+    update_job_status,
+)
 from primeagent.services.database.models.jobs.model import Job, JobStatus
 from primeagent.services.deps import session_scope
 

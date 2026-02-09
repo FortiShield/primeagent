@@ -4,7 +4,12 @@ from uuid import uuid4
 import pytest
 from primeagent.services.database.models.flow.model import FlowCreate
 from wfx.components.flow_controls.run_flow import RunFlowComponent
-from wfx.components.input_output import ChatInput, ChatOutput, TextInputComponent, TextOutputComponent
+from wfx.components.input_output import (
+    ChatInput,
+    ChatOutput,
+    TextInputComponent,
+    TextOutputComponent,
+)
 from wfx.graph.graph.base import Graph
 from wfx.helpers.flow import run_flow
 from wfx.schema.data import Data
@@ -85,7 +90,9 @@ class TestRunFlowEndToEnd:
 
             # NO MOCKING - Use real component methods that will hit real database
             updated_config = await component.update_build_config(
-                build_config=build_config, field_value=None, field_name="flow_name_selected"
+                build_config=build_config,
+                field_value=None,
+                field_name="flow_name_selected",
             )
 
             # Verify the real flow appears in options (should see target flow in same folder)
@@ -118,7 +125,13 @@ class TestRunFlowEndToEnd:
         graph = Graph(start=chat_input, end=text_output)
 
         # Execute run_flow with real graph
-        inputs = [{"components": [chat_input.get_id()], "input_value": "Hello, world!", "type": "chat"}]
+        inputs = [
+            {
+                "components": [chat_input.get_id()],
+                "input_value": "Hello, world!",
+                "type": "chat",
+            }
+        ]
 
         result = await run_flow(
             user_id=user_id,
@@ -152,7 +165,10 @@ class TestRunFlowComponentWithTools:
         # Create a folder for our flows
         folder_response = await client.post(
             "api/v1/folders/",
-            json={"name": "Tool Test Folder", "description": "Folder for tool generation tests"},
+            json={
+                "name": "Tool Test Folder",
+                "description": "Folder for tool generation tests",
+            },
             headers=logged_in_headers,
         )
         assert folder_response.status_code == 201
@@ -167,7 +183,11 @@ class TestRunFlowComponentWithTools:
         tool_flow = FlowCreate(**graph_dict, folder_id=folder_id, user_id=str(active_user.id))
 
         # Create tool flow via API (will be associated with active_user via logged_in_headers)
-        response = await client.post("api/v1/flows/", json=tool_flow.model_dump(mode="json"), headers=logged_in_headers)
+        response = await client.post(
+            "api/v1/flows/",
+            json=tool_flow.model_dump(mode="json"),
+            headers=logged_in_headers,
+        )
         assert response.status_code == 201
         flow_data = response.json()
         flow_id = flow_data["id"]
@@ -245,7 +265,11 @@ class TestRunFlowOutputResolution:
         flow = FlowCreate(**graph_dict)
 
         # Create flow via API
-        response = await client.post("api/v1/flows/", json=flow.model_dump(mode="json"), headers=logged_in_headers)
+        response = await client.post(
+            "api/v1/flows/",
+            json=flow.model_dump(mode="json"),
+            headers=logged_in_headers,
+        )
         assert response.status_code == 201
         flow_data = response.json()
         flow_id = flow_data["id"]
@@ -476,7 +500,10 @@ class TestRunFlowInternalLogic:
             component.cache_flow = False  # Disable cache to ensure fresh graph load
 
             # Set up tweaks for both components
-            tweaks = {"input_node_1~input_value": "tweaked_value_1", "input_node_2~input_value": "tweaked_value_2"}
+            tweaks = {
+                "input_node_1~input_value": "tweaked_value_1",
+                "input_node_2~input_value": "tweaked_value_2",
+            }
             component.flow_tweak_data = tweaks
             component._attributes = {"flow_tweak_data": tweaks}
 
@@ -490,7 +517,10 @@ class TestRunFlowInternalLogic:
             run_output = result[0]
 
             # Check output for input_node_1
-            output_1 = next((o for o in run_output.outputs if o.component_id == "input_node_1"), None)
+            output_1 = next(
+                (o for o in run_output.outputs if o.component_id == "input_node_1"),
+                None,
+            )
             assert output_1 is not None, "Did not find output for input_node_1"
 
             message_1 = output_1.results["text"]
@@ -500,7 +530,10 @@ class TestRunFlowInternalLogic:
                 assert message_1.get("text") == "tweaked_value_1"
 
             # Check output for input_node_2
-            output_2 = next((o for o in run_output.outputs if o.component_id == "input_node_2"), None)
+            output_2 = next(
+                (o for o in run_output.outputs if o.component_id == "input_node_2"),
+                None,
+            )
             assert output_2 is not None, "Did not find output for input_node_2"
 
             message_2 = output_2.results["text"]

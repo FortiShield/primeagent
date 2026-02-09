@@ -600,7 +600,13 @@ class TestPayloadEdgeCases:
     def test_payload_serialization_with_none_values(self):
         """Test payload serialization when optional fields are None."""
         # Test with client_type as None
-        run_payload = RunPayload(run_seconds=60, run_success=True, client_type=None, run_error_message="", run_id=None)
+        run_payload = RunPayload(
+            run_seconds=60,
+            run_success=True,
+            client_type=None,
+            run_error_message="",
+            run_id=None,
+        )
 
         data = run_payload.model_dump(by_alias=True, exclude_none=True)
         assert "clientType" not in data  # Should be excluded when None
@@ -711,7 +717,13 @@ class TestPayloadIntegration:
         shutdown_payload = ShutdownPayload(time_running=3600, client_type="oss")
 
         # Verify all payloads have consistent client_type
-        all_payloads = [version_payload, run_payload, playground_payload, shutdown_payload, *component_payloads]
+        all_payloads = [
+            version_payload,
+            run_payload,
+            playground_payload,
+            shutdown_payload,
+            *component_payloads,
+        ]
         client_types = [p.client_type for p in all_payloads]
         assert all(ct == "oss" for ct in client_types)
 
@@ -835,7 +847,13 @@ class TestPayloadPerformance:
         # Create 1000 payload objects
         payloads = []
         for i in range(1000):
-            payload = RunPayload(run_seconds=i, run_success=True, client_type="oss", run_id=None, run_error_message="")
+            payload = RunPayload(
+                run_seconds=i,
+                run_success=True,
+                client_type="oss",
+                run_id=None,
+                run_error_message="",
+            )
             payloads.append(payload)
 
         creation_time = time.time() - start_time

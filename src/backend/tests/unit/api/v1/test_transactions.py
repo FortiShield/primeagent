@@ -488,7 +488,8 @@ class TestTransactionsEndpoint:
         """Test GET /monitor/transactions with custom pagination parameters."""
         flow_id = "00000000-0000-0000-0000-000000000000"
         response = await client.get(
-            f"api/v1/monitor/transactions?flow_id={flow_id}&page=1&size=10", headers=logged_in_headers
+            f"api/v1/monitor/transactions?flow_id={flow_id}&page=1&size=10",
+            headers=logged_in_headers,
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -505,7 +506,10 @@ class TestTransactionsEndpoint:
     @pytest.mark.usefixtures("active_user")
     async def test_get_transactions_invalid_flow_id_format(self, client: AsyncClient, logged_in_headers):
         """Test GET /monitor/transactions with invalid flow_id format."""
-        response = await client.get("api/v1/monitor/transactions?flow_id=invalid-uuid", headers=logged_in_headers)
+        response = await client.get(
+            "api/v1/monitor/transactions?flow_id=invalid-uuid",
+            headers=logged_in_headers,
+        )
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     @pytest.mark.usefixtures("active_user")

@@ -185,9 +185,9 @@ class TestBuildVertexLoopException:
             is_loop_component = vertex.display_name == "Loop" or vertex.is_loop
             should_build = not vertex.frozen or is_loop_component
 
-            assert should_build == expected, (
-                f"Failed for frozen={frozen}, is_loop={is_loop}: expected {expected}, got {should_build}"
-            )
+            assert (
+                should_build == expected
+            ), f"Failed for frozen={frozen}, is_loop={is_loop}: expected {expected}, got {should_build}"
 
 
 class TestVertexBuildLoopException:
@@ -339,9 +339,9 @@ class TestLoopEvaluateStopLoop:
             # This is the logic from evaluate_stop_loop
             result = current_index > data_length
 
-            assert result == expected_stop, (
-                f"Failed for index={current_index}, length={data_length}: expected {expected_stop}, got {result}"
-            )
+            assert (
+                result == expected_stop
+            ), f"Failed for index={current_index}, length={data_length}: expected {expected_stop}, got {result}"
 
 
 class TestFrozenLoopScenarios:

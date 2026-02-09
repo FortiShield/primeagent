@@ -6,7 +6,10 @@ from uuid import UUID
 
 from fastapi import HTTPException
 from primeagent.api.v2.mcp import get_server_list, update_server
-from primeagent.services.auth.mcp_encryption import decrypt_auth_settings, encrypt_auth_settings
+from primeagent.services.auth.mcp_encryption import (
+    decrypt_auth_settings,
+    encrypt_auth_settings,
+)
 from primeagent.services.database.models import Flow, Folder
 from primeagent.services.database.models.api_key.crud import create_api_key
 from primeagent.services.database.models.api_key.model import ApiKeyCreate

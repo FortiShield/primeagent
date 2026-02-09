@@ -34,7 +34,12 @@ load_env_vars()
 
 async def create_global_variable(client: AsyncClient, headers, name, value, variable_type="credential"):
     """Create a global variable in Primeagent."""
-    payload = {"name": name, "value": value, "type": variable_type, "default_fields": []}
+    payload = {
+        "name": name,
+        "value": value,
+        "type": variable_type,
+        "default_fields": [],
+    }
 
     response = await client.post("/api/v1/variables/", json=payload, headers=headers)
     if response.status_code != 201:
@@ -347,7 +352,11 @@ async def test_openai_responses_malformed_request(client: AsyncClient, created_a
         {"input": "Hello"},  # Missing model
         {"model": 123, "input": "Hello"},  # Wrong type for model
         {"model": "flow-id", "input": 123},  # Wrong type for input
-        {"model": "flow-id", "input": "Hello", "stream": "yes"},  # Wrong type for stream
+        {
+            "model": "flow-id",
+            "input": "Hello",
+            "stream": "yes",
+        },  # Wrong type for stream
     ]
 
     for payload in test_cases:
@@ -391,7 +400,12 @@ async def test_openai_responses_background_processing(client: AsyncClient, creat
     flow, headers = await load_and_prepare_flow(client, created_api_key)
 
     # Test with background=True
-    payload = {"model": flow["id"], "input": "Hello", "background": True, "stream": False}
+    payload = {
+        "model": flow["id"],
+        "input": "Hello",
+        "background": True,
+        "stream": False,
+    }
 
     response = await client.post("/api/v1/responses", json=payload, headers=headers)
     assert response.status_code == 200

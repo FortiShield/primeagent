@@ -7,22 +7,22 @@ from wfx.inputs.inputs import SecretStrInput
 from wfx.schema.data import Data
 
 
-class NotionUserList(LCToolComponent):
+class notionUserList(LCToolComponent):
     display_name = "List Users "
-    description = "Retrieve users from Notion."
+    description = "Retrieve users from notion."
     documentation = "https://docs.agent.khulnasoft.com/bundles-notion"
-    icon = "NotionDirectoryLoader"
+    icon = "notionDirectoryLoader"
 
     inputs = [
         SecretStrInput(
             name="notion_secret",
-            display_name="Notion Secret",
-            info="The Notion integration token.",
+            display_name="notion Secret",
+            info="The notion integration token.",
             required=True,
         ),
     ]
 
-    class NotionUserListSchema(BaseModel):
+    class notionUserListSchema(BaseModel):
         pass
 
     def run_model(self) -> list[Data]:
@@ -45,16 +45,16 @@ class NotionUserList(LCToolComponent):
     def build_tool(self) -> Tool:
         return StructuredTool.from_function(
             name="notion_list_users",
-            description="Retrieve users from Notion.",
+            description="Retrieve users from notion.",
             func=self._list_users,
-            args_schema=self.NotionUserListSchema,
+            args_schema=self.notionUserListSchema,
         )
 
     def _list_users(self) -> list[dict]:
         url = "https://api.notion.com/v1/users"
         headers = {
             "Authorization": f"Bearer {self.notion_secret}",
-            "Notion-Version": "2022-06-28",
+            "notion-Version": "2022-06-28",
         }
 
         response = requests.get(url, headers=headers, timeout=10)

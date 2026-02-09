@@ -163,9 +163,7 @@ class TestWorkflowDeveloperAPIProtection:
         mock_settings_dev_api_enabled,  # noqa: ARG002
     ):
         """Test POST workflow/stop endpoint is allowed when developer API is enabled - job not found."""
-        request_data = {
-            "job_id": "550e8400-e29b-41d4-a716-446655440001"  # Non-existent job ID
-        }
+        request_data = {"job_id": "550e8400-e29b-41d4-a716-446655440001"}  # Non-existent job ID
 
         headers = {"x-api-key": created_api_key.api_key}
         response = await client.post(
@@ -221,7 +219,12 @@ class TestWorkflowDeveloperAPIProtection:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow.id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow.id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.post(
@@ -338,7 +341,12 @@ class TestWorkflowErrorHandling:
     ):
         """Test that non-existent flow returns 404 with FLOW_NOT_FOUND error code."""
         flow_id = str(uuid4())
-        request_data = {"flow_id": flow_id, "background": False, "stream": False, "inputs": None}
+        request_data = {
+            "flow_id": flow_id,
+            "background": False,
+            "stream": False,
+            "inputs": None,
+        }
 
         headers = {"x-api-key": created_api_key.api_key}
         response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -357,7 +365,12 @@ class TestWorkflowErrorHandling:
     ):
         """Test that database errors return 503 with DATABASE_ERROR code."""
         flow_id = str(uuid4())
-        request_data = {"flow_id": flow_id, "background": False, "stream": False, "inputs": None}
+        request_data = {
+            "flow_id": flow_id,
+            "background": False,
+            "stream": False,
+            "inputs": None,
+        }
 
         # Mock get_flow_by_id_or_endpoint_name to raise OperationalError
         with patch("primeagent.api.v2.workflow.get_flow_by_id_or_endpoint_name") as mock_get_flow:
@@ -395,7 +408,12 @@ class TestWorkflowErrorHandling:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -436,7 +454,12 @@ class TestWorkflowErrorHandling:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -479,16 +502,24 @@ class TestWorkflowErrorHandling:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             # Mock execute_sync_workflow to sleep longer than timeout
-            async def slow_execution(*args, **kwargs):  # noqa: ARG001
+            async def slow_execution(*args, **kwargs):
                 await asyncio.sleep(2)  # Sleep for 2 seconds
                 return MagicMock()
 
             # Temporarily reduce timeout for testing
             with (
-                patch("primeagent.api.v2.workflow.execute_sync_workflow", side_effect=slow_execution),
+                patch(
+                    "primeagent.api.v2.workflow.execute_sync_workflow",
+                    side_effect=slow_execution,
+                ),
                 patch("primeagent.api.v2.workflow.EXECUTION_TIMEOUT", 0.5),  # 0.5 second timeout
             ):
                 headers = {"x-api-key": created_api_key.api_key}
@@ -611,7 +642,12 @@ class TestWorkflowErrorHandling:
     ):
         """Test that all error responses have consistent structure."""
         flow_id = str(uuid4())
-        request_data = {"flow_id": flow_id, "background": False, "stream": False, "inputs": None}
+        request_data = {
+            "flow_id": flow_id,
+            "background": False,
+            "stream": False,
+            "inputs": None,
+        }
 
         headers = {"x-api-key": created_api_key.api_key}
         response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -655,7 +691,12 @@ class TestWorkflowErrorHandling:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             # Mock execute_sync_workflow to raise WorkflowValidationError
             with patch("primeagent.api.v2.workflow.execute_sync_workflow") as mock_execute:
@@ -718,7 +759,12 @@ class TestWorkflowSyncExecution:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -767,7 +813,12 @@ class TestWorkflowSyncExecution:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             # Mock run_graph_internal to raise a component execution error
             with patch("primeagent.api.v2.workflow.run_graph_internal") as mock_run:
@@ -830,7 +881,12 @@ class TestWorkflowSyncExecution:
             # Mock successful execution with ChatOutput
             mock_result_data = MagicMock()
             mock_result_data.component_id = "ChatOutput-xyz789"
-            mock_result_data.outputs = {"message": {"message": "I'm doing well, thank you for asking!", "type": "text"}}
+            mock_result_data.outputs = {
+                "message": {
+                    "message": "I'm doing well, thank you for asking!",
+                    "type": "text",
+                }
+            }
             mock_result_data.metadata = {}
 
             # Wrap ResultData in RunOutputs
@@ -967,7 +1023,7 @@ class TestWorkflowSyncExecution:
                 "stream": False,
                 "inputs": {
                     "TextInput-abc.text": "Content to save",
-                    "SaveToFile-xyz.file_path": "/tmp/output.txt",  # noqa: S108
+                    "SaveToFile-xyz.file_path": "/tmp/output.txt",
                 },
             }
 
@@ -975,7 +1031,10 @@ class TestWorkflowSyncExecution:
             mock_result_data = MagicMock()
             mock_result_data.component_id = "SaveToFile-xyz"
             mock_result_data.outputs = {
-                "message": {"message": "File saved successfully to /tmp/output.txt", "type": "text"}
+                "message": {
+                    "message": "File saved successfully to /tmp/output.txt",
+                    "type": "text",
+                }
             }
             mock_result_data.metadata = {"bytes_written": 1024}
 
@@ -1044,7 +1103,10 @@ class TestWorkflowSyncExecution:
 
             with patch("primeagent.api.v2.workflow.run_graph_internal") as mock_run:
                 # run_graph_internal returns tuple[list[RunOutputs], str]
-                mock_run.return_value = ([mock_chat_output, mock_file_output], "session-202")
+                mock_run.return_value = (
+                    [mock_chat_output, mock_file_output],
+                    "session-202",
+                )
 
                 headers = {"x-api-key": created_api_key.api_key}
                 response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -1085,7 +1147,12 @@ class TestWorkflowSyncExecution:
             await session.refresh(flow)
 
         try:
-            request_data = {"flow_id": str(flow_id), "background": False, "stream": False, "inputs": None}
+            request_data = {
+                "flow_id": str(flow_id),
+                "background": False,
+                "stream": False,
+                "inputs": None,
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.post("api/v2/workflows", json=request_data, headers=headers)
@@ -1428,7 +1495,11 @@ class TestWorkflowStatus:
             mock_flow.id = flow_id
             mock_get_flow.return_value = mock_flow
 
-            mock_reconstruct.return_value = {"flow_id": str(flow_id), "status": "completed", "outputs": {}}
+            mock_reconstruct.return_value = {
+                "flow_id": str(flow_id),
+                "status": "completed",
+                "outputs": {},
+            }
 
             headers = {"x-api-key": created_api_key.api_key}
             response = await client.get(f"api/v2/workflows?job_id={job_id}", headers=headers)

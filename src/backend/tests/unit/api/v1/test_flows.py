@@ -211,7 +211,10 @@ async def test_read_flows_user_isolation(client: AsyncClient, logged_in_headers,
         await session.refresh(other_user)
 
     # Login as the other user to get headers
-    login_data = {"username": "other_test_user", "password": "testpassword"}  # pragma: allowlist secret
+    login_data = {
+        "username": "other_test_user",
+        "password": "testpassword",
+    }  # pragma: allowlist secret
     response = await client.post("api/v1/login", data=login_data)
     assert response.status_code == 200
     tokens = response.json()
@@ -575,7 +578,10 @@ async def test_upsert_flow_returns_404_for_other_users_flow(client: AsyncClient,
         await session.commit()
 
     # Login as other user and create a flow
-    login_data = {"username": "other_user_for_upsert_test", "password": "testpassword"}  # pragma: allowlist secret
+    login_data = {
+        "username": "other_user_for_upsert_test",
+        "password": "testpassword",
+    }  # pragma: allowlist secret
     login_response = await client.post("api/v1/login", data=login_data)
     assert login_response.status_code == status.HTTP_200_OK, f"Login failed: {login_response.text}"
     other_user_headers = {"Authorization": f"Bearer {login_response.json()['access_token']}"}
@@ -586,7 +592,11 @@ async def test_upsert_flow_returns_404_for_other_users_flow(client: AsyncClient,
 
     # Try to upsert other user's flow with original user's credentials
     update_data = {"name": "trying_to_steal", "data": {}}
-    response = await client.put(f"api/v1/flows/{other_user_flow_id}", json=update_data, headers=logged_in_headers)
+    response = await client.put(
+        f"api/v1/flows/{other_user_flow_id}",
+        json=update_data,
+        headers=logged_in_headers,
+    )
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert "not found" in response.json()["detail"].lower()
@@ -684,15 +694,27 @@ async def test_upsert_flow_returns_409_for_name_conflict_on_update(client: Async
 async def test_upsert_flow_returns_409_for_endpoint_conflict_on_update(client: AsyncClient, logged_in_headers):
     """Test that PUT returns 409 when endpoint_name conflicts with another flow during UPDATE."""
     # Create two flows with different endpoint names
-    first_flow = {"name": "endpoint_flow_one", "endpoint_name": "endpoint_one", "data": {}}
-    second_flow = {"name": "endpoint_flow_two", "endpoint_name": "endpoint_two", "data": {}}
+    first_flow = {
+        "name": "endpoint_flow_one",
+        "endpoint_name": "endpoint_one",
+        "data": {},
+    }
+    second_flow = {
+        "name": "endpoint_flow_two",
+        "endpoint_name": "endpoint_two",
+        "data": {},
+    }
 
     await client.post("api/v1/flows/", json=first_flow, headers=logged_in_headers)
     second_response = await client.post("api/v1/flows/", json=second_flow, headers=logged_in_headers)
     second_flow_id = second_response.json()["id"]
 
     # Try to update second flow to have first flow's endpoint_name
-    update_data = {"name": "endpoint_flow_two", "endpoint_name": "endpoint_one", "data": {}}
+    update_data = {
+        "name": "endpoint_flow_two",
+        "endpoint_name": "endpoint_one",
+        "data": {},
+    }
 
     response = await client.put(f"api/v1/flows/{second_flow_id}", json=update_data, headers=logged_in_headers)
 

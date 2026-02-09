@@ -1,9 +1,23 @@
 from typing import Annotated
 
-from pydantic import BaseModel, Discriminator, Field, Tag, field_serializer, field_validator
+from pydantic import (
+    BaseModel,
+    Discriminator,
+    Field,
+    Tag,
+    field_serializer,
+    field_validator,
+)
 from typing_extensions import TypedDict
 
-from .content_types import CodeContent, ErrorContent, JSONContent, MediaContent, TextContent, ToolContent
+from .content_types import (
+    CodeContent,
+    ErrorContent,
+    JSONContent,
+    MediaContent,
+    TextContent,
+    ToolContent,
+)
 
 
 def _get_type(d: dict | BaseModel) -> str | None:

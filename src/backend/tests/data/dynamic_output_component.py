@@ -14,7 +14,12 @@ class DynamicOutputComponent(Component):
 
     inputs = [
         MessageTextInput(name="input_value", display_name="Input Value", value="Hello, World!"),
-        BoolInput(name="show_output", display_name="Show Output", value=True, real_time_refresh=True),
+        BoolInput(
+            name="show_output",
+            display_name="Show Output",
+            value=True,
+            real_time_refresh=True,
+        ),
     ]
 
     outputs = [
@@ -25,7 +30,11 @@ class DynamicOutputComponent(Component):
         if field_name == "show_output":
             if field_value:
                 frontend_node["outputs"].append(
-                    Output(display_name="Tool Output", name="tool_output", method="build_output")
+                    Output(
+                        display_name="Tool Output",
+                        name="tool_output",
+                        method="build_output",
+                    )
                 )
             else:
                 # remove the output

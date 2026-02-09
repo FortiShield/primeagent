@@ -3,7 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from primeagent.services.factory import ServiceFactory
-from primeagent.services.variable.service import DatabaseVariableService, VariableService
+from primeagent.services.variable.service import (
+    DatabaseVariableService,
+    VariableService,
+)
 from typing_extensions import override
 
 if TYPE_CHECKING:

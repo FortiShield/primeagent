@@ -10,7 +10,9 @@ from primeagent.services.database.models.folder.model import (
     FolderRead,
     FolderReadWithFlows,
 )
-from primeagent.services.database.models.folder.pagination_model import FolderWithPaginatedFlows
+from primeagent.services.database.models.folder.pagination_model import (
+    FolderWithPaginatedFlows,
+)
 
 router = APIRouter(prefix="/folders", tags=["Folders"])
 
@@ -30,7 +32,11 @@ async def read_folders_redirect():
     return RedirectResponse(url="/api/v1/projects/", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
 
 
-@router.get("/{folder_id}", response_model=FolderWithPaginatedFlows | FolderReadWithFlows, status_code=200)
+@router.get(
+    "/{folder_id}",
+    response_model=FolderWithPaginatedFlows | FolderReadWithFlows,
+    status_code=200,
+)
 async def read_folder_redirect(
     *,
     folder_id: UUID,
@@ -65,7 +71,10 @@ async def update_folder_redirect(
     folder_id: UUID,
 ):
     """Redirect to the projects endpoint."""
-    return RedirectResponse(url=f"/api/v1/projects/{folder_id}", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    return RedirectResponse(
+        url=f"/api/v1/projects/{folder_id}",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    )
 
 
 @router.delete("/{folder_id}", status_code=204)
@@ -74,7 +83,10 @@ async def delete_folder_redirect(
     folder_id: UUID,
 ):
     """Redirect to the projects endpoint."""
-    return RedirectResponse(url=f"/api/v1/projects/{folder_id}", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    return RedirectResponse(
+        url=f"/api/v1/projects/{folder_id}",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    )
 
 
 @router.get("/download/{folder_id}", status_code=200)
@@ -84,7 +96,8 @@ async def download_file_redirect(
 ):
     """Redirect to the projects endpoint."""
     return RedirectResponse(
-        url=f"/api/v1/projects/download/{folder_id}", status_code=status.HTTP_307_TEMPORARY_REDIRECT
+        url=f"/api/v1/projects/download/{folder_id}",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
     )
 
 

@@ -185,9 +185,24 @@ def loop_flow():
             "Output: A single well-formed JSON object, and nothing else."
         ),
         output_schema=[  # Fixed schema types to match expected format
-            {"name": "summary", "type": "str", "description": "Key summary of the content", "multiple": False},
-            {"name": "topics", "type": "list", "description": "Main topics covered", "multiple": False},
-            {"name": "source_url", "type": "str", "description": "Source URL of the content", "multiple": False},
+            {
+                "name": "summary",
+                "type": "str",
+                "description": "Key summary of the content",
+                "multiple": False,
+            },
+            {
+                "name": "topics",
+                "type": "list",
+                "description": "Main topics covered",
+                "multiple": False,
+            },
+            {
+                "name": "source_url",
+                "type": "str",
+                "description": "Source URL of the content",
+                "multiple": False,
+            },
         ],
     )
 
@@ -401,7 +416,7 @@ class TestLoopComponentSubgraphExecution:
 
         # Create async context manager for create_subgraph
         @asynccontextmanager
-        async def mock_create_subgraph(vertex_ids):  # noqa: ARG001
+        async def mock_create_subgraph(vertex_ids):
             yield mock_subgraph
 
         with (
@@ -444,7 +459,7 @@ class TestLoopComponentSubgraphExecution:
         # Create a mock context that returns data_list when get is called
         mock_ctx = MagicMock()
         mock_ctx.get = MagicMock(
-            side_effect=lambda key, default=None: data_list if key == f"{loop._id}_data" else default
+            side_effect=lambda key, default=None: (data_list if key == f"{loop._id}_data" else default)
         )
 
         with (
@@ -479,7 +494,11 @@ class TestLoopComponentSubgraphExecution:
         mock_vertex.outgoing_edges = [mock_edge]
 
         mock_graph = MagicMock()
-        mock_graph.successor_map = {"component_a": ["component_b"], "component_b": ["loop_end"], "loop_end": []}
+        mock_graph.successor_map = {
+            "component_a": ["component_b"],
+            "component_b": ["loop_end"],
+            "loop_end": [],
+        }
 
         loop._vertex = mock_vertex
 

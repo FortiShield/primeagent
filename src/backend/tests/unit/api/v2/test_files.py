@@ -32,7 +32,7 @@ from tests.conftest import _delete_transactions_and_vertex_builds
 
 
 @pytest.fixture(name="files_created_api_key")
-async def files_created_api_key(files_client, files_active_user):  # noqa: ARG001
+async def files_created_api_key(files_client, files_active_user):
     hashed = get_password_hash("random_key")
     api_key = ApiKey(
         name="files_created_api_key",
@@ -60,7 +60,7 @@ async def files_created_api_key(files_client, files_active_user):  # noqa: ARG00
 
 
 @pytest.fixture(name="files_active_user")
-async def files_active_user(files_client):  # noqa: ARG001
+async def files_active_user(files_client):
     async with session_scope() as session:
         user = User(
             username="files_active_user",
@@ -571,7 +571,7 @@ def aws_credentials():
 
 
 @pytest.fixture(name="s3_files_created_api_key")
-async def s3_files_created_api_key(s3_files_client, s3_files_active_user):  # noqa: ARG001
+async def s3_files_created_api_key(s3_files_client, s3_files_active_user):
     hashed = get_password_hash("s3_random_key")
     api_key = ApiKey(
         name="s3_files_created_api_key",
@@ -599,7 +599,7 @@ async def s3_files_created_api_key(s3_files_client, s3_files_active_user):  # no
 
 
 @pytest.fixture(name="s3_files_active_user")
-async def s3_files_active_user(s3_files_client):  # noqa: ARG001
+async def s3_files_active_user(s3_files_client):
     async with session_scope() as session:
         user = User(
             username="s3_files_active_user",
@@ -628,7 +628,7 @@ async def s3_files_active_user(s3_files_client):  # noqa: ARG001
 async def s3_files_client_fixture(
     monkeypatch,
     request,
-    aws_credentials,  # noqa: ARG001
+    aws_credentials,
 ):
     """S3 storage client fixture for testing with real S3."""
     # Set the database url to a test database
@@ -913,7 +913,12 @@ class TestStorageFailureHandling:
         # Mock S3 error with NoSuchBucket code
         class MockS3Error(Exception):
             def __init__(self):
-                self.response = {"Error": {"Code": "NoSuchBucket", "Message": "Bucket does not exist"}}
+                self.response = {
+                    "Error": {
+                        "Code": "NoSuchBucket",
+                        "Message": "Bucket does not exist",
+                    }
+                }
 
         error = MockS3Error()
         assert is_permanent_storage_failure(error) is True
@@ -1080,7 +1085,7 @@ class TestStorageFailureHandling:
 
         deleted_file_ids = set()
 
-        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:  # noqa: ARG001
+        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:
             if file_name == f"{file_ids[0]}.txt":
                 msg = f"File {file_name} not found"
                 raise FileNotFoundError(msg)
@@ -1175,7 +1180,7 @@ class TestStorageFailureHandling:
 
         call_count = 0
 
-        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:  # noqa: ARG001
+        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:
             nonlocal call_count
             call_count += 1
             if call_count == 1:
@@ -1259,7 +1264,7 @@ class TestStorageFailureHandling:
 
         call_count = 0
 
-        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:  # noqa: ARG001
+        async def mock_delete_file(*, flow_id: str | None = None, file_name: str | None = None) -> None:
             nonlocal call_count
             call_count += 1
             if call_count == 1:

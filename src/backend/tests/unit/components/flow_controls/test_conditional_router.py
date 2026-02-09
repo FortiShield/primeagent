@@ -110,7 +110,13 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
             # Regex tests - case sensitivity doesn't apply to regex
             ("hello123", r"hello\d+", "regex", True, True),
             ("hello123", r"Hello\d+", "regex", True, False),
-            ("hello123", r"Hello\d+", "regex", False, False),  # Still case sensitive for regex
+            (
+                "hello123",
+                r"Hello\d+",
+                "regex",
+                False,
+                False,
+            ),  # Still case sensitive for regex
             ("hello", r"invalid[regex", "regex", True, False),  # Invalid regex
             # Numeric comparison tests
             ("10", "5", "greater than", True, True),
@@ -127,7 +133,14 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
         ],
     )
     async def test_evaluate_condition(
-        self, component_class, default_kwargs, input_text, match_text, operator, case_sensitive, expected
+        self,
+        component_class,
+        default_kwargs,
+        input_text,
+        match_text,
+        operator,
+        case_sensitive,
+        expected,
     ):
         """Test evaluate_condition method with various inputs."""
         component = await self.component_setup(component_class, default_kwargs)
@@ -158,7 +171,12 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
             patch.object(component, "_id", "test_id"),
             patch.object(component, "update_ctx") as mock_update,
             patch.object(component, "stop") as mock_stop,
-            patch.object(type(component), "graph", new_callable=PropertyMock, return_value=mock_graph),
+            patch.object(
+                type(component),
+                "graph",
+                new_callable=PropertyMock,
+                return_value=mock_graph,
+            ),
         ):
             component.iterate_and_stop_once("false_result")
 
@@ -188,7 +206,12 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
             patch.object(component, "_id", "test_id"),
             patch.object(component, "update_ctx") as mock_update,
             patch.object(component, "stop") as mock_stop,
-            patch.object(type(component), "graph", new_callable=PropertyMock, return_value=mock_graph),
+            patch.object(
+                type(component),
+                "graph",
+                new_callable=PropertyMock,
+                return_value=mock_graph,
+            ),
         ):
             component.iterate_and_stop_once("false_result")
 
@@ -353,6 +376,6 @@ class TestConditionalRouterComponent(ComponentTestBaseWithoutClient):
 
         for input_text, match_text, operator, case_sensitive, expected in test_cases:
             result = component.evaluate_condition(input_text, match_text, operator, case_sensitive=case_sensitive)
-            assert result == expected, (
-                f"Failed for {input_text} {operator} {match_text} (case_sensitive={case_sensitive})"
-            )
+            assert (
+                result == expected
+            ), f"Failed for {input_text} {operator} {match_text} (case_sensitive={case_sensitive})"

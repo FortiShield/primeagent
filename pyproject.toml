@@ -6,28 +6,20 @@ requires-python = ">=3.10,<3.14"
 license = "MIT"
 keywords = ["nlp", "langchain", "openai", "gpt", "gui"]
 readme = "README.md"
-maintainers = [
-    { name = "Carlos Coelho", email = "carlos@agent.khulnasoft.com" },
-    { name = "Cristhian Zanforlin", email = "cristhian.lousa@gmail.com" },
-    { name = "Gabriel Almeida", email = "gabriel@agent.khulnasoft.com" },
-    { name = "Lucas Eduoli", email = "lucaseduoli@gmail.com" },
-    { name = "Otávio Anovazzi", email = "otavio2204@gmail.com" },
-    { name = "Rodrigo Nader", email = "rodrigo@agent.khulnasoft.com" },
-    { name = "Italo dos Anjos", email = "italojohnnydosanjos@gmail.com" },
-]
+maintainers = [{ name = "khulnaSoft", email = "info@khulnasoft.com" }]
+
 # Define your main dependencies here
 dependencies = [
-    "primeagent-base[complete]~=0.2.0",
+    "primeagent-base~=0.2.0"
 ]
-
 
 [dependency-groups]
 dev = [
+    "primeagent[dev]",
     "pytest-instafail>=0.5.0",
     "types-redis>=4.6.0.5",
     "ipykernel>=6.29.0",
     "mypy>=1.11.0",
-    "torch>=2.10.0",
     "ruff~=0.13.1",
     "httpx>=0.28.1",
     "pytest>=8.2.0",
@@ -237,6 +229,15 @@ ignore = [
 external = ["RUF027"]
 
 [tool.ruff.lint.per-file-ignores]
+# Pytest fixtures intentionally unused
+"**/tests/**" = ["ARG001", "S108"]
+
+# Plugin / dynamic component system (intentional internals + exec)
+"src/wfx/src/wfx/custom/**" = ["SLF001", "S102"]
+
+# Component discovery uses internal attributes by design
+"src/wfx/src/wfx/components/**" = ["SLF001"]
+
 "scripts/*" = ["D1", "INP", "T201"]
 "src/backend/base/primeagent/alembic/versions/*" = ["INP001", "D415", "PGH003"]
 "src/backend/base/primeagent/custom/__init__.py" = [

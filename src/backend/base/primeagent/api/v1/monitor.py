@@ -8,9 +8,18 @@ from primeagent.api.utils import DbSession, custom_params
 from primeagent.schema.message import MessageResponse
 from primeagent.services.auth.utils import get_current_active_user
 from primeagent.services.database.models.flow.model import Flow
-from primeagent.services.database.models.message.model import MessageRead, MessageTable, MessageUpdate
-from primeagent.services.database.models.transactions.crud import transform_transaction_table_for_logs
-from primeagent.services.database.models.transactions.model import TransactionLogsResponse, TransactionTable
+from primeagent.services.database.models.message.model import (
+    MessageRead,
+    MessageTable,
+    MessageUpdate,
+)
+from primeagent.services.database.models.transactions.crud import (
+    transform_transaction_table_for_logs,
+)
+from primeagent.services.database.models.transactions.model import (
+    TransactionLogsResponse,
+    TransactionTable,
+)
 from primeagent.services.database.models.user.model import User
 from primeagent.services.database.models.vertex_builds.crud import (
     delete_vertex_builds_by_flow_id,
@@ -106,7 +115,11 @@ async def delete_messages(message_ids: list[UUID], session: DbSession) -> None:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
-@router.put("/messages/{message_id}", dependencies=[Depends(get_current_active_user)], response_model=MessageRead)
+@router.put(
+    "/messages/{message_id}",
+    dependencies=[Depends(get_current_active_user)],
+    response_model=MessageRead,
+)
 async def update_message(
     message_id: UUID,
     message: MessageUpdate,
@@ -170,7 +183,11 @@ async def update_session_id(
     return message_responses
 
 
-@router.delete("/messages/session/{session_id}", status_code=204, dependencies=[Depends(get_current_active_user)])
+@router.delete(
+    "/messages/session/{session_id}",
+    status_code=204,
+    dependencies=[Depends(get_current_active_user)],
+)
 async def delete_messages_session(
     session_id: str,
     session: DbSession,
@@ -203,8 +220,15 @@ async def get_transactions(
 
         with warnings.catch_warnings():
             warnings.filterwarnings(
-                "ignore", category=DeprecationWarning, module=r"fastapi_pagination\.ext\.sqlalchemy"
+                "ignore",
+                category=DeprecationWarning,
+                module=r"fastapi_pagination\.ext\.sqlalchemy",
             )
-            return await apaginate(session, stmt, params=params, transformer=transform_transaction_table_for_logs)
+            return await apaginate(
+                session,
+                stmt,
+                params=params,
+                transformer=transform_transaction_table_for_logs,
+            )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
